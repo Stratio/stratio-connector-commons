@@ -1,4 +1,2 @@
-stratio-connector-commons
+stratio-connector-elasticsearch
 =========================
-
-The common module for the stratio connectors
