@@ -57,16 +57,28 @@ public abstract class GenericBulkInsertTest extends GenericConnectorTest {
          return DEFAULT_ROWS_TO_INSERT;
     }
     @Test
-    public void testBulkInsert() throws ExecutionException, ValidationException, UnsupportedOperationException, UnsupportedException {
+    public void testBulkInsertWithPK() throws ExecutionException, ValidationException, UnsupportedOperationException, UnsupportedException {
 
         ClusterName clusterName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST testBulkInsert "+ clusterName.getName()+" ***********************************");
-        insertBulk(clusterName);
+        insertBulk(clusterName, true);
         verifyInsert(clusterName);
 
     }
 
-    private void insertBulk(ClusterName cluesterName) throws UnsupportedException, ExecutionException {
+    @Test
+    public void testBulkInsertWitoutPK() throws ExecutionException, ValidationException, UnsupportedOperationException, UnsupportedException {
+
+        ClusterName clusterName = getClusterName();
+        System.out.println("*********************************** INIT FUNCTIONAL TEST testBulkInsert "+ clusterName.getName()+" ***********************************");
+        insertBulk(clusterName, false);
+        verifyInsert(clusterName);
+
+    }
+
+
+
+    private void insertBulk(ClusterName cluesterName, boolean withPK) throws UnsupportedException, ExecutionException {
         Set<Row> rows = new HashSet<Row>();
 
 
@@ -82,8 +94,13 @@ public abstract class GenericBulkInsertTest extends GenericConnectorTest {
             rows.add(row);
         }
 
+        List<ColumnName> pk = new ArrayList<>();
+        if (withPK) {
+            ColumnName columnPK = new ColumnName(SCHEMA, TABLE, COLUMN_1);
+            pk.add(columnPK);
+        }
 
-        TableMetadata targetTable = new TableMetadata(new TableName(SCHEMA, TABLE),null,null,null,null,null,null);
+        TableMetadata targetTable = new TableMetadata(new TableName(SCHEMA, TABLE),null,null,null,null,pk, Collections.EMPTY_LIST);
         connector.getStorageEngine().insert(cluesterName, targetTable, rows);
 
 

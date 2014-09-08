@@ -19,6 +19,7 @@ package com.stratio.connector.connection;
 import com.stratio.meta.common.connector.ConnectorClusterConfig;
 import com.stratio.meta.common.connector.IConfiguration;
 import com.stratio.meta.common.security.ICredentials;
+import com.stratio.meta2.common.data.ClusterName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -98,4 +99,7 @@ public abstract class ConnectionHandle {
         }
         return connection;
     }
+
+
+
 }

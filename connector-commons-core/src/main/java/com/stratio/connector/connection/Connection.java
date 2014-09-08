@@ -27,6 +27,6 @@ public interface Connection<T> {
 
     public boolean isConnect();
 
-    public  T getClient();
+    public  T getNativeConnection();
 
 }

@@ -29,7 +29,7 @@ import org.junit.Before;
 
 public abstract class GenericConnectorTest<T extends IConnector> {
 
-    protected ClusterName getClusterName(){ return  new ClusterName(TABLE+SCHEMA); }
+    protected ClusterName getClusterName(){ return  new ClusterName(SCHEMA+"-"+TABLE); }
 
     private IConnectorHelper iConnectorHelper;
 
