@@ -13,31 +13,19 @@
  *
  *   You should have received a copy of the GNU Lesser General Public License along with this library.
  */
-package com.stratio.connector.commons.util;
+
+package com.stratio.connector.commons.connection.exceptions;
 
 /**
- * This class is the responsible to parse the information.
- * Created by jmgomez on 3/09/14.
+ * This exception represents a exception in the handling of a connection.
+ * Created by jmgomez on 9/09/14.
  */
-public class Parser {
-
-
+public class HandleConnectionException extends Throwable {
     /**
-     * This method parse the hosts string.
-     * @param hosts the hosts string.
-     * @return  the hosts in an Array.
+     * Constructor.
+     * @param msg the message.
      */
-    public String[] hosts(String hosts) {
-        return hosts.split(",");
-
-    }
-
-    /**
-     * This method parse the ips string.
-     * @param ips the ips string.
-     * @return  the ips in an Array.
-     */
-    public String[] ports(String ips) {
-        return ips.split(",");
+    public HandleConnectionException(String msg) {
+        super(msg);
     }
 }

@@ -25,11 +25,19 @@ import com.stratio.meta.common.security.ICredentials;
 import com.stratio.meta2.common.data.ClusterName;
 import org.junit.After;
 import org.junit.Before;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public abstract class GenericConnectorTest<T extends IConnector> {
 
-    protected ClusterName getClusterName(){ return  new ClusterName(SCHEMA+"-"+TABLE); }
+
+    /**
+     * The Log.
+     */
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    protected ClusterName getClusterName(){ return  new ClusterName(CATALOG +"-"+TABLE); }
 
     private IConnectorHelper iConnectorHelper;
 
@@ -38,8 +46,8 @@ public abstract class GenericConnectorTest<T extends IConnector> {
     protected T connector;
 
 
-    protected final String TABLE = getClass().getSimpleName();
-    protected final String SCHEMA = "functionaltest";
+    protected  final String TABLE = getClass().getSimpleName();
+    protected  final String CATALOG = "catalog_functional_test";
 
 
 
@@ -50,14 +58,14 @@ public abstract class GenericConnectorTest<T extends IConnector> {
         connector.init(getConfiguration());
         connector.connect(getICredentials(), getConnectorClusterConfig());
 
-        deleteSet(SCHEMA);
+        deleteCatalog(CATALOG);
 
-        System.out.println(SCHEMA +"/"+ TABLE);
+        System.out.println(CATALOG +"/"+ TABLE);
     }
 
 
 
-    protected  void deleteSet(String catalog){
+    protected  void deleteCatalog(String catalog){
         iConnectorHelper.deleteSet(catalog);
     }
     protected  void refresh(String catalog){
@@ -81,8 +89,13 @@ public abstract class GenericConnectorTest<T extends IConnector> {
     
     @After
     public void tearDown() throws ConnectionException {
-        deleteSet(SCHEMA);
+
+        deleteCatalog(CATALOG);
         connector.close(getClusterName());
+        if (logger.isDebugEnabled()){
+            logger.debug("Delete Catalog: "+CATALOG);
+
+        }
 
 
     }

@@ -15,18 +15,30 @@
  */
 
 
-package com.stratio.connector.connection;
+package com.stratio.connector.commons.connection;
 
 /**
+ * This interface represents a generic connection to be handle.
  * Created by jmgomez on 29/08/14.
  */
 public interface Connection<T> {
 
 
+    /**
+     * Close the connection.
+     */
     public  void close();
 
+    /**
+     * Ask if the connection is connected.
+     * @return true if the connection is connected. False in other case.
+     */
     public boolean isConnect();
 
+    /**
+     * Return a database native connection.
+     * @return the native connection.
+     */
     public  T getNativeConnection();
 
 }

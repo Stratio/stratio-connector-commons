@@ -35,7 +35,6 @@ import org.junit.Test;
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 
 /**
@@ -64,7 +63,8 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
         ClusterName clusterName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST testSimpleInsert  ***********************************");
 
-        insertRow(clusterName, VALUE_4, VALUE_1,true);
+
+        insertRow(clusterName, VALUE_4, VALUE_1, true);
 
 
 
@@ -100,7 +100,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
 
 
     private void verifyInsert(ClusterName cluesterName, String test_value_4) throws UnsupportedException, ExecutionException {
-        QueryResult queryResult = connector.getQueryEngine().execute(cluesterName,createLogicalPlan());
+        QueryResult queryResult = connector.getQueryEngine().execute(cluesterName, createLogicalWorkFlow());
         ResultSet resultIterator = queryResult.getResultSet();
 
 
@@ -128,25 +128,25 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
 
         List<ColumnName> pk = new ArrayList<>();
         if (withPK) {
-            ColumnName columnPK = new ColumnName(SCHEMA, TABLE, COLUMN_1);
+            ColumnName columnPK = new ColumnName(CATALOG, TABLE, COLUMN_1);
             pk.add(columnPK);
         }
 
 
-        connector.getStorageEngine().insert(cluesterName,  new TableMetadata(new TableName(SCHEMA, TABLE),null,null,null,null,pk, Collections.EMPTY_LIST), row);
-        refresh(SCHEMA);
+        connector.getStorageEngine().insert(cluesterName,  new TableMetadata(new TableName(CATALOG, TABLE),null,null,null,null,pk, Collections.EMPTY_LIST), row);
+        refresh(CATALOG);
     }
 
 
-    private LogicalWorkflow createLogicalPlan() {
+    private LogicalWorkflow createLogicalWorkFlow() {
         List<LogicalStep> stepList = new ArrayList<>();
         List<ColumnName> columns = new ArrayList<>();
 
-        columns.add(new ColumnName(SCHEMA,TABLE,COLUMN_1));
-        columns.add(new ColumnName(SCHEMA,TABLE,COLUMN_2));
-        columns.add(new ColumnName(SCHEMA,TABLE,COLUMN_3));
-        columns.add(new ColumnName(SCHEMA,TABLE,COLUMN_4));
-        TableName tableName = new TableName(SCHEMA,TABLE);
+        columns.add(new ColumnName(CATALOG,TABLE,COLUMN_1));
+        columns.add(new ColumnName(CATALOG,TABLE,COLUMN_2));
+        columns.add(new ColumnName(CATALOG,TABLE,COLUMN_3));
+        columns.add(new ColumnName(CATALOG,TABLE,COLUMN_4));
+        TableName tableName = new TableName(CATALOG,TABLE);
         Project project = new Project(null,tableName,columns);
         stepList.add(project);
         return new LogicalWorkflow(stepList);

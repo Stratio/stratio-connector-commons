@@ -31,10 +31,7 @@ import com.stratio.meta2.common.data.TableName;
 import com.stratio.meta2.common.metadata.TableMetadata;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 
@@ -57,7 +54,7 @@ public abstract class GenericLimitTest extends GenericConnectorTest {
 		insertRow(4, "text", 10, 30,clusterName);
 		insertRow(5, "text", 20, 42,clusterName);
 
-        refresh(SCHEMA);
+        refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = createLogicalPlan(2);
 
@@ -74,9 +71,9 @@ public abstract class GenericLimitTest extends GenericConnectorTest {
 
 		List<ColumnName> columns = new ArrayList<>();
 
-		columns.add(new ColumnName(SCHEMA,TABLE, COLUMN_TEXT)); //REVIEW todo esto se ha cambiado para que compile
-		columns.add(new ColumnName(SCHEMA,TABLE, COLUMN_AGE));
-        TableName tableName = new TableName(SCHEMA,TABLE);
+		columns.add(new ColumnName(CATALOG,TABLE, COLUMN_TEXT)); //REVIEW todo esto se ha cambiado para que compile
+		columns.add(new ColumnName(CATALOG,TABLE, COLUMN_AGE));
+        TableName tableName = new TableName(CATALOG,TABLE);
 		Project project =  new Project(null,tableName, columns);
 		stepList.add(project);
 
@@ -96,7 +93,7 @@ public abstract class GenericLimitTest extends GenericConnectorTest {
 	    cells.put(COLUMN_AGE, new Cell(age));
 	    cells.put(COLUMN_MONEY, new Cell(money));
 	    row.setCells(cells);        
-	     connector.getStorageEngine().insert(cLusterName,new TableMetadata(new TableName(SCHEMA,TABLE),null,null,null,null,null,null), row);
+	     connector.getStorageEngine().insert(cLusterName,new TableMetadata(new TableName(CATALOG,TABLE),null,null,null,null,Collections.EMPTY_LIST, Collections.EMPTY_LIST), row);
 	        
 	    
 	}

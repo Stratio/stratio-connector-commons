@@ -62,7 +62,7 @@ public abstract class GenericQueryProjectTest extends GenericConnectorTest {
 
         }
 
-        refresh(SCHEMA);
+        refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = createLogicalPlan();
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(clusterNodeName, logicalPlan);
@@ -97,9 +97,9 @@ public abstract class GenericQueryProjectTest extends GenericConnectorTest {
     private LogicalWorkflow createLogicalPlan() {
         List<LogicalStep> stepList = new ArrayList<>();
         List<ColumnName> columns = new ArrayList<>();
-        columns.add(new ColumnName(SCHEMA,TABLE,COLUMN_1));
-        columns.add(new ColumnName(SCHEMA,TABLE,COLUMN_2));
-        TableName tableName = new TableName(SCHEMA,TABLE);
+        columns.add(new ColumnName(CATALOG,TABLE,COLUMN_1));
+        columns.add(new ColumnName(CATALOG,TABLE,COLUMN_2));
+        TableName tableName = new TableName(CATALOG,TABLE);
         Project project = new Project(null,tableName,columns);
         stepList.add(project);
         return new LogicalWorkflow(stepList);
@@ -113,7 +113,7 @@ private void insertRow(int ikey,  ClusterName clusterNodeName ) throws Unsupport
         cells.put(COLUMN_2, new Cell("ValueBin2_r"+ikey));
         cells.put(COLUMN_3, new Cell("ValueBin3_r"+ikey));
         row.setCells(cells);        
-        connector.getStorageEngine().insert(clusterNodeName, new TableMetadata(new TableName(SCHEMA, TABLE), null, null, null, null, null,null), row);
+        connector.getStorageEngine().insert(clusterNodeName, new TableMetadata(new TableName(CATALOG, TABLE), null, null, null, null, Collections.EMPTY_LIST,Collections.EMPTY_LIST), row);
         
     }
 

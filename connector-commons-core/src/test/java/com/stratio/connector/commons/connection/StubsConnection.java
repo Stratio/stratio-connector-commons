@@ -13,31 +13,35 @@
  *
  *   You should have received a copy of the GNU Lesser General Public License along with this library.
  */
-package com.stratio.connector.commons.util;
+
+package com.stratio.connector.commons.connection;
 
 /**
- * This class is the responsible to parse the information.
- * Created by jmgomez on 3/09/14.
+ * Created by jmgomez on 9/09/14.
  */
-public class Parser {
+public class StubsConnection implements Connection {
 
-
-    /**
-     * This method parse the hosts string.
-     * @param hosts the hosts string.
-     * @return  the hosts in an Array.
-     */
-    public String[] hosts(String hosts) {
-        return hosts.split(",");
-
+    @Override
+    public void close() {
+        connect=false;
     }
 
     /**
-     * This method parse the ips string.
-     * @param ips the ips string.
-     * @return  the ips in an Array.
+     * this method is only for test.
      */
-    public String[] ports(String ips) {
-        return ips.split(",");
+    public void setConnect(boolean connect){
+        this.connect = connect;
+    }
+
+    public boolean connect = true;
+
+    @Override
+    public boolean isConnect() {
+        return connect;
+    }
+
+    @Override
+    public Object getNativeConnection() {
+        return "A connection";
     }
 }

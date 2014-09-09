@@ -31,7 +31,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 
@@ -61,12 +60,12 @@ public abstract class GenericDeleteTest extends GenericConnectorTest {
          insertRow(4,"text",10,30);
          insertRow(5,"text",20,42);
 
-        refresh(SCHEMA);
+        refresh(CATALOG);
 
 
         Filter[] filterSet = createFilterCollection(EQUAL_FILTER, "text2"); 
-//   	 	((ElasticsearchStorageEngine) connector.getStorageEngine()).delete(SCHEMA, TABLE, filterSet);
-//        refresh(SCHEMA);
+//   	 	((ElasticsearchStorageEngine) connector.getStorageEngine()).delete(CATALOG, TABLE, filterSet);
+//        refresh(CATALOG);
 //
 //
 //        SearchResponse response = nodeClient.prepareSearch(CATALOG)
@@ -108,14 +107,14 @@ public abstract class GenericDeleteTest extends GenericConnectorTest {
          insertRow(4,"text",10,30);
          insertRow(5,"text",20,42);
 
-        refresh(SCHEMA);
+        refresh(CATALOG);
 
 
         Filter[] filterSet = createFilterCollection(EQUAL_FILTER, 20);    
-//   	 	((ElasticsearchStorageEngine) connector.getStorageEngine()).delete(SCHEMA, TABLE, filterSet);
+//   	 	((ElasticsearchStorageEngine) connector.getStorageEngine()).delete(CATALOG, TABLE, filterSet);
 
 //
-//        refresh(SCHEMA);
+//        refresh(CATALOG);
 //
 //
 //        SearchResponse response = nodeClient.prepareSearch(CATALOG)
@@ -149,16 +148,16 @@ public abstract class GenericDeleteTest extends GenericConnectorTest {
 	 insertRow(4,"text",10,30);
 	 insertRow(5,"text",20,42);
 
-        refresh(SCHEMA);
+        refresh(CATALOG);
 
 
         //age notequal 20 and money between 9,11
 	 Filter[] filterSet = createFilterCollection(NOTEQUAL_BETWEEN, 20);
 
-//	 ((ElasticsearchStorageEngine)connector.getStorageEngine()).delete(SCHEMA, TABLE,filterSet);
+//	 ((ElasticsearchStorageEngine)connector.getStorageEngine()).delete(CATALOG, TABLE,filterSet);
 
 
-//        refresh(SCHEMA);
+//        refresh(CATALOG);
 //
 //        SearchResponse response = nodeClient.prepareSearch(CATALOG)
 //	      		.setSearchType(SearchType.QUERY_THEN_FETCH)
@@ -256,7 +255,7 @@ private void insertRow(int ikey, String texto, int money, int age) throws Unsupp
        cells.put(COLUMN_AGE, new Cell(age));
        row.setCells(cells);
         
-//       ((ElasticsearchStorageEngine) connector.getStorageEngine()).insert(SCHEMA, TABLE, row);
+//       ((ElasticsearchStorageEngine) connector.getStorageEngine()).insert(CATALOG, TABLE, row);
     fail("Not implemented"); //REVIEW debido a cambio de interfaz
     }
  

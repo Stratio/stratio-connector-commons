@@ -74,7 +74,7 @@ public abstract class GenericQueryFilterTest extends GenericConnectorTest {
         insertRow(4,10,1, clusterNodeName);
         insertRow(5,20,1, clusterNodeName);
 
-        refresh(SCHEMA);
+        refresh(CATALOG);
 
 
         LogicalWorkflow logicalPlan = createLogicalPlan(EQUAL_FILTER);
@@ -120,7 +120,7 @@ public abstract class GenericQueryFilterTest extends GenericConnectorTest {
     	insertRow(7,1,8, clusterNodeName);
     	insertRow(8,1,12, clusterNodeName);
 
-        refresh(SCHEMA);
+        refresh(CATALOG);
 
 
         LogicalWorkflow logicalPlan = createLogicalPlan(BETWEEN_FILTER);
@@ -171,7 +171,7 @@ public abstract class GenericQueryFilterTest extends GenericConnectorTest {
     	insertRow(7,8,1, clusterNodeName);
     	insertRow(8,12,10, clusterNodeName);
 
-        refresh(SCHEMA);
+        refresh(CATALOG);
 
 
         LogicalWorkflow logicalPlan = createLogicalPlan(HIGH_BETWEEN_FILTER);
@@ -216,7 +216,7 @@ public abstract class GenericQueryFilterTest extends GenericConnectorTest {
     	insertRow(7,8,1, clusterNodeName);
     	insertRow(8,12,1, clusterNodeName);
 
-        refresh(SCHEMA);
+        refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = createLogicalPlan(HIGH_FILTER);
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(clusterNodeName, logicalPlan);
@@ -269,7 +269,7 @@ public abstract class GenericQueryFilterTest extends GenericConnectorTest {
     	insertRow(7,8,1, clusterNodeName);
     	insertRow(8,12,1, clusterNodeName);
 
-        refresh(SCHEMA);
+        refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = createLogicalPlan(LOW_FILTER);
         QueryResult queryResult = (QueryResult)  connector.getQueryEngine().execute(clusterNodeName,logicalPlan);
@@ -307,11 +307,11 @@ public abstract class GenericQueryFilterTest extends GenericConnectorTest {
         List<LogicalStep> stepList = new ArrayList<>();
         List<ColumnName> columns = new ArrayList<>();
 
-        columns.add(new ColumnName(SCHEMA,TABLE,COLUMN_1));
-        columns.add(new ColumnName(SCHEMA,TABLE,COLUMN_2));
-        columns.add(new ColumnName(SCHEMA,TABLE,COLUMN_AGE));
-        columns.add(new ColumnName(SCHEMA,TABLE,COLUMN_MONEY));
-        TableName tableName = new TableName(SCHEMA,TABLE);
+        columns.add(new ColumnName(CATALOG,TABLE,COLUMN_1));
+        columns.add(new ColumnName(CATALOG,TABLE,COLUMN_2));
+        columns.add(new ColumnName(CATALOG,TABLE,COLUMN_AGE));
+        columns.add(new ColumnName(CATALOG,TABLE,COLUMN_MONEY));
+        TableName tableName = new TableName(CATALOG,TABLE);
         Project project = new Project(null,tableName,columns);
         stepList.add(project);
         if (EQUAL_FILTER==filterType || HIGH_FILTER == filterType || LOW_FILTER == filterType || HIGH_BETWEEN_FILTER == filterType){
@@ -324,7 +324,7 @@ public abstract class GenericQueryFilterTest extends GenericConnectorTest {
     }
 
     private LogicalStep  createBetweenFilter() {
-//        Relation relation =  relation = new Relation(new ColumnSelector(new ColumnName(SCHEMA, TABLE, COLUMN_MONEY)),Operator.BETWEEN,
+//        Relation relation =  relation = new Relation(new ColumnSelector(new ColumnName(CATALOG, TABLE, COLUMN_MONEY)),Operator.BETWEEN,
 //        relation.setType(Relation.TYPE_BETWEEN);
 //        List<Term<?>> terms = new ArrayList<>();
 //        terms.add(new IntegerTerm("9"));
@@ -340,14 +340,14 @@ public abstract class GenericQueryFilterTest extends GenericConnectorTest {
         Relation relation = null;
         Operations operation = null;
         if (filterType==EQUAL_FILTER) {
-            relation = new Relation(new ColumnSelector(new ColumnName(SCHEMA, TABLE, COLUMN_AGE)), Operator.COMPARE, new IntegerSelector("10"));
+            relation = new Relation(new ColumnSelector(new ColumnName(CATALOG, TABLE, COLUMN_AGE)), Operator.COMPARE, new IntegerSelector("10"));
             operation= Operations.FILTER_NON_INDEXED_EQ;
         }
         else if (filterType==HIGH_FILTER || filterType == HIGH_BETWEEN_FILTER) {
-            relation = new Relation(new ColumnSelector(new ColumnName(SCHEMA, TABLE, COLUMN_AGE)), Operator.GET, new IntegerSelector("10"));
+            relation = new Relation(new ColumnSelector(new ColumnName(CATALOG, TABLE, COLUMN_AGE)), Operator.GET, new IntegerSelector("10"));
             operation= Operations.FILTER_NON_INDEXED_GET;
         }else  if (filterType==LOW_FILTER) {
-            relation = new Relation(new ColumnSelector(new ColumnName(SCHEMA, TABLE, COLUMN_AGE)), Operator.LET, new IntegerSelector("10"));
+            relation = new Relation(new ColumnSelector(new ColumnName(CATALOG, TABLE, COLUMN_AGE)), Operator.LET, new IntegerSelector("10"));
             operation= Operations.FILTER_NON_INDEXED_LET;
         }
 
@@ -366,7 +366,7 @@ public abstract class GenericQueryFilterTest extends GenericConnectorTest {
             cells.put(COLUMN_AGE, new Cell(age));
             cells.put(COLUMN_MONEY, new Cell(money));
             row.setCells(cells);        
-            connector.getStorageEngine().insert(clusterNodeName,new TableMetadata(new TableName(SCHEMA, TABLE),null,null,null,null,null,null), row);
+            connector.getStorageEngine().insert(clusterNodeName,new TableMetadata(new TableName(CATALOG, TABLE),null,null,null,null,Collections.EMPTY_LIST,Collections.EMPTY_LIST), row);
             
         }
 

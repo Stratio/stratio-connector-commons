@@ -22,7 +22,7 @@ import org.junit.Test;
 import static org.junit.Assert.fail;
 
 
-public abstract class GenericCreateTest extends GenericConnectorTest {
+public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
 
 
     @Test

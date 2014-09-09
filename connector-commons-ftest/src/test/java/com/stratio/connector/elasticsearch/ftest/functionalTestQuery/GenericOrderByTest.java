@@ -61,7 +61,7 @@ public abstract class GenericOrderByTest extends GenericConnectorTest {
          insertRow(4,"text",10,30,clusterName);
          insertRow(5,"text",20,42,clusterName);
 
-        refresh(SCHEMA);
+        refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = createLogicalPlanLimit(SORT_AGE);
 
@@ -96,7 +96,7 @@ public abstract class GenericOrderByTest extends GenericConnectorTest {
          insertRow(5,"text",20,42,clusterName);
          insertRow(6,"text",10,10,clusterName);
 
-        refresh(SCHEMA);
+        refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = createLogicalPlanMultifield();
          
@@ -145,9 +145,9 @@ public abstract class GenericOrderByTest extends GenericConnectorTest {
 
 //
 //
-//	     columns.add(new ColumnName(SCHEMA,TABLE,COLUMN_TEXT)); //REVIEW cambiado para que compile
-//	     columns.add(new ColumnName(SCHEMA,TABLE,COLUMN_AGE));
-//        TableName tableName = new TableName(SCHEMA,TABLE);
+//	     columns.add(new ColumnName(CATALOG,TABLE,COLUMN_TEXT)); //REVIEW cambiado para que compile
+//	     columns.add(new ColumnName(CATALOG,TABLE,COLUMN_AGE));
+//        TableName tableName = new TableName(CATALOG,TABLE);
 //	     Project project = new Project(null,tableName,columns);
 //	     stepList.add(project);
 //
@@ -175,9 +175,9 @@ public abstract class GenericOrderByTest extends GenericConnectorTest {
      
      
 
-     columns.add(new ColumnName(SCHEMA,TABLE,COLUMN_TEXT)); //REVIEW cambiado para que compile
-     columns.add(new ColumnName(SCHEMA,TABLE,COLUMN_AGE));
-        TableName tableName = new TableName(SCHEMA,TABLE);
+     columns.add(new ColumnName(CATALOG,TABLE,COLUMN_TEXT)); //REVIEW cambiado para que compile
+     columns.add(new ColumnName(CATALOG,TABLE,COLUMN_AGE));
+        TableName tableName = new TableName(CATALOG,TABLE);
      Project project = new Project(null, tableName,columns);
      stepList.add(project);
      
@@ -202,10 +202,10 @@ public abstract class GenericOrderByTest extends GenericConnectorTest {
 	     List<ColumnName> columns = new ArrayList<>();
 	     
 
-	     columns.add(new ColumnName(SCHEMA,TABLE,COLUMN_TEXT));
-	     columns.add(new ColumnName(SCHEMA,TABLE,COLUMN_AGE));
+	     columns.add(new ColumnName(CATALOG,TABLE,COLUMN_TEXT));
+	     columns.add(new ColumnName(CATALOG,TABLE,COLUMN_AGE));
 	     // money not required
-        TableName tableName = new TableName(SCHEMA,TABLE);
+        TableName tableName = new TableName(CATALOG,TABLE);
 	     Project project = new Project(null,tableName,columns); //REVIEW cambiado para que compile
 	     
 	     stepList.add(project);
@@ -231,7 +231,7 @@ private void insertRow(int ikey, String texto, int money, int age,ClusterName cl
     cells.put(COLUMN_AGE, new Cell(age));
     cells.put(COLUMN_MONEY, new Cell(money));
     row.setCells(cells);        
-     connector.getStorageEngine().insert(clusterName,new TableMetadata(new TableName(SCHEMA, TABLE),null,null,null,null,null,null), row);
+     connector.getStorageEngine().insert(clusterName,new TableMetadata(new TableName(CATALOG, TABLE),null,null,null,null,Collections.EMPTY_LIST,Collections.EMPTY_LIST), row);
         
     }
 

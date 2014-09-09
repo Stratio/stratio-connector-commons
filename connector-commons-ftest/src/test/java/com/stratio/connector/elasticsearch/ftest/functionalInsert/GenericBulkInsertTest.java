@@ -31,7 +31,6 @@ import com.stratio.meta2.common.data.ClusterName;
 import com.stratio.meta2.common.data.ColumnName;
 import com.stratio.meta2.common.data.TableName;
 import com.stratio.meta2.common.metadata.TableMetadata;
-
 import org.junit.Test;
 
 import java.util.*;
@@ -96,15 +95,15 @@ public abstract class GenericBulkInsertTest extends GenericConnectorTest {
 
         List<ColumnName> pk = new ArrayList<>();
         if (withPK) {
-            ColumnName columnPK = new ColumnName(SCHEMA, TABLE, COLUMN_1);
+            ColumnName columnPK = new ColumnName(CATALOG, TABLE, COLUMN_1);
             pk.add(columnPK);
         }
 
-        TableMetadata targetTable = new TableMetadata(new TableName(SCHEMA, TABLE),null,null,null,null,pk, Collections.EMPTY_LIST);
+        TableMetadata targetTable = new TableMetadata(new TableName(CATALOG, TABLE),null,null,null,null,pk, Collections.EMPTY_LIST);
         connector.getStorageEngine().insert(cluesterName, targetTable, rows);
 
 
-        refresh(SCHEMA);
+        refresh(CATALOG);
     }
 
     private void verifyInsert(ClusterName cluesterName) throws UnsupportedException, ExecutionException {
@@ -132,11 +131,11 @@ public abstract class GenericBulkInsertTest extends GenericConnectorTest {
         List<LogicalStep> stepList = new ArrayList<>();
         List<ColumnName> columns = new ArrayList<>();
 
-        columns.add(new ColumnName(SCHEMA,TABLE, COLUMN_KEY));
-        columns.add(new ColumnName(SCHEMA,TABLE,COLUMN_1));
-        columns.add(new ColumnName(SCHEMA,TABLE,COLUMN_2));
-        columns.add(new ColumnName(SCHEMA,TABLE,COLUMN_3));
-        TableName tableName = new TableName(SCHEMA,TABLE);
+        columns.add(new ColumnName(CATALOG,TABLE, COLUMN_KEY));
+        columns.add(new ColumnName(CATALOG,TABLE,COLUMN_1));
+        columns.add(new ColumnName(CATALOG,TABLE,COLUMN_2));
+        columns.add(new ColumnName(CATALOG,TABLE,COLUMN_3));
+        TableName tableName = new TableName(CATALOG,TABLE);
         Project project = new Project(null,tableName,columns);
         stepList.add(project);
         return new LogicalWorkflow(stepList);
