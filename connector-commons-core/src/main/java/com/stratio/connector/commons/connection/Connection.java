@@ -1,5 +1,5 @@
 /*
- * Stratio Meta
+ * Stratio Deep
  *
  *   Copyright (c) 2014, Stratio, All rights reserved.
  *
@@ -27,18 +27,20 @@ public interface Connection<T> {
     /**
      * Close the connection.
      */
-    public  void close();
+    public void close();
 
     /**
      * Ask if the connection is connected.
+     *
      * @return true if the connection is connected. False in other case.
      */
     public boolean isConnect();
 
     /**
      * Return a database native connection.
+     *
      * @return the native connection.
      */
-    public  T getNativeConnection();
+    public T getNativeConnection();
 
 }

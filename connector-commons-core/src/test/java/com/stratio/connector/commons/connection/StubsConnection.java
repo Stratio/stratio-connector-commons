@@ -1,5 +1,5 @@
 /*
- * Stratio Meta
+ * Stratio Deep
  *
  *   Copyright (c) 2014, Stratio, All rights reserved.
  *
@@ -23,13 +23,13 @@ public class StubsConnection implements Connection {
 
     @Override
     public void close() {
-        connect=false;
+        connect = false;
     }
 
     /**
      * this method is only for test.
      */
-    public void setConnect(boolean connect){
+    public void setConnect(boolean connect) {
         this.connect = connect;
     }
 

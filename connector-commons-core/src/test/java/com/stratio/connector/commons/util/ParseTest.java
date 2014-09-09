@@ -1,5 +1,5 @@
 /*
- * Stratio Meta
+ * Stratio Deep
  *
  *   Copyright (c) 2014, Stratio, All rights reserved.
  *
@@ -22,46 +22,46 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-/** 
-* Parse Tester. 
-* 
-* @author <Authors name> 
-* @since <pre>sep 3, 2014</pre> 
-* @version 1.0 
-*/ 
+/**
+ * Parse Tester.
+ *
+ * @author <Authors name>
+ * @version 1.0
+ * @since <pre>sep 3, 2014</pre>
+ */
 public class ParseTest {
 
     Parser parse;
-@Before
-public void before() throws Exception {
-    parse = new Parser();
-} 
 
-@After
-public void after() throws Exception { 
-} 
+    @Before
+    public void before() throws Exception {
+        parse = new Parser();
+    }
+
+    @After
+    public void after() throws Exception {
+    }
 
     @Test
-    public void parseHosts(){
+    public void parseHosts() {
 
         String[] hosts = parse.hosts("10.70.90.12,10.70.90.14");
 
-        assertEquals("The length is correct",2,hosts.length);
-        assertEquals("The fist ip is correct","10.70.90.12",hosts[0]);
-        assertEquals("The fist ip is correct","10.70.90.14",hosts[1]);
+        assertEquals("The length is correct", 2, hosts.length);
+        assertEquals("The fist ip is correct", "10.70.90.12", hosts[0]);
+        assertEquals("The fist ip is correct", "10.70.90.14", hosts[1]);
     }
 
 
     @Test
-    public void parsePorts(){
+    public void parsePorts() {
 
         String[] ips = parse.ports("2000,3000");
 
-        assertEquals("The length is correct",2,ips.length);
-        assertEquals("The fist port is correct","2000",ips[0]);
-        assertEquals("The fist port is correct","3000",ips[1]);
+        assertEquals("The length is correct", 2, ips.length);
+        assertEquals("The fist port is correct", "2000", ips[0]);
+        assertEquals("The fist port is correct", "3000", ips[1]);
     }
 
 
-
-} 
+}

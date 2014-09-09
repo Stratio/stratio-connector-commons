@@ -1,5 +1,5 @@
 /*
- * Stratio Meta
+ * Stratio Deep
  *
  *   Copyright (c) 2014, Stratio, All rights reserved.
  *
@@ -20,12 +20,13 @@ package com.stratio.connector.commons.connection.exceptions;
  * This exception represents a exception in the handling of a connection.
  * Created by jmgomez on 9/09/14.
  */
-public class HandleConnectionException extends Throwable {
+public class HandlerConnectionException extends Throwable {
     /**
      * Constructor.
+     *
      * @param msg the message.
      */
-    public HandleConnectionException(String msg) {
+    public HandlerConnectionException(String msg) {
         super(msg);
     }
 }

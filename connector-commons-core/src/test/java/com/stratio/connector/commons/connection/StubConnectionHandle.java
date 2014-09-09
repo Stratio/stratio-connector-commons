@@ -1,5 +1,5 @@
 /*
- * Stratio Meta
+ * Stratio Deep
  *
  *   Copyright (c) 2014, Stratio, All rights reserved.
  *
@@ -34,16 +34,16 @@ public class StubConnectionHandle extends ConnectionHandler {
     }
 
     Connection onlyOneConnection = null;
+
     @Override
     protected Connection createConcreteConnection(ICredentials credentials, ConnectorClusterConfig config) {
         onlyOneConnection = new StubsConnection();
         return onlyOneConnection;
     }
 
-    public Connection getOnlyOneConnection(){
+    public Connection getOnlyOneConnection() {
         return onlyOneConnection;
     }
-
 
 
 }

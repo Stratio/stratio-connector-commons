@@ -1,6 +1,23 @@
+/*
+ * Stratio Deep
+ *
+ *   Copyright (c) 2014, Stratio, All rights reserved.
+ *
+ *   This library is free software; you can redistribute it and/or modify it under the terms of the
+ *   GNU Lesser General Public License as published by the Free Software Foundation; either version
+ *   3.0 of the License, or (at your option) any later version.
+ *
+ *   This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ *   even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ *   Lesser General Public License for more details.
+ *
+ *   You should have received a copy of the GNU Lesser General Public License along with this library.
+ */
+
 package com.stratio.connector.commons.connection;
 
-import com.stratio.connector.commons.connection.exceptions.HandleConnectionException;
+
+import com.stratio.connector.commons.connection.exceptions.HandlerConnectionException;
 import com.stratio.meta.common.connector.ConnectorClusterConfig;
 import com.stratio.meta.common.connector.IConfiguration;
 import com.stratio.meta.common.security.ICredentials;
@@ -15,60 +32,57 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
-/** 
-* ConnectionHandle Tester. 
-* 
-* @author <Authors name> 
-* @since <pre>sep 9, 2014</pre> 
-* @version 1.0 
-*/
+/**
+ * ConnectionHandle Tester.
+ *
+ * @author <Authors name>
+ * @version 1.0
+ * @since <pre>sep 9, 2014</pre>
+ */
 @RunWith(PowerMockRunner.class)
 public class ConnectionHandleTest {
 
     public static final String CLUSTER_NAME = "cluster_name";
 
 
-
-
     private StubConnectionHandle stubConnectionHandle;
-    @Mock  ICredentials credentials;
-    @Mock  ConnectorClusterConfig conenectoClusterConfig;
-    @Mock  IConfiguration configuration;
-
+    @Mock
+    ICredentials credentials;
+    @Mock
+    ConnectorClusterConfig conenectoClusterConfig;
+    @Mock
+    IConfiguration configuration;
 
 
     @Before
-public void before() throws Exception {
+    public void before() throws Exception {
 
         when(conenectoClusterConfig.getName()).thenReturn(new ClusterName(CLUSTER_NAME));
         stubConnectionHandle = new StubConnectionHandle(configuration);
-}
-
+    }
 
 
     @After
-public void after() throws Exception { 
-} 
+    public void after() throws Exception {
+    }
 
-/** 
-* 
-* Method: createConnection(ICredentials credentials, ConnectorClusterConfig config) 
-* 
-*/ 
-@Test
-public void testCreateConnection() throws HandleConnectionException {
+    /**
+     * Method: createConnection(ICredentials credentials, ConnectorClusterConfig config)
+     */
+    @Test
+    public void testCreateConnection() throws HandlerConnectionException {
 
 
-    connectionNotExist();
+        connectionNotExist();
 
-    stubConnectionHandle.createConnection(credentials, conenectoClusterConfig);
+        stubConnectionHandle.createConnection(credentials, conenectoClusterConfig);
 
-    assertNotNull("The connection exists", stubConnectionHandle.getConnection(CLUSTER_NAME));
+        assertNotNull("The connection exists", stubConnectionHandle.getConnection(CLUSTER_NAME));
 
-}
+    }
 
     @Test
-    public void testCreateConnectionAlredyCrete() throws HandleConnectionException {
+    public void testCreateConnectionAlredyCrete() throws HandlerConnectionException {
 
 
         connectionNotExist();
@@ -77,67 +91,57 @@ public void testCreateConnection() throws HandleConnectionException {
         try {
             stubConnectionHandle.createConnection(credentials, conenectoClusterConfig);
             fail("should not get here");
-        }catch(HandleConnectionException e){
-            assertEquals("The message is correct","The connection ["+CLUSTER_NAME+"] already exists", e.getMessage());
+        } catch (HandlerConnectionException e) {
+            assertEquals("The message is correct", "The connection [" + CLUSTER_NAME + "] already exists", e.getMessage());
         }
 
 
     }
 
-    private void connectionNotExist() throws HandleConnectionException {
+    private void connectionNotExist() throws HandlerConnectionException {
         try {
             stubConnectionHandle.getConnection(CLUSTER_NAME);
             fail("should not get here");
 
-        }catch(HandleConnectionException e){
-            assertEquals("The mesahe is coorect",e.getMessage(),"The connection ["+CLUSTER_NAME+"] does not exist");
+        } catch (HandlerConnectionException e) {
+            assertEquals("The mesahe is coorect", e.getMessage(), "The connection [" + CLUSTER_NAME + "] does not exist");
 
         }
     }
 
 
     /**
-* 
-* Method: closeConnection(String clusterName) 
-* 
-*/ 
-@Test
-public void testCloseConnection() throws Exception, HandleConnectionException {
+     * Method: closeConnection(String clusterName)
+     */
+    @Test
+    public void testCloseConnection() throws Exception, HandlerConnectionException {
 
-    stubConnectionHandle.closeConnection(CLUSTER_NAME); //Close a not exist connection.
+        stubConnectionHandle.closeConnection(CLUSTER_NAME); //Close a not exist connection.
 
-    stubConnectionHandle.createConnection(credentials, conenectoClusterConfig);
-    assertNotNull("The connection exists", stubConnectionHandle.getConnection(CLUSTER_NAME));
-    stubConnectionHandle.closeConnection(CLUSTER_NAME);
-    connectionNotExist();
-} 
+        stubConnectionHandle.createConnection(credentials, conenectoClusterConfig);
+        assertNotNull("The connection exists", stubConnectionHandle.getConnection(CLUSTER_NAME));
+        stubConnectionHandle.closeConnection(CLUSTER_NAME);
+        connectionNotExist();
+    }
 
-/** 
-* 
-* Method: isConnected(String clusterName) 
-* 
-*/ 
-@Test
-public void testIsConnected() throws HandleConnectionException {
-    assertFalse("Connection is not connect", stubConnectionHandle.isConnected(CLUSTER_NAME));
+    /**
+     * Method: isConnected(String clusterName)
+     */
+    @Test
+    public void testIsConnected() throws HandlerConnectionException {
+        assertFalse("Connection is not connect", stubConnectionHandle.isConnected(CLUSTER_NAME));
 
 
-    stubConnectionHandle.createConnection(credentials, conenectoClusterConfig);
-    StubsConnection theRealConnection = (StubsConnection)stubConnectionHandle.getOnlyOneConnection();
+        stubConnectionHandle.createConnection(credentials, conenectoClusterConfig);
+        StubsConnection theRealConnection = (StubsConnection) stubConnectionHandle.getOnlyOneConnection();
 
-    assertTrue("Connection is connect", stubConnectionHandle.isConnected(CLUSTER_NAME));
-    theRealConnection.setConnect(true);
+        assertTrue("Connection is connect", stubConnectionHandle.isConnected(CLUSTER_NAME));
+        theRealConnection.setConnect(true);
 
-    theRealConnection.setConnect(false);
-    assertFalse("And now the connection is not connect", stubConnectionHandle.isConnected(CLUSTER_NAME));
+        theRealConnection.setConnect(false);
+        assertFalse("And now the connection is not connect", stubConnectionHandle.isConnected(CLUSTER_NAME));
 
-}
-
-
-
-
-
-
+    }
 
 
 }

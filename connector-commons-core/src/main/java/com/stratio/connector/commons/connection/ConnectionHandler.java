@@ -1,5 +1,5 @@
 /*
- * Stratio Meta
+ * Stratio Deep
  *
  *   Copyright (c) 2014, Stratio, All rights reserved.
  *
@@ -16,7 +16,8 @@
 package com.stratio.connector.commons.connection;
 
 
-import com.stratio.connector.commons.connection.exceptions.HandleConnectionException;
+
+import com.stratio.connector.commons.connection.exceptions.HandlerConnectionException;
 import com.stratio.meta.common.connector.ConnectorClusterConfig;
 import com.stratio.meta.common.connector.IConfiguration;
 import com.stratio.meta.common.security.ICredentials;
@@ -44,10 +45,11 @@ public abstract class ConnectionHandler {
     /**
      * The connections.
      */
-    private Map<String,Connection> connections = new HashMap<>();
+    private Map<String, Connection> connections = new HashMap<>();
 
     /**
      * Constructor.
+     *
      * @param configuration the general settings.
      */
     public ConnectionHandler(IConfiguration configuration) {
@@ -57,11 +59,12 @@ public abstract class ConnectionHandler {
 
     /**
      * This method create a connection.
+     *
      * @param credentials the cluster configuration.
-     * @param config the connection options.
-     * @throws com.stratio.connector.commons.connection.exceptions.HandleConnectionException if the connection already exists.
+     * @param config      the connection options.
+     * @throws HandlerConnectionException if the connection already exists.
      */
-    public void createConnection(ICredentials credentials, ConnectorClusterConfig config) throws HandleConnectionException {
+    public void createConnection(ICredentials credentials, ConnectorClusterConfig config) throws HandlerConnectionException {
         Connection connection = createConcreteConnection(credentials, config);
 
         String connectionName = config.getName().getName();
@@ -69,11 +72,9 @@ public abstract class ConnectionHandler {
             connections.put(connectionName, connection);
             logger.info("Create a connection [" + connectionName + "]");
 
-        }else{
-            throw new HandleConnectionException("The connection ["+connectionName+"] already exists");
+        } else {
+            throw new HandlerConnectionException("The connection [" + connectionName + "] already exists");
         }
-
-
 
 
     }
@@ -81,54 +82,57 @@ public abstract class ConnectionHandler {
 
     /**
      * Close the connection.
+     *
      * @param clusterName the connection name to be closed.
      */
     public void closeConnection(String clusterName) {
-        if (connections.containsKey(clusterName)){
+        if (connections.containsKey(clusterName)) {
             connections.get(clusterName).close();
             connections.remove(clusterName);
-            logger.info("Disconnected from ["+clusterName+"]");
+            logger.info("Disconnected from [" + clusterName + "]");
         }
     }
 
     /**
      * Return if a connection is connected.
+     *
      * @param clusterName the connection name.
      * @return true if the connection is connected. False in other case.
      */
     public boolean isConnected(String clusterName) {
         boolean isConnected = false;
-        if (connections.containsKey(clusterName)){
-            isConnected =  connections.get(clusterName).isConnect();
+        if (connections.containsKey(clusterName)) {
+            isConnected = connections.get(clusterName).isConnect();
         }
-        return  isConnected;
+        return isConnected;
     }
 
 
     /**
      * Create a connection for the concrete database.
+     *
      * @param credentials the credentials.
-     * @param config the config.
+     * @param config      the config.
      * @return a connection.
      */
     protected abstract Connection createConcreteConnection(ICredentials credentials, ConnectorClusterConfig config);
 
     /**
      * This method return a connection.
+     *
      * @param name the connection name.
      * @return the connection.
-     * @throws com.stratio.connector.commons.connection.exceptions.HandleConnectionException if the connection does not exist.
+     * @throws HandlerConnectionException if the connection does not exist.
      */
-    public Connection getConnection(String name) throws HandleConnectionException {
+    public Connection getConnection(String name) throws HandlerConnectionException {
         Connection connection = null;
-        if (connections.containsKey(name)){
+        if (connections.containsKey(name)) {
             connection = connections.get(name);
-        }else{
-            throw new HandleConnectionException("The connection ["+name+"] does not exist");
+        } else {
+            throw new HandlerConnectionException("The connection [" + name + "] does not exist");
         }
         return connection;
     }
-
 
 
 }

@@ -1,5 +1,5 @@
 /*
- * Stratio Meta
+ * Stratio Deep
  *
  *   Copyright (c) 2014, Stratio, All rights reserved.
  *
@@ -24,8 +24,9 @@ public class Parser {
 
     /**
      * This method parse the hosts string.
+     *
      * @param hosts the hosts string.
-     * @return  the hosts in an Array.
+     * @return the hosts in an Array.
      */
     public String[] hosts(String hosts) {
         return hosts.split(",");
@@ -34,8 +35,9 @@ public class Parser {
 
     /**
      * This method parse the ips string.
+     *
      * @param ips the ips string.
-     * @return  the ips in an Array.
+     * @return the ips in an Array.
      */
     public String[] ports(String ips) {
         return ips.split(",");
