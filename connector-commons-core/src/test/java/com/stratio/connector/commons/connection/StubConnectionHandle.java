@@ -23,7 +23,7 @@ import com.stratio.meta.common.security.ICredentials;
 /**
  * Created by jmgomez on 9/09/14.
  */
-public class StubConnectionHandle extends ConnectionHandle {
+public class StubConnectionHandle extends ConnectionHandler {
     /**
      * Constructor.
      *

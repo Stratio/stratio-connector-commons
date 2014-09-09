@@ -30,7 +30,7 @@ import java.util.Map;
  * This class is the responsible to handle the connections.
  * Created by jmgomez on 28/08/14.
  */
-public abstract class ConnectionHandle {
+public abstract class ConnectionHandler {
 
     /**
      * The Log.
@@ -50,7 +50,7 @@ public abstract class ConnectionHandle {
      * Constructor.
      * @param configuration the general settings.
      */
-    public ConnectionHandle(IConfiguration configuration) {
+    public ConnectionHandler(IConfiguration configuration) {
         this.configuration = configuration;
 
     }
