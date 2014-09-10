@@ -17,6 +17,7 @@ package com.stratio.connector.commons.connection;
 
 
 
+import com.stratio.connector.commons.connection.exceptions.CreateNativeConnectionException;
 import com.stratio.connector.commons.connection.exceptions.HandlerConnectionException;
 import com.stratio.meta.common.connector.ConnectorClusterConfig;
 import com.stratio.meta.common.connector.IConfiguration;
@@ -65,7 +66,7 @@ public abstract class ConnectionHandler {
      * @throws HandlerConnectionException if the connection already exists.
      */
     public void createConnection(ICredentials credentials, ConnectorClusterConfig config) throws HandlerConnectionException {
-        Connection connection = createConcreteConnection(credentials, config);
+        Connection connection = createNativeConnection(credentials, config);
 
         String connectionName = config.getName().getName();
         if (!connections.containsKey(connectionName)) {
@@ -115,7 +116,7 @@ public abstract class ConnectionHandler {
      * @param config      the config.
      * @return a connection.
      */
-    protected abstract Connection createConcreteConnection(ICredentials credentials, ConnectorClusterConfig config);
+    protected abstract Connection createNativeConnection(ICredentials credentials, ConnectorClusterConfig config) throws CreateNativeConnectionException;
 
     /**
      * This method return a connection.

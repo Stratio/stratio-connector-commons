@@ -57,7 +57,6 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
 
 
 
-
     @Test
     public void testSimpleInsertWithPK() throws UnsupportedException, ExecutionException {
         ClusterName clusterName = getClusterName();
@@ -96,12 +95,44 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
 
     }
 
+    @Test
+    public void testInsertString() throws UnsupportedException, ExecutionException {
+        ClusterName clusterName = getClusterName();
+        System.out.println("*********************************** INIT FUNCTIONAL TEST testInsertSamePK "+ clusterName.getName()+" ***********************************");
+
+        Object value4 = "String";
+        insertRow(clusterName, value4, VALUE_1,true);
+
+        ResultSet resultIterator = createResultSet(clusterName);
+        assertEquals("It have only one result", 1, resultIterator.size());
+        for(Row recoveredRow: resultIterator) {
+            assertEquals("The type is correct ",  String.class.getCanonicalName(), recoveredRow.getCell(COLUMN_4).getValue().getClass().getCanonicalName());
+            assertEquals("The value is correct ", value4, recoveredRow.getCell(COLUMN_4).getValue());
+        }
+
+    }
+
+    @Test
+    public void testInsertInteger() throws UnsupportedException, ExecutionException {
+        ClusterName clusterName = getClusterName();
+        System.out.println("*********************************** INIT FUNCTIONAL TEST testInsertSamePK "+ clusterName.getName()+" ***********************************");
+        Object value4 = new Integer(1);
+        insertRow(clusterName,value4 , VALUE_1,true);
+
+        ResultSet resultIterator = createResultSet(clusterName);
+        assertEquals("It have only one result", 1, resultIterator.size());
+        for(Row recoveredRow: resultIterator) {
+            assertEquals("The type is correct ",  Integer.class.getCanonicalName(), recoveredRow.getCell(COLUMN_4).getValue().getClass().getCanonicalName());
+            assertEquals("The value is correct ", value4, recoveredRow.getCell(COLUMN_4).getValue());
+        }
+
+    }
 
 
 
-    private void verifyInsert(ClusterName cluesterName, String test_value_4) throws UnsupportedException, ExecutionException {
-        QueryResult queryResult = connector.getQueryEngine().execute(cluesterName, createLogicalWorkFlow());
-        ResultSet resultIterator = queryResult.getResultSet();
+
+    private void verifyInsert(ClusterName clusterName, String test_value_4) throws UnsupportedException, ExecutionException {
+        ResultSet resultIterator = createResultSet(clusterName);
 
 
         for(Row recoveredRow: resultIterator){
@@ -111,12 +142,16 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
             assertEquals("The value is correct ",  test_value_4, recoveredRow.getCell(COLUMN_4).getValue());
         }
 
-        assertEquals("The records number is correct "+cluesterName.getName(), 1, resultIterator.size());
+        assertEquals("The records number is correct "+clusterName.getName(), 1, resultIterator.size());
+    }
+
+    private ResultSet createResultSet(ClusterName clusterName) throws UnsupportedException, ExecutionException {
+        QueryResult queryResult = connector.getQueryEngine().execute(clusterName, createLogicalWorkFlow());
+        return queryResult.getResultSet();
     }
 
 
-
-    private void insertRow(ClusterName cluesterName, String value_4, String PK_VALUE, boolean withPK) throws UnsupportedException, ExecutionException {
+    private void insertRow(ClusterName cluesterName, Object value_4, String PK_VALUE, boolean withPK) throws UnsupportedException, ExecutionException {
         Row row = new Row();
         Map<String, Cell> cells = new HashMap<>();
 
@@ -124,6 +159,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
         cells.put(COLUMN_2, new Cell(VALUE_2));
         cells.put(COLUMN_3, new Cell(VALUE_3));
         cells.put(COLUMN_4, new Cell(value_4));
+
         row.setCells(cells);
 
         List<ColumnName> pk = new ArrayList<>();

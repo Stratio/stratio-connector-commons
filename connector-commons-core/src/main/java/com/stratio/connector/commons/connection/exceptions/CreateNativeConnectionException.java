@@ -20,17 +20,17 @@ package com.stratio.connector.commons.connection.exceptions;
  * This exception represents a exception in the handling of a connection.
  * Created by jmgomez on 9/09/14.
  */
-public class HandlerConnectionException extends Throwable {
+public class CreateNativeConnectionException extends HandlerConnectionException {
+
     /**
      * Constructor.
      *
      * @param msg the message.
      */
-    public HandlerConnectionException(String msg) {
+    public CreateNativeConnectionException(String msg) {
+
         super(msg);
     }
-
-
 
     /**
      * Constructor.
@@ -38,8 +38,9 @@ public class HandlerConnectionException extends Throwable {
      * @param msg the message.
      * @param exception the original exception.
      */
-    public HandlerConnectionException(String msg, Throwable exception) {
+    public CreateNativeConnectionException(String msg, Throwable exception) {
 
         super(msg,exception);
     }
+
 }

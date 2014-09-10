@@ -36,7 +36,7 @@ public class StubConnectionHandle extends ConnectionHandler {
     Connection onlyOneConnection = null;
 
     @Override
-    protected Connection createConcreteConnection(ICredentials credentials, ConnectorClusterConfig config) {
+    protected Connection createNativeConnection(ICredentials credentials, ConnectorClusterConfig config) {
         onlyOneConnection = new StubsConnection();
         return onlyOneConnection;
     }
