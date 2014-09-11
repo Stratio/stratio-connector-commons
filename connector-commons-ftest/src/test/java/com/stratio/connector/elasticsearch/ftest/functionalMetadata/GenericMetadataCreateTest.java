@@ -120,7 +120,7 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
     }
 
     @Test
-	public void createTableWithoutTableTest()  {
+	public void createTableWithoutTableTest() throws UnsupportedException, ExecutionException {
         ClusterName clusterName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST createTableTest ***********************************");
 
@@ -132,43 +132,71 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
         ClusterName clusterRef = getClusterName();
         List<ColumnName> partitionKey = Collections.EMPTY_LIST;
         List<ColumnName> clusterKey  = Collections.EMPTY_LIST;
-        try {
-            connector.getMetadataEngine().createTable(getClusterName(), new TableMetadata(tableName,options,columns,indexex,clusterRef,partitionKey,clusterKey));
-        } catch (UnsupportedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
+
+        //We must create the catalog firs
+        connector.getMetadataEngine().createCatalog(getClusterName(), new CatalogMetadata(new CatalogName(CATALOG), Collections.EMPTY_MAP, Collections.EMPTY_MAP));
+
+        try{
+            connector.getMetadataEngine().dropTable(getClusterName(), tableName);
+            fail("When I try to delete a table that not exists any type of exception must be throws. It may be a runtime exception.");
+        } catch (Throwable t){}
+
+
+        connector.getMetadataEngine().createTable(getClusterName(), new TableMetadata(tableName,options,columns,indexex,clusterRef,partitionKey,clusterKey));
+        try{
+            connector.getMetadataEngine().dropTable(getClusterName(),tableName);
+        } catch (Throwable t){
+            fail("Now I drop a catalog that exist. The operation must be correct.");
         }
 
+        connector.getMetadataEngine().dropCatalog(getClusterName(),new CatalogName(CATALOG));
     }
 
 
     @Test
-    public void createTableTest()  {
+    public void createTableTest() throws UnsupportedException, ExecutionException {
         ClusterName clusterName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST createTableTest ***********************************");
 
-        TableName tableName = new TableName(CATALOG,TABLE);
+        TableName tableName = new TableName(CATALOG, TABLE);
         Map<String, Object> options = Collections.EMPTY_MAP;
 
-        Map<ColumnName,ColumnMetadata> columns= new HashMap<>();
-        ColumnName columnName = new ColumnName(CATALOG, TABLE, "columnName1");
-        columns.put(columnName, new ColumnMetadata(columnName,null, ColumnType.INT));
-        ColumnName columnName2 = new ColumnName(CATALOG, TABLE, "columnName2");
-        columns.put(columnName2, new ColumnMetadata(columnName2,null, ColumnType.BOOLEAN));
+        Map<ColumnName, ColumnMetadata> columns = new HashMap<>();
+        int i = 1;
+        Collection<ColumnType> allSupportedColumnType = getConnectorHelper().getAllSupportedColumnType();
+        for (ColumnType columnType : allSupportedColumnType){
+            ColumnName columnName = new ColumnName(CATALOG, TABLE, "columnName_"+i);
+            columns.put(columnName, new ColumnMetadata(columnName, null, columnType));
+            i++;
+        }
+//        ColumnName columnName = new ColumnName(CATALOG, TABLE, "columnName1");
+//        columns.put(columnName, new ColumnMetadata(columnName, null, ColumnType.INT));
+//        ColumnName columnName2 = new ColumnName(CATALOG, TABLE, "columnName2");
+//        columns.put(columnName2, new ColumnMetadata(columnName2, null, ColumnType.BOOLEAN));
 
 
-        Map indexex =  Collections.EMPTY_MAP;
+        Map indexex = Collections.EMPTY_MAP;
         ClusterName clusterRef = getClusterName();
         List<ColumnName> partitionKey = Collections.EMPTY_LIST;
-        List<ColumnName> clusterKey  = Collections.EMPTY_LIST;
-        try {
-            connector.getMetadataEngine().createTable(getClusterName(), new TableMetadata(tableName,options,columns,indexex,clusterRef,partitionKey,clusterKey));
-        } catch (UnsupportedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
+        List<ColumnName> clusterKey = Collections.EMPTY_LIST;
+
+        //We must create the catalog firs
+        connector.getMetadataEngine().createCatalog(getClusterName(), new CatalogMetadata(new CatalogName(CATALOG), Collections.EMPTY_MAP, Collections.EMPTY_MAP));
+
+        try{
+           connector.getMetadataEngine().dropTable(getClusterName(), tableName);
+            fail("When I try to delete a table that not exists any type of exception must be throws. It may be a runtime exception.");
+        } catch (Throwable t){}
+
+
+         connector.getMetadataEngine().createTable(getClusterName(), new TableMetadata(tableName, options, columns, indexex, clusterRef, partitionKey, clusterKey));
+        try{
+            connector.getMetadataEngine().dropTable(getClusterName(),tableName);
+        } catch (Throwable t){
+            fail("Now I drop a catalog that exist. The operation must be correct.");
         }
+
+        connector.getMetadataEngine().dropCatalog(getClusterName(),new CatalogName(CATALOG));
 
     }
 	

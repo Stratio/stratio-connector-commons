@@ -19,7 +19,9 @@ package com.stratio.connector.elasticsearch.ftest.helper;
 import com.stratio.meta.common.connector.ConnectorClusterConfig;
 import com.stratio.meta.common.connector.IConfiguration;
 import com.stratio.meta.common.security.ICredentials;
+import com.stratio.meta2.common.metadata.ColumnType;
 
+import java.util.Collection;
 import java.util.Map;
 
 /**
@@ -39,4 +41,6 @@ public interface IConnectorHelper<T> {
     ICredentials getICredentials();
 
     Map<String,Object> recoveredCatalogSettings(String catalog);
+
+    Collection<ColumnType> getAllSupportedColumnType();
 }
