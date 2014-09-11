@@ -340,7 +340,7 @@ public abstract class GenericQueryFilterTest extends GenericConnectorTest {
         Relation relation = null;
         Operations operation = null;
         if (filterType==EQUAL_FILTER) {
-            relation = new Relation(new ColumnSelector(new ColumnName(CATALOG, TABLE, COLUMN_AGE)), Operator.COMPARE, new IntegerSelector("10"));
+            relation = new Relation(new ColumnSelector(new ColumnName(CATALOG, TABLE, COLUMN_AGE)), Operator.ASSIGN, new IntegerSelector("10"));
             operation= Operations.FILTER_NON_INDEXED_EQ;
         }
         else if (filterType==HIGH_FILTER || filterType == HIGH_BETWEEN_FILTER) {
