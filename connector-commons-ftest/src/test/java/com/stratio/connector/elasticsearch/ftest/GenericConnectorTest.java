@@ -20,8 +20,11 @@ import com.stratio.meta.common.connector.ConnectorClusterConfig;
 import com.stratio.meta.common.connector.IConfiguration;
 import com.stratio.meta.common.connector.IConnector;
 import com.stratio.meta.common.exceptions.ConnectionException;
+import com.stratio.meta.common.exceptions.ExecutionException;
 import com.stratio.meta.common.exceptions.InitializationException;
+import com.stratio.meta.common.exceptions.UnsupportedException;
 import com.stratio.meta.common.security.ICredentials;
+import com.stratio.meta2.common.data.CatalogName;
 import com.stratio.meta2.common.data.ClusterName;
 import org.junit.After;
 import org.junit.Before;
@@ -52,7 +55,7 @@ public abstract class GenericConnectorTest<T extends IConnector> {
 
 
     @Before
-    public void setUp() throws InitializationException, ConnectionException {
+    public void setUp() throws InitializationException, ConnectionException, UnsupportedException, ExecutionException {
         iConnectorHelper = getConnectorHelper();
         connector = getConnector();
         connector.init(getConfiguration());
@@ -65,8 +68,12 @@ public abstract class GenericConnectorTest<T extends IConnector> {
 
 
 
-    protected  void deleteCatalog(String catalog){
-        iConnectorHelper.deleteSet(catalog);
+    protected  void deleteCatalog(String catalog) throws UnsupportedException, ExecutionException {
+        try{
+            connector.getMetadataEngine().dropCatalog(getClusterName(), new CatalogName(catalog));
+        }catch(Throwable t) {
+            logger.debug("Index does not exist");
+        }
     }
     protected  void refresh(String catalog){
         iConnectorHelper.refresh(catalog);
@@ -88,7 +95,7 @@ public abstract class GenericConnectorTest<T extends IConnector> {
     }
     
     @After
-    public void tearDown() throws ConnectionException {
+    public void tearDown() throws ConnectionException, UnsupportedException, ExecutionException {
 
         deleteCatalog(CATALOG);
         connector.close(getClusterName());
