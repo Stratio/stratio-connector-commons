@@ -13,9 +13,10 @@
  *
  *   You should have received a copy of the GNU Lesser General Public License along with this library.
  */
-package com.stratio.connector.elasticsearch.ftest.functionalTestQuery;
+package com.stratio.connector.commons.ftest.functionalTestQuery;
 
-import com.stratio.connector.elasticsearch.ftest.GenericConnectorTest;
+import com.stratio.connector.commons.ftest.GenericConnectorTest;
+
 import org.junit.Test;
 
 import static org.junit.Assert.fail;

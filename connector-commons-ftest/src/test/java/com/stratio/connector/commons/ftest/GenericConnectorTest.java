@@ -13,9 +13,9 @@
  *
  *   You should have received a copy of the GNU Lesser General Public License along with this library.
  */
-package com.stratio.connector.elasticsearch.ftest;
+package com.stratio.connector.commons.ftest;
 
-import com.stratio.connector.elasticsearch.ftest.helper.IConnectorHelper;
+import com.stratio.connector.commons.ftest.helper.IConnectorHelper;
 import com.stratio.meta.common.connector.ConnectorClusterConfig;
 import com.stratio.meta.common.connector.IConfiguration;
 import com.stratio.meta.common.connector.IConnector;
@@ -23,6 +23,7 @@ import com.stratio.meta.common.exceptions.ConnectionException;
 import com.stratio.meta.common.exceptions.InitializationException;
 import com.stratio.meta.common.security.ICredentials;
 import com.stratio.meta2.common.data.ClusterName;
+
 import org.junit.After;
 import org.junit.Before;
 import org.slf4j.Logger;

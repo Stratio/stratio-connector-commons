@@ -14,9 +14,9 @@
  *   You should have received a copy of the GNU Lesser General Public License along with this library.
  */
 
-package com.stratio.connector.elasticsearch.ftest.functionalDelete;
+package com.stratio.connector.commons.ftest.functionalDelete;
 
-import com.stratio.connector.elasticsearch.ftest.GenericConnectorTest;
+import com.stratio.connector.commons.ftest.GenericConnectorTest;
 import com.stratio.meta.common.data.Cell;
 import com.stratio.meta.common.data.Row;
 import com.stratio.meta.common.exceptions.ExecutionException;
@@ -24,6 +24,7 @@ import com.stratio.meta.common.logicalplan.Filter;
 import com.stratio.meta.common.logicalplan.LogicalStep;
 import com.stratio.meta.common.metadata.structures.ColumnMetadata;
 import com.stratio.meta2.common.data.ClusterName;
+
 import org.junit.Test;
 
 import java.util.ArrayList;

@@ -14,9 +14,9 @@
  *   You should have received a copy of the GNU Lesser General Public License along with this library.
  */
 
-package com.stratio.connector.elasticsearch.ftest.functionalInsert;
+package com.stratio.connector.commons.ftest.functionalInsert;
 
-import com.stratio.connector.elasticsearch.ftest.GenericConnectorTest;
+import com.stratio.connector.commons.ftest.GenericConnectorTest;
 import com.stratio.meta.common.data.Cell;
 import com.stratio.meta.common.data.ResultSet;
 import com.stratio.meta.common.data.Row;
@@ -31,6 +31,7 @@ import com.stratio.meta2.common.data.ClusterName;
 import com.stratio.meta2.common.data.ColumnName;
 import com.stratio.meta2.common.data.TableName;
 import com.stratio.meta2.common.metadata.TableMetadata;
+
 import org.junit.Test;
 
 import java.util.*;
