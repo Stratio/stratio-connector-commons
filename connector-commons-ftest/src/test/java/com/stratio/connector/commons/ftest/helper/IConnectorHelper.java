@@ -19,12 +19,16 @@ package com.stratio.connector.commons.ftest.helper;
 import com.stratio.meta.common.connector.ConnectorClusterConfig;
 import com.stratio.meta.common.connector.IConfiguration;
 import com.stratio.meta.common.security.ICredentials;
+import com.stratio.meta2.common.metadata.ColumnType;
+
+import java.util.Collection;
+import java.util.Map;
 
 /**
  * Created by jmgomez on 4/09/14.
  */
 public interface IConnectorHelper<T> {
-    void deleteSet(String catalog);
+
 
     void refresh(String catalog);
 
@@ -35,4 +39,8 @@ public interface IConnectorHelper<T> {
     ConnectorClusterConfig getConnectorClusterConfig();
 
     ICredentials getICredentials();
+
+    Map<String,Object> recoveredCatalogSettings(String catalog);
+
+    Collection<ColumnType> getAllSupportedColumnType();
 }

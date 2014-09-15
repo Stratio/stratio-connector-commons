@@ -136,7 +136,7 @@ public abstract class GenericMetadataDropTest extends GenericConnectorTest {
     }
 
     @After
-    public void tearDown() throws ConnectionException{
+    public void tearDown() throws ConnectionException, UnsupportedException, ExecutionException {
         super.tearDown();
         deleteCatalog(OTHER_CATALOG);
 
