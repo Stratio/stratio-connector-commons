@@ -91,20 +91,21 @@ public class LogicalWorkFlowCreator {
     }
 
 
-    public LogicalWorkFlowCreator addNoPKEqualFilter(String columnName, Object value) {
-        createFilterEQ(columnName, value, Operations.FILTER_NON_INDEXED_EQ);
+    public LogicalWorkFlowCreator addEqualFilter(String columnName, Object value, Boolean indexed) {
+        Selector columnSelector = new ColumnSelector(new ColumnName(catalog, table, columnName));
+
+        if (indexed) {
+            filters.add(new Filter(Operations.FILTER_INDEXED_EQ, new Relation(columnSelector, Operator.ASSIGN, returnSelector(value))));
+        }else{
+            filters.add(new Filter(Operations.FILTER_NON_INDEXED_EQ, new Relation(columnSelector, Operator.ASSIGN, returnSelector(value))));
+        }
 
         return this;
 
     }
 
 
-    public LogicalWorkFlowCreator addPKEqualFilter(String columnName, Object value) {
-        createFilterEQ(columnName, value, Operations.FILTER_INDEXED_EQ);
 
-        return this;
-
-    }
 
 
     private void createFilterEQ(String columnName, Object value, Operations operations) {
@@ -129,42 +130,68 @@ public class LogicalWorkFlowCreator {
     }
 
 
-    public LogicalWorkFlowCreator addGreaterEqualFilter(String columnName, Object term) {
+    public LogicalWorkFlowCreator addGreaterEqualFilter(String columnName, Object term, Boolean indexed) {
 
 
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)), Operator.GET, returnSelector(term));
 
-        filters.add(new Filter(Operations.FILTER_NON_INDEXED_GET, relation));
+        if (indexed) {
+            filters.add(new Filter(Operations.FILTER_INDEXED_GET, relation));
+        }else{
+            filters.add(new Filter(Operations.FILTER_NON_INDEXED_GET, relation));
+
+        }
 
         return this;
 
     }
 
-    public LogicalWorkFlowCreator addGreaterFilter(String columnName, Object term) {
+    public LogicalWorkFlowCreator addGreaterFilter(String columnName, Object term, Boolean indexed) {
 
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)), Operator.GT, returnSelector(term));
-
-        filters.add(new Filter(Operations.FILTER_NON_INDEXED_GT, relation));
+        if (indexed) {
+            filters.add(new Filter(Operations.FILTER_INDEXED_GT, relation));
+        }else{
+            filters.add(new Filter(Operations.FILTER_NON_INDEXED_GT, relation));
+        }
 
         return this;
 
     }
 
-    public LogicalWorkFlowCreator addLowerEqualFilter(String columnName, Object term) {
+    public LogicalWorkFlowCreator addLowerEqualFilter(String columnName, Object term, Boolean indexed) {
 
 
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)), Operator.LET, returnSelector(term));
-
-        filters.add(new Filter(Operations.FILTER_NON_INDEXED_LET, relation));
+        if (indexed) {
+            filters.add(new Filter(Operations.FILTER_INDEXED_LET, relation));
+        }else {
+            filters.add(new Filter(Operations.FILTER_NON_INDEXED_LET, relation));
+        }
 
         return this;
 
     }
 
-    public LogicalWorkFlowCreator addLowerFilter(String columnName, Object term) {
+    public LogicalWorkFlowCreator addNoPKLowerFilter(String columnName, Object term,Boolean indexed) {
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)), Operator.LT, returnSelector(term));
+        if (indexed) {
+            filters.add(new Filter(Operations.FILTER_INDEXED_LT, relation));
+        }else {
+            filters.add(new Filter(Operations.FILTER_NON_INDEXED_LT, relation));
+        }
 
-        filters.add(new Filter(Operations.FILTER_NON_INDEXED_LT, relation));
+        return this;
+    }
+
+
+    public LogicalWorkFlowCreator addNotIndexedDistinctFilter(String columnName, Object term, Boolean indexed) {
+        Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)), Operator.DISTINCT, returnSelector(term));
+        if (indexed) {
+            filters.add(new Filter(Operations.FILTER_INDEXED_DISTINCT, relation));
+        }else {
+            filters.add(new Filter(Operations.FILTER_NON_INDEXED_DISTINCT, relation));
+        }
 
         return this;
     }

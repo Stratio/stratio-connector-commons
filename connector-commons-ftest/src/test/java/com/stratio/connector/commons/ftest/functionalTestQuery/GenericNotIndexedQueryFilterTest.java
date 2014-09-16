@@ -43,7 +43,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by jmgomez on 17/07/14.
  */
-public abstract class GenericQueryFilterTest extends GenericConnectorTest {
+public abstract class GenericNotIndexedQueryFilterTest extends GenericConnectorTest {
 
 
     LogicalWorkFlowCreator logicalWorkFlowCreator;
@@ -56,10 +56,10 @@ public abstract class GenericQueryFilterTest extends GenericConnectorTest {
 
 
     @Test
-    public void selectFilterEqual() throws ExecutionException, UnsupportedException {
+    public void selectNotIndexedFilterEqual() throws ExecutionException, UnsupportedException {
 
         ClusterName clusterNodeName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST selectFilterEqual ***********************************");
+        System.out.println("*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterEqual ***********************************");
 
         insertRow(1, 10, 5, clusterNodeName);
         insertRow(2, 9, 1, clusterNodeName);
@@ -70,7 +70,7 @@ public abstract class GenericQueryFilterTest extends GenericConnectorTest {
         refresh(CATALOG);
 
 
-        LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns().addNoPKEqualFilter(COLUMN_AGE, new Integer(10)).getLogicalWorkflow();
+        LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns().addEqualFilter(COLUMN_AGE, new Integer(10),false).getLogicalWorkflow();
 
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(clusterNodeName, logicalPlan);
 
@@ -95,9 +95,9 @@ public abstract class GenericQueryFilterTest extends GenericConnectorTest {
 
 
     @Test
-    public void selectFilterBetween() throws ExecutionException, UnsupportedException {
+    public void selectNotIndexedFilterBetween() throws ExecutionException, UnsupportedException {
         ClusterName clusterNodeName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST selectFilterBetween ***********************************");
+        System.out.println("*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterBetween ***********************************");
 
         insertRow(1, 1, 10, clusterNodeName);
         insertRow(2, 1, 9, clusterNodeName);
@@ -137,9 +137,9 @@ public abstract class GenericQueryFilterTest extends GenericConnectorTest {
 
 
     @Test
-    public void selectFilterGreaterEqual() throws ExecutionException, UnsupportedException {
+    public void selectNoNotIndexedFilterGreaterEqual() throws ExecutionException, UnsupportedException {
         ClusterName clusterNodeName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST selectFilterGreaterEqual ***********************************");
+        System.out.println("*********************************** INIT FUNCTIONAL TEST selectNoNotIndexedFilterGreaterEqual ***********************************");
 
 
         insertRow(1, 10, 15, clusterNodeName);
@@ -153,7 +153,7 @@ public abstract class GenericQueryFilterTest extends GenericConnectorTest {
 
         refresh(CATALOG);
 
-        LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns().addGreaterEqualFilter(COLUMN_AGE, new Integer("10")).getLogicalWorkflow();
+        LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns().addGreaterEqualFilter(COLUMN_AGE, new Integer("10"),false).getLogicalWorkflow();
 
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(clusterNodeName, logicalPlan);
 
@@ -194,10 +194,10 @@ public abstract class GenericQueryFilterTest extends GenericConnectorTest {
 
 
     @Test
-    public void selectFilterGreater() throws UnsupportedException, ExecutionException {
+    public void selectNotIndexedFilterGreater() throws UnsupportedException, ExecutionException {
 
         ClusterName clusterNodeName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST selectFilterGreater ***********************************");
+        System.out.println("*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterGreater ***********************************");
 
         insertRow(1, 10, 1, clusterNodeName);
         insertRow(2, 9, 1, clusterNodeName);
@@ -211,7 +211,7 @@ public abstract class GenericQueryFilterTest extends GenericConnectorTest {
         refresh(CATALOG);
 
 
-        LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns().addGreaterFilter(COLUMN_AGE, new Integer("10")).getLogicalWorkflow();
+        LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns().addGreaterFilter(COLUMN_AGE, new Integer("10"),false).getLogicalWorkflow();
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(clusterNodeName, logicalPlan);
 
         Set<Object> proveSet = createCellsResult(queryResult);
@@ -240,9 +240,9 @@ public abstract class GenericQueryFilterTest extends GenericConnectorTest {
 
 
     @Test
-    public void selectFilterLower() throws UnsupportedException, ExecutionException {
+    public void selectNotIndexedFilterLower() throws UnsupportedException, ExecutionException {
         ClusterName clusterNodeName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST selectFilterLower ***********************************");
+        System.out.println("*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterLower ***********************************");
 
 
         insertRow(1, 10, 1, clusterNodeName);
@@ -257,7 +257,7 @@ public abstract class GenericQueryFilterTest extends GenericConnectorTest {
         refresh(CATALOG);
 
 
-        LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns().addLowerFilter(COLUMN_AGE, new Integer("10")).getLogicalWorkflow();
+        LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns().addNoPKLowerFilter(COLUMN_AGE, new Integer("10"),false).getLogicalWorkflow();
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(clusterNodeName, logicalPlan);
 
         Set<Object> proveSet = createCellsResult(queryResult);
@@ -287,9 +287,9 @@ public abstract class GenericQueryFilterTest extends GenericConnectorTest {
 
 
     @Test
-    public void selectFilterLowerEqual() throws UnsupportedException, ExecutionException {
+    public void selectNotIndexedFilterLowerEqual() throws UnsupportedException, ExecutionException {
         ClusterName clusterNodeName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST selectFilterLowerEqual ***********************************");
+        System.out.println("*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterLowerEqual ***********************************");
 
 
         insertRow(1, 10, 1, clusterNodeName);
@@ -304,7 +304,7 @@ public abstract class GenericQueryFilterTest extends GenericConnectorTest {
         refresh(CATALOG);
 
 
-        LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns().addLowerEqualFilter(COLUMN_AGE, new Integer("10")).getLogicalWorkflow();
+        LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns().addLowerEqualFilter(COLUMN_AGE, new Integer("10"),false).getLogicalWorkflow();
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(clusterNodeName, logicalPlan);
 
         Set<Object> proveSet = createCellsResult(queryResult);
@@ -339,6 +339,45 @@ public abstract class GenericQueryFilterTest extends GenericConnectorTest {
         assertTrue("Return correct record", proveSet.contains("column2={Row=7;Column2}"));
         assertTrue("Return correct record", proveSet.contains("age={8}"));
         assertTrue("Return correct record", proveSet.contains("money={1}"));
+
+    }
+
+
+    @Test
+    public void selectNotIndexedFilterDistinct() throws UnsupportedException, ExecutionException {
+        ClusterName clusterNodeName = getClusterName();
+        System.out.println("*********************************** INIT FUNCTIONAL TEST selectNoPKFilterDistinct ***********************************");
+
+
+        insertRow(1, 10, 1, clusterNodeName);
+        insertRow(2, 9, 1, clusterNodeName);
+        insertRow(3, 11, 5, clusterNodeName);
+        insertRow(4, 10, 1, clusterNodeName);
+        insertRow(5, 10, 7, clusterNodeName);
+
+        refresh(CATALOG);
+
+
+        LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns().addNotIndexedDistinctFilter(COLUMN_AGE, new Integer("10"),false).getLogicalWorkflow();
+        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(clusterNodeName, logicalPlan);
+
+        Set<Object> proveSet = createCellsResult(queryResult);
+
+        assertEquals("The record number is correct", 2, queryResult.getResultSet().size());
+
+        //Second row
+        assertTrue("Return correct record", proveSet.contains("column1={Row=2;Column1}"));
+        assertTrue("Return correct record", proveSet.contains("column2={Row=2;Column2}"));
+        assertTrue("Return correct record", proveSet.contains("age={9}"));
+        assertTrue("Return correct record", proveSet.contains("money={5}"));
+
+        //Third row
+        assertTrue("Return correct record", proveSet.contains("column1={Row=3;Column1}"));
+        assertTrue("Return correct record", proveSet.contains("column2={Row=3;Column2}"));
+        assertTrue("Return correct record", proveSet.contains("age={11}"));
+        assertTrue("Return correct record", proveSet.contains("money={1}"));
+
+
 
     }
 
