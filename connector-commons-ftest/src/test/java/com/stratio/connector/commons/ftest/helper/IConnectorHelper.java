@@ -40,7 +40,7 @@ public interface IConnectorHelper<T> {
 
     ICredentials getICredentials();
 
-    Map<String,Object> recoveredCatalogSettings(String catalog);
+    Map<String, Object> recoveredCatalogSettings(String catalog);
 
     Collection<ColumnType> getAllSupportedColumnType();
 }

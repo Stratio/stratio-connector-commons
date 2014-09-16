@@ -26,7 +26,6 @@ import com.stratio.meta.common.exceptions.UnsupportedException;
 import com.stratio.meta.common.security.ICredentials;
 import com.stratio.meta2.common.data.CatalogName;
 import com.stratio.meta2.common.data.ClusterName;
-
 import org.junit.After;
 import org.junit.Before;
 import org.slf4j.Logger;
@@ -41,7 +40,9 @@ public abstract class GenericConnectorTest<T extends IConnector> {
      */
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    protected ClusterName getClusterName(){ return  new ClusterName(CATALOG +"-"+TABLE); }
+    protected ClusterName getClusterName() {
+        return new ClusterName(CATALOG + "-" + TABLE);
+    }
 
     private IConnectorHelper iConnectorHelper;
 
@@ -50,9 +51,8 @@ public abstract class GenericConnectorTest<T extends IConnector> {
     protected T connector;
 
 
-    protected  final String TABLE = getClass().getSimpleName();
-    protected  final String CATALOG = "catalog_functional_test";
-
+    public final String TABLE = this.getClass().getSimpleName();
+    public final String CATALOG = "catalog_functional_test";
 
 
     @Before
@@ -64,44 +64,46 @@ public abstract class GenericConnectorTest<T extends IConnector> {
 
         deleteCatalog(CATALOG);
 
-        System.out.println(CATALOG +"/"+ TABLE);
+        System.out.println(CATALOG + "/" + TABLE);
     }
 
 
-
-    protected  void deleteCatalog(String catalog) throws UnsupportedException, ExecutionException {
-        try{
+    protected void deleteCatalog(String catalog) throws UnsupportedException, ExecutionException {
+        try {
             connector.getMetadataEngine().dropCatalog(getClusterName(), new CatalogName(catalog));
-        }catch(Throwable t) {
+        } catch (Throwable t) {
             logger.debug("Index does not exist");
         }
     }
-    protected  void refresh(String catalog){
+
+    protected void refresh(String catalog) {
         iConnectorHelper.refresh(catalog);
     }
 
-    protected  T getConnector(){
-        return (T)iConnectorHelper.getConnector();
+    protected T getConnector() {
+        return (T) iConnectorHelper.getConnector();
     }
 
 
-    protected IConfiguration getConfiguration(){
+    protected IConfiguration getConfiguration() {
         return iConnectorHelper.getConfiguration();
     }
-    protected  ConnectorClusterConfig getConnectorClusterConfig(){
+
+    protected ConnectorClusterConfig getConnectorClusterConfig() {
         return iConnectorHelper.getConnectorClusterConfig();
     }
-    protected ICredentials getICredentials(){
+
+    protected ICredentials getICredentials() {
         return iConnectorHelper.getICredentials();
     }
-    
+
     @After
     public void tearDown() throws ConnectionException, UnsupportedException, ExecutionException {
 
         deleteCatalog(CATALOG);
         connector.close(getClusterName());
-        if (logger.isDebugEnabled()){
-            logger.debug("Delete Catalog: "+CATALOG);
+        if (logger.isDebugEnabled()) {
+            logger.debug("Delete Catalog: " + CATALOG);
 
         }
 

@@ -30,7 +30,6 @@ import com.stratio.meta2.common.data.ClusterName;
 import com.stratio.meta2.common.data.ColumnName;
 import com.stratio.meta2.common.data.TableName;
 import com.stratio.meta2.common.metadata.TableMetadata;
-
 import org.junit.After;
 import org.junit.Test;
 
@@ -42,27 +41,25 @@ import static org.junit.Assert.assertNotEquals;
 public abstract class GenericMetadataDropTest extends GenericConnectorTest {
 
 
-    public  final String OTHER_TABLE = "other" + TABLE;
+    public final String OTHER_TABLE = "other" + TABLE;
     private static String COLUMN_1 = "name1";
     private static String COLUMN_2 = "name2";
-    private  String OTHER_CATALOG = "other_"+CATALOG ;
+    private String OTHER_CATALOG = "other_" + CATALOG;
 
 
-
-
-	@Test
-	public void dropTableTest() throws UnsupportedException, ExecutionException {
+    @Test
+    public void dropTableTest() throws UnsupportedException, ExecutionException {
         ClusterName clusterName = getClusterName();
-		Row row = new Row();
-		Map<String, Cell> cells = new HashMap<>();
-		cells.put(COLUMN_1, new Cell("value1"));
-		cells.put(COLUMN_2, new Cell(2));
-		row.setCells(cells);
+        Row row = new Row();
+        Map<String, Cell> cells = new HashMap<>();
+        cells.put(COLUMN_1, new Cell("value1"));
+        cells.put(COLUMN_2, new Cell(2));
+        row.setCells(cells);
 
 
-		 connector.getStorageEngine().insert(clusterName, new TableMetadata(new TableName(CATALOG, TABLE), null, null, null, null, Collections.EMPTY_LIST,Collections.EMPTY_LIST), row);
-		 connector.getStorageEngine().insert(clusterName, new TableMetadata(new TableName(OTHER_CATALOG, TABLE), null, null, null, null, Collections.EMPTY_LIST,Collections.EMPTY_LIST), row);
-		 connector.getStorageEngine().insert(clusterName, new TableMetadata(new TableName(CATALOG, OTHER_TABLE), null, null, null, null, Collections.EMPTY_LIST,Collections.EMPTY_LIST), row);
+        connector.getStorageEngine().insert(clusterName, new TableMetadata(new TableName(CATALOG, TABLE), null, null, null, null, Collections.EMPTY_LIST, Collections.EMPTY_LIST), row);
+        connector.getStorageEngine().insert(clusterName, new TableMetadata(new TableName(OTHER_CATALOG, TABLE), null, null, null, null, Collections.EMPTY_LIST, Collections.EMPTY_LIST), row);
+        connector.getStorageEngine().insert(clusterName, new TableMetadata(new TableName(CATALOG, OTHER_TABLE), null, null, null, null, Collections.EMPTY_LIST, Collections.EMPTY_LIST), row);
 
 
         refresh(CATALOG);
@@ -71,24 +68,20 @@ public abstract class GenericMetadataDropTest extends GenericConnectorTest {
         connector.getMetadataEngine().dropTable(clusterName, (new TableName(CATALOG, TABLE)));
 
 
-        QueryResult queryResult = connector.getQueryEngine().execute(clusterName,createLogicalWorkFlow(CATALOG, TABLE));
-		assertEquals("Table ["+CATALOG+"."+TABLE+"] deleted", 0, queryResult.getResultSet().size());
+        QueryResult queryResult = connector.getQueryEngine().execute(clusterName, createLogicalWorkFlow(CATALOG, TABLE));
+        assertEquals("Table [" + CATALOG + "." + TABLE + "] deleted", 0, queryResult.getResultSet().size());
 
-        queryResult = connector.getQueryEngine().execute(clusterName,createLogicalWorkFlow(OTHER_CATALOG, TABLE));
-        assertNotEquals("Table ["+OTHER_CATALOG+"."+TABLE+"] exist", 0, queryResult.getResultSet().size());
+        queryResult = connector.getQueryEngine().execute(clusterName, createLogicalWorkFlow(OTHER_CATALOG, TABLE));
+        assertNotEquals("Table [" + OTHER_CATALOG + "." + TABLE + "] exist", 0, queryResult.getResultSet().size());
 
-        queryResult = connector.getQueryEngine().execute(clusterName,createLogicalWorkFlow(CATALOG, OTHER_TABLE));
-        assertNotEquals("Table ["+CATALOG+"."+OTHER_TABLE+" exist", 0, queryResult.getResultSet().size());
-
-
+        queryResult = connector.getQueryEngine().execute(clusterName, createLogicalWorkFlow(CATALOG, OTHER_TABLE));
+        assertNotEquals("Table [" + CATALOG + "." + OTHER_TABLE + " exist", 0, queryResult.getResultSet().size());
 
 
+    }
 
-
-	}
-	
-	@Test
-	public void dropCatalogTest() throws UnsupportedException, ExecutionException {
+    @Test
+    public void dropCatalogTest() throws UnsupportedException, ExecutionException {
 
         ClusterName clusterName = getClusterName();
         Row row = new Row();
@@ -98,7 +91,7 @@ public abstract class GenericMetadataDropTest extends GenericConnectorTest {
         row.setCells(cells);
 
 
-        connector.getStorageEngine().insert(clusterName, new TableMetadata(new TableName(CATALOG, TABLE), null, null, null, null, Collections.EMPTY_LIST,Collections.EMPTY_LIST), row);
+        connector.getStorageEngine().insert(clusterName, new TableMetadata(new TableName(CATALOG, TABLE), null, null, null, null, Collections.EMPTY_LIST, Collections.EMPTY_LIST), row);
         connector.getStorageEngine().insert(clusterName, new TableMetadata(new TableName(OTHER_CATALOG, TABLE), null, null, null, null, Collections.EMPTY_LIST, Collections.EMPTY_LIST), row);
         connector.getStorageEngine().insert(clusterName, new TableMetadata(new TableName(CATALOG, OTHER_TABLE), null, null, null, null, Collections.EMPTY_LIST, Collections.EMPTY_LIST), row);
 
@@ -109,28 +102,28 @@ public abstract class GenericMetadataDropTest extends GenericConnectorTest {
         connector.getMetadataEngine().dropCatalog(clusterName, new CatalogName(CATALOG));
 
 
-        QueryResult queryResult = connector.getQueryEngine().execute(clusterName,createLogicalWorkFlow(CATALOG, TABLE));
-        assertEquals("Table ["+CATALOG+"."+TABLE+"] deleted", 0, queryResult.getResultSet().size());
+        QueryResult queryResult = connector.getQueryEngine().execute(clusterName, createLogicalWorkFlow(CATALOG, TABLE));
+        assertEquals("Table [" + CATALOG + "." + TABLE + "] deleted", 0, queryResult.getResultSet().size());
 
-        queryResult = connector.getQueryEngine().execute(clusterName,createLogicalWorkFlow(OTHER_CATALOG, TABLE));
-        assertNotEquals("Table ["+OTHER_CATALOG+"."+TABLE+"] exist", 0, queryResult.getResultSet().size());
+        queryResult = connector.getQueryEngine().execute(clusterName, createLogicalWorkFlow(OTHER_CATALOG, TABLE));
+        assertNotEquals("Table [" + OTHER_CATALOG + "." + TABLE + "] exist", 0, queryResult.getResultSet().size());
 
-        queryResult = connector.getQueryEngine().execute(clusterName,createLogicalWorkFlow(CATALOG, OTHER_TABLE));
+        queryResult = connector.getQueryEngine().execute(clusterName, createLogicalWorkFlow(CATALOG, OTHER_TABLE));
         assertEquals("Table [" + CATALOG + "." + OTHER_TABLE + " deleted", 0, queryResult.getResultSet().size());
 
         deleteCatalog(OTHER_CATALOG);
 
-	}
+    }
 
 
     private LogicalWorkflow createLogicalWorkFlow(String catalog, String table) {
         List<LogicalStep> stepList = new ArrayList<>();
         List<ColumnName> columns = new ArrayList<>();
 
-        columns.add(new ColumnName(CATALOG, TABLE,COLUMN_1));
-        columns.add(new ColumnName(CATALOG, TABLE,COLUMN_2));
+        columns.add(new ColumnName(CATALOG, TABLE, COLUMN_1));
+        columns.add(new ColumnName(CATALOG, TABLE, COLUMN_2));
         TableName tableName = new TableName(catalog, table);
-        Project project = new Project(null,tableName,columns);
+        Project project = new Project(null, tableName, columns);
         stepList.add(project);
         return new LogicalWorkflow(stepList);
     }
@@ -140,12 +133,11 @@ public abstract class GenericMetadataDropTest extends GenericConnectorTest {
         super.tearDown();
         deleteCatalog(OTHER_CATALOG);
 
-        if (logger.isDebugEnabled()){
-            logger.debug("Delete Catalog: "+OTHER_CATALOG);
+        if (logger.isDebugEnabled()) {
+            logger.debug("Delete Catalog: " + OTHER_CATALOG);
 
         }
     }
 
 
-	
 }

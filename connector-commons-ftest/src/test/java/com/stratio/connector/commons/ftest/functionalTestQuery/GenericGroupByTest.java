@@ -16,7 +16,6 @@
 package com.stratio.connector.commons.ftest.functionalTestQuery;
 
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
-
 import org.junit.Test;
 
 import static org.junit.Assert.fail;
@@ -24,7 +23,7 @@ import static org.junit.Assert.fail;
 public abstract class GenericGroupByTest extends GenericConnectorTest {
 
     @Test
-    public void test(){
+    public void test() {
         fail("Not implemented yet.");
     }
 }

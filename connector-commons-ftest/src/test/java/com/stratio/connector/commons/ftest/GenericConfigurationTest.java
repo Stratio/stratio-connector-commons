@@ -22,13 +22,7 @@ import org.junit.Test;
 import static org.junit.Assert.fail;
 
 
-
-
-
-
-
 public abstract class GenericConfigurationTest extends GenericConnectorTest {
-
 
 
     @Test
@@ -55,6 +49,6 @@ public abstract class GenericConfigurationTest extends GenericConnectorTest {
 
 
     }
- 
- 
+
+
 }

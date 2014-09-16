@@ -29,7 +29,6 @@ import com.stratio.meta2.common.data.ClusterName;
 import com.stratio.meta2.common.data.ColumnName;
 import com.stratio.meta2.common.data.TableName;
 import com.stratio.meta2.common.metadata.TableMetadata;
-
 import org.junit.Test;
 
 import java.util.*;
@@ -39,64 +38,64 @@ import static org.junit.Assert.assertEquals;
 
 public abstract class GenericLimitTest extends GenericConnectorTest {
 
-	public static final String COLUMN_TEXT = "text";
-	public static final String COLUMN_AGE = "age";
-	public static final String COLUMN_MONEY = "money";
+    public static final String COLUMN_TEXT = "text";
+    public static final String COLUMN_AGE = "age";
+    public static final String COLUMN_MONEY = "money";
 
-	@Test
-	public void limitTest() throws Exception {
+    @Test
+    public void limitTest() throws Exception {
 
         ClusterName clusterName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST limitTest "+ clusterName.getName()+" ***********************************");
+        System.out.println("*********************************** INIT FUNCTIONAL TEST limitTest " + clusterName.getName() + " ***********************************");
 
-		insertRow(1, "text", 10, 20,clusterName);// row,text,money,age
-		insertRow(2, "text", 9, 17,clusterName);
-		insertRow(3, "text", 11, 26,clusterName);
-		insertRow(4, "text", 10, 30,clusterName);
-		insertRow(5, "text", 20, 42,clusterName);
+        insertRow(1, "text", 10, 20, clusterName);// row,text,money,age
+        insertRow(2, "text", 9, 17, clusterName);
+        insertRow(3, "text", 11, 26, clusterName);
+        insertRow(4, "text", 10, 30, clusterName);
+        insertRow(5, "text", 20, 42, clusterName);
 
         refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = createLogicalPlan(2);
 
-		// limit 2
-		QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(clusterName,logicalPlan);
+        // limit 2
+        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(clusterName, logicalPlan);
 
-		assertEquals(2, queryResult.getResultSet().size());
+        assertEquals(2, queryResult.getResultSet().size());
 
-	}
-	
-	private LogicalWorkflow createLogicalPlan(int limit) {
+    }
 
-		List<LogicalStep> stepList = new ArrayList<>();
+    private LogicalWorkflow createLogicalPlan(int limit) {
 
-		List<ColumnName> columns = new ArrayList<>();
+        List<LogicalStep> stepList = new ArrayList<>();
 
-		columns.add(new ColumnName(CATALOG,TABLE, COLUMN_TEXT)); //REVIEW todo esto se ha cambiado para que compile
-		columns.add(new ColumnName(CATALOG,TABLE, COLUMN_AGE));
-        TableName tableName = new TableName(CATALOG,TABLE);
-		Project project =  new Project(null,tableName, columns);
-		stepList.add(project);
+        List<ColumnName> columns = new ArrayList<>();
 
-		//stepList.add(new Limit(limit));
+        columns.add(new ColumnName(CATALOG, TABLE, COLUMN_TEXT)); //REVIEW todo esto se ha cambiado para que compile
+        columns.add(new ColumnName(CATALOG, TABLE, COLUMN_AGE));
+        TableName tableName = new TableName(CATALOG, TABLE);
+        Project project = new Project(null, tableName, columns);
+        stepList.add(project);
+
+        //stepList.add(new Limit(limit));
         //return new LogicalWorkflow(stepList);
 
         //REVIEW cuando haya LIMIT de meta
         throw new RuntimeException("Esperando a meta");
 
-	}
+    }
 
-	private void insertRow(int ikey, String texto, int money, int age, ClusterName cLusterName) throws UnsupportedOperationException, ExecutionException, UnsupportedException {
+    private void insertRow(int ikey, String texto, int money, int age, ClusterName cLusterName) throws UnsupportedOperationException, ExecutionException, UnsupportedException {
 
-		Row row = new Row();
-	    Map<String, Cell> cells = new HashMap<>();
-	    cells.put(COLUMN_TEXT, new Cell(texto+ikey));
-	    cells.put(COLUMN_AGE, new Cell(age));
-	    cells.put(COLUMN_MONEY, new Cell(money));
-	    row.setCells(cells);        
-	     connector.getStorageEngine().insert(cLusterName,new TableMetadata(new TableName(CATALOG,TABLE),null,null,null,null,Collections.EMPTY_LIST, Collections.EMPTY_LIST), row);
-	        
-	    
-	}
+        Row row = new Row();
+        Map<String, Cell> cells = new HashMap<>();
+        cells.put(COLUMN_TEXT, new Cell(texto + ikey));
+        cells.put(COLUMN_AGE, new Cell(age));
+        cells.put(COLUMN_MONEY, new Cell(money));
+        row.setCells(cells);
+        connector.getStorageEngine().insert(cLusterName, new TableMetadata(new TableName(CATALOG, TABLE), null, null, null, null, Collections.EMPTY_LIST, Collections.EMPTY_LIST), row);
+
+
+    }
 
 }

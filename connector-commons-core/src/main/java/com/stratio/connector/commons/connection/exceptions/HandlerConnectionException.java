@@ -31,15 +31,14 @@ public class HandlerConnectionException extends Throwable {
     }
 
 
-
     /**
      * Constructor.
      *
-     * @param msg the message.
+     * @param msg       the message.
      * @param exception the original exception.
      */
     public HandlerConnectionException(String msg, Throwable exception) {
 
-        super(msg,exception);
+        super(msg, exception);
     }
 }
