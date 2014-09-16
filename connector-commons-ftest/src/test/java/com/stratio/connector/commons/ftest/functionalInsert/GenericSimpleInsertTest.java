@@ -116,7 +116,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
     @Test
     public void testInsertInteger() throws UnsupportedException, ExecutionException {
         ClusterName clusterName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST testInsertSamePK "+ clusterName.getName()+" ***********************************");
+        System.out.println("*********************************** INIT FUNCTIONAL TEST testInsertInteger ***********************************");
         Object value4 = new Integer(1);
         insertRow(clusterName,value4 , VALUE_1,true);
 
