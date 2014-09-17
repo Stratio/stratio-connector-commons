@@ -173,7 +173,7 @@ public class LogicalWorkFlowCreator {
 
     }
 
-    public LogicalWorkFlowCreator addNoPKLowerFilter(String columnName, Object term,Boolean indexed) {
+    public LogicalWorkFlowCreator addNLowerFilter(String columnName, Object term, Boolean indexed) {
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)), Operator.LT, returnSelector(term));
         if (indexed) {
             filters.add(new Filter(Operations.FILTER_INDEXED_LT, relation));
@@ -185,13 +185,24 @@ public class LogicalWorkFlowCreator {
     }
 
 
-    public LogicalWorkFlowCreator addNotIndexedDistinctFilter(String columnName, Object term, Boolean indexed) {
+    public LogicalWorkFlowCreator addDistinctFilter(String columnName, Object term, Boolean indexed) {
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)), Operator.DISTINCT, returnSelector(term));
         if (indexed) {
             filters.add(new Filter(Operations.FILTER_INDEXED_DISTINCT, relation));
         }else {
             filters.add(new Filter(Operations.FILTER_NON_INDEXED_DISTINCT, relation));
         }
+
+        return this;
+    }
+
+    public LogicalWorkFlowCreator addMatchFilter(String columnName, String textToFind) {
+
+
+        Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)), Operator.MATCH, returnSelector(textToFind));
+
+       filters.add(new Filter(Operations.FILTER_FULLTEXT, relation));
+
 
         return this;
     }
