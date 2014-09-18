@@ -18,7 +18,7 @@ package com.stratio.connector.commons.ftest.functionalTestQuery;
 
 
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
-import com.stratio.connector.commons.ftest.helper.LogicalWorkFlowCreator;
+import com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator;
 import com.stratio.meta.common.data.Cell;
 import com.stratio.meta.common.data.ResultSet;
 import com.stratio.meta.common.data.Row;
@@ -36,7 +36,7 @@ import org.junit.Test;
 
 import java.util.*;
 
-import static com.stratio.connector.commons.ftest.helper.LogicalWorkFlowCreator.*;
+import static com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 

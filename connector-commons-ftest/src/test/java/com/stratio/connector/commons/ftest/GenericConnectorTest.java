@@ -28,6 +28,7 @@ import com.stratio.meta2.common.data.CatalogName;
 import com.stratio.meta2.common.data.ClusterName;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,21 +39,30 @@ public abstract class GenericConnectorTest<T extends IConnector> {
     /**
      * The Log.
      */
-    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+    protected  final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    protected ClusterName getClusterName() {
+    protected  ClusterName getClusterName() {
         return new ClusterName(CATALOG + "-" + TABLE);
     }
 
-    private IConnectorHelper iConnectorHelper;
+    public void setDeleteBeteweenTest(boolean deleteBeteweenTest){
+        this.deleteBeteweenTest=deleteBeteweenTest;
+    }
 
-    protected abstract IConnectorHelper getConnectorHelper();
+    protected boolean deleteBeteweenTest = true;
+    protected static IConnectorHelper iConnectorHelper;
 
-    protected T connector;
+
+    protected abstract  IConnectorHelper getConnectorHelper();
+    protected  T connector;
 
 
-    public final String TABLE = this.getClass().getSimpleName();
-    public final String CATALOG = "catalog_functional_test";
+
+
+    public  final String TABLE = this.getClass().getSimpleName();
+    public   String CATALOG =    "catalog_functional_test";
+
+
 
 
     @Before
@@ -68,7 +78,7 @@ public abstract class GenericConnectorTest<T extends IConnector> {
     }
 
 
-    protected void deleteCatalog(String catalog) throws UnsupportedException, ExecutionException {
+    protected void  deleteCatalog(String catalog) throws UnsupportedException, ExecutionException {
         try {
             connector.getMetadataEngine().dropCatalog(getClusterName(), new CatalogName(catalog));
         } catch (Throwable t) {
@@ -100,12 +110,13 @@ public abstract class GenericConnectorTest<T extends IConnector> {
     @After
     public void tearDown() throws ConnectionException, UnsupportedException, ExecutionException {
 
-        deleteCatalog(CATALOG);
-        connector.close(getClusterName());
-        if (logger.isDebugEnabled()) {
-            logger.debug("Delete Catalog: " + CATALOG);
-
+        if (deleteBeteweenTest) {
+            deleteCatalog(CATALOG);
+            if (logger.isDebugEnabled()) {
+                logger.debug("Delete Catalog: " + CATALOG);
+            }
         }
+        connector.close(getClusterName());
 
 
     }

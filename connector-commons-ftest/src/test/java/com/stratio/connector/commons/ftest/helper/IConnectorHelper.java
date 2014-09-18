@@ -18,6 +18,7 @@ package com.stratio.connector.commons.ftest.helper;
 
 import com.stratio.meta.common.connector.ConnectorClusterConfig;
 import com.stratio.meta.common.connector.IConfiguration;
+import com.stratio.meta.common.connector.IConnector;
 import com.stratio.meta.common.security.ICredentials;
 import com.stratio.meta2.common.metadata.ColumnType;
 
@@ -27,12 +28,12 @@ import java.util.Map;
 /**
  * Created by jmgomez on 4/09/14.
  */
-public interface IConnectorHelper<T> {
+public interface IConnectorHelper {
 
 
     void refresh(String catalog);
 
-    T getConnector();
+    IConnector getConnector();
 
     IConfiguration getConfiguration();
 
