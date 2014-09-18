@@ -60,7 +60,7 @@ public abstract class GenericBulkInsertTest extends GenericConnectorTest {
     public void testBulkInsertWithPK() throws ExecutionException, ValidationException, UnsupportedOperationException, UnsupportedException {
 
         ClusterName clusterName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST testBulkInsert " + clusterName.getName() + " ***********************************");
+        System.out.println("*********************************** INIT FUNCTIONAL TEST testBulkInsertWithPK ***********************************");
         insertBulk(clusterName, true);
         verifyInsert(clusterName);
 
@@ -70,7 +70,7 @@ public abstract class GenericBulkInsertTest extends GenericConnectorTest {
     public void testBulkInsertWitoutPK() throws ExecutionException, ValidationException, UnsupportedOperationException, UnsupportedException {
 
         ClusterName clusterName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST testBulkInsert " + clusterName.getName() + " ***********************************");
+        System.out.println("*********************************** INIT FUNCTIONAL TEST testBulkInsertWitoutPK ***********************************");
         insertBulk(clusterName, false);
         verifyInsert(clusterName);
 

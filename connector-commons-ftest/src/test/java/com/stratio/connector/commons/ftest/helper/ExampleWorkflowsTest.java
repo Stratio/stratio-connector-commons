@@ -1,168 +1,123 @@
+/*
+ * Stratio Deep
+ *
+ *   Copyright (c) 2014, Stratio, All rights reserved.
+ *
+ *   This library is free software; you can redistribute it and/or modify it under the terms of the
+ *   GNU Lesser General Public License as published by the Free Software Foundation; either version
+ *   3.0 of the License, or (at your option) any later version.
+ *
+ *   This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ *   even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ *   Lesser General Public License for more details.
+ *
+ *   You should have received a copy of the GNU Lesser General Public License along with this library.
+ */
+
 package com.stratio.connector.commons.ftest.helper;
 
-import com.datastax.driver.core.Session;
-import com.stratio.connector.cassandra.engine.CassandraQueryEngine;
+
+import com.stratio.connector.commons.ftest.GenericConnectorTest;
+import com.stratio.connector.commons.ftest.workFlow.ExampleWorkflows;
+import com.stratio.meta.common.exceptions.ConnectionException;
+import com.stratio.meta.common.exceptions.ExecutionException;
+import com.stratio.meta.common.exceptions.InitializationException;
 import com.stratio.meta.common.exceptions.UnsupportedException;
 import com.stratio.meta.common.logicalplan.LogicalWorkflow;
 import com.stratio.meta.common.result.QueryResult;
-import com.stratio.meta2.common.data.ClusterName;
-import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
 
+import com.stratio.meta2.common.data.TableName;
+import com.stratio.meta2.common.metadata.TableMetadata;
+import org.junit.*;
+
+
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.Map;
 
-import static org.testng.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by jjlopez on 16/09/14.
  */
-public class ExampleWorkflowsTest extends BasicCoreCassandraTest {
+public abstract class ExampleWorkflowsTest extends GenericConnectorTest {
 
-    @BeforeClass
-    public static void setUpBeforeClass() {
-        BasicCoreCassandraTest.setUpBeforeClass();
-        BasicCoreCassandraTest.loadTestData("example", "exampleKeyspace.cql");
-        //metadataManager = new MetadataManager(_session, null);
-        //metadataManager.loadMetadata();
+    private ExampleWorkflows exampleWorkflows;
+
+
+
+    private static boolean insertData = false;
+
+    @Before
+    public void setUp() throws InitializationException, ConnectionException, UnsupportedException, ExecutionException {
+            setDeleteBeteweenTest(false);
+            super.setUp();
+        exampleWorkflows = new ExampleWorkflows(CATALOG,TABLE);
+        if (!insertData){
+            deleteCatalog(CATALOG);
+            TableMetadata targetTable = new TableMetadata(new TableName(CATALOG, TABLE), null, null, null, null, Collections.EMPTY_LIST, Collections.EMPTY_LIST);
+            for (int i=0;i<1;i++) {
+                connector.getStorageEngine().insert(getClusterName(), targetTable, exampleWorkflows.getRows(i));
+            }
+            System.out.println("Insert Finish");
+            insertData=true;
+        }
     }
 
-    private ExampleWorkflows getExampleWorkflows(){
-        ExampleWorkflows exampleWorkflows=new ExampleWorkflows();
-        return exampleWorkflows;
-    }
 
-    @Test
-    public void basicSelect(){
-        ClusterName targetCluster = new ClusterName("cluster");
 
-        ExampleWorkflows exampleWorkflows=getExampleWorkflows();
+        @Test
+    public void basicSelect() throws UnsupportedException, ExecutionException {
+
+        System.out.println("*********************************** INIT FUNCTIONAL TEST basicSelect ***********************************");
+
         LogicalWorkflow logicalWorkflow=exampleWorkflows.getBasicSelect();
-
-        Map<String, Session> sessions = new HashMap<>();
-        sessions.put("cluster", this._session);
-        CassandraQueryEngine cqe = new CassandraQueryEngine(sessions);
-
-
-        QueryResult qr = null;
-        try {
-            qr = cqe.execute(targetCluster, logicalWorkflow);
-        } catch (UnsupportedException e) {
-            e.printStackTrace();
-            Assert.assertFalse(true);
-        } catch (com.stratio.meta.common.exceptions.ExecutionException e) {
-            e.printStackTrace();
-            Assert.assertFalse(true);
-        }
-        Assert.assertEquals(qr.getResultSet().size(), 4);
+        QueryResult qr =  connector.getQueryEngine().execute(getClusterName(), logicalWorkflow);
+        assertEquals(qr.getResultSet().size(), 4);
     }
 
     @Test
-    public void basicSelectAsterisk(){
-        ClusterName targetCluster = new ClusterName("cluster");
+    public void basicSelectAsterisk() throws UnsupportedException, ExecutionException {
+        System.out.println("*********************************** INIT FUNCTIONAL TEST basicSelectAsterisk ***********************************");
 
-        ExampleWorkflows exampleWorkflows=getExampleWorkflows();
         LogicalWorkflow logicalWorkflow=exampleWorkflows.getBasicSelectAsterisk();
-
-        Map<String, Session> sessions = new HashMap<>();
-        sessions.put("cluster", this._session);
-        CassandraQueryEngine cqe = new CassandraQueryEngine(sessions);
-
-
-        QueryResult qr = null;
-        try {
-            qr = cqe.execute(targetCluster, logicalWorkflow);
-        } catch (UnsupportedException e) {
-            e.printStackTrace();
-            Assert.assertFalse(true);
-        } catch (com.stratio.meta.common.exceptions.ExecutionException e) {
-            e.printStackTrace();
-            Assert.assertFalse(true);
-        }
-        Assert.assertEquals(qr.getResultSet().size(), 4);
+        QueryResult qr =  connector.getQueryEngine().execute(getClusterName(), logicalWorkflow);
+        assertEquals(qr.getResultSet().size(), 4);
     }
 
     @Test
-    public void selectIndexedField(){
-        ClusterName targetCluster = new ClusterName("cluster");
+    public void selectIndexedField() throws UnsupportedException, ExecutionException {
 
-        ExampleWorkflows exampleWorkflows=getExampleWorkflows();
+        System.out.println("*********************************** INIT FUNCTIONAL TEST basicSelectAsterisk ***********************************");
+
         LogicalWorkflow logicalWorkflow=exampleWorkflows.getSelectIndexedField();
 
-        Map<String, Session> sessions = new HashMap<>();
-        sessions.put("cluster", this._session);
-        CassandraQueryEngine cqe = new CassandraQueryEngine(sessions);
 
-
-        QueryResult qr = null;
-        try {
-            qr = cqe.execute(targetCluster, logicalWorkflow);
-        } catch (UnsupportedException e) {
-            e.printStackTrace();
-            Assert.assertFalse(true);
-        } catch (com.stratio.meta.common.exceptions.ExecutionException e) {
-            e.printStackTrace();
-            Assert.assertFalse(true);
-        }
-        Assert.assertEquals(qr.getResultSet().size(), 1);
+        QueryResult   qr =     connector.getQueryEngine().execute(getClusterName(), logicalWorkflow);
+        assertEquals(qr.getResultSet().size(), 1);
     }
 
     @Test
-    public void selectNonIndexedField(){
-        ClusterName targetCluster = new ClusterName("cluster");
+    public void selectNonIndexedField() throws UnsupportedException, ExecutionException {
+        System.out.println("*********************************** INIT FUNCTIONAL TEST selectNonIndexedField ***********************************");
 
-        ExampleWorkflows exampleWorkflows=getExampleWorkflows();
         LogicalWorkflow logicalWorkflow=exampleWorkflows.getSelectNonIndexedField();
 
-        Map<String, Session> sessions = new HashMap<>();
-        sessions.put("cluster", this._session);
-        CassandraQueryEngine cqe = new CassandraQueryEngine(sessions);
+        QueryResult   qr =   connector.getQueryEngine().execute(getClusterName(), logicalWorkflow);
 
-
-        QueryResult qr = null;
-        try {
-            qr = cqe.execute(targetCluster, logicalWorkflow);
-            Assert.assertEquals(qr.getResultSet().size(), 1);
-        } catch (UnsupportedException e) {
-            e.printStackTrace();
-            Assert.assertTrue(true);
-        } catch (com.stratio.meta.common.exceptions.ExecutionException e) {
-            e.printStackTrace();
-            Assert.assertTrue(true);
-        }
 
     }
 
     @Test
-    public void selectMixedWhere(){
-        ClusterName targetCluster = new ClusterName("cluster");
+    public void selectMixedWhere() throws UnsupportedException, ExecutionException {
+        System.out.println("*********************************** INIT FUNCTIONAL TEST selectMixedWhere ***********************************");
 
-        ExampleWorkflows exampleWorkflows=getExampleWorkflows();
         LogicalWorkflow logicalWorkflow=exampleWorkflows.getSelectMixedWhere();
 
-        Map<String, Session> sessions = new HashMap<>();
-        sessions.put("cluster", this._session);
-        CassandraQueryEngine cqe = new CassandraQueryEngine(sessions);
+        QueryResult qr =  connector.getQueryEngine().execute(getClusterName(), logicalWorkflow);
+        assertEquals(qr.getResultSet().size(), 4);
 
-
-        QueryResult qr = null;
-        try {
-            qr = cqe.execute(targetCluster, logicalWorkflow);
-            Assert.assertEquals(qr.getResultSet().size(), 4);
-        } catch (UnsupportedException e) {
-            e.printStackTrace();
-            Assert.assertTrue(true);
-        } catch (com.stratio.meta.common.exceptions.ExecutionException e) {
-            e.printStackTrace();
-            Assert.assertTrue(true);
-        }
 
     }
-
-
-
-
 
 
 }
