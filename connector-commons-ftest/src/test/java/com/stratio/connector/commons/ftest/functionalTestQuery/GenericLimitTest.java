@@ -80,8 +80,8 @@ public abstract class GenericLimitTest extends GenericConnectorTest {
         //stepList.add(new Limit(limit));
         //return new LogicalWorkflow(stepList);
 
-        //REVIEW cuando haya LIMIT de meta
-        throw new RuntimeException("Esperando a meta");
+
+        throw new RuntimeException("Not yet generic supported");
 
     }
 

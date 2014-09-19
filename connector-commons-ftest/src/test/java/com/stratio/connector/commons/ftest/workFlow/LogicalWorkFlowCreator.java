@@ -52,6 +52,7 @@ public class LogicalWorkFlowCreator {
     public static final String COLUMN_MONEY = "money";
 
 
+
     List<ColumnName> columns = new ArrayList<>();
     List<Filter> filters = new ArrayList<>();
 
@@ -61,6 +62,7 @@ public class LogicalWorkFlowCreator {
         addColumnName(COLUMN_2);
         addColumnName(COLUMN_AGE);
         addColumnName(COLUMN_MONEY);
+
 
 
         return this;
@@ -73,19 +75,26 @@ public class LogicalWorkFlowCreator {
     }
 
     public LogicalWorkflow getLogicalWorkflow() {
+
+
         List<LogicalStep> logiclaSteps = new ArrayList<>();
-        if (!filters.isEmpty()) {
-            logiclaSteps.addAll(filters);
+
+
+            Project project = new Project(Operations.PROJECT, new TableName(catalog, table), columns);
+        for (Filter filter: filters) {
+            project.setNextStep(filter);
         }
-        if (!columns.isEmpty()) {
-            logiclaSteps.add(new Project(Operations.PROJECT, new TableName(catalog, table), columns));
-        }
+
+            logiclaSteps.add(project);
+
         return new LogicalWorkflow(logiclaSteps);
 
     }
 
-    public LogicalWorkFlowCreator addColumnName(String columnName) {
-        columns.add(new ColumnName(catalog, table, columnName));
+    public LogicalWorkFlowCreator addColumnName(String... columnName) {
+        for (int i=0;i<columnName.length;i++) {
+            columns.add(new ColumnName(catalog, table, columnName[i]));
+        }
 
         return this;
     }
