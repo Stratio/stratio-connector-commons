@@ -14,11 +14,12 @@
  *   You should have received a copy of the GNU Lesser General Public License along with this library.
  */
 
-package com.stratio.connector.commons.ftest.helper;
+package com.stratio.connector.commons.ftest.workFlow;
 
 
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
 import com.stratio.connector.commons.ftest.workFlow.ExampleWorkflows;
+import com.stratio.meta.common.data.Row;
 import com.stratio.meta.common.exceptions.ConnectionException;
 import com.stratio.meta.common.exceptions.ExecutionException;
 import com.stratio.meta.common.exceptions.InitializationException;
@@ -35,6 +36,7 @@ import java.util.Collections;
 import java.util.HashMap;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by jjlopez on 16/09/14.
@@ -49,30 +51,39 @@ public abstract class ExampleWorkflowsTest extends GenericConnectorTest {
 
     @Before
     public void setUp() throws InitializationException, ConnectionException, UnsupportedException, ExecutionException {
-            setDeleteBeteweenTest(false);
-            super.setUp();
-        exampleWorkflows = new ExampleWorkflows(CATALOG,TABLE);
+        setDeleteBeteweenTest(false);
+        super.setUp();
+
+            exampleWorkflows = new ExampleWorkflows(CATALOG,TABLE);
         if (!insertData){
+            setDeleteBeteweenTest(true);
             deleteCatalog(CATALOG);
+            setDeleteBeteweenTest(false);
             TableMetadata targetTable = new TableMetadata(new TableName(CATALOG, TABLE), null, null, null, null, Collections.EMPTY_LIST, Collections.EMPTY_LIST);
-            for (int i=0;i<1;i++) {
+            for (int i=0;i<100;i++) {
                 connector.getStorageEngine().insert(getClusterName(), targetTable, exampleWorkflows.getRows(i));
+                refresh(CATALOG);
             }
             System.out.println("Insert Finish");
             insertData=true;
+
         }
     }
 
 
 
-        @Test
+    @Test
     public void basicSelect() throws UnsupportedException, ExecutionException {
 
         System.out.println("*********************************** INIT FUNCTIONAL TEST basicSelect ***********************************");
 
         LogicalWorkflow logicalWorkflow=exampleWorkflows.getBasicSelect();
         QueryResult qr =  connector.getQueryEngine().execute(getClusterName(), logicalWorkflow);
-        assertEquals(qr.getResultSet().size(), 4);
+        assertEquals("The result number is correct", 1000000,qr.getResultSet().size());
+
+        Row oneRow = qr.getResultSet().iterator().next();
+        assertTrue("The alias age is correct",oneRow.getCells().containsKey("users.name"));
+        assertTrue("The alias name is correct", oneRow.getCells().containsKey("users.age"));
     }
 
     @Test
@@ -81,7 +92,7 @@ public abstract class ExampleWorkflowsTest extends GenericConnectorTest {
 
         LogicalWorkflow logicalWorkflow=exampleWorkflows.getBasicSelectAsterisk();
         QueryResult qr =  connector.getQueryEngine().execute(getClusterName(), logicalWorkflow);
-        assertEquals(qr.getResultSet().size(), 4);
+        assertEquals("All record are recovered",1000000,qr.getResultSet().size());
     }
 
     @Test
@@ -93,7 +104,12 @@ public abstract class ExampleWorkflowsTest extends GenericConnectorTest {
 
 
         QueryResult   qr =     connector.getQueryEngine().execute(getClusterName(), logicalWorkflow);
-        assertEquals(qr.getResultSet().size(), 1);
+        assertEquals("The items number in the resultset is correct",1623,qr.getResultSet().size());
+
+        Row oneRow = qr.getResultSet().iterator().next();
+        assertTrue("The alias id is correct",oneRow.getCells().containsKey("id"));
+        assertTrue("The alias age is correct",oneRow.getCells().containsKey("users.name"));
+        assertTrue("The alias name is correct", oneRow.getCells().containsKey("users.age"));
     }
 
     @Test
@@ -105,6 +121,16 @@ public abstract class ExampleWorkflowsTest extends GenericConnectorTest {
         QueryResult   qr =   connector.getQueryEngine().execute(getClusterName(), logicalWorkflow);
 
 
+        
+        assertEquals("The items number in the resultset is correct",9009,qr.getResultSet().size());
+
+        Row oneRow = qr.getResultSet().iterator().next();
+
+        assertTrue("The alias id is correct",oneRow.getCells().containsKey("id"));
+        assertTrue("The alias age is correct",oneRow.getCells().containsKey("users.name"));
+        assertTrue("The alias name is correct", oneRow.getCells().containsKey("users.age"));
+
+
     }
 
     @Test
@@ -114,7 +140,7 @@ public abstract class ExampleWorkflowsTest extends GenericConnectorTest {
         LogicalWorkflow logicalWorkflow=exampleWorkflows.getSelectMixedWhere();
 
         QueryResult qr =  connector.getQueryEngine().execute(getClusterName(), logicalWorkflow);
-        assertEquals(qr.getResultSet().size(), 4);
+        assertEquals("The result is correct", 7,qr.getResultSet().size());
 
 
     }

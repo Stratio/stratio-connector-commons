@@ -24,6 +24,6 @@ public abstract class GenericGroupByTest extends GenericConnectorTest {
 
     @Test
     public void test() {
-        fail("Not implemented yet.");
+        fail("Not yet generic supported");
     }
 }

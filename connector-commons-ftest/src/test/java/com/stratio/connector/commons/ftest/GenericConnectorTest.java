@@ -75,7 +75,9 @@ public abstract class GenericConnectorTest<T extends IConnector> {
 
     protected void  deleteCatalog(String catalog) throws UnsupportedException, ExecutionException {
         try {
-            connector.getMetadataEngine().dropCatalog(getClusterName(), new CatalogName(catalog));
+            if (deleteBeteweenTest) {
+                connector.getMetadataEngine().dropCatalog(getClusterName(), new CatalogName(catalog));
+            }
         } catch (Throwable t) {
             logger.debug("Index does not exist");
         }
@@ -110,11 +112,11 @@ public abstract class GenericConnectorTest<T extends IConnector> {
             deleteCatalog(CATALOG);
             if (logger.isDebugEnabled()) {
                 logger.debug("Delete Catalog: " + CATALOG);
+
+                connector.close(getClusterName());
             }
+
+
         }
-        connector.close(getClusterName());
-
-
     }
-
 }

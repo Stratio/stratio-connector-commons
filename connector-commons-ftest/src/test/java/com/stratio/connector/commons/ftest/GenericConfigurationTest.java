@@ -27,25 +27,14 @@ public abstract class GenericConfigurationTest extends GenericConnectorTest {
 
     @Test
     public void supportedOperationsTest() throws Exception {
-
-
-//    	assertTrue(connector.getSupportededOperations().containsKey(Operations.CREATE_CATALOG));
-//    	assertTrue("insert is supported",stratioElasticConnector.getSupportededOperations().get(Operations.INSERT));
-
-        fail("Wait for meta");
+        fail("Not yet generic supported");
 
     }
 
     @Test
     public void connectionConfigurationTest() throws Exception {
-//    	Set<ConnectionConfiguration> options =  stratioElasticConnector.getConnectionConfiguration();
-//    	int numHostOption = 0;
-//    	for(ConnectionConfiguration option: options){
-//    		if (option.getConnectionOption() == ConnectionOption.HOST_IP) numHostOption++;
-//    	}
-//    	assertEquals( 1, numHostOption );
 
-        fail("Wait for meta");
+        fail("Not yet generic supported");
 
 
     }
