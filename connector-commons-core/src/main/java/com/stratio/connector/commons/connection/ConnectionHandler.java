@@ -47,7 +47,10 @@ public abstract class ConnectionHandler {
      */
     private Map<String, Connection> connections = new HashMap<>();
 
+
+
     /**
+
      * Constructor.
      *
      * @param configuration the general settings.
@@ -132,6 +135,10 @@ public abstract class ConnectionHandler {
             throw new HandlerConnectionException("The connection [" + name + "] does not exist");
         }
         return connection;
+    }
+
+    public Map<String, Connection> getConnections() {
+        return connections;
     }
 
 

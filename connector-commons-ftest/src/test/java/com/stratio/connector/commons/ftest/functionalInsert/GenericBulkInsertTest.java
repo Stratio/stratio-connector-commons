@@ -67,7 +67,7 @@ public abstract class GenericBulkInsertTest extends GenericConnectorTest {
     }
 
     @Test
-    public void testBulkInsertWitoutPK() throws ExecutionException, ValidationException, UnsupportedOperationException, UnsupportedException {
+    public void testBulkInsertWithoutPK() throws ExecutionException, ValidationException, UnsupportedOperationException, UnsupportedException {
 
         ClusterName clusterName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST testBulkInsertWitoutPK ***********************************");

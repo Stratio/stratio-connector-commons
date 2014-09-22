@@ -21,6 +21,7 @@ import com.stratio.meta.common.connector.IConfiguration;
 import com.stratio.meta.common.connector.IConnector;
 import com.stratio.meta.common.security.ICredentials;
 import com.stratio.meta2.common.metadata.ColumnType;
+import com.stratio.meta2.common.metadata.IndexMetadata;
 
 import java.util.Collection;
 import java.util.Map;
@@ -44,4 +45,10 @@ public interface IConnectorHelper {
     Map<String, Object> recoveredCatalogSettings(String catalog);
 
     Collection<ColumnType> getAllSupportedColumnType();
+
+	boolean containsIndex(String catalogName, String collectionName,
+			String indexName);
+
+	int countIndexes(String catalogName, String collectionName);
+
 }

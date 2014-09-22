@@ -36,6 +36,9 @@ import org.slf4j.LoggerFactory;
 public abstract class GenericConnectorTest<T extends IConnector> {
 
 
+    public  final String TABLE = this.getClass().getSimpleName();
+    public   String CATALOG =    "catalog_functional_test";
+    
     /**
      * The Log.
      */
@@ -55,14 +58,6 @@ public abstract class GenericConnectorTest<T extends IConnector> {
 
     protected abstract  IConnectorHelper getConnectorHelper();
     protected  T connector;
-
-
-
-
-    public  final String TABLE = this.getClass().getSimpleName();
-    public   String CATALOG =    "catalog_functional_test";
-
-
 
 
     @Before
@@ -109,6 +104,7 @@ public abstract class GenericConnectorTest<T extends IConnector> {
         return iConnectorHelper.getICredentials();
     }
 
+    
     @After
     public void tearDown() throws ConnectionException, UnsupportedException, ExecutionException {
 

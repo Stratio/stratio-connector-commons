@@ -19,7 +19,7 @@ package com.stratio.connector.commons.connection;
 /**
  * Created by jmgomez on 9/09/14.
  */
-public class StubsConnection implements Connection {
+public class StubsConnection extends Connection {
 
     @Override
     public void close() {

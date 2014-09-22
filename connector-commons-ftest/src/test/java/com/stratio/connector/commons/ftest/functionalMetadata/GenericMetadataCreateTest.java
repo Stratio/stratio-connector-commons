@@ -15,33 +15,50 @@
  */
 package com.stratio.connector.commons.ftest.functionalMetadata;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.junit.Test;
+
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
+import com.stratio.connector.commons.ftest.helper.IConnectorHelper;
 import com.stratio.meta.common.exceptions.ExecutionException;
 import com.stratio.meta.common.exceptions.UnsupportedException;
 import com.stratio.meta2.common.data.CatalogName;
 import com.stratio.meta2.common.data.ClusterName;
 import com.stratio.meta2.common.data.ColumnName;
+import com.stratio.meta2.common.data.IndexName;
 import com.stratio.meta2.common.data.TableName;
 import com.stratio.meta2.common.metadata.CatalogMetadata;
 import com.stratio.meta2.common.metadata.ColumnMetadata;
 import com.stratio.meta2.common.metadata.ColumnType;
+import com.stratio.meta2.common.metadata.IndexMetadata;
+import com.stratio.meta2.common.metadata.IndexType;
 import com.stratio.meta2.common.metadata.TableMetadata;
+
 import com.stratio.meta2.common.statements.structures.selectors.BooleanSelector;
 import com.stratio.meta2.common.statements.structures.selectors.IntegerSelector;
 import com.stratio.meta2.common.statements.structures.selectors.Selector;
 import com.stratio.meta2.common.statements.structures.selectors.StringSelector;
-import org.junit.Test;
 
-import java.awt.datatransfer.StringSelection;
-import java.util.*;
 
-import static org.junit.Assert.*;
 
 
 public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
 
 
     private static final String NEW_CATALOG = "new_catalog";
+    private static final String INDEX = "index1";
 
     @Test
     public void createCatalogTest() throws UnsupportedException, ExecutionException {
@@ -207,6 +224,55 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
 
         connector.getMetadataEngine().dropCatalog(getClusterName(), new CatalogName(CATALOG));
 
+    }
+    
+    
+    @Test
+    public void createCatalogWithTablesAndIndex() throws UnsupportedException, ExecutionException {
+        ClusterName clusterName = getClusterName();
+        System.out.println("*********************************** INIT FUNCTIONAL TEST createCatalogWithTablesAndIndexTest ***********************************");
+
+        TableName tableName = new TableName(CATALOG, TABLE);
+        ClusterName clusterRef = getClusterName();
+        List<ColumnName> partitionKey = Collections.EMPTY_LIST;
+        List<ColumnName> clusterKey = Collections.EMPTY_LIST;
+
+        //ColumnMetadata (all columns)
+        Map<Selector, Selector> options = Collections.EMPTY_MAP;
+        Map<ColumnName, ColumnMetadata> columnsMap = new HashMap<>();
+        int i = 1;
+        Collection<ColumnType> allSupportedColumnType = getConnectorHelper().getAllSupportedColumnType();
+        for (ColumnType columnType : allSupportedColumnType) {
+            ColumnName columnName = new ColumnName(CATALOG, TABLE, "columnName_" + i);
+            columnsMap.put(columnName, new ColumnMetadata(columnName, null, columnType));
+            i++;
+        }
+        
+        //ColumnMetadata (list of columns to create a single index)
+        List<ColumnMetadata> columns=new ArrayList<>();
+        Object[] parameters = null;
+		columns.add(new ColumnMetadata(new ColumnName(tableName,"columnName_1"),parameters, ColumnType.TEXT));
+        
+		//Creating the index with the previous columns
+		Map<IndexName,IndexMetadata> indexMap = new HashMap<IndexName, IndexMetadata>();
+	    indexMap.put(new IndexName(tableName, INDEX), new IndexMetadata(new IndexName(tableName, INDEX), columns, IndexType.DEFAULT, options));
+	        
+	    Map<TableName,TableMetadata> tableMap = new HashMap<TableName, TableMetadata>();
+        TableMetadata tableMetadata = new TableMetadata(tableName, options, columnsMap, indexMap, clusterRef, partitionKey, clusterKey);
+        tableMap.put(tableName,tableMetadata);
+        
+        assertFalse(iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX));
+        
+        connector.getMetadataEngine().createCatalog(getClusterName(), new CatalogMetadata(new CatalogName(CATALOG), Collections.EMPTY_MAP, tableMap));
+        connector.getMetadataEngine().createTable(getClusterName(), tableMetadata);
+        
+        assertTrue(iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX));
+        
+        connector.getMetadataEngine().dropCatalog(getClusterName(), new CatalogName(CATALOG) );
+        
+        //check if when the catalog is dropped, all the meta-info is removed
+        assertFalse(iConnectorHelper.containsIndex(CATALOG, TABLE,INDEX));
+        
     }
 
 
