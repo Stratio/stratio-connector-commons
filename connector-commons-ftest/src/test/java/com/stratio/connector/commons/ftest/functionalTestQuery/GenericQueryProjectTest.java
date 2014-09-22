@@ -55,7 +55,7 @@ public abstract class GenericQueryProjectTest extends GenericConnectorTest {
     public void selectFilterProject() throws UnsupportedException, ExecutionException {
 
         ClusterName clusterNodeName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST selectFilterHigh ***********************************");
+        System.out.println("*********************************** INIT FUNCTIONAL TEST selectFilterProject ***********************************");
 
         for (int i = 0; i < getRowsToSearch(); i++) {
             insertRow(i, clusterNodeName);
@@ -77,7 +77,7 @@ public abstract class GenericQueryProjectTest extends GenericConnectorTest {
         }
 
 
-        assertEquals("The record number is correct", 2 * getRowsToSearch(), probeSet.size());
+        assertEquals("The record number is correct", getRowsToSearch(), (Integer)queryResult.getResultSet().size());
         for (int i = 0; i < getRowsToSearch(); i++) {
 
 

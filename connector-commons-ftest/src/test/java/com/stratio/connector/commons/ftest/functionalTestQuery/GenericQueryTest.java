@@ -78,7 +78,7 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
             }
         }
 
-        assertEquals("The record number is correct", 3 * getRowsToSearch(), proveSet.size());
+        assertEquals("The record number is correct",  getRowsToSearch(),(Integer)queryResult.getResultSet().size());
         for (int i = 0; i < getRowsToSearch(); i++) {
             assertTrue("Return correct record", proveSet.contains("bin1ValueBin1_r" + i));
             assertTrue("Return correct record", proveSet.contains("bin2ValueBin2_r" + i));

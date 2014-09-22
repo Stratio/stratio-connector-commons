@@ -26,8 +26,13 @@ import com.stratio.meta2.common.metadata.CatalogMetadata;
 import com.stratio.meta2.common.metadata.ColumnMetadata;
 import com.stratio.meta2.common.metadata.ColumnType;
 import com.stratio.meta2.common.metadata.TableMetadata;
+import com.stratio.meta2.common.statements.structures.selectors.BooleanSelector;
+import com.stratio.meta2.common.statements.structures.selectors.IntegerSelector;
+import com.stratio.meta2.common.statements.structures.selectors.Selector;
+import com.stratio.meta2.common.statements.structures.selectors.StringSelector;
 import org.junit.Test;
 
+import java.awt.datatransfer.StringSelection;
 import java.util.*;
 
 import static org.junit.Assert.*;
@@ -72,10 +77,10 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
         } catch (Throwable t) {
         }
 
-        Map<String, Object> options = new HashMap<>();
-        options.put("option1", "value1");
-        options.put("option2", new Integer(3));
-        options.put("option3", false);
+        Map<Selector, Selector> options = new HashMap<>();
+        options.put(new StringSelector("option1"), new StringSelector("value1"));
+        options.put(new StringSelector("option2"), new IntegerSelector(new Integer(3)));
+        options.put(new StringSelector("option3"), new BooleanSelector(false));
         connector.getMetadataEngine().createCatalog(getClusterName(), new CatalogMetadata(new CatalogName(NEW_CATALOG), options, Collections.EMPTY_MAP));
 
 
@@ -130,7 +135,7 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
         System.out.println("*********************************** INIT FUNCTIONAL TEST createTableTest ***********************************");
 
         TableName tableName = new TableName(CATALOG, TABLE);
-        Map<String, Object> options = Collections.EMPTY_MAP;
+        Map<Selector, Selector> options = Collections.EMPTY_MAP;
 
         Map<ColumnName, ColumnMetadata> columns = Collections.EMPTY_MAP;
         Map indexex = columns = Collections.EMPTY_MAP;
@@ -165,7 +170,7 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
         System.out.println("*********************************** INIT FUNCTIONAL TEST createTableTest ***********************************");
 
         TableName tableName = new TableName(CATALOG, TABLE);
-        Map<String, Object> options = Collections.EMPTY_MAP;
+        Map<Selector, Selector> options = Collections.EMPTY_MAP;
 
         Map<ColumnName, ColumnMetadata> columns = new HashMap<>();
         int i = 1;
@@ -175,10 +180,7 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
             columns.put(columnName, new ColumnMetadata(columnName, null, columnType));
             i++;
         }
-//        ColumnName columnName = new ColumnName(CATALOG, TABLE, "columnName1");
-//        columns.put(columnName, new ColumnMetadata(columnName, null, ColumnType.INT));
-//        ColumnName columnName2 = new ColumnName(CATALOG, TABLE, "columnName2");
-//        columns.put(columnName2, new ColumnMetadata(columnName2, null, ColumnType.BOOLEAN));
+
 
 
         Map indexex = Collections.EMPTY_MAP;
