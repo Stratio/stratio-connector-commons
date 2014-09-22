@@ -1,5 +1,6 @@
 package com.stratio.connector.commons.engine;
 
+import com.stratio.connector.commons.connection.Connection;
 import com.stratio.connector.commons.connection.ConnectionHandler;
 import com.stratio.connector.commons.connection.exceptions.HandlerConnectionException;
 import com.stratio.meta.common.connector.IMetadataEngine;
@@ -18,68 +19,118 @@ import com.stratio.meta2.common.metadata.TableMetadata;
  */
 public abstract class CommonsMetadataEngine extends CommonsUtils implements IMetadataEngine {
 
+    /**
+     * The connection handler.
+     */
+    ConnectionHandler connectionHandler;
+
+
+    /**
+     * Constructor.
+     *
+     * @param connectionHandler the connector handler.
+     */
+    protected CommonsMetadataEngine(ConnectionHandler connectionHandler) {
+        this.connectionHandler= connectionHandler;
+    }
+
+    public abstract void createCatalog(ClusterName targetCluster, CatalogMetadata catalogMetadata, Connection connection) throws UnsupportedException, ExecutionException ;
+
+
+    public abstract void createTable(ClusterName targetCluster, TableMetadata tableMetadata, Connection connection) throws UnsupportedException, ExecutionException ;
+
+
+    public abstract void dropCatalog(ClusterName targetCluster, CatalogName name, Connection connection) throws UnsupportedException, ExecutionException ;
+
+
+    public abstract void dropTable(ClusterName targetCluster, TableName name, Connection connection) throws UnsupportedException, ExecutionException ;
+
+
+    public abstract void createIndex(ClusterName targetCluster, IndexMetadata indexMetadata, Connection connection) throws UnsupportedException, ExecutionException ;
+
+
+    public abstract void dropIndex(ClusterName targetCluster, IndexMetadata indexMetadata, Connection connection) throws UnsupportedException, ExecutionException ;
 
 
 
-    public void createCatalog(ClusterName targetCluster, CatalogMetadata catalogMetadata, ConnectionHandler connection) throws UnsupportedException, ExecutionException {
-        startWork(targetCluster , connection);
-        createCatalog(targetCluster,catalogMetadata);
-        endWork(targetCluster , connection);
+
+    public void createCatalog(ClusterName targetCluster, CatalogMetadata catalogMetadata) throws UnsupportedException, ExecutionException{
+        try{
+
+            startWork(targetCluster , connectionHandler);
+            createCatalog(targetCluster, catalogMetadata, connectionHandler.getConnection(targetCluster.getName()));
+            endWork(targetCluster, connectionHandler);
+
+        } catch (HandlerConnectionException e) {
+             String msg = "Error find Connection in " + targetCluster.getName() + ". " + e.getMessage();
+             logger.error(msg);
+            throw new ExecutionException(msg, e);
+        }
+    }
+
+    public  void createTable(ClusterName targetCluster, TableMetadata tableMetadata) throws UnsupportedException, ExecutionException {
+        try{
+            startWork(targetCluster , connectionHandler);
+            createTable(targetCluster,tableMetadata, connectionHandler.getConnection(targetCluster.getName()));
+            endWork(targetCluster , connectionHandler);
+        } catch (HandlerConnectionException e) {
+            String msg = "Error find Connection in " + targetCluster.getName() + ". " + e.getMessage();
+            logger.error(msg);
+            throw new ExecutionException(msg, e);
+        }
     }
 
 
-    public void createTable(ClusterName targetCluster, TableMetadata tableMetadata, ConnectionHandler connection) throws UnsupportedException, ExecutionException, HandlerConnectionException {
-        startWork(targetCluster , connection);
-        createTable(targetCluster,tableMetadata);
-        endWork(targetCluster , connection);
+    public  void dropCatalog(ClusterName targetCluster, CatalogName name) throws UnsupportedException, ExecutionException {
+        try{
+            startWork(targetCluster , connectionHandler);
+            dropCatalog(targetCluster,name,connectionHandler.getConnection(targetCluster.getName()));
+            endWork(targetCluster , connectionHandler);
+        } catch (HandlerConnectionException e) {
+            String msg = "Error find Connection in " + targetCluster.getName() + ". " + e.getMessage();
+            logger.error(msg);
+            throw new ExecutionException(msg, e);
+        }
+
     }
 
 
-    public void dropCatalog(ClusterName targetCluster, CatalogName name, ConnectionHandler connection) throws UnsupportedException, ExecutionException {
-        startWork(targetCluster , connection);
-        dropCatalog(targetCluster,name);
-        endWork(targetCluster , connection);
+    public  void dropTable(ClusterName targetCluster, TableName name) throws UnsupportedException, ExecutionException {
+        try{
+            startWork(targetCluster , connectionHandler);
+            dropTable(targetCluster,name,connectionHandler.getConnection(targetCluster.getName()));
+            endWork(targetCluster , connectionHandler);
+        } catch (HandlerConnectionException e) {
+            String msg = "Error find Connection in " + targetCluster.getName() + ". " + e.getMessage();
+            logger.error(msg);
+            throw new ExecutionException(msg, e);
+        }
+    }
+
+    public  void createIndex(ClusterName targetCluster, IndexMetadata indexMetadata) throws UnsupportedException, ExecutionException{
+        try{
+            startWork(targetCluster , connectionHandler);
+            createIndex(targetCluster,indexMetadata,connectionHandler.getConnection(targetCluster.getName()));
+            endWork(targetCluster , connectionHandler);
+        } catch (HandlerConnectionException e) {
+            String msg = "Error find Connection in " + targetCluster.getName() + ". " + e.getMessage();
+            logger.error(msg);
+            throw new ExecutionException(msg, e);
+        }
     }
 
 
-    public void dropTable(ClusterName targetCluster, TableName name, ConnectionHandler connection) throws UnsupportedException, ExecutionException {
-        startWork(targetCluster , connection);
-        dropTable(targetCluster,name);
-        endWork(targetCluster , connection);
+    public  void dropIndex(ClusterName targetCluster, IndexMetadata indexMetadata) throws UnsupportedException, ExecutionException {
+        try{
+            startWork(targetCluster , connectionHandler);
+            createIndex(targetCluster,indexMetadata, connectionHandler.getConnection(targetCluster.getName()));
+            endWork(targetCluster , connectionHandler);
+        } catch (HandlerConnectionException e) {
+            String msg = "Error find Connection in " + targetCluster.getName() + ". " + e.getMessage();
+            logger.error(msg);
+            throw new ExecutionException(msg, e);
+        }
     }
-
-
-    public void createIndex(ClusterName targetCluster, IndexMetadata indexMetadata, ConnectionHandler connection) throws UnsupportedException, ExecutionException {
-        startWork(targetCluster , connection);
-        createIndex(targetCluster,indexMetadata);
-        endWork(targetCluster , connection);
-    }
-
-
-    public void dropIndex(ClusterName targetCluster, IndexMetadata indexMetadata, ConnectionHandler connection) throws UnsupportedException, ExecutionException {
-        startWork(targetCluster , connection);
-        dropIndex(targetCluster, indexMetadata);
-        endWork(targetCluster , connection);
-    }
-
-
-
-    public abstract void createCatalog(ClusterName targetCluster, CatalogMetadata catalogMetadata) throws UnsupportedException, ExecutionException;
-
-
-    public abstract void createTable(ClusterName targetCluster, TableMetadata tableMetadata) throws UnsupportedException, ExecutionException ;
-
-
-    public abstract void dropCatalog(ClusterName targetCluster, CatalogName name) throws UnsupportedException, ExecutionException ;
-
-
-    public abstract void dropTable(ClusterName targetCluster, TableName name) throws UnsupportedException, ExecutionException ;
-
-
-    public abstract void createIndex(ClusterName targetCluster, IndexMetadata indexMetadata) throws UnsupportedException, ExecutionException;
-
-
-    public abstract void dropIndex(ClusterName targetCluster, IndexMetadata indexMetadata) throws UnsupportedException, ExecutionException ;
 
 
 

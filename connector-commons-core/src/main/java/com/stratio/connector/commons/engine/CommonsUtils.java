@@ -16,7 +16,7 @@ import java.util.Date;
 public class CommonsUtils {
 
     /**
-     * The Log.
+     * .
      */
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 

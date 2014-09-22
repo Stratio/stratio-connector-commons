@@ -15,28 +15,42 @@ import java.util.Collection;
  */
 public abstract class CommonsStorageEngine extends CommonsUtils implements IStorageEngine {
 
+    /**
+     * The connection handler.
+     */
+    ConnectionHandler connectionHandler;
 
-    public void insert(ClusterName targetCluster, TableMetadata targetTable, Row row, ConnectionHandler connectionHandler ) throws UnsupportedException, ExecutionException{
+
+    /**
+     * Constructor.
+     *
+     * @param connectionHandler the connector handler.
+     */
+    public CommonsStorageEngine(ConnectionHandler connectionHandler) {
+        this.connectionHandler= connectionHandler;
+    }
+
+    public abstract void insert(ClusterName targetCluster, TableMetadata targetTable, Row row, ConnectionHandler connectionHandler ) throws UnsupportedException, ExecutionException;
+
+    public abstract void insert(ClusterName targetCluster, TableMetadata targetTable, Collection<Row> rows, ConnectionHandler connectionHandler ) throws UnsupportedException, ExecutionException;
+
+
+    @Override
+    public  void insert(ClusterName targetCluster, TableMetadata targetTable, Row row) throws UnsupportedException, ExecutionException{
 
         startWork(targetCluster , connectionHandler);
-        insert(targetCluster,targetTable,row);
+        insert(targetCluster,targetTable,row,connectionHandler);
         endWork(targetCluster, connectionHandler);
 
     }
 
-    public void insert(ClusterName targetCluster, TableMetadata targetTable, Collection<Row> rows, ConnectionHandler connectionHandler ) throws UnsupportedException, ExecutionException{
+    @Override
+    public  void insert(ClusterName targetCluster, TableMetadata targetTable, Collection<Row> rows) throws UnsupportedException, ExecutionException{
 
         startWork(targetCluster , connectionHandler);
-        insert(targetCluster,targetTable,rows);
+        insert(targetCluster,targetTable,rows,connectionHandler);
         endWork(targetCluster , connectionHandler);
 
     }
-
-
-    @Override
-    public abstract void insert(ClusterName targetCluster, TableMetadata targetTable, Row row) throws UnsupportedException, ExecutionException;
-
-    @Override
-    public abstract void insert(ClusterName targetCluster, TableMetadata targetTable, Collection<Row> rows) throws UnsupportedException, ExecutionException;
 
 }

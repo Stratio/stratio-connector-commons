@@ -13,18 +13,35 @@ import com.stratio.meta2.common.data.ClusterName;
  */
 public abstract class CommonsQueryEngine extends CommonsUtils implements IQueryEngine{
 
+    /**
+     * The connection handler.
+     */
+    ConnectionHandler connectionHandler;
 
 
-    public QueryResult execute(ClusterName targetCluster, LogicalWorkflow workflow, ConnectionHandler  connection) throws UnsupportedException, ExecutionException {
-
-        QueryResult result = null;
-        startWork(targetCluster,connection);
-        result = execute(targetCluster,workflow);
-        endWork(targetCluster, connection);
-
-        return result;
+    /**
+     * Constructor.
+     *
+     * @param connectionHandler the connector handler.
+     */
+    public CommonsQueryEngine(ConnectionHandler connectionHandler) {
+        this.connectionHandler= connectionHandler;
     }
 
+
+    public abstract QueryResult execute(ClusterName targetCluster, LogicalWorkflow workflow, ConnectionHandler  connection) throws UnsupportedException, ExecutionException ;
+
+
+
     @Override
-    public abstract QueryResult execute(ClusterName targetCluster, LogicalWorkflow workflow) throws UnsupportedException, ExecutionException;
+    public  QueryResult execute(ClusterName targetCluster, LogicalWorkflow workflow) throws UnsupportedException, ExecutionException{
+
+        QueryResult result = null;
+        startWork(targetCluster,connectionHandler);
+        result = execute(targetCluster,workflow,connectionHandler);
+        endWork(targetCluster, connectionHandler);
+
+        return result;
+
+    }
 }
