@@ -107,7 +107,7 @@ public abstract class ExampleWorkflowsTest extends GenericConnectorTest {
         assertEquals("The items number in the resultset is correct",1623,qr.getResultSet().size());
 
         Row oneRow = qr.getResultSet().iterator().next();
-        assertTrue("The alias id is correct",oneRow.getCells().containsKey("id"));
+        assertEquals("The cells number is correct",2,oneRow.getCells().size());
         assertTrue("The alias age is correct",oneRow.getCells().containsKey("users.name"));
         assertTrue("The alias name is correct", oneRow.getCells().containsKey("users.age"));
     }
@@ -126,7 +126,7 @@ public abstract class ExampleWorkflowsTest extends GenericConnectorTest {
 
         Row oneRow = qr.getResultSet().iterator().next();
 
-        assertTrue("The alias id is correct",oneRow.getCells().containsKey("id"));
+        assertEquals("The cells number is correct",2,oneRow.getCells().size());
         assertTrue("The alias age is correct",oneRow.getCells().containsKey("users.name"));
         assertTrue("The alias name is correct", oneRow.getCells().containsKey("users.age"));
 

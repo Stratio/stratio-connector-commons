@@ -62,26 +62,8 @@ public abstract class GenericDeleteTest extends GenericConnectorTest {
 
 
         Filter[] filterSet = createFilterCollection(EQUAL_FILTER, "text2");
-//   	 	((ElasticsearchStorageEngine) connector.getStorageEngine()).delete(CATALOG, TABLE, filterSet);
-//        refresh(CATALOG);
-//
-//
-//        SearchResponse response = nodeClient.prepareSearch(CATALOG)
-//     		.setSearchType(SearchType.QUERY_THEN_FETCH)
-//     		.setTypes(COLLECTION)
-//     		.execute()
-//     		.actionGet();
-//
-//     SearchHits hits = response.getHits();
-//
-//     for(SearchHit hit: hits.hits()){
-//    	 assertEquals(false, hit.getSource().get(COLUMN_TEXT).equals("text2"));
-//     }
-//
-//     assertEquals(4, hits.getTotalHits());
-//
 
-        fail("Not implemented"); //REVIEW debido a cambio de interfaz
+        fail("Not yet generic supported");
 
 
     }
@@ -104,27 +86,8 @@ public abstract class GenericDeleteTest extends GenericConnectorTest {
 
 
         Filter[] filterSet = createFilterCollection(EQUAL_FILTER, 20);
-//   	 	((ElasticsearchStorageEngine) connector.getStorageEngine()).delete(CATALOG, TABLE, filterSet);
 
-//
-//        refresh(CATALOG);
-//
-//
-//        SearchResponse response = nodeClient.prepareSearch(CATALOG)
-//      		.setSearchType(SearchType.QUERY_THEN_FETCH)
-//      		.setTypes(COLLECTION)
-//      		.execute()
-//      		.actionGet();
-//
-//      SearchHits hits = response.getHits();
-//
-//      for(SearchHit hit: hits.hits()){
-//     	 assertEquals(false, hit.getSource().get(COLUMN_AGE).equals(20));
-//      }
-//
-//      assertEquals(3, hits.getTotalHits());
-
-        fail("Not implemented"); //REVIEW debido a cambio de interfaz
+        fail("Not yet generic supported");
 
     }
 
@@ -147,27 +110,7 @@ public abstract class GenericDeleteTest extends GenericConnectorTest {
         //age notequal 20 and money between 9,11
         Filter[] filterSet = createFilterCollection(NOTEQUAL_BETWEEN, 20);
 
-//	 ((ElasticsearchStorageEngine)connector.getStorageEngine()).delete(CATALOG, TABLE,filterSet);
-
-
-//        refresh(CATALOG);
-//
-//        SearchResponse response = nodeClient.prepareSearch(CATALOG)
-//	      		.setSearchType(SearchType.QUERY_THEN_FETCH)
-//	      		.setTypes(COLLECTION)
-//	      		.execute()
-//	      		.actionGet();
-//
-//	      SearchHits hits = response.getHits();
-//
-//	      for(SearchHit hit: hits.hits()){
-//	     	assertEquals(false, hit.getSource().get(COLUMN_AGE).equals(17) ||
-//	     			hit.getSource().get(COLUMN_AGE).equals(30));
-//	      }
-//
-//	      assertEquals(3, hits.getTotalHits());
-
-        fail("Not implemented"); //REVIEW debido a cambio de interfaz
+        fail("Not yet generic supported");
     }
 
 
@@ -238,7 +181,7 @@ public abstract class GenericDeleteTest extends GenericConnectorTest {
 //
 //	Filter f = new Filter(Operations.SELECT_WHERE_MATCH, RelationType.COMPARE, relCom);
 //	return f;
-        fail("Not implemented");
+        fail("Not yet generic supported");
         return null; //REVIEW por la nueva version de meta
 
     }
@@ -254,7 +197,7 @@ public abstract class GenericDeleteTest extends GenericConnectorTest {
         row.setCells(cells);
 
 //       ((ElasticsearchStorageEngine) connector.getStorageEngine()).insert(CATALOG, TABLE, row);
-        fail("Not implemented"); //REVIEW debido a cambio de interfaz
+        fail("Not yet generic supported");
     }
 
 

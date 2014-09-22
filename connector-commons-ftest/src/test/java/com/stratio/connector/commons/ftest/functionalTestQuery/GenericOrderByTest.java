@@ -151,7 +151,7 @@ public abstract class GenericOrderByTest extends GenericConnectorTest {
 //	        }
 //	        return new LogicalWorkflow(stepList);
         //REVIEW cuando haya LIMIT de meta
-        throw new RuntimeException("Esperando a meta");
+        throw new RuntimeException("Not yet generic supported.");
     }
 
 
@@ -173,7 +173,7 @@ public abstract class GenericOrderByTest extends GenericConnectorTest {
         switch (sortAge) {
             case SORT_AGE: //stepList.add(new Sort(COLUMN_AGE, Sort.DESC)); break;
                 //REVIEW cuando haya SORT de meta
-                throw new RuntimeException("Esperando a meta");
+                throw new RuntimeException("Not yet generic supported.\n");
 
 // 2 Sort? o uno con lista de parámetros y luego lista de tipo ASC o DESC
 //        	case SORT_AGE_MONEY: stepList.add(createNotEqualsFilter(filterType, object)); stepList.add(createBetweenFilter(9,11)); break;
@@ -207,7 +207,7 @@ public abstract class GenericOrderByTest extends GenericConnectorTest {
         //stepList.add(limit);
         //return new LogicalWorkflow(stepList);
         //REVIEW cuando haya SORT de meta
-        throw new RuntimeException("Esperando a meta");
+        throw new RuntimeException("Not yet generic supported.");
 
 
     }
