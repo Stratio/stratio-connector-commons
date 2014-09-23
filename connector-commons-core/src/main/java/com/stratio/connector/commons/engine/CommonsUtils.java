@@ -28,6 +28,8 @@ public class CommonsUtils {
             conn.setLastDateInfo(new Date().toString());
             conn.setStatus("Work in Progress");
             conn.setWorkInProgress(true);
+
+            
         } catch (HandlerConnectionException e) {
             String msg ="fail get the Connection. "+e.getMessage();
             logger.error(msg);

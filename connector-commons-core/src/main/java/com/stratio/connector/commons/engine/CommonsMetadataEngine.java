@@ -52,8 +52,6 @@ public abstract class CommonsMetadataEngine extends CommonsUtils implements IMet
     public abstract void dropIndex(ClusterName targetCluster, IndexMetadata indexMetadata, Connection connection) throws UnsupportedException, ExecutionException ;
 
 
-
-
     public void createCatalog(ClusterName targetCluster, CatalogMetadata catalogMetadata) throws UnsupportedException, ExecutionException{
         try{
 
