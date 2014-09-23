@@ -132,7 +132,7 @@ public class ExampleWorkflows {
      * @param filterOp The Filter operation.
      * @param column   The column name.
      * @param op       The relationship operator.
-     * @param right    The right selector.
+     * @param right    The right select.
      * @return A {@link com.stratio.meta.common.logicalplan.Filter}.
      */
     public Filter getFilter(Operations filterOp, ColumnName column, Operator op, Selector right) {

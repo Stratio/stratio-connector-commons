@@ -19,28 +19,24 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.junit.Test;
 
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
+import com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator;
 import com.stratio.meta.common.data.Cell;
 import com.stratio.meta.common.data.Row;
 import com.stratio.meta.common.exceptions.ExecutionException;
 import com.stratio.meta.common.exceptions.UnsupportedException;
-import com.stratio.meta.common.logicalplan.LogicalStep;
 import com.stratio.meta.common.logicalplan.LogicalWorkflow;
-import com.stratio.meta.common.logicalplan.Project;
 import com.stratio.meta.common.result.QueryResult;
 import com.stratio.meta2.common.data.ClusterName;
-import com.stratio.meta2.common.data.ColumnName;
 import com.stratio.meta2.common.data.TableName;
 import com.stratio.meta2.common.metadata.TableMetadata;
 
@@ -72,7 +68,7 @@ public abstract class GenericQueryProjectTest extends GenericConnectorTest {
 
         refresh(CATALOG);
 
-        LogicalWorkflow logicalPlan = createLogicalPlan();
+        LogicalWorkflow logicalPlan = createLogicalWorkFlow();
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(clusterNodeName, logicalPlan);
 
         Set<Object> probeSet = new HashSet<>();
@@ -94,15 +90,10 @@ public abstract class GenericQueryProjectTest extends GenericConnectorTest {
 
     }
 
-    private LogicalWorkflow createLogicalPlan() {
-        List<LogicalStep> stepList = new ArrayList<>();
-        List<ColumnName> columns = new ArrayList<>();
-        columns.add(new ColumnName(CATALOG, TABLE, COLUMN_1));
-        columns.add(new ColumnName(CATALOG, TABLE, COLUMN_2));
-        TableName tableName = new TableName(CATALOG, TABLE);
-        Project project = new Project(null, tableName, columns);
-        stepList.add(project);
-        return new LogicalWorkflow(stepList);
+    private LogicalWorkflow createLogicalWorkFlow() {
+        
+        return new LogicalWorkFlowCreator(CATALOG,
+                TABLE).addColumnName(COLUMN_1,COLUMN_2).getLogicalWorkflow();
     }
 
     private void insertRow(int ikey, ClusterName clusterNodeName)

@@ -31,11 +31,11 @@ import org.junit.Test;
  */
 public class ParseTest {
 
-    Parser parse;
+    ConnectorParser parse;
 
     @Before
     public void before() throws Exception {
-        parse = new Parser();
+        parse = new ConnectorParser();
     }
 
     @After

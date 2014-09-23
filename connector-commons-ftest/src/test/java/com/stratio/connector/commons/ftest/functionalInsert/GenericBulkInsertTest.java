@@ -29,6 +29,7 @@ import java.util.Set;
 import org.junit.Test;
 
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
+import com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator;
 import com.stratio.meta.common.data.Cell;
 import com.stratio.meta.common.data.ResultSet;
 import com.stratio.meta.common.data.Row;
@@ -115,7 +116,7 @@ public abstract class GenericBulkInsertTest extends GenericConnectorTest {
     }
 
     private void verifyInsert(ClusterName cluesterName) throws UnsupportedException, ExecutionException {
-        QueryResult queryResult = connector.getQueryEngine().execute(cluesterName, createLogicalPlan());
+        QueryResult queryResult = connector.getQueryEngine().execute(cluesterName, createLogicalWorkFlow());
         ResultSet resultIterator = queryResult.getResultSet();
 
         assertEquals("The records number is correct " + cluesterName.getName(), getRowToInsert(),
@@ -133,18 +134,11 @@ public abstract class GenericBulkInsertTest extends GenericConnectorTest {
 
     }
 
-    private LogicalWorkflow createLogicalPlan() {
-        List<LogicalStep> stepList = new ArrayList<>();
-        List<ColumnName> columns = new ArrayList<>();
+    private LogicalWorkflow createLogicalWorkFlow() {
 
-        columns.add(new ColumnName(CATALOG, TABLE, COLUMN_KEY));
-        columns.add(new ColumnName(CATALOG, TABLE, COLUMN_1));
-        columns.add(new ColumnName(CATALOG, TABLE, COLUMN_2));
-        columns.add(new ColumnName(CATALOG, TABLE, COLUMN_3));
-        TableName tableName = new TableName(CATALOG, TABLE);
-        Project project = new Project(null, tableName, columns);
-        stepList.add(project);
-        return new LogicalWorkflow(stepList);
+        return new LogicalWorkFlowCreator(CATALOG,TABLE).addColumnName(COLUMN_KEY,COLUMN_1,COLUMN_2,
+                COLUMN_3).getLogicalWorkflow();
+
     }
 
 }

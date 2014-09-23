@@ -27,6 +27,7 @@ import java.util.Map;
 import org.junit.Test;
 
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
+import com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator;
 import com.stratio.meta.common.data.Cell;
 import com.stratio.meta.common.data.ResultSet;
 import com.stratio.meta.common.data.Row;
@@ -232,17 +233,10 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
     }
 
     private LogicalWorkflow createLogicalWorkFlow() {
-        List<LogicalStep> stepList = new ArrayList<>();
-        List<ColumnName> columns = new ArrayList<>();
 
-        columns.add(new ColumnName(CATALOG, TABLE, COLUMN_1));
-        columns.add(new ColumnName(CATALOG, TABLE, COLUMN_2));
-        columns.add(new ColumnName(CATALOG, TABLE, COLUMN_3));
-        columns.add(new ColumnName(CATALOG, TABLE, COLUMN_4));
-        TableName tableName = new TableName(CATALOG, TABLE);
-        Project project = new Project(null, tableName, columns);
-        stepList.add(project);
-        return new LogicalWorkflow(stepList);
+        return new LogicalWorkFlowCreator(CATALOG,TABLE).addColumnName(COLUMN_1,COLUMN_2,COLUMN_3,
+                COLUMN_4).getLogicalWorkflow();
+
     }
 
 }

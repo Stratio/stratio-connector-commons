@@ -17,13 +17,16 @@
 package com.stratio.connector.commons.ftest.workFlow;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.stratio.meta.common.connector.Operations;
 import com.stratio.meta.common.logicalplan.Filter;
 import com.stratio.meta.common.logicalplan.LogicalStep;
 import com.stratio.meta.common.logicalplan.LogicalWorkflow;
 import com.stratio.meta.common.logicalplan.Project;
+import com.stratio.meta.common.logicalplan.Select;
 import com.stratio.meta.common.statements.structures.relationships.Operator;
 import com.stratio.meta.common.statements.structures.relationships.Relation;
 import com.stratio.meta2.common.data.ColumnName;
@@ -39,6 +42,7 @@ import com.stratio.meta2.common.statements.structures.selectors.StringSelector;
  */
 public class LogicalWorkFlowCreator {
 
+    Select select;
     public static final String COLUMN_1 = "column1";
     public static final String COLUMN_2 = "column2";
     public static final String COLUMN_3 = "column3";
@@ -51,6 +55,35 @@ public class LogicalWorkFlowCreator {
     public LogicalWorkFlowCreator(String catalog, String table) {
         this.catalog = catalog;
         this.table = table;
+    }
+
+
+
+    public LogicalWorkflow getLogicalWorkflow() {
+
+        List<LogicalStep> logiclaSteps = new ArrayList<>();
+
+        Project project = new Project(Operations.PROJECT, new TableName(catalog, table), columns);
+        LogicalStep lastStep = project;
+        for (Filter filter : filters) {
+            lastStep.setNextStep(filter);
+            lastStep = filter;
+        }
+        if (select ==null){
+            Map<String, String> selectColumn = new LinkedHashMap<>();
+            for (ColumnName columnName : project.getColumnList()){
+                selectColumn.put(columnName.getName(),columnName.getName());
+            }
+            select = new Select(Operations.PROJECT, selectColumn); //The select is mandatory. If it doesn't exist we
+            // create with all project's columns.
+
+        }
+        lastStep.setNextStep(select);
+
+        logiclaSteps.add(project);
+
+        return new LogicalWorkflow(logiclaSteps);
+
     }
 
     public LogicalWorkFlowCreator addDefaultColumns() {
@@ -69,20 +102,7 @@ public class LogicalWorkFlowCreator {
         // return this;
     }
 
-    public LogicalWorkflow getLogicalWorkflow() {
 
-        List<LogicalStep> logiclaSteps = new ArrayList<>();
-
-        Project project = new Project(Operations.PROJECT, new TableName(catalog, table), columns);
-        for (Filter filter : filters) {
-            project.setNextStep(filter);
-        }
-
-        logiclaSteps.add(project);
-
-        return new LogicalWorkflow(logiclaSteps);
-
-    }
 
     public LogicalWorkFlowCreator addColumnName(String... columnName) {
         for (int i = 0; i < columnName.length; i++) {
@@ -203,5 +223,12 @@ public class LogicalWorkFlowCreator {
         filters.add(new Filter(Operations.FILTER_FULLTEXT, relation));
 
         return this;
+    }
+
+    public LogicalWorkFlowCreator addSelect(LinkedHashMap<String, String> fields) {
+         select = new Select(Operations.PROJECT, fields);
+
+        return this;
+
     }
 }

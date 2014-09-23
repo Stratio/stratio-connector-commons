@@ -19,7 +19,7 @@ package com.stratio.connector.commons.util;
  * This class is the responsible to parse the information.
  * Created by jmgomez on 3/09/14.
  */
-public class Parser {
+public class ConnectorParser {
 
     /**
      * This method parse the hosts string.
@@ -27,7 +27,7 @@ public class Parser {
      * @param hosts the hosts string.
      * @return the hosts in an Array.
      */
-    public String[] hosts(String hosts) {
+    public static String[] hosts(String hosts) {
         return hosts.split(",");
 
     }
@@ -38,7 +38,7 @@ public class Parser {
      * @param ips the ips string.
      * @return the ips in an Array.
      */
-    public String[] ports(String ips) {
+    public static String[] ports(String ips) {
         return ips.split(",");
     }
 }
