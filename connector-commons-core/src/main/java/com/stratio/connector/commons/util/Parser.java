@@ -21,7 +21,6 @@ package com.stratio.connector.commons.util;
  */
 public class Parser {
 
-
     /**
      * This method parse the hosts string.
      *

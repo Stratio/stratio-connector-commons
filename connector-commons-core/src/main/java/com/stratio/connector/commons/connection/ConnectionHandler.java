@@ -15,17 +15,17 @@
  */
 package com.stratio.connector.commons.connection;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.stratio.connector.commons.connection.exceptions.CreateNativeConnectionException;
 import com.stratio.connector.commons.connection.exceptions.HandlerConnectionException;
 import com.stratio.meta.common.connector.ConnectorClusterConfig;
 import com.stratio.meta.common.connector.IConfiguration;
 import com.stratio.meta.common.security.ICredentials;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * This class is the responsible to handle the connections.
@@ -47,10 +47,7 @@ public abstract class ConnectionHandler {
      */
     private Map<String, Connection> connections = new HashMap<>();
 
-
-
     /**
-
      * Constructor.
      *
      * @param configuration the general settings.
@@ -67,7 +64,8 @@ public abstract class ConnectionHandler {
      * @param config      the connection options.
      * @throws HandlerConnectionException if the connection already exists.
      */
-    public void createConnection(ICredentials credentials, ConnectorClusterConfig config) throws HandlerConnectionException {
+    public void createConnection(ICredentials credentials, ConnectorClusterConfig config)
+            throws HandlerConnectionException {
         Connection connection = createNativeConnection(credentials, config);
 
         String connectionName = config.getName().getName();
@@ -79,9 +77,7 @@ public abstract class ConnectionHandler {
             throw new HandlerConnectionException("The connection [" + connectionName + "] already exists");
         }
 
-
     }
-
 
     /**
      * Close the connection.
@@ -110,7 +106,6 @@ public abstract class ConnectionHandler {
         return isConnected;
     }
 
-
     /**
      * Create a connection for the concrete database.
      *
@@ -118,7 +113,8 @@ public abstract class ConnectionHandler {
      * @param config      the config.
      * @return a connection.
      */
-    protected abstract Connection createNativeConnection(ICredentials credentials, ConnectorClusterConfig config) throws CreateNativeConnectionException;
+    protected abstract Connection createNativeConnection(ICredentials credentials, ConnectorClusterConfig config)
+            throws CreateNativeConnectionException;
 
     /**
      * This method return a connection.
@@ -140,6 +136,5 @@ public abstract class ConnectionHandler {
     public Map<String, Connection> getConnections() {
         return connections;
     }
-
 
 }

@@ -16,6 +16,16 @@
 
 package com.stratio.connector.commons.ftest.functionalTestQuery;
 
+import static org.junit.Assert.assertEquals;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.junit.Test;
+
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
 import com.stratio.meta.common.data.Cell;
 import com.stratio.meta.common.data.Row;
@@ -29,12 +39,6 @@ import com.stratio.meta2.common.data.ClusterName;
 import com.stratio.meta2.common.data.ColumnName;
 import com.stratio.meta2.common.data.TableName;
 import com.stratio.meta2.common.metadata.TableMetadata;
-import org.junit.Test;
-
-import java.util.*;
-
-import static org.junit.Assert.assertEquals;
-
 
 public abstract class GenericLimitTest extends GenericConnectorTest {
 
@@ -46,7 +50,8 @@ public abstract class GenericLimitTest extends GenericConnectorTest {
     public void limitTest() throws Exception {
 
         ClusterName clusterName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST limitTest " + clusterName.getName() + " ***********************************");
+        System.out.println("*********************************** INIT FUNCTIONAL TEST limitTest " + clusterName.getName()
+                + " ***********************************");
 
         insertRow(1, "text", 10, 20, clusterName);// row,text,money,age
         insertRow(2, "text", 9, 17, clusterName);
@@ -80,12 +85,12 @@ public abstract class GenericLimitTest extends GenericConnectorTest {
         //stepList.add(new Limit(limit));
         //return new LogicalWorkflow(stepList);
 
-
         throw new RuntimeException("Not yet generic supported");
 
     }
 
-    private void insertRow(int ikey, String texto, int money, int age, ClusterName cLusterName) throws UnsupportedOperationException, ExecutionException, UnsupportedException {
+    private void insertRow(int ikey, String texto, int money, int age, ClusterName cLusterName)
+            throws UnsupportedOperationException, ExecutionException, UnsupportedException {
 
         Row row = new Row();
         Map<String, Cell> cells = new HashMap<>();
@@ -93,8 +98,9 @@ public abstract class GenericLimitTest extends GenericConnectorTest {
         cells.put(COLUMN_AGE, new Cell(age));
         cells.put(COLUMN_MONEY, new Cell(money));
         row.setCells(cells);
-        connector.getStorageEngine().insert(cLusterName, new TableMetadata(new TableName(CATALOG, TABLE), null, null, null, null, Collections.EMPTY_LIST, Collections.EMPTY_LIST), row);
-
+        connector.getStorageEngine().insert(cLusterName,
+                new TableMetadata(new TableName(CATALOG, TABLE), null, null, null, null, Collections.EMPTY_LIST,
+                        Collections.EMPTY_LIST), row);
 
     }
 

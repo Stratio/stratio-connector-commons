@@ -15,10 +15,11 @@
  */
 package com.stratio.connector.commons.ftest.functionalTestQuery;
 
-import com.stratio.connector.commons.ftest.GenericConnectorTest;
+import static org.junit.Assert.fail;
+
 import org.junit.Test;
 
-import static org.junit.Assert.fail;
+import com.stratio.connector.commons.ftest.GenericConnectorTest;
 
 public abstract class GenericGroupByTest extends GenericConnectorTest {
 

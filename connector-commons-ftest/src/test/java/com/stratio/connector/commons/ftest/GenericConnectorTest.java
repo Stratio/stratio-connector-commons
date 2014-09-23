@@ -15,6 +15,11 @@
  */
 package com.stratio.connector.commons.ftest;
 
+import org.junit.After;
+import org.junit.Before;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.stratio.connector.commons.ftest.helper.IConnectorHelper;
 import com.stratio.meta.common.connector.ConnectorClusterConfig;
 import com.stratio.meta.common.connector.IConfiguration;
@@ -26,39 +31,28 @@ import com.stratio.meta.common.exceptions.UnsupportedException;
 import com.stratio.meta.common.security.ICredentials;
 import com.stratio.meta2.common.data.CatalogName;
 import com.stratio.meta2.common.data.ClusterName;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 
 public abstract class GenericConnectorTest<T extends IConnector> {
 
-
-    public  final String TABLE = this.getClass().getSimpleName();
-    public   String CATALOG =    "catalog_functional_test";
-    
+    protected static IConnectorHelper iConnectorHelper;
+    public final String TABLE = this.getClass().getSimpleName();
     /**
      * The Log.
      */
-    protected  final Logger logger = LoggerFactory.getLogger(this.getClass());
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+    public String CATALOG = "catalog_functional_test";
+    protected boolean deleteBeteweenTest = true;
+    protected T connector;
 
-    protected  ClusterName getClusterName() {
+    protected ClusterName getClusterName() {
         return new ClusterName(CATALOG + "-" + TABLE);
     }
 
-    public void setDeleteBeteweenTest(boolean deleteBeteweenTest){
-        this.deleteBeteweenTest=deleteBeteweenTest;
+    public void setDeleteBeteweenTest(boolean deleteBeteweenTest) {
+        this.deleteBeteweenTest = deleteBeteweenTest;
     }
 
-    protected boolean deleteBeteweenTest = true;
-    protected static IConnectorHelper iConnectorHelper;
-
-
-    protected abstract  IConnectorHelper getConnectorHelper();
-    protected  T connector;
-
+    protected abstract IConnectorHelper getConnectorHelper();
 
     @Before
     public void setUp() throws InitializationException, ConnectionException, UnsupportedException, ExecutionException {
@@ -72,8 +66,7 @@ public abstract class GenericConnectorTest<T extends IConnector> {
         System.out.println(CATALOG + "/" + TABLE);
     }
 
-
-    protected void  deleteCatalog(String catalog) throws UnsupportedException, ExecutionException {
+    protected void deleteCatalog(String catalog) throws UnsupportedException, ExecutionException {
         try {
             if (deleteBeteweenTest) {
                 connector.getMetadataEngine().dropCatalog(getClusterName(), new CatalogName(catalog));
@@ -91,7 +84,6 @@ public abstract class GenericConnectorTest<T extends IConnector> {
         return (T) iConnectorHelper.getConnector();
     }
 
-
     protected IConfiguration getConfiguration() {
         return iConnectorHelper.getConfiguration();
     }
@@ -104,7 +96,6 @@ public abstract class GenericConnectorTest<T extends IConnector> {
         return iConnectorHelper.getICredentials();
     }
 
-    
     @After
     public void tearDown() throws ConnectionException, UnsupportedException, ExecutionException {
 
@@ -115,7 +106,6 @@ public abstract class GenericConnectorTest<T extends IConnector> {
 
                 connector.close(getClusterName());
             }
-
 
         }
     }

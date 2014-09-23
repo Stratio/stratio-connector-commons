@@ -16,21 +16,19 @@
 
 package com.stratio.connector.commons.ftest.helper;
 
+import java.util.Collection;
+import java.util.Map;
+
 import com.stratio.meta.common.connector.ConnectorClusterConfig;
 import com.stratio.meta.common.connector.IConfiguration;
 import com.stratio.meta.common.connector.IConnector;
 import com.stratio.meta.common.security.ICredentials;
 import com.stratio.meta2.common.metadata.ColumnType;
-import com.stratio.meta2.common.metadata.IndexMetadata;
-
-import java.util.Collection;
-import java.util.Map;
 
 /**
  * Created by jmgomez on 4/09/14.
  */
 public interface IConnectorHelper {
-
 
     void refresh(String catalog);
 
@@ -46,9 +44,9 @@ public interface IConnectorHelper {
 
     Collection<ColumnType> getAllSupportedColumnType();
 
-	boolean containsIndex(String catalogName, String collectionName,
-			String indexName);
+    boolean containsIndex(String catalogName, String collectionName,
+            String indexName);
 
-	int countIndexes(String catalogName, String collectionName);
+    int countIndexes(String catalogName, String collectionName);
 
 }

@@ -16,11 +16,11 @@
 
 package com.stratio.connector.commons.util;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * Parse Tester.
@@ -52,7 +52,6 @@ public class ParseTest {
         assertEquals("The fist ip is correct", "10.70.90.14", hosts[1]);
     }
 
-
     @Test
     public void parsePorts() {
 
@@ -62,6 +61,5 @@ public class ParseTest {
         assertEquals("The fist port is correct", "2000", ips[0]);
         assertEquals("The fist port is correct", "3000", ips[1]);
     }
-
 
 }

@@ -16,7 +16,12 @@
 
 package com.stratio.connector.commons.util;
 
-import com.stratio.meta2.common.statements.structures.selectors.*;
+import com.stratio.meta2.common.statements.structures.selectors.BooleanSelector;
+import com.stratio.meta2.common.statements.structures.selectors.ColumnSelector;
+import com.stratio.meta2.common.statements.structures.selectors.FloatingPointSelector;
+import com.stratio.meta2.common.statements.structures.selectors.IntegerSelector;
+import com.stratio.meta2.common.statements.structures.selectors.Selector;
+import com.stratio.meta2.common.statements.structures.selectors.StringSelector;
 
 /**
  * Created by jmgomez on 17/09/14.
@@ -25,19 +30,27 @@ public class SelectorHelper {
 
     public String getStringFieldValue(Selector selector) {
         String field = "";
-        switch(selector.getType()){
-            case COLUMN: field =  ((ColumnSelector)selector).getName().getName(); break;
-            case BOOLEAN: field = String.valueOf(((BooleanSelector)selector).getValue()); break;
-            case STRING: field =  ((StringSelector)selector).getValue(); break;
-            case INTEGER: field = String.valueOf(((IntegerSelector)selector).getValue()); break;
-            case FLOATING_POINT: field =((FloatingPointSelector) selector).toString(); break;
-            default: throw new RuntimeException("Selector "+selector.getType()+" not supported get value operation.");
+        switch (selector.getType()) {
+        case COLUMN:
+            field = ((ColumnSelector) selector).getName().getName();
+            break;
+        case BOOLEAN:
+            field = String.valueOf(((BooleanSelector) selector).getValue());
+            break;
+        case STRING:
+            field = ((StringSelector) selector).getValue();
+            break;
+        case INTEGER:
+            field = String.valueOf(((IntegerSelector) selector).getValue());
+            break;
+        case FLOATING_POINT:
+            field = ((FloatingPointSelector) selector).toString();
+            break;
+        default:
+            throw new RuntimeException("Selector " + selector.getType() + " not supported get value operation.");
         }
-
 
         return field;
     }
-
-
 
 }

@@ -15,6 +15,20 @@
  */
 package com.stratio.connector.commons.ftest.functionalTestQuery;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.junit.Test;
+
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
 import com.stratio.meta.common.data.Cell;
 import com.stratio.meta.common.data.Row;
@@ -28,13 +42,6 @@ import com.stratio.meta2.common.data.ClusterName;
 import com.stratio.meta2.common.data.ColumnName;
 import com.stratio.meta2.common.data.TableName;
 import com.stratio.meta2.common.metadata.TableMetadata;
-import org.junit.Test;
-
-import java.util.*;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 
 /**
  * Created by jmgomez on 17/07/14.
@@ -47,7 +54,6 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
 
     private Integer DEFAULT_GET_TO_SEARCH = 100;
 
-
     protected Integer getRowsToSearch() {
         return DEFAULT_GET_TO_SEARCH;
     }
@@ -56,14 +62,14 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
     public void selectAllFromTable() throws UnsupportedException, ExecutionException {
 
         ClusterName clusterNodeName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST selectAllFromTable ***********************************");
+        System.out.println(
+                "*********************************** INIT FUNCTIONAL TEST selectAllFromTable ***********************************");
 
         for (int i = 0; i < getRowsToSearch(); i++) {
             insertRow(i, clusterNodeName);
         }
 
         insertRecordNotReturnedInSearch(clusterNodeName);
-
 
         refresh(CATALOG);
 
@@ -78,23 +84,22 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
             }
         }
 
-        assertEquals("The record number is correct",  getRowsToSearch(),(Integer)queryResult.getResultSet().size());
+        assertEquals("The record number is correct", getRowsToSearch(), (Integer) queryResult.getResultSet().size());
         for (int i = 0; i < getRowsToSearch(); i++) {
             assertTrue("Return correct record", proveSet.contains("bin1ValueBin1_r" + i));
             assertTrue("Return correct record", proveSet.contains("bin2ValueBin2_r" + i));
             assertTrue("Return correct record", proveSet.contains("bin3ValueBin3_r" + i));
         }
 
-
     }
 
-    private void insertRecordNotReturnedInSearch(ClusterName clusterNodeName) throws ExecutionException, UnsupportedException {
+    private void insertRecordNotReturnedInSearch(ClusterName clusterNodeName)
+            throws ExecutionException, UnsupportedException {
         insertRow(1, "type2", clusterNodeName);
         insertRow(2, "type2", clusterNodeName);
         insertRow(1, "otherTable", clusterNodeName);
         insertRow(2, "otherTable", clusterNodeName);
     }
-
 
     private LogicalWorkflow createLogicalPlan() {
         List<LogicalStep> stepList = new ArrayList<>();
@@ -109,12 +114,13 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
         return new LogicalWorkflow(stepList);
     }
 
-    private void insertRow(int ikey, ClusterName clusterNodeName) throws UnsupportedOperationException, ExecutionException, UnsupportedException {
+    private void insertRow(int ikey, ClusterName clusterNodeName)
+            throws UnsupportedOperationException, ExecutionException, UnsupportedException {
         insertRow(ikey, TABLE, clusterNodeName);
     }
 
-
-    private void insertRow(int ikey, String Table, ClusterName clusterNodeName) throws UnsupportedOperationException, ExecutionException, UnsupportedException {
+    private void insertRow(int ikey, String Table, ClusterName clusterNodeName)
+            throws UnsupportedOperationException, ExecutionException, UnsupportedException {
 
         Row row = new Row();
         Map<String, Cell> cells = new HashMap<>();
@@ -122,7 +128,9 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
         cells.put(COLUMN_2, new Cell("ValueBin2_r" + ikey));
         cells.put(COLUMN_3, new Cell("ValueBin3_r" + ikey));
         row.setCells(cells);
-        connector.getStorageEngine().insert(clusterNodeName, new TableMetadata(new TableName(CATALOG, Table), null, null, null, null, Collections.EMPTY_LIST, Collections.EMPTY_LIST), row);
+        connector.getStorageEngine().insert(clusterNodeName,
+                new TableMetadata(new TableName(CATALOG, Table), null, null, null, null, Collections.EMPTY_LIST,
+                        Collections.EMPTY_LIST), row);
 
     }
 

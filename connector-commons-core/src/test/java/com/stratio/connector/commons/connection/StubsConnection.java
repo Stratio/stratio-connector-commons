@@ -21,9 +21,16 @@ package com.stratio.connector.commons.connection;
  */
 public class StubsConnection extends Connection {
 
+    public boolean connect = true;
+
     @Override
     public void close() {
         connect = false;
+    }
+
+    @Override
+    public boolean isConnect() {
+        return connect;
     }
 
     /**
@@ -31,13 +38,6 @@ public class StubsConnection extends Connection {
      */
     public void setConnect(boolean connect) {
         this.connect = connect;
-    }
-
-    public boolean connect = true;
-
-    @Override
-    public boolean isConnect() {
-        return connect;
     }
 
     @Override

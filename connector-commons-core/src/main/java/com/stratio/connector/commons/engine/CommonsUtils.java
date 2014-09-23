@@ -1,14 +1,14 @@
 package com.stratio.connector.commons.engine;
 
-import com.stratio.connector.commons.connection.Connection;
-import com.stratio.connector.commons.connection.ConnectionHandler;
-import com.stratio.connector.commons.connection.exceptions.HandlerConnectionException;
-import com.stratio.meta.common.exceptions.ConnectionException;
-import com.stratio.meta2.common.data.ClusterName;
+import java.util.Date;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Date;
+import com.stratio.connector.commons.connection.Connection;
+import com.stratio.connector.commons.connection.ConnectionHandler;
+import com.stratio.connector.commons.connection.exceptions.HandlerConnectionException;
+import com.stratio.meta2.common.data.ClusterName;
 
 /**
  * Created by dgomez on 22/09/14.
@@ -20,7 +20,7 @@ public class CommonsUtils {
      */
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    protected void startWork(ClusterName targetCluster ,ConnectionHandler connection) {
+    protected void startWork(ClusterName targetCluster, ConnectionHandler connection) {
         Connection conn = null;
         try {
             conn = connection.getConnection(targetCluster.getName());
@@ -29,15 +29,14 @@ public class CommonsUtils {
             conn.setStatus("Work in Progress");
             conn.setWorkInProgress(true);
 
-            
         } catch (HandlerConnectionException e) {
-            String msg ="fail get the Connection. "+e.getMessage();
+            String msg = "fail get the Connection. " + e.getMessage();
             logger.error(msg);
 
         }
     }
 
-    protected void endWork(ClusterName targetCluster ,ConnectionHandler connection) {
+    protected void endWork(ClusterName targetCluster, ConnectionHandler connection) {
         Connection conn = null;
         try {
             conn = connection.getConnection(targetCluster.getName());
@@ -47,7 +46,7 @@ public class CommonsUtils {
             conn.setWorkInProgress(false);
 
         } catch (HandlerConnectionException e) {
-            String msg ="fail getting the Connection. "+e.getMessage();
+            String msg = "fail getting the Connection. " + e.getMessage();
             logger.error(msg);
         }
     }

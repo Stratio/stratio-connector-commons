@@ -16,14 +16,11 @@
 
 package com.stratio.connector.commons.ftest;
 
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
-import static org.junit.Assert.fail;
-
-
 public abstract class GenericConfigurationTest extends GenericConnectorTest {
-
 
     @Test
     public void supportedOperationsTest() throws Exception {
@@ -36,8 +33,6 @@ public abstract class GenericConfigurationTest extends GenericConnectorTest {
 
         fail("Not yet generic supported");
 
-
     }
-
 
 }

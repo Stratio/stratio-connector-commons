@@ -24,6 +24,8 @@ import com.stratio.meta.common.security.ICredentials;
  * Created by jmgomez on 9/09/14.
  */
 public class StubConnectionHandle extends ConnectionHandler {
+    Connection onlyOneConnection = null;
+
     /**
      * Constructor.
      *
@@ -32,8 +34,6 @@ public class StubConnectionHandle extends ConnectionHandler {
     public StubConnectionHandle(IConfiguration configuration) {
         super(configuration);
     }
-
-    Connection onlyOneConnection = null;
 
     @Override
     protected Connection createNativeConnection(ICredentials credentials, ConnectorClusterConfig config) {
@@ -44,6 +44,5 @@ public class StubConnectionHandle extends ConnectionHandler {
     public Connection getOnlyOneConnection() {
         return onlyOneConnection;
     }
-
 
 }
