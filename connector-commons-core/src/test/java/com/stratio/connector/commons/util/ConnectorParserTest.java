@@ -29,23 +29,14 @@ import org.junit.Test;
  * @version 1.0
  * @since <pre>sep 3, 2014</pre>
  */
-public class ParseTest {
+public class ConnectorParserTest {
 
-    ConnectorParser parse;
 
-    @Before
-    public void before() throws Exception {
-        parse = new ConnectorParser();
-    }
-
-    @After
-    public void after() throws Exception {
-    }
 
     @Test
     public void parseHosts() {
 
-        String[] hosts = parse.hosts("10.70.90.12,10.70.90.14");
+        String[] hosts = ConnectorParser.hosts("10.70.90.12,10.70.90.14");
 
         assertEquals("The length is correct", 2, hosts.length);
         assertEquals("The fist ip is correct", "10.70.90.12", hosts[0]);
@@ -55,7 +46,7 @@ public class ParseTest {
     @Test
     public void parsePorts() {
 
-        String[] ips = parse.ports("2000,3000");
+        String[] ips = ConnectorParser.ports("2000,3000");
 
         assertEquals("The length is correct", 2, ips.length);
         assertEquals("The fist port is correct", "2000", ips[0]);

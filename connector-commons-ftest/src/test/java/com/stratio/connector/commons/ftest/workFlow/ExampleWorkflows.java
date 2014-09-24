@@ -36,6 +36,7 @@ import com.stratio.meta.common.statements.structures.relationships.Operator;
 import com.stratio.meta.common.statements.structures.relationships.Relation;
 import com.stratio.meta2.common.data.ColumnName;
 import com.stratio.meta2.common.data.TableName;
+import com.stratio.meta2.common.metadata.ColumnType;
 import com.stratio.meta2.common.statements.structures.selectors.ColumnSelector;
 import com.stratio.meta2.common.statements.structures.selectors.IntegerSelector;
 import com.stratio.meta2.common.statements.structures.selectors.Selector;
@@ -116,14 +117,16 @@ public class ExampleWorkflows {
      * @param columnNames The list of columns.
      * @return A {@link com.stratio.meta.common.logicalplan.Select}.
      */
-    public Select getSelect(String[] alias, ColumnName... columnNames) {
+    public Select getSelect(String[] alias, ColumnType[] types, ColumnName... columnNames) {
         Map<String, String> columnMap = new HashMap<>();
+        Map<String, ColumnType> columntype = new HashMap<>();
         int aliasIndex = 0;
         for (ColumnName column : columnNames) {
             columnMap.put(column.getQualifiedName(), alias[aliasIndex]);
+            columntype.put(column.getQualifiedName(),types[aliasIndex]);
             aliasIndex++;
         }
-        return new Select(Operations.SELECT_OPERATOR, columnMap);
+        return new Select(Operations.SELECT_OPERATOR, columnMap,columntype);
     }
 
     /**
@@ -151,8 +154,9 @@ public class ExampleWorkflows {
         ColumnName name = new ColumnName(catalog, table, COLUMN_NAME);
         ColumnName age = new ColumnName(catalog, table, COLUMN_AGE);
         String[] outputNames = { ALIAS_NAME, ALIAS_AGE };
+        ColumnType[] types = {ColumnType.VARCHAR,ColumnType.INT};
         LogicalStep project = getProject(name, age);
-        LogicalStep select = getSelect(outputNames, name, age);
+        LogicalStep select = getSelect(outputNames, types, name, age);
         project.setNextStep(select);
         LogicalWorkflow lw = new LogicalWorkflow(Arrays.asList(project));
         return lw;
@@ -188,11 +192,12 @@ public class ExampleWorkflows {
         ColumnName name = new ColumnName(catalog, table, COLUMN_NAME);
         ColumnName age = new ColumnName(catalog, table, COLUMN_AGE);
         String[] outputNames = { ALIAS_NAME, ALIAS_AGE };
+        ColumnType[] types = {ColumnType.VARCHAR,ColumnType.INT};
         LogicalStep project = getProject(id, name, age);
         LogicalStep filter = getFilter(Operations.FILTER_INDEXED_EQ,
                 name, Operator.EQ, new StringSelector(names[0].toLowerCase()));
         project.setNextStep(filter);
-        LogicalStep select = getSelect(outputNames, name, age);
+        LogicalStep select = getSelect(outputNames,types, name, age);
         filter.setNextStep(select);
         LogicalWorkflow lw = new LogicalWorkflow(Arrays.asList(project));
         return lw;
@@ -209,11 +214,12 @@ public class ExampleWorkflows {
         ColumnName name = new ColumnName(catalog, table, COLUMN_NAME);
         ColumnName age = new ColumnName(catalog, table, COLUMN_AGE);
         String[] outputNames = { ALIAS_NAME, ALIAS_AGE };
+        ColumnType[] types = {ColumnType.VARCHAR,ColumnType.INT};
         LogicalStep project = getProject(id, name, age);
         LogicalStep filter = getFilter(Operations.FILTER_NON_INDEXED_EQ,
                 age, Operator.EQ, new IntegerSelector(42));
         project.setNextStep(filter);
-        LogicalStep select = getSelect(outputNames, name, age);
+        LogicalStep select = getSelect(outputNames, types,name, age);
         filter.setNextStep(select);
         LogicalWorkflow lw = new LogicalWorkflow(Arrays.asList(project));
         return lw;
@@ -230,6 +236,7 @@ public class ExampleWorkflows {
         ColumnName name = new ColumnName(catalog, table, COLUMN_NAME);
         ColumnName age = new ColumnName(catalog, table, COLUMN_AGE);
         String[] outputNames = { ALIAS_ID, ALIAS_NAME, ALIAS_AGE };
+        ColumnType[] types = {ColumnType.INT,ColumnType.VARCHAR,ColumnType.INT};
         LogicalStep project = getProject(id, name, age);
         LogicalStep filterName = getFilter(Operations.FILTER_INDEXED_EQ,
                 name, Operator.EQ, new StringSelector(names[1].toLowerCase()));
@@ -237,7 +244,7 @@ public class ExampleWorkflows {
         LogicalStep filterAge = getFilter(Operations.FILTER_NON_INDEXED_EQ,
                 age, Operator.EQ, new IntegerSelector(40));
         filterName.setNextStep(filterAge);
-        LogicalStep select = getSelect(outputNames, id, name, age);
+        LogicalStep select = getSelect(outputNames, types,id, name, age);
         filterAge.setNextStep(select);
         LogicalWorkflow lw = new LogicalWorkflow(Arrays.asList(project));
         return lw;

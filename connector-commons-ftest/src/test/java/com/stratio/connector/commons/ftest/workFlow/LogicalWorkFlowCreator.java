@@ -17,7 +17,9 @@
 package com.stratio.connector.commons.ftest.workFlow;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +32,9 @@ import com.stratio.meta.common.logicalplan.Select;
 import com.stratio.meta.common.statements.structures.relationships.Operator;
 import com.stratio.meta.common.statements.structures.relationships.Relation;
 import com.stratio.meta2.common.data.ColumnName;
+import com.stratio.meta2.common.data.NameType;
 import com.stratio.meta2.common.data.TableName;
+import com.stratio.meta2.common.metadata.ColumnType;
 import com.stratio.meta2.common.statements.structures.selectors.BooleanSelector;
 import com.stratio.meta2.common.statements.structures.selectors.ColumnSelector;
 import com.stratio.meta2.common.statements.structures.selectors.IntegerSelector;
@@ -71,11 +75,15 @@ public class LogicalWorkFlowCreator {
         }
         if (select ==null){
             Map<String, String> selectColumn = new LinkedHashMap<>();
+            Map<String, ColumnType> typeMap =  new LinkedHashMap();
             for (ColumnName columnName : project.getColumnList()){
                 selectColumn.put(columnName.getName(),columnName.getName());
+                typeMap.put(columnName.getName(),ColumnType.VARCHAR);
             }
-            select = new Select(Operations.PROJECT, selectColumn); //The select is mandatory. If it doesn't exist we
-            // create with all project's columns.
+
+            select = new Select(Operations.PROJECT, selectColumn, typeMap); //The select is mandatory. If it doesn't
+            // exist we
+            // create with all project's columns with varchar type.
 
         }
         lastStep.setNextStep(select);
@@ -85,6 +93,7 @@ public class LogicalWorkFlowCreator {
         return new LogicalWorkflow(logiclaSteps);
 
     }
+
 
     public LogicalWorkFlowCreator addDefaultColumns() {
 
@@ -225,10 +234,31 @@ public class LogicalWorkFlowCreator {
         return this;
     }
 
-    public LogicalWorkFlowCreator addSelect(LinkedHashMap<String, String> fields) {
-         select = new Select(Operations.PROJECT, fields);
+    public LogicalWorkFlowCreator addSelect(LinkedList<ConnectorField> fields) {
+        Map<String, String> mapping = new HashMap<>();
+        Map<String, ColumnType> types = new HashMap<>();;
+        for (ConnectorField connectorField : fields){
+            mapping.put(connectorField.name,connectorField.alias);
+            types.put(connectorField.name,connectorField.columnType);
+        }
+
+        select = new Select(Operations.PROJECT, mapping,types);
 
         return this;
+
+    }
+
+    public class ConnectorField {
+        public String name;
+        public String alias;
+        public ColumnType columnType;
+
+        ConnectorField(String name, String alias, ColumnType columnType){
+            this.name = name;
+            this.alias = alias;
+            this.columnType = columnType;
+        }
+
 
     }
 }
