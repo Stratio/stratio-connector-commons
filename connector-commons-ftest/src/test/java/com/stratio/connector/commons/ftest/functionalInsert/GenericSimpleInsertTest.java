@@ -70,7 +70,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
 
 
     @Test
-    public void testSimpleInsertWithOutPK() throws UnsupportedException, ExecutionException {
+    public void testSimpleInsertWithoutPK() throws UnsupportedException, ExecutionException {
         ClusterName clusterName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST testSimpleInsert  ***********************************");
 
