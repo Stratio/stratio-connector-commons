@@ -247,13 +247,19 @@ public class LogicalWorkFlowCreator {
         return this;
 
     }
+    public  ConnectorField  createConnectorField(String name, String alias, ColumnType columnType){
+        return new ConnectorField(name,alias,columnType);
 
-    public class ConnectorField {
+    }
+
+
+
+    public  class ConnectorField {
         public String name;
         public String alias;
         public ColumnType columnType;
 
-        ConnectorField(String name, String alias, ColumnType columnType){
+        public  ConnectorField(String name, String alias, ColumnType columnType){
             this.name = name;
             this.alias = alias;
             this.columnType = columnType;

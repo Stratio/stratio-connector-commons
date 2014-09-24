@@ -37,6 +37,7 @@ import org.junit.Test;
 
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
 
+import com.stratio.connector.commons.ftest.schema.TableMetadataBuilder;
 import com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator;
 import com.stratio.meta.common.data.Cell;
 import com.stratio.meta.common.data.ResultSet;
@@ -86,12 +87,14 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
         refresh(CATALOG);
 
         LinkedList<LogicalWorkFlowCreator.ConnectorField> fields = new LinkedList<>();
-        fields.put(COLUMN_1,COLUMN_1);
-        fields.put(COLUMN_2,COLUMN_2);
-        fields.put(COLUMN_3,COLUMN_3);
+        LogicalWorkFlowCreator logicalWorkFlowCreator = new LogicalWorkFlowCreator(CATALOG,
+                TABLE);
+        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_1, COLUMN_1, ColumnType.VARCHAR));
+        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_2, COLUMN_2,ColumnType.VARCHAR));
+        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_3, COLUMN_3,ColumnType.VARCHAR));
 
-        LogicalWorkflow logicalPlan = new LogicalWorkFlowCreator(CATALOG,
-                TABLE).addColumnName(COLUMN_1, COLUMN_2, COLUMN_3).addSelect(fields).getLogicalWorkflow();
+
+        LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addColumnName(COLUMN_1, COLUMN_2, COLUMN_3).addSelect(fields).getLogicalWorkflow();
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(clusterNodeName, logicalPlan);
         Set<Object> proveSet = new HashSet<>();
         ResultSet resultSet = queryResult.getResultSet();
@@ -127,13 +130,15 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
 
         refresh(CATALOG);
 
-        LinkedHashMap<String, String> fields = new LinkedHashMap<String, String>();
-        fields.put(COLUMN_1,"alias"+COLUMN_1);
-        fields.put(COLUMN_2,"alias"+COLUMN_2);
-        fields.put(COLUMN_3,"alias"+COLUMN_3);
+        LinkedList<LogicalWorkFlowCreator.ConnectorField> fields = new LinkedList<>();
+        LogicalWorkFlowCreator logicalWorkFlowCreator = new LogicalWorkFlowCreator(CATALOG,
+                TABLE);
+        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_1, COLUMN_1, ColumnType.VARCHAR));
+        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_2, COLUMN_2,ColumnType.VARCHAR));
+        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_3, COLUMN_3,ColumnType.VARCHAR));
 
-        LogicalWorkflow logicalPlan = new LogicalWorkFlowCreator(CATALOG,
-                TABLE).addColumnName(COLUMN_1, COLUMN_2, COLUMN_3).addSelect(fields).getLogicalWorkflow();
+
+        LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addColumnName(COLUMN_1, COLUMN_2, COLUMN_3).addSelect(fields).getLogicalWorkflow();
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(clusterNodeName, logicalPlan);
 
         ResultSet resultSet = queryResult.getResultSet();
@@ -208,12 +213,16 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
 
 
     private LogicalWorkflow createLogicalPlan() {
-        LinkedHashMap<String, String> fields = new LinkedHashMap<String, String>();
-        fields.put(COLUMN_1, COLUMN_1);
-        fields.put(COLUMN_2, COLUMN_2);
-        fields.put(COLUMN_3, COLUMN_3);
+        LinkedList<LogicalWorkFlowCreator.ConnectorField> fields = new LinkedList<>();
+        LogicalWorkFlowCreator logicalWorkFlowCreator = new LogicalWorkFlowCreator(CATALOG,
+                TABLE);
+        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_1, COLUMN_1, ColumnType.VARCHAR));
+        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_2, COLUMN_2,ColumnType.VARCHAR));
+        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_3, COLUMN_3,ColumnType.VARCHAR));
 
-        return new LogicalWorkFlowCreator(CATALOG, TABLE).addColumnName(COLUMN_1, COLUMN_2, COLUMN_3).addSelect(fields)
+
+
+        return logicalWorkFlowCreator.addColumnName(COLUMN_1, COLUMN_2, COLUMN_3).addSelect(fields)
                         .getLogicalWorkflow();
     }
 
