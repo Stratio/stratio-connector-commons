@@ -17,29 +17,24 @@ package com.stratio.connector.commons.ftest.functionalInsert;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
 
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
+import com.stratio.connector.commons.ftest.schema.TableMetadataBuilder;
 import com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator;
 import com.stratio.meta.common.data.Cell;
 import com.stratio.meta.common.data.ResultSet;
 import com.stratio.meta.common.data.Row;
 import com.stratio.meta.common.exceptions.ExecutionException;
 import com.stratio.meta.common.exceptions.UnsupportedException;
-import com.stratio.meta.common.logicalplan.LogicalStep;
 import com.stratio.meta.common.logicalplan.LogicalWorkflow;
-import com.stratio.meta.common.logicalplan.Project;
 import com.stratio.meta.common.result.QueryResult;
 import com.stratio.meta2.common.data.ClusterName;
-import com.stratio.meta2.common.data.ColumnName;
-import com.stratio.meta2.common.data.TableName;
+import com.stratio.meta2.common.metadata.ColumnType;
 import com.stratio.meta2.common.metadata.TableMetadata;
 
 /**
@@ -61,21 +56,19 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
     @Test
     public void testSimpleInsertWithPK() throws UnsupportedException, ExecutionException {
         ClusterName clusterName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST testSimpleInsert  ***********************************");
+        System.out.println("*********************************** INIT FUNCTIONAL TEST testSimpleInsert  ***********************************");
 
-        insertRow(clusterName, VALUE_4, VALUE_1, true);
+        insertRow(clusterName, VALUE_4, ColumnType.VARCHAR, VALUE_1, true);
 
         verifyInsert(clusterName, VALUE_4);
     }
 
     @Test
-    public void testSimpleInsertWithOutPK() throws UnsupportedException, ExecutionException {
+    public void testSimpleInsertWithoutPK() throws UnsupportedException, ExecutionException {
         ClusterName clusterName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST testSimpleInsert  ***********************************");
+        System.out.println("*********************************** INIT FUNCTIONAL TEST testSimpleInsert  ***********************************");
 
-        insertRow(clusterName, VALUE_4, VALUE_1, false);
+        insertRow(clusterName, VALUE_4, ColumnType.VARCHAR, VALUE_1, false);
 
         verifyInsert(clusterName, VALUE_4);
     }
@@ -83,32 +76,63 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
     @Test
     public void testInsertSamePK() throws UnsupportedException, ExecutionException {
         ClusterName clusterName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST testInsertSamePK " + clusterName.getName()
-                        + " ***********************************");
+        System.out.println("*********************************** INIT FUNCTIONAL TEST testInsertSamePK "
+                        + clusterName.getName() + " ***********************************");
 
-        insertRow(clusterName, VALUE_4, VALUE_1, true);
-        insertRow(clusterName, OTHER_VALUE_4, VALUE_1, true);
+        insertRow(clusterName, VALUE_4, ColumnType.VARCHAR, VALUE_1, true);
+        insertRow(clusterName, OTHER_VALUE_4, ColumnType.VARCHAR, VALUE_1, true);
 
         verifyInsert(clusterName, OTHER_VALUE_4);
 
     }
 
     @Test
+    public void testInsertDuplicateCompositePK() throws UnsupportedException, ExecutionException {
+        ClusterName clusterName = getClusterName();
+        System.out.println("*********************************** INIT FUNCTIONAL TEST testDuplicateCompositePK "
+                        + clusterName.getName() + " ***********************************");
+
+        insertRowCompositePK(clusterName, COLUMN_1, COLUMN_2);
+        try {
+            insertRowCompositePK(clusterName, COLUMN_1, COLUMN_2);
+        } catch (Exception e) {
+        }
+
+        ResultSet resultIterator = createResultSet(clusterName);
+
+        assertEquals("The records number is correct " + clusterName.getName(), 1, resultIterator.size());
+
+    }
+
+    @Test
+    public void testInsertCompositePK() throws UnsupportedException, ExecutionException {
+        ClusterName clusterName = getClusterName();
+        System.out.println("*********************************** INIT FUNCTIONAL TEST testCompositePK "
+                        + clusterName.getName() + " ***********************************");
+
+        insertRowCompositePK(clusterName, COLUMN_1, COLUMN_2);
+        insertRowCompositePK(clusterName, COLUMN_1, COLUMN_3);
+
+        ResultSet resultIterator = createResultSet(clusterName);
+
+        assertEquals("The records number is correct " + clusterName.getName(), 2, resultIterator.size());
+
+    }
+
+    @Test
     public void testInsertString() throws UnsupportedException, ExecutionException {
         ClusterName clusterName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST testInsertSamePK " + clusterName.getName()
-                        + " ***********************************");
+        System.out.println("*********************************** INIT FUNCTIONAL TEST testInsertSamePK "
+                        + clusterName.getName() + " ***********************************");
 
         Object value4 = "String";
-        insertRow(clusterName, value4, VALUE_1, true);
+        insertRow(clusterName, value4, ColumnType.VARCHAR, VALUE_1, true);
 
         ResultSet resultIterator = createResultSet(clusterName);
         assertEquals("It have only one result", 1, resultIterator.size());
         for (Row recoveredRow : resultIterator) {
-            assertEquals("The type is correct ", String.class.getCanonicalName(),
-                    recoveredRow.getCell(COLUMN_4).getValue().getClass().getCanonicalName());
+            assertEquals("The type is correct ", String.class.getCanonicalName(), recoveredRow.getCell(COLUMN_4)
+                            .getValue().getClass().getCanonicalName());
             assertEquals("The value is correct ", value4, recoveredRow.getCell(COLUMN_4).getValue());
         }
 
@@ -117,16 +141,15 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
     @Test
     public void testInsertInteger() throws UnsupportedException, ExecutionException {
         ClusterName clusterName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST testInsertInteger ***********************************");
+        System.out.println("*********************************** INIT FUNCTIONAL TEST testInsertInteger ***********************************");
         Object value4 = new Integer(1);
-        insertRow(clusterName, value4, VALUE_1, true);
+        insertRow(clusterName, value4, ColumnType.INT, VALUE_1, true);
 
         ResultSet resultIterator = createResultSet(clusterName);
         assertEquals("It have only one result", 1, resultIterator.size());
         for (Row recoveredRow : resultIterator) {
-            assertEquals("The type is correct ", Integer.class.getCanonicalName(),
-                    recoveredRow.getCell(COLUMN_4).getValue().getClass().getCanonicalName());
+            assertEquals("The type is correct ", Integer.class.getCanonicalName(), recoveredRow.getCell(COLUMN_4)
+                            .getValue().getClass().getCanonicalName());
             assertEquals("The value is correct ", value4, recoveredRow.getCell(COLUMN_4).getValue());
         }
 
@@ -135,17 +158,16 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
     @Test
     public void testInsertLong() throws UnsupportedException, ExecutionException {
         ClusterName clusterName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST testInsertSamePK " + clusterName.getName()
-                        + " ***********************************");
+        System.out.println("*********************************** INIT FUNCTIONAL TEST testInsertSamePK "
+                        + clusterName.getName() + " ***********************************");
         Object value4 = 1L;
-        insertRow(clusterName, value4, VALUE_1, true);
+        insertRow(clusterName, value4, ColumnType.BIGINT, VALUE_1, true);
 
         ResultSet resultIterator = createResultSet(clusterName);
         assertEquals("It have only one result", 1, resultIterator.size());
         for (Row recoveredRow : resultIterator) {
-            assertEquals("The type is correct ", Long.class.getCanonicalName(),
-                    recoveredRow.getCell(COLUMN_4).getValue().getClass().getCanonicalName());
+            assertEquals("The type is correct ", Long.class.getCanonicalName(), recoveredRow.getCell(COLUMN_4)
+                            .getValue().getClass().getCanonicalName());
             assertEquals("The value is correct ", value4, recoveredRow.getCell(COLUMN_4).getValue());
         }
 
@@ -154,17 +176,16 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
     @Test
     public void testInsertBoolean() throws UnsupportedException, ExecutionException {
         ClusterName clusterName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST testInsertSamePK " + clusterName.getName()
-                        + " ***********************************");
+        System.out.println("*********************************** INIT FUNCTIONAL TEST testInsertSamePK "
+                        + clusterName.getName() + " ***********************************");
         Object value4 = new Boolean(true);
-        insertRow(clusterName, value4, VALUE_1, true);
+        insertRow(clusterName, value4, ColumnType.BOOLEAN, VALUE_1, true);
 
         ResultSet resultIterator = createResultSet(clusterName);
         assertEquals("It have only one result", 1, resultIterator.size());
         for (Row recoveredRow : resultIterator) {
-            assertEquals("The type is correct ", Boolean.class.getCanonicalName(),
-                    recoveredRow.getCell(COLUMN_4).getValue().getClass().getCanonicalName());
+            assertEquals("The type is correct ", Boolean.class.getCanonicalName(), recoveredRow.getCell(COLUMN_4)
+                            .getValue().getClass().getCanonicalName());
             assertEquals("The value is correct ", value4, recoveredRow.getCell(COLUMN_4).getValue());
         }
 
@@ -173,24 +194,23 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
     @Test
     public void testInsertDate() throws UnsupportedException, ExecutionException {
         ClusterName clusterName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST testInsertSamePK " + clusterName.getName()
-                        + " ***********************************");
+        System.out.println("*********************************** INIT FUNCTIONAL TEST testInsertSamePK "
+                        + clusterName.getName() + " ***********************************");
         Object value4 = new Date();
-        insertRow(clusterName, value4, VALUE_1, true);
+        insertRow(clusterName, value4, ColumnType.NATIVE, VALUE_1, true);
 
         ResultSet resultIterator = createResultSet(clusterName);
         assertEquals("It have only one result", 1, resultIterator.size());
         for (Row recoveredRow : resultIterator) {
-            assertEquals("The type is correct ", Date.class.getCanonicalName(),
-                    recoveredRow.getCell(COLUMN_4).getValue().getClass().getCanonicalName());
+            assertEquals("The type is correct ", Date.class.getCanonicalName(), recoveredRow.getCell(COLUMN_4)
+                            .getValue().getClass().getCanonicalName());
             assertEquals("The value is correct ", value4, recoveredRow.getCell(COLUMN_4).getValue());
         }
 
     }
 
-    private void verifyInsert(ClusterName clusterName, String test_value_4)
-            throws UnsupportedException, ExecutionException {
+    private void verifyInsert(ClusterName clusterName, String test_value_4) throws UnsupportedException,
+                    ExecutionException {
         ResultSet resultIterator = createResultSet(clusterName);
 
         for (Row recoveredRow : resultIterator) {
@@ -208,8 +228,8 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
         return queryResult.getResultSet();
     }
 
-    private void insertRow(ClusterName cluesterName, Object value_4, String PK_VALUE, boolean withPK)
-            throws UnsupportedException, ExecutionException {
+    private void insertRow(ClusterName cluesterName, Object value_4, ColumnType colType_4, String PK_VALUE,
+                    boolean withPK) throws UnsupportedException, ExecutionException {
         Row row = new Row();
         Map<String, Cell> cells = new HashMap<>();
 
@@ -220,22 +240,48 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
 
         row.setCells(cells);
 
-        List<ColumnName> pk = new ArrayList<>();
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
+        tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.VARCHAR)
+                        .addColumn(COLUMN_3, ColumnType.VARCHAR).addColumn(COLUMN_4, colType_4);
         if (withPK) {
-            ColumnName columnPK = new ColumnName(CATALOG, TABLE, COLUMN_1);
-            pk.add(columnPK);
+            tableMetadataBuilder.withPartitionKey(COLUMN_1);
         }
+        TableMetadata targetTable = tableMetadataBuilder.build();
 
-        connector.getStorageEngine().insert(cluesterName,
-                new TableMetadata(new TableName(CATALOG, TABLE), null, null, null, null, pk, Collections.EMPTY_LIST),
-                row);
+        connector.getStorageEngine().insert(cluesterName, targetTable, row);
+        refresh(CATALOG);
+    }
+
+    private void insertRowCompositePK(ClusterName cluesterName, String partitionKey, String clusterKey)
+                    throws UnsupportedException, ExecutionException {
+
+        Row row = new Row();
+        Map<String, Cell> cells = new HashMap<>();
+
+        cells.put(partitionKey, new Cell(VALUE_1));
+        cells.put(clusterKey, new Cell(VALUE_2));
+        cells.put(COLUMN_3, new Cell(VALUE_3));
+        cells.put(COLUMN_4, new Cell(VALUE_4));
+
+        row.setCells(cells);
+
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
+        tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.VARCHAR)
+                        .addColumn(COLUMN_3, ColumnType.VARCHAR).addColumn(COLUMN_4, ColumnType.VARCHAR);
+
+        tableMetadataBuilder.withPartitionKey(COLUMN_1);
+        tableMetadataBuilder.withClusterKey(clusterKey);
+
+        TableMetadata targetTable = tableMetadataBuilder.build();
+
+        connector.getStorageEngine().insert(cluesterName, targetTable, row);
         refresh(CATALOG);
     }
 
     private LogicalWorkflow createLogicalWorkFlow() {
 
-        return new LogicalWorkFlowCreator(CATALOG,TABLE).addColumnName(COLUMN_1,COLUMN_2,COLUMN_3,
-                COLUMN_4).getLogicalWorkflow();
+        return new LogicalWorkFlowCreator(CATALOG, TABLE).addColumnName(COLUMN_1, COLUMN_2, COLUMN_3, COLUMN_4)
+                        .getLogicalWorkflow();
 
     }
 

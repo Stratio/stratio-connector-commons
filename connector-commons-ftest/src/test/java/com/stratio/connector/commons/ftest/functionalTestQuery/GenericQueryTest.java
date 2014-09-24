@@ -19,19 +19,24 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+
 import java.util.Collections;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+
 import java.util.LinkedList;
 import java.util.List;
+
 import java.util.Map;
 import java.util.Set;
 
 import org.junit.Test;
 
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
+
 import com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator;
 import com.stratio.meta.common.data.Cell;
 import com.stratio.meta.common.data.ResultSet;
@@ -39,10 +44,15 @@ import com.stratio.meta.common.data.Row;
 import com.stratio.meta.common.exceptions.ExecutionException;
 import com.stratio.meta.common.exceptions.UnsupportedException;
 import com.stratio.meta.common.logicalplan.LogicalWorkflow;
+
 import com.stratio.meta.common.metadata.structures.ColumnMetadata;
 import com.stratio.meta.common.result.QueryResult;
 import com.stratio.meta2.common.data.ClusterName;
 import com.stratio.meta2.common.data.TableName;
+
+import com.stratio.meta.common.result.QueryResult;
+import com.stratio.meta2.common.data.ClusterName;
+
 import com.stratio.meta2.common.metadata.ColumnType;
 import com.stratio.meta2.common.metadata.TableMetadata;
 
@@ -65,8 +75,7 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
     public void selectAllFromTable() throws UnsupportedException, ExecutionException {
 
         ClusterName clusterNodeName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST selectAllFromTable ***********************************");
+        System.out.println("*********************************** INIT FUNCTIONAL TEST selectAllFromTable ***********************************");
 
         for (int i = 0; i < getRowsToSearch(); i++) {
             insertRow(i, clusterNodeName);
@@ -86,12 +95,15 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(clusterNodeName, logicalPlan);
         Set<Object> proveSet = new HashSet<>();
         ResultSet resultSet = queryResult.getResultSet();
-        ;
+
         Iterator<Row> rowIterator = resultSet.iterator();
         while (rowIterator.hasNext()) {
             Row row = rowIterator.next();
-            Map<String,Cell> cells =  row.getCells();
-            String[] columnName = cells.keySet().toArray( new String[0]);
+
+
+
+            Map<String, Cell> cells = row.getCells();
+            String[] columnName = cells.keySet().toArray(new String[0]);
             validateFieldOrder(columnName);
             for (String cell : row.getCells().keySet()) {
                 proveSet.add(cell + row.getCell(cell).getValue());
@@ -186,21 +198,32 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
         assertEquals("The third column is sorted",COLUMN_3,columnName[2]);
     }
 
-    private void insertRecordNotReturnedInSearch(ClusterName clusterNodeName)
-            throws ExecutionException, UnsupportedException {
+    private void insertRecordNotReturnedInSearch(ClusterName clusterNodeName) throws ExecutionException,
+                    UnsupportedException {
         insertRow(1, "type2", clusterNodeName);
         insertRow(2, "type2", clusterNodeName);
         insertRow(1, "otherTable", clusterNodeName);
         insertRow(2, "otherTable", clusterNodeName);
     }
 
-    private void insertRow(int ikey, ClusterName clusterNodeName)
-            throws UnsupportedOperationException, ExecutionException, UnsupportedException {
+
+    private LogicalWorkflow createLogicalPlan() {
+        LinkedHashMap<String, String> fields = new LinkedHashMap<String, String>();
+        fields.put(COLUMN_1, COLUMN_1);
+        fields.put(COLUMN_2, COLUMN_2);
+        fields.put(COLUMN_3, COLUMN_3);
+
+        return new LogicalWorkFlowCreator(CATALOG, TABLE).addColumnName(COLUMN_1, COLUMN_2, COLUMN_3).addSelect(fields)
+                        .getLogicalWorkflow();
+    }
+
+    private void insertRow(int ikey, ClusterName clusterNodeName) throws UnsupportedOperationException,
+                    ExecutionException, UnsupportedException {
         insertRow(ikey, TABLE, clusterNodeName);
     }
 
-    private void insertRow(int ikey, String Table, ClusterName clusterNodeName)
-            throws UnsupportedOperationException, ExecutionException, UnsupportedException {
+    private void insertRow(int ikey, String Table, ClusterName clusterNodeName) throws UnsupportedOperationException,
+                    ExecutionException, UnsupportedException {
 
         Row row = new Row();
         Map<String, Cell> cells = new HashMap<>();
@@ -208,9 +231,14 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
         cells.put(COLUMN_2, new Cell("ValueBin2_r" + ikey));
         cells.put(COLUMN_3, new Cell("ValueBin3_r" + ikey));
         row.setCells(cells);
-        connector.getStorageEngine().insert(clusterNodeName,
-                new TableMetadata(new TableName(CATALOG, Table), null, null, null, null, Collections.EMPTY_LIST,
-                        Collections.EMPTY_LIST), row);
+
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
+        tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.VARCHAR)
+                        .addColumn(COLUMN_3, ColumnType.VARCHAR);
+
+        TableMetadata targetTable = tableMetadataBuilder.build();
+
+        connector.getStorageEngine().insert(clusterNodeName, targetTable, row);
 
     }
 

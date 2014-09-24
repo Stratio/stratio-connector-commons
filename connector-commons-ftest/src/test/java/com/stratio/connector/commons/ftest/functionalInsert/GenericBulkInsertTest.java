@@ -18,17 +18,15 @@ package com.stratio.connector.commons.ftest.functionalInsert;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.junit.Test;
 
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
+import com.stratio.connector.commons.ftest.schema.TableMetadataBuilder;
 import com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator;
 import com.stratio.meta.common.data.Cell;
 import com.stratio.meta.common.data.ResultSet;
@@ -36,13 +34,10 @@ import com.stratio.meta.common.data.Row;
 import com.stratio.meta.common.exceptions.ExecutionException;
 import com.stratio.meta.common.exceptions.UnsupportedException;
 import com.stratio.meta.common.exceptions.ValidationException;
-import com.stratio.meta.common.logicalplan.LogicalStep;
 import com.stratio.meta.common.logicalplan.LogicalWorkflow;
-import com.stratio.meta.common.logicalplan.Project;
 import com.stratio.meta.common.result.QueryResult;
 import com.stratio.meta2.common.data.ClusterName;
-import com.stratio.meta2.common.data.ColumnName;
-import com.stratio.meta2.common.data.TableName;
+import com.stratio.meta2.common.metadata.ColumnType;
 import com.stratio.meta2.common.metadata.TableMetadata;
 
 /**
@@ -64,24 +59,22 @@ public abstract class GenericBulkInsertTest extends GenericConnectorTest {
     }
 
     @Test
-    public void testBulkInsertWithPK()
-            throws ExecutionException, ValidationException, UnsupportedOperationException, UnsupportedException {
+    public void testBulkInsertWithPK() throws ExecutionException, ValidationException, UnsupportedOperationException,
+                    UnsupportedException {
 
         ClusterName clusterName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST testBulkInsertWithPK ***********************************");
+        System.out.println("*********************************** INIT FUNCTIONAL TEST testBulkInsertWithPK ***********************************");
         insertBulk(clusterName, true);
         verifyInsert(clusterName);
 
     }
 
     @Test
-    public void testBulkInsertWithoutPK()
-            throws ExecutionException, ValidationException, UnsupportedOperationException, UnsupportedException {
+    public void testBulkInsertWithoutPK() throws ExecutionException, ValidationException,
+                    UnsupportedOperationException, UnsupportedException {
 
         ClusterName clusterName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST testBulkInsertWitoutPK ***********************************");
+        System.out.println("*********************************** INIT FUNCTIONAL TEST testBulkInsertWithoutPK ***********************************");
         insertBulk(clusterName, false);
         verifyInsert(clusterName);
 
@@ -102,14 +95,14 @@ public abstract class GenericBulkInsertTest extends GenericConnectorTest {
             rows.add(row);
         }
 
-        List<ColumnName> pk = new ArrayList<>();
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
+        tableMetadataBuilder.addColumn(COLUMN_KEY, ColumnType.VARCHAR).addColumn(COLUMN_1, ColumnType.VARCHAR)
+                        .addColumn(COLUMN_2, ColumnType.VARCHAR).addColumn(COLUMN_3, ColumnType.VARCHAR);
         if (withPK) {
-            ColumnName columnPK = new ColumnName(CATALOG, TABLE, COLUMN_1);
-            pk.add(columnPK);
+            tableMetadataBuilder.withPartitionKey(COLUMN_1);
         }
+        TableMetadata targetTable = tableMetadataBuilder.build();
 
-        TableMetadata targetTable = new TableMetadata(new TableName(CATALOG, TABLE), null, null, null, null, pk,
-                Collections.EMPTY_LIST);
         connector.getStorageEngine().insert(cluesterName, targetTable, rows);
 
         refresh(CATALOG);
@@ -119,8 +112,7 @@ public abstract class GenericBulkInsertTest extends GenericConnectorTest {
         QueryResult queryResult = connector.getQueryEngine().execute(cluesterName, createLogicalWorkFlow());
         ResultSet resultIterator = queryResult.getResultSet();
 
-        assertEquals("The records number is correct " + cluesterName.getName(), getRowToInsert(),
-                resultIterator.size());
+        assertEquals("The records number is correct " + cluesterName.getName(), getRowToInsert(), resultIterator.size());
 
         int rowRecovered = 0;
         for (Row recoveredRow : resultIterator) {
@@ -136,8 +128,8 @@ public abstract class GenericBulkInsertTest extends GenericConnectorTest {
 
     private LogicalWorkflow createLogicalWorkFlow() {
 
-        return new LogicalWorkFlowCreator(CATALOG,TABLE).addColumnName(COLUMN_KEY,COLUMN_1,COLUMN_2,
-                COLUMN_3).getLogicalWorkflow();
+        return new LogicalWorkFlowCreator(CATALOG, TABLE).addColumnName(COLUMN_KEY, COLUMN_1, COLUMN_2, COLUMN_3)
+                        .getLogicalWorkflow();
 
     }
 
