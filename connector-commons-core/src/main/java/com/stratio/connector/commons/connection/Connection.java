@@ -14,33 +14,58 @@
  *   You should have received a copy of the GNU Lesser General Public License along with this library.
  */
 
-
 package com.stratio.connector.commons.connection;
 
 /**
  * This interface represents a generic connection to be handle.
  * Created by jmgomez on 29/08/14.
  */
-public interface Connection<T> {
+public abstract class Connection<T> {
 
+    private String status;
+    private String lastDateInfo;
+    private Boolean workInProgress;
 
     /**
      * Close the connection.
      */
-    public void close();
+    public abstract void close();
 
     /**
      * Ask if the connection is connected.
      *
      * @return true if the connection is connected. False in other case.
      */
-    public boolean isConnect();
+    public abstract boolean isConnect();
 
     /**
      * Return a database native connection.
      *
      * @return the native connection.
      */
-    public T getNativeConnection();
+    public abstract T getNativeConnection();
 
+    public String getLastDateInfo() {
+        return lastDateInfo;
+    }
+
+    public void setLastDateInfo(String lastDateInfo) {
+        this.lastDateInfo = lastDateInfo;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Boolean getWorkInProgress() {
+        return workInProgress;
+    }
+
+    public void setWorkInProgress(Boolean workInProgress) {
+        this.workInProgress = workInProgress;
+    }
 }

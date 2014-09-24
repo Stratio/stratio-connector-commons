@@ -30,7 +30,6 @@ public class HandlerConnectionException extends Throwable {
         super(msg);
     }
 
-
     /**
      * Constructor.
      *

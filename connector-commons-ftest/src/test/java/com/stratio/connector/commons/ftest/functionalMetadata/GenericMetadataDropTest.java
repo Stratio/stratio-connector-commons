@@ -15,6 +15,18 @@
  */
 package com.stratio.connector.commons.ftest.functionalMetadata;
 
+import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.junit.After;
+import org.junit.Test;
+
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
 import com.stratio.meta.common.data.Cell;
 import com.stratio.meta.common.data.Row;
@@ -30,22 +42,13 @@ import com.stratio.meta2.common.data.ClusterName;
 import com.stratio.meta2.common.data.ColumnName;
 import com.stratio.meta2.common.data.TableName;
 import com.stratio.meta2.common.metadata.TableMetadata;
-import org.junit.After;
-import org.junit.Test;
-
-import java.util.*;
-
-import static junit.framework.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
 public abstract class GenericMetadataDropTest extends GenericConnectorTest {
 
-
-    public final String OTHER_TABLE = "other" + TABLE;
     private static String COLUMN_1 = "name1";
     private static String COLUMN_2 = "name2";
+    public final String OTHER_TABLE = "other" + TABLE;
     private String OTHER_CATALOG = "other_" + CATALOG;
-
 
     @Test
     public void dropTableTest() throws UnsupportedException, ExecutionException {
@@ -56,19 +59,23 @@ public abstract class GenericMetadataDropTest extends GenericConnectorTest {
         cells.put(COLUMN_2, new Cell(2));
         row.setCells(cells);
 
-
-        connector.getStorageEngine().insert(clusterName, new TableMetadata(new TableName(CATALOG, TABLE), null, null, null, null, Collections.EMPTY_LIST, Collections.EMPTY_LIST), row);
-        connector.getStorageEngine().insert(clusterName, new TableMetadata(new TableName(OTHER_CATALOG, TABLE), null, null, null, null, Collections.EMPTY_LIST, Collections.EMPTY_LIST), row);
-        connector.getStorageEngine().insert(clusterName, new TableMetadata(new TableName(CATALOG, OTHER_TABLE), null, null, null, null, Collections.EMPTY_LIST, Collections.EMPTY_LIST), row);
-
+        connector.getStorageEngine().insert(clusterName,
+                new TableMetadata(new TableName(CATALOG, TABLE), null, null, null, null, Collections.EMPTY_LIST,
+                        Collections.EMPTY_LIST), row);
+        connector.getStorageEngine().insert(clusterName,
+                new TableMetadata(new TableName(OTHER_CATALOG, TABLE), null, null, null, null, Collections.EMPTY_LIST,
+                        Collections.EMPTY_LIST), row);
+        connector.getStorageEngine().insert(clusterName,
+                new TableMetadata(new TableName(CATALOG, OTHER_TABLE), null, null, null, null, Collections.EMPTY_LIST,
+                        Collections.EMPTY_LIST), row);
 
         refresh(CATALOG);
         refresh(OTHER_CATALOG);
 
         connector.getMetadataEngine().dropTable(clusterName, (new TableName(CATALOG, TABLE)));
 
-
-        QueryResult queryResult = connector.getQueryEngine().execute(clusterName, createLogicalWorkFlow(CATALOG, TABLE));
+        QueryResult queryResult = connector.getQueryEngine()
+                .execute(clusterName, createLogicalWorkFlow(CATALOG, TABLE));
         assertEquals("Table [" + CATALOG + "." + TABLE + "] deleted", 0, queryResult.getResultSet().size());
 
         queryResult = connector.getQueryEngine().execute(clusterName, createLogicalWorkFlow(OTHER_CATALOG, TABLE));
@@ -76,7 +83,6 @@ public abstract class GenericMetadataDropTest extends GenericConnectorTest {
 
         queryResult = connector.getQueryEngine().execute(clusterName, createLogicalWorkFlow(CATALOG, OTHER_TABLE));
         assertNotEquals("Table [" + CATALOG + "." + OTHER_TABLE + " exist", 0, queryResult.getResultSet().size());
-
 
     }
 
@@ -90,19 +96,23 @@ public abstract class GenericMetadataDropTest extends GenericConnectorTest {
         cells.put(COLUMN_2, new Cell(2));
         row.setCells(cells);
 
-
-        connector.getStorageEngine().insert(clusterName, new TableMetadata(new TableName(CATALOG, TABLE), null, null, null, null, Collections.EMPTY_LIST, Collections.EMPTY_LIST), row);
-        connector.getStorageEngine().insert(clusterName, new TableMetadata(new TableName(OTHER_CATALOG, TABLE), null, null, null, null, Collections.EMPTY_LIST, Collections.EMPTY_LIST), row);
-        connector.getStorageEngine().insert(clusterName, new TableMetadata(new TableName(CATALOG, OTHER_TABLE), null, null, null, null, Collections.EMPTY_LIST, Collections.EMPTY_LIST), row);
-
+        connector.getStorageEngine().insert(clusterName,
+                new TableMetadata(new TableName(CATALOG, TABLE), null, null, null, null, Collections.EMPTY_LIST,
+                        Collections.EMPTY_LIST), row);
+        connector.getStorageEngine().insert(clusterName,
+                new TableMetadata(new TableName(OTHER_CATALOG, TABLE), null, null, null, null, Collections.EMPTY_LIST,
+                        Collections.EMPTY_LIST), row);
+        connector.getStorageEngine().insert(clusterName,
+                new TableMetadata(new TableName(CATALOG, OTHER_TABLE), null, null, null, null, Collections.EMPTY_LIST,
+                        Collections.EMPTY_LIST), row);
 
         refresh(CATALOG);
         refresh(OTHER_CATALOG);
 
         connector.getMetadataEngine().dropCatalog(clusterName, new CatalogName(CATALOG));
 
-
-        QueryResult queryResult = connector.getQueryEngine().execute(clusterName, createLogicalWorkFlow(CATALOG, TABLE));
+        QueryResult queryResult = connector.getQueryEngine()
+                .execute(clusterName, createLogicalWorkFlow(CATALOG, TABLE));
         assertEquals("Table [" + CATALOG + "." + TABLE + "] deleted", 0, queryResult.getResultSet().size());
 
         queryResult = connector.getQueryEngine().execute(clusterName, createLogicalWorkFlow(OTHER_CATALOG, TABLE));
@@ -114,7 +124,6 @@ public abstract class GenericMetadataDropTest extends GenericConnectorTest {
         deleteCatalog(OTHER_CATALOG);
 
     }
-
 
     private LogicalWorkflow createLogicalWorkFlow(String catalog, String table) {
         List<LogicalStep> stepList = new ArrayList<>();
@@ -138,6 +147,5 @@ public abstract class GenericMetadataDropTest extends GenericConnectorTest {
 
         }
     }
-
 
 }

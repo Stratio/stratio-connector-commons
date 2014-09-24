@@ -15,7 +15,6 @@
  */
 package com.stratio.connector.commons.ftest.functionalMetadata;
 
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -39,195 +38,209 @@ import com.stratio.meta2.common.metadata.ColumnType;
 import com.stratio.meta2.common.metadata.IndexMetadata;
 import com.stratio.meta2.common.metadata.IndexType;
 
-
 public abstract class GenericMetadataIndexTest extends GenericConnectorTest {
-  
-		static final String INDEX_NAME = "index1";
-		static final String INDEX_NAME_2 = "index2";
-		static final String COLUMN_INDEX_NAME = "columnName_2";
-		 /**
-		* The Log.
-		*/
-		final Logger logger = LoggerFactory.getLogger(this.getClass());
-		
-		/** 
-		 * Create a default index key with a single column.
-		 * @throws UnsupportedException
-		 * @throws ExecutionException
-		 */
-		@Test
-	    public void createDefaultIndexTest() throws UnsupportedException, ExecutionException {
 
-		  	//TODO create the catalog and the table if needed 
-	        System.out.println("*********************************** INIT FUNCTIONAL TEST createDefaultIndexTest ***********************************");
-	        TableName tableName = new TableName(CATALOG, TABLE);
+    static final String INDEX_NAME = "index1";
+    static final String INDEX_NAME_2 = "index2";
+    static final String COLUMN_INDEX_NAME = "columnName_2";
+    /**
+     * The Log.
+     */
+    final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	        //Creating the indexMetadata with the previous columns
-	        List<ColumnMetadata> columns=new ArrayList<>();
-	        Object[] parameters = null;
-			columns.add(new ColumnMetadata(new ColumnName(tableName,"columnName_1"),parameters, ColumnType.TEXT));
-			IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, INDEX_NAME), columns, IndexType.DEFAULT, Collections.EMPTY_MAP);
+    /**
+     * Create a default index key with a single column.
+     *
+     * @throws UnsupportedException
+     * @throws ExecutionException
+     */
+    @Test
+    public void createDefaultIndexTest() throws UnsupportedException, ExecutionException {
 
-		    //Creating other indexMetadata with columnName insteadOf indexName
-	        List<ColumnMetadata> columns2=new ArrayList<>();
-	        Object[] parameters2 = null;
-			columns2.add(new ColumnMetadata(new ColumnName(tableName,COLUMN_INDEX_NAME),parameters2, ColumnType.TEXT));
-			IndexMetadata indexMetadata2 = new IndexMetadata(new IndexName(tableName, COLUMN_INDEX_NAME), columns2, IndexType.DEFAULT, Collections.EMPTY_MAP);
+        //TODO create the catalog and the table if needed
+        System.out.println(
+                "*********************************** INIT FUNCTIONAL TEST createDefaultIndexTest ***********************************");
+        TableName tableName = new TableName(CATALOG, TABLE);
 
-		    //Creating index
-	        connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata);
-	        connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata2);
-	        
-	        assertTrue(iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
-	        assertTrue(iConnectorHelper.containsIndex(CATALOG, TABLE, COLUMN_INDEX_NAME));
-	        
-	    }
-		
-		/** 
-		 * Testing the fulltext index
-		 * @throws UnsupportedException
-		 * @throws ExecutionException
-		 */
-		@Test
-	    public void createTextIndexTest() throws UnsupportedException, ExecutionException {
-			
-		  	//TODO create the catalog and the table if needed 
-			//TODO the connectors must check the columnType (Varchar, fulltext?)
-			
-	        System.out.println("*********************************** INIT FUNCTIONAL TEST createTextIndexTest ***********************************");
-	        TableName tableName = new TableName(CATALOG, TABLE);
+        //Creating the indexMetadata with the previous columns
+        List<ColumnMetadata> columns = new ArrayList<>();
+        Object[] parameters = null;
+        columns.add(new ColumnMetadata(new ColumnName(tableName, "columnName_1"), parameters, ColumnType.TEXT));
+        IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, INDEX_NAME), columns,
+                IndexType.DEFAULT, Collections.EMPTY_MAP);
 
-	        //Creating the indexMetadata with 1 column
-	        List<ColumnMetadata> columns=new ArrayList<>();
-	        Object[] parameters = null;
-			columns.add(new ColumnMetadata(new ColumnName(tableName,"columnName_1"),parameters, ColumnType.TEXT));
-			IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, INDEX_NAME), columns, IndexType.FULL_TEXT, Collections.EMPTY_MAP);
+        //Creating other indexMetadata with columnName insteadOf indexName
+        List<ColumnMetadata> columns2 = new ArrayList<>();
+        Object[] parameters2 = null;
+        columns2.add(new ColumnMetadata(new ColumnName(tableName, COLUMN_INDEX_NAME), parameters2, ColumnType.TEXT));
+        IndexMetadata indexMetadata2 = new IndexMetadata(new IndexName(tableName, COLUMN_INDEX_NAME), columns2,
+                IndexType.DEFAULT, Collections.EMPTY_MAP);
 
-		    //Creating other indexMetadata with 2 columns
-	        List<ColumnMetadata> columns2=new ArrayList<>();
-	        Object[] parameters2 = null;
-			columns2.add(new ColumnMetadata(new ColumnName(tableName,"columnName_2"),parameters2, ColumnType.VARCHAR));
-			columns2.add(new ColumnMetadata(new ColumnName(tableName,"columnName_3"),parameters2, ColumnType.TEXT));
-			IndexMetadata indexMetadata2 = new IndexMetadata(new IndexName(tableName, INDEX_NAME_2), columns2, IndexType.FULL_TEXT, Collections.EMPTY_MAP);
+        //Creating index
+        connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata);
+        connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata2);
 
-		    //Creating index
-	        connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata);
-	        assertTrue(iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
-	        
-	        //The text index must be applied only over a single column.
-	        try{
-	        	connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata2);
-	        	//failDoubleTextIndex();
-	        }catch(Exception e){}
-	        
-	        assertFalse("The index text must be applied only onver a single column",iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME_2));
-		
-	    }
+        assertTrue(iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
+        assertTrue(iConnectorHelper.containsIndex(CATALOG, TABLE, COLUMN_INDEX_NAME));
 
-		private void failDoubleTextIndex() {
-			assertFalse("The index text must be applied only onver a single column", true);
-		}
-		
-		/** 
-		 * Create a default index with several columns.
-		 * @throws UnsupportedException
-		 * @throws ExecutionException
-		 */
-		@Test
-	    public void createMultiIndexTest() throws UnsupportedException, ExecutionException {
-			
-			//TODO create the catalog and the table if needed 
-			
-	        System.out.println("*********************************** INIT FUNCTIONAL TEST createCompoundIndexTest ***********************************");
-	        TableName tableName = new TableName(CATALOG, TABLE);
+    }
 
-		    //Creating other indexMetadata with 2 columns
-	        List<ColumnMetadata> columns2=new ArrayList<>();
-	        Object[] parameters2 = null;
-			columns2.add(new ColumnMetadata(new ColumnName(tableName,"columnName_2"),parameters2, ColumnType.VARCHAR));
-			columns2.add(new ColumnMetadata(new ColumnName(tableName,"columnName_3"),parameters2, ColumnType.TEXT));
-			IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, INDEX_NAME), columns2, IndexType.DEFAULT, Collections.EMPTY_MAP);
+    /**
+     * Testing the fulltext index
+     *
+     * @throws UnsupportedException
+     * @throws ExecutionException
+     */
+    @Test
+    public void createTextIndexTest() throws UnsupportedException, ExecutionException {
 
-		    //Creating the index
-	        connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata);
-	        assertTrue(iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
-	        
-	    }
-		
-		
+        //TODO create the catalog and the table if needed
+        //TODO the connectors must check the columnType (Varchar, fulltext?)
 
-		@Test
-	    public void createDuplicatedIndexTest() throws UnsupportedException, ExecutionException {	//TODO create the catalog and the table if needed 
-			
-	        System.out.println("*********************************** INIT FUNCTIONAL TEST createDuplicatedIndexTest ***********************************");
-	        TableName tableName = new TableName(CATALOG, TABLE);
+        System.out.println(
+                "*********************************** INIT FUNCTIONAL TEST createTextIndexTest ***********************************");
+        TableName tableName = new TableName(CATALOG, TABLE);
 
-		    //Creating other indexMetadata with 2 columns
-	        List<ColumnMetadata> columns2=new ArrayList<>();
-	        Object[] parameters2 = null;
-			columns2.add(new ColumnMetadata(new ColumnName(tableName,"columnName_2"),parameters2, ColumnType.VARCHAR));
-			columns2.add(new ColumnMetadata(new ColumnName(tableName,"columnName_3"),parameters2, ColumnType.TEXT));
-			IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, INDEX_NAME), columns2, IndexType.DEFAULT, Collections.EMPTY_MAP);
+        //Creating the indexMetadata with 1 column
+        List<ColumnMetadata> columns = new ArrayList<>();
+        Object[] parameters = null;
+        columns.add(new ColumnMetadata(new ColumnName(tableName, "columnName_1"), parameters, ColumnType.TEXT));
+        IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, INDEX_NAME), columns,
+                IndexType.FULL_TEXT, Collections.EMPTY_MAP);
 
-		    //Creating the index
-	        connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata);
-	        assertTrue(iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
-	        
-	        int previousIndexCount = iConnectorHelper.countIndexes(CATALOG, TABLE);
-	        
-	        //Creating the same index again
-	        try{
-	        	connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata);
-	        }catch(Exception e){}
-	        
-	        assertTrue(iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
-	        
-	        int indexCount = iConnectorHelper.countIndexes(CATALOG, TABLE);
-	        assertEquals(previousIndexCount, indexCount);
-	    }
+        //Creating other indexMetadata with 2 columns
+        List<ColumnMetadata> columns2 = new ArrayList<>();
+        Object[] parameters2 = null;
+        columns2.add(new ColumnMetadata(new ColumnName(tableName, "columnName_2"), parameters2, ColumnType.VARCHAR));
+        columns2.add(new ColumnMetadata(new ColumnName(tableName, "columnName_3"), parameters2, ColumnType.TEXT));
+        IndexMetadata indexMetadata2 = new IndexMetadata(new IndexName(tableName, INDEX_NAME_2), columns2,
+                IndexType.FULL_TEXT, Collections.EMPTY_MAP);
 
-		
-		@Test
-	    public void dropIndexTest() throws UnsupportedException, ExecutionException {
-			System.out.println("*********************************** INIT FUNCTIONAL TEST dropIndexTest ***********************************");
-	        TableName tableName = new TableName(CATALOG, TABLE);
+        //Creating index
+        connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata);
+        assertTrue(iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
 
-	        //Creating the indexMetadata with 1 column
-	        List<ColumnMetadata> columns=new ArrayList<>();
-	        Object[] parameters = null;
-			columns.add(new ColumnMetadata(new ColumnName(tableName,"columnName_1"),parameters, ColumnType.TEXT));
-			IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, INDEX_NAME), columns, IndexType.DEFAULT, Collections.EMPTY_MAP);
+        //The text index must be applied only over a single column.
+        try {
+            connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata2);
+            //failDoubleTextIndex();
+        } catch (Exception e) {
+        }
 
+        assertFalse("The index text must be applied only onver a single column",
+                iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME_2));
 
-		    //Creating the index
-	        connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata);
-	        assertTrue(iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
-	        
-	        
-		    //Creating other indexMetadata 
-	        List<ColumnMetadata> columns2=new ArrayList<>();
-	        Object[] parameters2 = null;
-			columns2.add(new ColumnMetadata(new ColumnName(tableName,"columnName_2"),parameters2, ColumnType.VARCHAR));
-			IndexMetadata indexMetadata2 = new IndexMetadata(new IndexName(tableName, INDEX_NAME_2), columns2, IndexType.FULL_TEXT, Collections.EMPTY_MAP);
+    }
 
-			 //Creating the index
-	        connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata2);
-	        assertTrue(iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME_2));
-			
-	        connector.getMetadataEngine().dropIndex(getClusterName(), indexMetadata);
-	        connector.getMetadataEngine().dropIndex(getClusterName(), indexMetadata2);
-	        
-	        assertFalse(iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
-	        assertFalse(iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME_2));
-	        
-	        //TODO An exception could to be thrown when dropping a index which does not exist
-	        try{
-	        	connector.getMetadataEngine().dropIndex(getClusterName(), indexMetadata);
-	        	logger.debug("Dropping a not existing index does not cause an exception");
-	        }catch(Exception e){ };
-	        
-	        
-	    }
+    private void failDoubleTextIndex() {
+        assertFalse("The index text must be applied only onver a single column", true);
+    }
 
+    /**
+     * Create a default index with several columns.
+     *
+     * @throws UnsupportedException
+     * @throws ExecutionException
+     */
+    @Test
+    public void createMultiIndexTest() throws UnsupportedException, ExecutionException {
+
+        //TODO create the catalog and the table if needed
+
+        System.out.println(
+                "*********************************** INIT FUNCTIONAL TEST createCompoundIndexTest ***********************************");
+        TableName tableName = new TableName(CATALOG, TABLE);
+
+        //Creating other indexMetadata with 2 columns
+        List<ColumnMetadata> columns2 = new ArrayList<>();
+        Object[] parameters2 = null;
+        columns2.add(new ColumnMetadata(new ColumnName(tableName, "columnName_2"), parameters2, ColumnType.VARCHAR));
+        columns2.add(new ColumnMetadata(new ColumnName(tableName, "columnName_3"), parameters2, ColumnType.TEXT));
+        IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, INDEX_NAME), columns2,
+                IndexType.DEFAULT, Collections.EMPTY_MAP);
+
+        //Creating the index
+        connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata);
+        assertTrue(iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
+
+    }
+
+    @Test
+    public void createDuplicatedIndexTest()
+            throws UnsupportedException, ExecutionException {    //TODO create the catalog and the table if needed
+
+        System.out.println(
+                "*********************************** INIT FUNCTIONAL TEST createDuplicatedIndexTest ***********************************");
+        TableName tableName = new TableName(CATALOG, TABLE);
+
+        //Creating other indexMetadata with 2 columns
+        List<ColumnMetadata> columns2 = new ArrayList<>();
+        Object[] parameters2 = null;
+        columns2.add(new ColumnMetadata(new ColumnName(tableName, "columnName_2"), parameters2, ColumnType.VARCHAR));
+        columns2.add(new ColumnMetadata(new ColumnName(tableName, "columnName_3"), parameters2, ColumnType.TEXT));
+        IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, INDEX_NAME), columns2,
+                IndexType.DEFAULT, Collections.EMPTY_MAP);
+
+        //Creating the index
+        connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata);
+        assertTrue(iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
+
+        int previousIndexCount = iConnectorHelper.countIndexes(CATALOG, TABLE);
+
+        //Creating the same index again
+        try {
+            connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata);
+        } catch (Exception e) {
+        }
+
+        assertTrue(iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
+
+        int indexCount = iConnectorHelper.countIndexes(CATALOG, TABLE);
+        assertEquals(previousIndexCount, indexCount);
+    }
+
+    @Test
+    public void dropIndexTest() throws UnsupportedException, ExecutionException {
+        System.out.println(
+                "*********************************** INIT FUNCTIONAL TEST dropIndexTest ***********************************");
+        TableName tableName = new TableName(CATALOG, TABLE);
+
+        //Creating the indexMetadata with 1 column
+        List<ColumnMetadata> columns = new ArrayList<>();
+        Object[] parameters = null;
+        columns.add(new ColumnMetadata(new ColumnName(tableName, "columnName_1"), parameters, ColumnType.TEXT));
+        IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, INDEX_NAME), columns,
+                IndexType.DEFAULT, Collections.EMPTY_MAP);
+
+        //Creating the index
+        connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata);
+        assertTrue(iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
+
+        //Creating other indexMetadata
+        List<ColumnMetadata> columns2 = new ArrayList<>();
+        Object[] parameters2 = null;
+        columns2.add(new ColumnMetadata(new ColumnName(tableName, "columnName_2"), parameters2, ColumnType.VARCHAR));
+        IndexMetadata indexMetadata2 = new IndexMetadata(new IndexName(tableName, INDEX_NAME_2), columns2,
+                IndexType.FULL_TEXT, Collections.EMPTY_MAP);
+
+        //Creating the index
+        connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata2);
+        assertTrue(iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME_2));
+
+        connector.getMetadataEngine().dropIndex(getClusterName(), indexMetadata);
+        connector.getMetadataEngine().dropIndex(getClusterName(), indexMetadata2);
+
+        assertFalse(iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
+        assertFalse(iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME_2));
+
+        //TODO An exception could to be thrown when dropping a index which does not exist
+        try {
+            connector.getMetadataEngine().dropIndex(getClusterName(), indexMetadata);
+            logger.debug("Dropping a not existing index does not cause an exception");
+        } catch (Exception e) {
+        }
+        ;
+
+    }
 
 }

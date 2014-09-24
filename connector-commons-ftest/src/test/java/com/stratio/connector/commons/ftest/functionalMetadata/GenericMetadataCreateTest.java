@@ -31,7 +31,6 @@ import java.util.Set;
 import org.junit.Test;
 
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
-import com.stratio.connector.commons.ftest.helper.IConnectorHelper;
 import com.stratio.meta.common.exceptions.ExecutionException;
 import com.stratio.meta.common.exceptions.UnsupportedException;
 import com.stratio.meta2.common.data.CatalogName;
@@ -45,10 +44,12 @@ import com.stratio.meta2.common.metadata.ColumnType;
 import com.stratio.meta2.common.metadata.IndexMetadata;
 import com.stratio.meta2.common.metadata.IndexType;
 import com.stratio.meta2.common.metadata.TableMetadata;
-
+import com.stratio.meta2.common.statements.structures.selectors.BooleanSelector;
+import com.stratio.meta2.common.statements.structures.selectors.IntegerSelector;
+import com.stratio.meta2.common.statements.structures.selectors.Selector;
+import com.stratio.meta2.common.statements.structures.selectors.StringSelector;
 
 public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
-
 
     private static final String NEW_CATALOG = "new_catalog";
     private static final String INDEX = "index1";
@@ -56,7 +57,9 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
     @Test
     public void createCatalogTest() throws UnsupportedException, ExecutionException {
         ClusterName clusterName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST createCatalogTest " + clusterName.getName() + " ***********************************");
+        System.out.println(
+                "*********************************** INIT FUNCTIONAL TEST createCatalogTest " + clusterName.getName()
+                        + " ***********************************");
 
         try {
             connector.getMetadataEngine().dropCatalog(getClusterName(), new CatalogName(NEW_CATALOG));
@@ -64,7 +67,8 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
         } catch (Throwable t) {
         }
 
-        connector.getMetadataEngine().createCatalog(getClusterName(), new CatalogMetadata(new CatalogName(NEW_CATALOG), Collections.EMPTY_MAP, Collections.EMPTY_MAP));
+        connector.getMetadataEngine().createCatalog(getClusterName(),
+                new CatalogMetadata(new CatalogName(NEW_CATALOG), Collections.EMPTY_MAP, Collections.EMPTY_MAP));
 
         try {
             connector.getMetadataEngine().dropCatalog(getClusterName(), new CatalogName(NEW_CATALOG));
@@ -75,11 +79,12 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
 
     }
 
-
     @Test
     public void createCatalogWithOptionsTest() throws UnsupportedException, ExecutionException {
         ClusterName clusterName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST createCatalogTest " + clusterName.getName() + " ***********************************");
+        System.out.println(
+                "*********************************** INIT FUNCTIONAL TEST createCatalogTest " + clusterName.getName()
+                        + " ***********************************");
 
         try {
             connector.getMetadataEngine().dropCatalog(getClusterName(), new CatalogName(NEW_CATALOG));
@@ -87,12 +92,12 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
         } catch (Throwable t) {
         }
 
-        Map<String, Object> options = new HashMap<>();
-        options.put("option1", "value1");
-        options.put("option2", new Integer(3));
-        options.put("option3", false);
-        connector.getMetadataEngine().createCatalog(getClusterName(), new CatalogMetadata(new CatalogName(NEW_CATALOG), options, Collections.EMPTY_MAP));
-
+        Map<Selector, Selector> options = new HashMap<>();
+        options.put(new StringSelector("option1"), new StringSelector("value1"));
+        options.put(new StringSelector("option2"), new IntegerSelector(new Integer(3)));
+        options.put(new StringSelector("option3"), new BooleanSelector(false));
+        connector.getMetadataEngine().createCatalog(getClusterName(),
+                new CatalogMetadata(new CatalogName(NEW_CATALOG), options, Collections.EMPTY_MAP));
 
         Map<String, Object> recoveredSettings = getConnectorHelper().recoveredCatalogSettings(NEW_CATALOG);
 
@@ -114,11 +119,12 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
 
     }
 
-
     @Test
     public void createCatalogExceptionCreateTwoCatalogTest() throws UnsupportedException, ExecutionException {
         ClusterName clusterName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST createCatalogTest " + clusterName.getName() + " ***********************************");
+        System.out.println(
+                "*********************************** INIT FUNCTIONAL TEST createCatalogTest " + clusterName.getName()
+                        + " ***********************************");
 
         try {
             connector.getMetadataEngine().dropCatalog(getClusterName(), new CatalogName(NEW_CATALOG));
@@ -126,9 +132,11 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
         } catch (Throwable t) {
         }
 
-        connector.getMetadataEngine().createCatalog(getClusterName(), new CatalogMetadata(new CatalogName(NEW_CATALOG), Collections.EMPTY_MAP, Collections.EMPTY_MAP));
+        connector.getMetadataEngine().createCatalog(getClusterName(),
+                new CatalogMetadata(new CatalogName(NEW_CATALOG), Collections.EMPTY_MAP, Collections.EMPTY_MAP));
         try {
-            connector.getMetadataEngine().createCatalog(getClusterName(), new CatalogMetadata(new CatalogName(NEW_CATALOG), Collections.EMPTY_MAP, Collections.EMPTY_MAP));
+            connector.getMetadataEngine().createCatalog(getClusterName(),
+                    new CatalogMetadata(new CatalogName(NEW_CATALOG), Collections.EMPTY_MAP, Collections.EMPTY_MAP));
             fail("I try to create a second catalog with the same identification. Any type of exception must be throws. It may be a runtime excepcion");
         } catch (Throwable t) {
 
@@ -136,16 +144,16 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
 
         connector.getMetadataEngine().dropCatalog(getClusterName(), new CatalogName(NEW_CATALOG));
 
-
     }
 
     @Test
     public void createTableWithoutTableTest() throws UnsupportedException, ExecutionException {
         ClusterName clusterName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST createTableTest ***********************************");
+        System.out.println(
+                "*********************************** INIT FUNCTIONAL TEST createTableTest ***********************************");
 
         TableName tableName = new TableName(CATALOG, TABLE);
-        Map<String, Object> options = Collections.EMPTY_MAP;
+        Map<Selector, Selector> options = Collections.EMPTY_MAP;
 
         Map<ColumnName, ColumnMetadata> columns = Collections.EMPTY_MAP;
         Map indexex = columns = Collections.EMPTY_MAP;
@@ -154,7 +162,8 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
         List<ColumnName> clusterKey = Collections.EMPTY_LIST;
 
         //We must create the catalog firs
-        connector.getMetadataEngine().createCatalog(getClusterName(), new CatalogMetadata(new CatalogName(CATALOG), Collections.EMPTY_MAP, Collections.EMPTY_MAP));
+        connector.getMetadataEngine().createCatalog(getClusterName(),
+                new CatalogMetadata(new CatalogName(CATALOG), Collections.EMPTY_MAP, Collections.EMPTY_MAP));
 
         try {
             connector.getMetadataEngine().dropTable(getClusterName(), tableName);
@@ -162,8 +171,8 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
         } catch (Throwable t) {
         }
 
-
-        connector.getMetadataEngine().createTable(getClusterName(), new TableMetadata(tableName, options, columns, indexex, clusterRef, partitionKey, clusterKey));
+        connector.getMetadataEngine().createTable(getClusterName(),
+                new TableMetadata(tableName, options, columns, indexex, clusterRef, partitionKey, clusterKey));
         try {
             connector.getMetadataEngine().dropTable(getClusterName(), tableName);
         } catch (Throwable t) {
@@ -173,14 +182,14 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
         connector.getMetadataEngine().dropCatalog(getClusterName(), new CatalogName(CATALOG));
     }
 
-
     @Test
     public void createTableTest() throws UnsupportedException, ExecutionException {
         ClusterName clusterName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST createTableTest ***********************************");
+        System.out.println(
+                "*********************************** INIT FUNCTIONAL TEST createTableTest ***********************************");
 
         TableName tableName = new TableName(CATALOG, TABLE);
-        Map<String, Object> options = Collections.EMPTY_MAP;
+        Map<Selector, Selector> options = Collections.EMPTY_MAP;
 
         Map<ColumnName, ColumnMetadata> columns = new HashMap<>();
         int i = 1;
@@ -190,11 +199,6 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
             columns.put(columnName, new ColumnMetadata(columnName, null, columnType));
             i++;
         }
-//        ColumnName columnName = new ColumnName(CATALOG, TABLE, "columnName1");
-//        columns.put(columnName, new ColumnMetadata(columnName, null, ColumnType.INT));
-//        ColumnName columnName2 = new ColumnName(CATALOG, TABLE, "columnName2");
-//        columns.put(columnName2, new ColumnMetadata(columnName2, null, ColumnType.BOOLEAN));
-
 
         Map indexex = Collections.EMPTY_MAP;
         ClusterName clusterRef = getClusterName();
@@ -202,7 +206,8 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
         List<ColumnName> clusterKey = Collections.EMPTY_LIST;
 
         //We must create the catalog firs
-        connector.getMetadataEngine().createCatalog(getClusterName(), new CatalogMetadata(new CatalogName(CATALOG), Collections.EMPTY_MAP, Collections.EMPTY_MAP));
+        connector.getMetadataEngine().createCatalog(getClusterName(),
+                new CatalogMetadata(new CatalogName(CATALOG), Collections.EMPTY_MAP, Collections.EMPTY_MAP));
 
         try {
             connector.getMetadataEngine().dropTable(getClusterName(), tableName);
@@ -210,8 +215,8 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
         } catch (Throwable t) {
         }
 
-
-        connector.getMetadataEngine().createTable(getClusterName(), new TableMetadata(tableName, options, columns, indexex, clusterRef, partitionKey, clusterKey));
+        connector.getMetadataEngine().createTable(getClusterName(),
+                new TableMetadata(tableName, options, columns, indexex, clusterRef, partitionKey, clusterKey));
         try {
             connector.getMetadataEngine().dropTable(getClusterName(), tableName);
         } catch (Throwable t) {
@@ -221,12 +226,12 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
         connector.getMetadataEngine().dropCatalog(getClusterName(), new CatalogName(CATALOG));
 
     }
-    
-    
+
     @Test
     public void createCatalogWithTablesAndIndex() throws UnsupportedException, ExecutionException {
         ClusterName clusterName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST createCatalogWithTablesAndIndexTest ***********************************");
+        System.out.println(
+                "*********************************** INIT FUNCTIONAL TEST createCatalogWithTablesAndIndexTest ***********************************");
 
         TableName tableName = new TableName(CATALOG, TABLE);
         ClusterName clusterRef = getClusterName();
@@ -234,7 +239,7 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
         List<ColumnName> clusterKey = Collections.EMPTY_LIST;
 
         //ColumnMetadata (all columns)
-        Map<String, Object> options = Collections.EMPTY_MAP;
+        Map<Selector, Selector> options = Collections.EMPTY_MAP;
         Map<ColumnName, ColumnMetadata> columnsMap = new HashMap<>();
         int i = 1;
         Collection<ColumnType> allSupportedColumnType = getConnectorHelper().getAllSupportedColumnType();
@@ -243,33 +248,35 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
             columnsMap.put(columnName, new ColumnMetadata(columnName, null, columnType));
             i++;
         }
-        
-        //ColumnMetadata (list of columns to create a single index)
-        List<ColumnMetadata> columns=new ArrayList<>();
-        Object[] parameters = null;
-		columns.add(new ColumnMetadata(new ColumnName(tableName,"columnName_1"),parameters, ColumnType.TEXT));
-        
-		//Creating the index with the previous columns
-		Map<IndexName,IndexMetadata> indexMap = new HashMap<IndexName, IndexMetadata>();
-	    indexMap.put(new IndexName(tableName, INDEX), new IndexMetadata(new IndexName(tableName, INDEX), columns, IndexType.DEFAULT, options));
-	        
-	    Map<TableName,TableMetadata> tableMap = new HashMap<TableName, TableMetadata>();
-        TableMetadata tableMetadata = new TableMetadata(tableName, options, columnsMap, indexMap, clusterRef, partitionKey, clusterKey);
-        tableMap.put(tableName,tableMetadata);
-        
-        assertFalse(iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX));
-        
-        connector.getMetadataEngine().createCatalog(getClusterName(), new CatalogMetadata(new CatalogName(CATALOG), Collections.EMPTY_MAP, tableMap));
-        connector.getMetadataEngine().createTable(getClusterName(), tableMetadata);
-        
-        assertTrue(iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX));
-        
-        connector.getMetadataEngine().dropCatalog(getClusterName(), new CatalogName(CATALOG) );
-        
-        //check if when the catalog is dropped, all the meta-info is removed
-        assertFalse(iConnectorHelper.containsIndex(CATALOG, TABLE,INDEX));
-        
-    }
 
+        //ColumnMetadata (list of columns to create a single index)
+        List<ColumnMetadata> columns = new ArrayList<>();
+        Object[] parameters = null;
+        columns.add(new ColumnMetadata(new ColumnName(tableName, "columnName_1"), parameters, ColumnType.TEXT));
+
+        //Creating the index with the previous columns
+        Map<IndexName, IndexMetadata> indexMap = new HashMap<IndexName, IndexMetadata>();
+        indexMap.put(new IndexName(tableName, INDEX),
+                new IndexMetadata(new IndexName(tableName, INDEX), columns, IndexType.DEFAULT, options));
+
+        Map<TableName, TableMetadata> tableMap = new HashMap<TableName, TableMetadata>();
+        TableMetadata tableMetadata = new TableMetadata(tableName, options, columnsMap, indexMap, clusterRef,
+                partitionKey, clusterKey);
+        tableMap.put(tableName, tableMetadata);
+
+        assertFalse(iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX));
+
+        connector.getMetadataEngine().createCatalog(getClusterName(),
+                new CatalogMetadata(new CatalogName(CATALOG), Collections.EMPTY_MAP, tableMap));
+        connector.getMetadataEngine().createTable(getClusterName(), tableMetadata);
+
+        assertTrue(iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX));
+
+        connector.getMetadataEngine().dropCatalog(getClusterName(), new CatalogName(CATALOG));
+
+        //check if when the catalog is dropped, all the meta-info is removed
+        assertFalse(iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX));
+
+    }
 
 }
