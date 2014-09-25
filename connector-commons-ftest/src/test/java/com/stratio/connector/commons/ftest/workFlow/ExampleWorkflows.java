@@ -175,8 +175,11 @@ public class ExampleWorkflows {
         ColumnName bool = new ColumnName(catalog, table, COLUMN_BOOL);
         String[] outputNames = { COLUMN_ID, COLUMN_NAME, COLUMN_AGE, COLUMN_BOOL };
         LogicalStep project = getProject(id, name, age, bool);
-    /*LogicalStep select = getSelect(outputNames, id, name, age, bool);
-    project.setNextStep(select);*/
+    LogicalStep select = getSelect(outputNames, new ColumnType[]{ColumnType.INT,ColumnType.TEXT,ColumnType.INT,
+                ColumnType.BOOLEAN},id, name,
+            age,
+            bool);
+    project.setNextStep(select);
         LogicalWorkflow lw = new LogicalWorkflow(Arrays.asList(project));
         return lw;
     }

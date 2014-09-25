@@ -235,8 +235,8 @@ public class LogicalWorkFlowCreator {
     }
 
     public LogicalWorkFlowCreator addSelect(LinkedList<ConnectorField> fields) {
-        Map<String, String> mapping = new HashMap<>();
-        Map<String, ColumnType> types = new HashMap<>();;
+        Map<String, String> mapping = new LinkedHashMap<>();
+        Map<String, ColumnType> types = new LinkedHashMap<>();;
         for (ConnectorField connectorField : fields){
             mapping.put(connectorField.name,connectorField.alias);
             types.put(connectorField.name,connectorField.columnType);

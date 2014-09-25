@@ -133,9 +133,9 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
         LinkedList<LogicalWorkFlowCreator.ConnectorField> fields = new LinkedList<>();
         LogicalWorkFlowCreator logicalWorkFlowCreator = new LogicalWorkFlowCreator(CATALOG,
                 TABLE);
-        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_1, COLUMN_1, ColumnType.VARCHAR));
-        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_2, COLUMN_2,ColumnType.VARCHAR));
-        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_3, COLUMN_3,ColumnType.VARCHAR));
+        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_1, "alias"+COLUMN_1, ColumnType.TEXT));
+        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_2, "alias"+COLUMN_2,ColumnType.INT));
+        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_3, "alias"+COLUMN_3,ColumnType.BOOLEAN));
 
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addColumnName(COLUMN_1, COLUMN_2, COLUMN_3).addSelect(fields).getLogicalWorkflow();
@@ -241,7 +241,7 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
         cells.put(COLUMN_3, new Cell("ValueBin3_r" + ikey));
         row.setCells(cells);
 
-        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, Table);
         tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.VARCHAR)
                         .addColumn(COLUMN_3, ColumnType.VARCHAR);
 
