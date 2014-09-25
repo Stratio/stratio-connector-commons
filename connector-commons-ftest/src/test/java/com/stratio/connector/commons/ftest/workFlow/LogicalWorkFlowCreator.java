@@ -31,6 +31,7 @@ import com.stratio.meta.common.logicalplan.Project;
 import com.stratio.meta.common.logicalplan.Select;
 import com.stratio.meta.common.statements.structures.relationships.Operator;
 import com.stratio.meta.common.statements.structures.relationships.Relation;
+import com.stratio.meta2.common.data.ClusterName;
 import com.stratio.meta2.common.data.ColumnName;
 import com.stratio.meta2.common.data.NameType;
 import com.stratio.meta2.common.data.TableName;
@@ -46,6 +47,7 @@ import com.stratio.meta2.common.statements.structures.selectors.StringSelector;
  */
 public class LogicalWorkFlowCreator {
 
+    private final ClusterName clusterName;
     Select select;
     public static final String COLUMN_1 = "column1";
     public static final String COLUMN_2 = "column2";
@@ -56,9 +58,10 @@ public class LogicalWorkFlowCreator {
     public String catalog = "catalog_functional_test";
     List<ColumnName> columns = new ArrayList<>();
     List<Filter> filters = new ArrayList<>();
-    public LogicalWorkFlowCreator(String catalog, String table) {
+    public LogicalWorkFlowCreator(String catalog, String table, ClusterName clusterName) {
         this.catalog = catalog;
         this.table = table;
+        this.clusterName = clusterName;
     }
 
 
@@ -67,7 +70,7 @@ public class LogicalWorkFlowCreator {
 
         List<LogicalStep> logiclaSteps = new ArrayList<>();
 
-        Project project = new Project(Operations.PROJECT, new TableName(catalog, table), columns);
+        Project project = new Project(Operations.PROJECT, new TableName(catalog, table), clusterName,columns);
         LogicalStep lastStep = project;
         for (Filter filter : filters) {
             lastStep.setNextStep(filter);

@@ -28,6 +28,8 @@ import org.junit.After;
 import org.junit.Test;
 
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
+import com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator;
+import com.stratio.meta.common.connector.Operations;
 import com.stratio.meta.common.data.Cell;
 import com.stratio.meta.common.data.Row;
 import com.stratio.meta.common.exceptions.ConnectionException;
@@ -75,13 +77,13 @@ public abstract class GenericMetadataDropTest extends GenericConnectorTest {
         connector.getMetadataEngine().dropTable(clusterName, (new TableName(CATALOG, TABLE)));
 
         QueryResult queryResult = connector.getQueryEngine()
-                .execute(clusterName, createLogicalWorkFlow(CATALOG, TABLE));
+                .execute( createLogicalWorkFlow(CATALOG, TABLE));
         assertEquals("Table [" + CATALOG + "." + TABLE + "] deleted", 0, queryResult.getResultSet().size());
 
-        queryResult = connector.getQueryEngine().execute(clusterName, createLogicalWorkFlow(OTHER_CATALOG, TABLE));
+        queryResult = connector.getQueryEngine().execute( createLogicalWorkFlow(OTHER_CATALOG, TABLE));
         assertNotEquals("Table [" + OTHER_CATALOG + "." + TABLE + "] exist", 0, queryResult.getResultSet().size());
 
-        queryResult = connector.getQueryEngine().execute(clusterName, createLogicalWorkFlow(CATALOG, OTHER_TABLE));
+        queryResult = connector.getQueryEngine().execute(createLogicalWorkFlow(CATALOG, OTHER_TABLE));
         assertNotEquals("Table [" + CATALOG + "." + OTHER_TABLE + " exist", 0, queryResult.getResultSet().size());
 
     }
@@ -112,13 +114,13 @@ public abstract class GenericMetadataDropTest extends GenericConnectorTest {
         connector.getMetadataEngine().dropCatalog(clusterName, new CatalogName(CATALOG));
 
         QueryResult queryResult = connector.getQueryEngine()
-                .execute(clusterName, createLogicalWorkFlow(CATALOG, TABLE));
+                .execute(createLogicalWorkFlow(CATALOG, TABLE));
         assertEquals("Table [" + CATALOG + "." + TABLE + "] deleted", 0, queryResult.getResultSet().size());
 
-        queryResult = connector.getQueryEngine().execute(clusterName, createLogicalWorkFlow(OTHER_CATALOG, TABLE));
+        queryResult = connector.getQueryEngine().execute(createLogicalWorkFlow(OTHER_CATALOG, TABLE));
         assertNotEquals("Table [" + OTHER_CATALOG + "." + TABLE + "] exist", 0, queryResult.getResultSet().size());
 
-        queryResult = connector.getQueryEngine().execute(clusterName, createLogicalWorkFlow(CATALOG, OTHER_TABLE));
+        queryResult = connector.getQueryEngine().execute(createLogicalWorkFlow(CATALOG, OTHER_TABLE));
         assertEquals("Table [" + CATALOG + "." + OTHER_TABLE + " deleted", 0, queryResult.getResultSet().size());
 
         deleteCatalog(OTHER_CATALOG);
@@ -126,15 +128,10 @@ public abstract class GenericMetadataDropTest extends GenericConnectorTest {
     }
 
     private LogicalWorkflow createLogicalWorkFlow(String catalog, String table) {
-        List<LogicalStep> stepList = new ArrayList<>();
-        List<ColumnName> columns = new ArrayList<>();
 
-        columns.add(new ColumnName(CATALOG, TABLE, COLUMN_1));
-        columns.add(new ColumnName(CATALOG, TABLE, COLUMN_2));
-        TableName tableName = new TableName(catalog, table);
-        Project project = new Project(null, tableName, columns);
-        stepList.add(project);
-        return new LogicalWorkflow(stepList);
+
+        return new LogicalWorkFlowCreator(catalog, table, getClusterName()).addColumnName(COLUMN_1, COLUMN_2)
+                .getLogicalWorkflow();
     }
 
     @After

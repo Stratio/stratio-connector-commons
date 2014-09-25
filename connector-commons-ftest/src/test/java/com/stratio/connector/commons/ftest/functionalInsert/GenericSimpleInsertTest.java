@@ -224,7 +224,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
     }
 
     private ResultSet createResultSet(ClusterName clusterName) throws UnsupportedException, ExecutionException {
-        QueryResult queryResult = connector.getQueryEngine().execute(clusterName, createLogicalWorkFlow());
+        QueryResult queryResult = connector.getQueryEngine().execute(createLogicalWorkFlow());
         return queryResult.getResultSet();
     }
 
@@ -280,7 +280,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
 
     private LogicalWorkflow createLogicalWorkFlow() {
 
-        return new LogicalWorkFlowCreator(CATALOG, TABLE).addColumnName(COLUMN_1, COLUMN_2, COLUMN_3, COLUMN_4)
+        return new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName()).addColumnName(COLUMN_1, COLUMN_2, COLUMN_3, COLUMN_4)
                         .getLogicalWorkflow();
 
     }

@@ -18,8 +18,6 @@ package com.stratio.connector.commons.util;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -30,8 +28,6 @@ import org.junit.Test;
  * @since <pre>sep 3, 2014</pre>
  */
 public class ConnectorParserTest {
-
-
 
     @Test
     public void parseHosts() {

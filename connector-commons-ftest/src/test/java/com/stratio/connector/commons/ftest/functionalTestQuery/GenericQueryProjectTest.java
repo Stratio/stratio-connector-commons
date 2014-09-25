@@ -68,7 +68,7 @@ public abstract class GenericQueryProjectTest extends GenericConnectorTest {
         refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = createLogicalWorkFlow();
-        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(clusterNodeName, logicalPlan);
+        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
 
         Set<Object> probeSet = new HashSet<>();
         Iterator<Row> rowIterator = queryResult.getResultSet().iterator();
@@ -91,7 +91,7 @@ public abstract class GenericQueryProjectTest extends GenericConnectorTest {
 
     private LogicalWorkflow createLogicalWorkFlow() {
 
-        return new LogicalWorkFlowCreator(CATALOG, TABLE).addColumnName(COLUMN_1, COLUMN_2).getLogicalWorkflow();
+        return new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName()).addColumnName(COLUMN_1, COLUMN_2).getLogicalWorkflow();
     }
 
     private void insertRow(int ikey, ClusterName clusterNodeName) throws UnsupportedOperationException,

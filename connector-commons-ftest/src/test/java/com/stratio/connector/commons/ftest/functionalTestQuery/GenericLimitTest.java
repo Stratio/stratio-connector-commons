@@ -64,7 +64,7 @@ public abstract class GenericLimitTest extends GenericConnectorTest {
         LogicalWorkflow logicalPlan = createLogicalPlan(2);
 
         // limit 2
-        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(clusterName, logicalPlan);
+        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
 
         assertEquals(2, queryResult.getResultSet().size());
 
@@ -79,7 +79,7 @@ public abstract class GenericLimitTest extends GenericConnectorTest {
         columns.add(new ColumnName(CATALOG, TABLE, COLUMN_TEXT)); //REVIEW todo esto se ha cambiado para que compile
         columns.add(new ColumnName(CATALOG, TABLE, COLUMN_AGE));
         TableName tableName = new TableName(CATALOG, TABLE);
-        Project project = new Project(null, tableName, columns);
+        Project project = new Project(null, tableName, getClusterName(),columns);
         stepList.add(project);
 
         //stepList.add(new Limit(limit));

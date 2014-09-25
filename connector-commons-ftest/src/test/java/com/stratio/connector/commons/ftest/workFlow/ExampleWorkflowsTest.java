@@ -48,7 +48,7 @@ public abstract class ExampleWorkflowsTest extends GenericConnectorTest {
         setDeleteBeteweenTest(false);
         super.setUp();
 
-        exampleWorkflows = new ExampleWorkflows(CATALOG, TABLE);
+        exampleWorkflows = new ExampleWorkflows(CATALOG, TABLE,getClusterName());
         if (!insertData) {
             setDeleteBeteweenTest(true);
             deleteCatalog(CATALOG);
@@ -72,7 +72,7 @@ public abstract class ExampleWorkflowsTest extends GenericConnectorTest {
                 "*********************************** INIT FUNCTIONAL TEST basicSelect ***********************************");
 
         LogicalWorkflow logicalWorkflow = exampleWorkflows.getBasicSelect();
-        QueryResult qr = connector.getQueryEngine().execute(getClusterName(), logicalWorkflow);
+        QueryResult qr = connector.getQueryEngine().execute(logicalWorkflow);
         assertEquals("The result number is correct", 1000000, qr.getResultSet().size());
 
         Row oneRow = qr.getResultSet().iterator().next();
@@ -86,7 +86,7 @@ public abstract class ExampleWorkflowsTest extends GenericConnectorTest {
                 "*********************************** INIT FUNCTIONAL TEST basicSelectAsterisk ***********************************");
 
         LogicalWorkflow logicalWorkflow = exampleWorkflows.getBasicSelectAsterisk();
-        QueryResult qr = connector.getQueryEngine().execute(getClusterName(), logicalWorkflow);
+        QueryResult qr = connector.getQueryEngine().execute(logicalWorkflow);
         assertEquals("All record are recovered", 1000000, qr.getResultSet().size());
     }
 
@@ -98,7 +98,7 @@ public abstract class ExampleWorkflowsTest extends GenericConnectorTest {
 
         LogicalWorkflow logicalWorkflow = exampleWorkflows.getSelectIndexedField();
 
-        QueryResult qr = connector.getQueryEngine().execute(getClusterName(), logicalWorkflow);
+        QueryResult qr = connector.getQueryEngine().execute(logicalWorkflow);
         assertEquals("The items number in the resultset is correct", 1623, qr.getResultSet().size());
 
         Row oneRow = qr.getResultSet().iterator().next();
@@ -114,7 +114,7 @@ public abstract class ExampleWorkflowsTest extends GenericConnectorTest {
 
         LogicalWorkflow logicalWorkflow = exampleWorkflows.getSelectNonIndexedField();
 
-        QueryResult qr = connector.getQueryEngine().execute(getClusterName(), logicalWorkflow);
+        QueryResult qr = connector.getQueryEngine().execute(logicalWorkflow);
 
         assertEquals("The items number in the resultset is correct", 9009, qr.getResultSet().size());
 
@@ -133,7 +133,7 @@ public abstract class ExampleWorkflowsTest extends GenericConnectorTest {
 
         LogicalWorkflow logicalWorkflow = exampleWorkflows.getSelectMixedWhere();
 
-        QueryResult qr = connector.getQueryEngine().execute(getClusterName(), logicalWorkflow);
+        QueryResult qr = connector.getQueryEngine().execute(logicalWorkflow);
         assertEquals("The result is correct", 7, qr.getResultSet().size());
 
     }

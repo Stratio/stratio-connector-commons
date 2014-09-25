@@ -70,7 +70,7 @@ public abstract class GenericOrderByTest extends GenericConnectorTest {
 
         //return COLUMN_TEXT order by age DESC
 
-        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(clusterName, logicalPlan);
+        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
 
         assertEquals(5, queryResult.getResultSet().size());
 
@@ -105,7 +105,7 @@ public abstract class GenericOrderByTest extends GenericConnectorTest {
 
         //return COLUMN_TEXT order by money asc, age asc
 
-        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(clusterName, logicalPlan);
+        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
 
         assertEquals(6, queryResult.getResultSet().size());
 
@@ -164,7 +164,7 @@ public abstract class GenericOrderByTest extends GenericConnectorTest {
         columns.add(new ColumnName(CATALOG, TABLE, COLUMN_TEXT)); //REVIEW cambiado para que compile
         columns.add(new ColumnName(CATALOG, TABLE, COLUMN_AGE));
         TableName tableName = new TableName(CATALOG, TABLE);
-        Project project = new Project(null, tableName, columns);
+        Project project = new Project(null, tableName, getClusterName(),columns);
         stepList.add(project);
 
         switch (sortAge) {
@@ -190,7 +190,7 @@ public abstract class GenericOrderByTest extends GenericConnectorTest {
         columns.add(new ColumnName(CATALOG, TABLE, COLUMN_AGE));
 
         TableName tableName = new TableName(CATALOG, TABLE);
-        Project project = new Project(null, tableName, columns); //REVIEW cambiado para que compile
+        Project project = new Project(null, tableName, getClusterName(),columns); //REVIEW cambiado para que compile
 
         stepList.add(project);
         LogicalStep gropuBy;

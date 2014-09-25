@@ -15,60 +15,53 @@
  */
 package com.stratio.connector.commons.engine;
 
-import java.util.List;
-
+import com.stratio.connector.commons.connection.Connection;
 import com.stratio.connector.commons.connection.ConnectionHandler;
 import com.stratio.connector.commons.connection.exceptions.HandlerConnectionException;
 import com.stratio.meta.common.connector.IQueryEngine;
 import com.stratio.meta.common.exceptions.ExecutionException;
 import com.stratio.meta.common.exceptions.UnsupportedException;
-import com.stratio.meta.common.logicalplan.LogicalStep;
 import com.stratio.meta.common.logicalplan.LogicalWorkflow;
+import com.stratio.meta.common.logicalplan.Project;
 import com.stratio.meta.common.result.QueryResult;
 import com.stratio.meta2.common.data.ClusterName;
 
 /**
  * @author darroyo
- *
  */
-public abstract class SimpleCommonsQueryEngine extends CommonsUtils implements IQueryEngine {
+public abstract class UniqueProjectQueryEngine extends CommonsQueryEngine implements IQueryEngine {
 
     /**
-     * The connection handler.
+     * Constructor.
+     *
+     * @param connectionHandler the connector handler.
      */
-    ConnectionHandler connectionHandler;
-
-    /**
-     * @param connectionHandler
-     */
-    public SimpleCommonsQueryEngine(ConnectionHandler connectionHandler) {
-        this.connectionHandler = connectionHandler;
+    public UniqueProjectQueryEngine(ConnectionHandler connectionHandler) {
+        super(connectionHandler);
     }
 
-    public QueryResult execute(LogicalWorkflow workflow) throws UnsupportedException, ExecutionException {
-
-        ClusterName targetCluster;
-        List<LogicalStep> initialSteps = workflow.getInitialSteps();
-        if (initialSteps.size() != 1)
-            throw new UnsupportedException("");
-        targetCluster = initialSteps.get(0).getClusterName();
-
-        QueryResult result = null;
+    protected QueryResult executeWorkFlow(LogicalWorkflow workflow) throws UnsupportedException, ExecutionException {
+        chekSupport(workflow);
+        ClusterName clusterName = null;
+        QueryResult queryResult = null;
         try {
-            startWork(targetCluster, connectionHandler);
-
-            result = execute(workflow, connectionHandler.getConnection(targetCluster.getName()));
-
+            clusterName = ((Project) workflow.getInitialSteps().get(0)).getClusterName();
+            queryResult = execute(workflow, connectionHandler.getConnection(clusterName.getName()));
         } catch (HandlerConnectionException e) {
-            String msg = "Error find Connection in " + targetCluster.getName() + ". " + e.getMessage();
+            String msg = "Error find Connection in " + clusterName.getName() + ". " + e.getMessage();
             logger.error(msg);
             throw new ExecutionException(msg, e);
-        } finally {
-            endWork(targetCluster, connectionHandler);
         }
+        return queryResult;
+    }
 
-        return result;
+    protected abstract QueryResult execute(LogicalWorkflow workflow, Connection connection)
+            throws UnsupportedException, ExecutionException;
 
+    private void chekSupport(LogicalWorkflow workflow) throws UnsupportedException {
+        if (workflow.getInitialSteps().size() != 1) {
+            throw new UnsupportedException("The connector can only execute queries with one Project");
+        }
     }
 
 }

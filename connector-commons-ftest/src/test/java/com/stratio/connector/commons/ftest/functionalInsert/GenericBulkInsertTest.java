@@ -109,7 +109,7 @@ public abstract class GenericBulkInsertTest extends GenericConnectorTest {
     }
 
     private void verifyInsert(ClusterName cluesterName) throws UnsupportedException, ExecutionException {
-        QueryResult queryResult = connector.getQueryEngine().execute(cluesterName, createLogicalWorkFlow());
+        QueryResult queryResult = connector.getQueryEngine().execute(createLogicalWorkFlow());
         ResultSet resultIterator = queryResult.getResultSet();
 
         assertEquals("The records number is correct " + cluesterName.getName(), getRowToInsert(), resultIterator.size());
@@ -128,7 +128,7 @@ public abstract class GenericBulkInsertTest extends GenericConnectorTest {
 
     private LogicalWorkflow createLogicalWorkFlow() {
 
-        return new LogicalWorkFlowCreator(CATALOG, TABLE).addColumnName(COLUMN_KEY, COLUMN_1, COLUMN_2, COLUMN_3)
+        return new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName()).addColumnName(COLUMN_KEY, COLUMN_1, COLUMN_2, COLUMN_3)
                         .getLogicalWorkflow();
 
     }

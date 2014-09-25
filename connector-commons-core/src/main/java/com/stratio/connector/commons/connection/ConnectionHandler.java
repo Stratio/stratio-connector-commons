@@ -15,6 +15,9 @@
  */
 package com.stratio.connector.commons.connection;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,12 +29,18 @@ import com.stratio.connector.commons.connection.exceptions.HandlerConnectionExce
 import com.stratio.meta.common.connector.ConnectorClusterConfig;
 import com.stratio.meta.common.connector.IConfiguration;
 import com.stratio.meta.common.security.ICredentials;
+import com.stratio.meta2.common.data.ClusterName;
 
 /**
  * This class is the responsible to handle the connections.
  * Created by jmgomez on 28/08/14.
  */
 public abstract class ConnectionHandler {
+
+    /**
+     * The dateFormat.
+     */
+    private static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
     /**
      * The Log.
@@ -131,6 +140,37 @@ public abstract class ConnectionHandler {
             throw new HandlerConnectionException("The connection [" + name + "] does not exist");
         }
         return connection;
+    }
+
+    public void startWork(ClusterName targetCluster) {
+        Connection conn = null;
+        try {
+            conn = getConnection(targetCluster.getName());
+
+            conn.setLastDateInfo(dateFormat.format(new Date()));
+            conn.setStatus("Work in Progress");
+            conn.setWorkInProgress(true);
+
+        } catch (HandlerConnectionException e) {
+            String msg = "fail get the Connection. " + e.getMessage();
+            logger.error(msg);
+
+        }
+    }
+
+    public void endWork(ClusterName targetCluster) {
+        Connection conn = null;
+        try {
+            conn = getConnection(targetCluster.getName());
+
+            conn.setLastDateInfo(new Date().toString());
+            conn.setStatus("Work Finished");
+            conn.setWorkInProgress(false);
+
+        } catch (HandlerConnectionException e) {
+            String msg = "fail getting the Connection. " + e.getMessage();
+            logger.error(msg);
+        }
     }
 
     public Map<String, Connection> getConnections() {

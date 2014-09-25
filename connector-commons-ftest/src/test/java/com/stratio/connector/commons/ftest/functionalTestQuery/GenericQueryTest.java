@@ -25,7 +25,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -50,9 +49,6 @@ import com.stratio.meta.common.metadata.structures.ColumnMetadata;
 import com.stratio.meta.common.result.QueryResult;
 import com.stratio.meta2.common.data.ClusterName;
 import com.stratio.meta2.common.data.TableName;
-
-import com.stratio.meta.common.result.QueryResult;
-import com.stratio.meta2.common.data.ClusterName;
 
 import com.stratio.meta2.common.metadata.ColumnType;
 import com.stratio.meta2.common.metadata.TableMetadata;
@@ -88,14 +84,14 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
 
         LinkedList<LogicalWorkFlowCreator.ConnectorField> fields = new LinkedList<>();
         LogicalWorkFlowCreator logicalWorkFlowCreator = new LogicalWorkFlowCreator(CATALOG,
-                TABLE);
+                TABLE, getClusterName());
         fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_1, COLUMN_1, ColumnType.VARCHAR));
         fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_2, COLUMN_2,ColumnType.VARCHAR));
         fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_3, COLUMN_3,ColumnType.VARCHAR));
 
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addColumnName(COLUMN_1, COLUMN_2, COLUMN_3).addSelect(fields).getLogicalWorkflow();
-        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(clusterNodeName, logicalPlan);
+        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
         Set<Object> proveSet = new HashSet<>();
         ResultSet resultSet = queryResult.getResultSet();
 
@@ -132,14 +128,14 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
 
         LinkedList<LogicalWorkFlowCreator.ConnectorField> fields = new LinkedList<>();
         LogicalWorkFlowCreator logicalWorkFlowCreator = new LogicalWorkFlowCreator(CATALOG,
-                TABLE);
+                TABLE, getClusterName());
         fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_1, "alias"+COLUMN_1, ColumnType.TEXT));
         fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_2, "alias"+COLUMN_2,ColumnType.INT));
         fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_3, "alias"+COLUMN_3,ColumnType.BOOLEAN));
 
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addColumnName(COLUMN_1, COLUMN_2, COLUMN_3).addSelect(fields).getLogicalWorkflow();
-        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(clusterNodeName, logicalPlan);
+        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
 
         ResultSet resultSet = queryResult.getResultSet();
         List<ColumnMetadata> columnMetadata = resultSet.getColumnMetadata();
@@ -215,7 +211,7 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
     private LogicalWorkflow createLogicalPlan() {
         LinkedList<LogicalWorkFlowCreator.ConnectorField> fields = new LinkedList<>();
         LogicalWorkFlowCreator logicalWorkFlowCreator = new LogicalWorkFlowCreator(CATALOG,
-                TABLE);
+                TABLE, getClusterName());
         fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_1, COLUMN_1, ColumnType.VARCHAR));
         fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_2, COLUMN_2,ColumnType.VARCHAR));
         fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_3, COLUMN_3,ColumnType.VARCHAR));

@@ -34,6 +34,7 @@ import com.stratio.meta.common.logicalplan.Project;
 import com.stratio.meta.common.logicalplan.Select;
 import com.stratio.meta.common.statements.structures.relationships.Operator;
 import com.stratio.meta.common.statements.structures.relationships.Relation;
+import com.stratio.meta2.common.data.ClusterName;
 import com.stratio.meta2.common.data.ColumnName;
 import com.stratio.meta2.common.data.TableName;
 import com.stratio.meta2.common.metadata.ColumnType;
@@ -73,12 +74,14 @@ public class ExampleWorkflows {
     public static final String ALIAS_NAME = "users.name";
     public static final String ALIAS_AGE = "users.age";
     public static Boolean[] booleans = { true, false };
+    private final ClusterName clusterName;
     public String table;
     public String catalog;
 
-    public ExampleWorkflows(String catalog, String table) {
+    public ExampleWorkflows(String catalog, String table, ClusterName clusterName) {
         this.catalog = catalog;
         this.table = table;
+        this.clusterName = clusterName;
     }
 
     public List<Row> getRows(int init) {
@@ -107,7 +110,7 @@ public class ExampleWorkflows {
         TableName table = new TableName(
                 columnNames[0].getTableName().getCatalogName().getName(),
                 columnNames[0].getTableName().getName());
-        return new Project(Operations.PROJECT, table, Arrays.asList(columnNames));
+        return new Project(Operations.PROJECT, table, clusterName,Arrays.asList(columnNames));
     }
 
     /**
