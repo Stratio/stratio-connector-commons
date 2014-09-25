@@ -26,36 +26,37 @@ public abstract class CommonsMetadataEngine extends CommonsUtils implements IMet
     /**
      * Constructor.
      *
-     * @param connectionHandler the connector handler.
+     * @param connectionHandler
+     *            the connector handler.
      */
     protected CommonsMetadataEngine(ConnectionHandler connectionHandler) {
         this.connectionHandler = connectionHandler;
     }
 
-    public abstract void createCatalog(ClusterName targetCluster, CatalogMetadata catalogMetadata,
-            Connection connection) throws UnsupportedException, ExecutionException;
+    public abstract void createCatalog(CatalogMetadata catalogMetadata, Connection connection)
+                    throws UnsupportedException, ExecutionException;
 
-    public abstract void createTable(ClusterName targetCluster, TableMetadata tableMetadata, Connection connection)
-            throws UnsupportedException, ExecutionException;
+    public abstract void createTable(TableMetadata tableMetadata, Connection connection) throws UnsupportedException,
+                    ExecutionException;
 
-    public abstract void dropCatalog(ClusterName targetCluster, CatalogName name, Connection connection)
-            throws UnsupportedException, ExecutionException;
+    public abstract void dropCatalog(CatalogName name, Connection connection) throws UnsupportedException,
+                    ExecutionException;
 
-    public abstract void dropTable(ClusterName targetCluster, TableName name, Connection connection)
-            throws UnsupportedException, ExecutionException;
+    public abstract void dropTable(TableName name, Connection connection) throws UnsupportedException,
+                    ExecutionException;
 
-    public abstract void createIndex(ClusterName targetCluster, IndexMetadata indexMetadata, Connection connection)
-            throws UnsupportedException, ExecutionException;
+    public abstract void createIndex(IndexMetadata indexMetadata, Connection connection) throws UnsupportedException,
+                    ExecutionException;
 
-    public abstract void dropIndex(ClusterName targetCluster, IndexMetadata indexMetadata, Connection connection)
-            throws UnsupportedException, ExecutionException;
+    public abstract void dropIndex(IndexMetadata indexMetadata, Connection connection) throws UnsupportedException,
+                    ExecutionException;
 
-    public void createCatalog(ClusterName targetCluster, CatalogMetadata catalogMetadata)
-            throws UnsupportedException, ExecutionException {
+    public void createCatalog(ClusterName targetCluster, CatalogMetadata catalogMetadata) throws UnsupportedException,
+                    ExecutionException {
         try {
 
             startWork(targetCluster, connectionHandler);
-            createCatalog(targetCluster, catalogMetadata, connectionHandler.getConnection(targetCluster.getName()));
+            createCatalog(catalogMetadata, connectionHandler.getConnection(targetCluster.getName()));
             endWork(targetCluster, connectionHandler);
 
         } catch (HandlerConnectionException e) {
@@ -65,11 +66,11 @@ public abstract class CommonsMetadataEngine extends CommonsUtils implements IMet
         }
     }
 
-    public void createTable(ClusterName targetCluster, TableMetadata tableMetadata)
-            throws UnsupportedException, ExecutionException {
+    public void createTable(ClusterName targetCluster, TableMetadata tableMetadata) throws UnsupportedException,
+                    ExecutionException {
         try {
             startWork(targetCluster, connectionHandler);
-            createTable(targetCluster, tableMetadata, connectionHandler.getConnection(targetCluster.getName()));
+            createTable(tableMetadata, connectionHandler.getConnection(targetCluster.getName()));
             endWork(targetCluster, connectionHandler);
         } catch (HandlerConnectionException e) {
             String msg = "Error find Connection in " + targetCluster.getName() + ". " + e.getMessage();
@@ -78,11 +79,11 @@ public abstract class CommonsMetadataEngine extends CommonsUtils implements IMet
         }
     }
 
-    public void dropCatalog(ClusterName targetCluster, CatalogName name)
-            throws UnsupportedException, ExecutionException {
+    public void dropCatalog(ClusterName targetCluster, CatalogName name) throws UnsupportedException,
+                    ExecutionException {
         try {
             startWork(targetCluster, connectionHandler);
-            dropCatalog(targetCluster, name, connectionHandler.getConnection(targetCluster.getName()));
+            dropCatalog(name, connectionHandler.getConnection(targetCluster.getName()));
             endWork(targetCluster, connectionHandler);
         } catch (HandlerConnectionException e) {
             String msg = "Error find Connection in " + targetCluster.getName() + ". " + e.getMessage();
@@ -95,7 +96,7 @@ public abstract class CommonsMetadataEngine extends CommonsUtils implements IMet
     public void dropTable(ClusterName targetCluster, TableName name) throws UnsupportedException, ExecutionException {
         try {
             startWork(targetCluster, connectionHandler);
-            dropTable(targetCluster, name, connectionHandler.getConnection(targetCluster.getName()));
+            dropTable(name, connectionHandler.getConnection(targetCluster.getName()));
             endWork(targetCluster, connectionHandler);
         } catch (HandlerConnectionException e) {
             String msg = "Error find Connection in " + targetCluster.getName() + ". " + e.getMessage();
@@ -104,11 +105,11 @@ public abstract class CommonsMetadataEngine extends CommonsUtils implements IMet
         }
     }
 
-    public void createIndex(ClusterName targetCluster, IndexMetadata indexMetadata)
-            throws UnsupportedException, ExecutionException {
+    public void createIndex(ClusterName targetCluster, IndexMetadata indexMetadata) throws UnsupportedException,
+                    ExecutionException {
         try {
             startWork(targetCluster, connectionHandler);
-            createIndex(targetCluster, indexMetadata, connectionHandler.getConnection(targetCluster.getName()));
+            createIndex(indexMetadata, connectionHandler.getConnection(targetCluster.getName()));
             endWork(targetCluster, connectionHandler);
         } catch (HandlerConnectionException e) {
             String msg = "Error find Connection in " + targetCluster.getName() + ". " + e.getMessage();
@@ -117,11 +118,11 @@ public abstract class CommonsMetadataEngine extends CommonsUtils implements IMet
         }
     }
 
-    public void dropIndex(ClusterName targetCluster, IndexMetadata indexMetadata)
-            throws UnsupportedException, ExecutionException {
+    public void dropIndex(ClusterName targetCluster, IndexMetadata indexMetadata) throws UnsupportedException,
+                    ExecutionException {
         try {
             startWork(targetCluster, connectionHandler);
-            createIndex(targetCluster, indexMetadata, connectionHandler.getConnection(targetCluster.getName()));
+            createIndex(indexMetadata, connectionHandler.getConnection(targetCluster.getName()));
             endWork(targetCluster, connectionHandler);
         } catch (HandlerConnectionException e) {
             String msg = "Error find Connection in " + targetCluster.getName() + ". " + e.getMessage();
