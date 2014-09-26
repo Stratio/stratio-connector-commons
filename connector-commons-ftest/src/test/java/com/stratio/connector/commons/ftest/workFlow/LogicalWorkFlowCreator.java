@@ -80,8 +80,9 @@ public class LogicalWorkFlowCreator {
             lastStep = filter;
         }
         if (limit!=null){
-            lastStep = limit;
+
             lastStep.setNextStep(limit);
+            lastStep = limit;
 
         }
         if (select ==null){
