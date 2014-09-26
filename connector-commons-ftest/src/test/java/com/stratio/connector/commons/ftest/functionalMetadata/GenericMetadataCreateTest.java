@@ -163,10 +163,11 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
         List<ColumnName> partitionKey = Collections.EMPTY_LIST;
         List<ColumnName> clusterKey = Collections.EMPTY_LIST;
 
-        // We must create the catalog firs
+        
+        if (getConnectorHelper().isCatalogMandatory()){
         connector.getMetadataEngine().createCatalog(getClusterName(),
                         new CatalogMetadata(new CatalogName(CATALOG), Collections.EMPTY_MAP, Collections.EMPTY_MAP));
-
+        }
         try {
             connector.getMetadataEngine().dropTable(getClusterName(), tableName);
             fail("When I try to delete a table that not exists any type of exception must be throws. It may be a runtime exception.");
@@ -205,11 +206,11 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
         ClusterName clusterRef = getClusterName();
         List<ColumnName> partitionKey = Collections.EMPTY_LIST;
         List<ColumnName> clusterKey = Collections.EMPTY_LIST;
-
-        // We must create the catalog firs
+        
+            if (getConnectorHelper().isCatalogMandatory()){
         connector.getMetadataEngine().createCatalog(getClusterName(),
                         new CatalogMetadata(new CatalogName(CATALOG), Collections.EMPTY_MAP, Collections.EMPTY_MAP));
-
+            }
         try {
             connector.getMetadataEngine().dropTable(getClusterName(), tableName);
             fail("When I try to delete a table that not exists any type of exception must be throws. It may be a runtime exception.");

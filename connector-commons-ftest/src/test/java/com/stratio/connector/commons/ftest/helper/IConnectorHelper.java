@@ -49,4 +49,6 @@ public interface IConnectorHelper {
 
     int countIndexes(String catalogName, String collectionName);
 
+	boolean isCatalogMandatory();
+
 }
