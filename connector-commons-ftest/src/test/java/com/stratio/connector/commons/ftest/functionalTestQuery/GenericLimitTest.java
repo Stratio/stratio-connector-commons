@@ -46,6 +46,7 @@ public abstract class GenericLimitTest extends GenericConnectorTest {
     public static final String COLUMN_TEXT = "text";
     public static final String COLUMN_AGE = "age";
     public static final String COLUMN_MONEY = "money";
+	private static final int RESULT_NUMBER = 15456;
 
     @Test
     public void limitTest() throws Exception {
@@ -53,20 +54,18 @@ public abstract class GenericLimitTest extends GenericConnectorTest {
         ClusterName clusterName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST limitTest  ***********************************");
 
-        insertRow(1, "text", 10, 20, clusterName);// row,text,money,age
-        insertRow(2, "text", 9, 17, clusterName);
-        insertRow(3, "text", 11, 26, clusterName);
-        insertRow(4, "text", 10, 30, clusterName);
-        insertRow(5, "text", 20, 42, clusterName);
+        for (int i=0;i<25463;i++){
+        insertRow(i, "text",  clusterName);
+                }
 
         refresh(CATALOG);
 
-        LogicalWorkflow logicalPlan = createLogicalPlan(2);
+        LogicalWorkflow logicalPlan = createLogicalPlan(RESULT_NUMBER);
 
-        // limit 2
+       
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
 
-        assertEquals(2, queryResult.getResultSet().size());
+        assertEquals("The limited result is correct",RESULT_NUMBER, queryResult.getResultSet().size());
 
     }
 
@@ -80,14 +79,14 @@ public abstract class GenericLimitTest extends GenericConnectorTest {
 
     }
 
-    private void insertRow(int ikey, String texto, int money, int age, ClusterName cLusterName)
+    private void insertRow(int ikey, String texto, ClusterName cLusterName)
             throws UnsupportedOperationException, ExecutionException, UnsupportedException {
 
         Row row = new Row();
         Map<String, Cell> cells = new HashMap<>();
         cells.put(COLUMN_TEXT, new Cell(texto + ikey));
-        cells.put(COLUMN_AGE, new Cell(age));
-        cells.put(COLUMN_MONEY, new Cell(money));
+        cells.put(COLUMN_AGE, new Cell(10));
+        cells.put(COLUMN_MONEY, new Cell(20));
         row.setCells(cells);
         connector.getStorageEngine().insert(cLusterName,
                 new TableMetadata(new TableName(CATALOG, TABLE), null, null, null, null, Collections.EMPTY_LIST,

@@ -39,7 +39,7 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
     }
 
     @Override
-    public void insert(ClusterName targetCluster, TableMetadata targetTable, Row row) throws UnsupportedException,
+    public final void insert(ClusterName targetCluster, TableMetadata targetTable, Row row) throws UnsupportedException,
             ExecutionException {
         try {
             connectionHandler.startWork(targetCluster);
@@ -55,7 +55,7 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
     }
 
     @Override
-    public void insert(ClusterName targetCluster, TableMetadata targetTable, Collection<Row> rows)
+    public final void insert(ClusterName targetCluster, TableMetadata targetTable, Collection<Row> rows)
             throws UnsupportedException, ExecutionException {
         try {
             connectionHandler.startWork(targetCluster);

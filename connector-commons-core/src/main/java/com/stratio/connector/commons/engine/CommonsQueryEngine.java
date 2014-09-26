@@ -48,7 +48,7 @@ public abstract class CommonsQueryEngine implements IQueryEngine {
             ExecutionException;
 
     @Override
-    public QueryResult execute(LogicalWorkflow workflow) throws UnsupportedException, ExecutionException {
+    public final QueryResult execute(LogicalWorkflow workflow) throws UnsupportedException, ExecutionException {
         QueryResult result = null;
         ClusterName clusterName = null;
         try {

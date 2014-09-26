@@ -40,7 +40,8 @@ public abstract class UniqueProjectQueryEngine<T> extends CommonsQueryEngine imp
         super(connectionHandler);
     }
 
-    protected QueryResult executeWorkFlow(LogicalWorkflow workflow) throws UnsupportedException, ExecutionException {
+    @Override
+    protected final QueryResult executeWorkFlow(LogicalWorkflow workflow) throws UnsupportedException, ExecutionException {
         chekSupport(workflow);
         ClusterName clusterName = null;
         QueryResult queryResult = null;
