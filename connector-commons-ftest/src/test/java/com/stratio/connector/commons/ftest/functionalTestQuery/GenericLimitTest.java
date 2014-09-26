@@ -76,7 +76,7 @@ public abstract class GenericLimitTest extends GenericConnectorTest {
                 TABLE, getClusterName()).addColumnName(COLUMN_TEXT, COLUMN_AGE,
                 COLUMN_MONEY).addLimit(limit).getLogicalWorkflow();
 
-        throw new RuntimeException("Not yet generic supported");
+
 
     }
 
