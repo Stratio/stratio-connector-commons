@@ -210,19 +210,6 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
     }
 
 
-    private LogicalWorkflow createLogicalPlan() {
-        LinkedList<LogicalWorkFlowCreator.ConnectorField> fields = new LinkedList<>();
-        LogicalWorkFlowCreator logicalWorkFlowCreator = new LogicalWorkFlowCreator(CATALOG,
-                TABLE, getClusterName());
-        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_1, COLUMN_1, ColumnType.VARCHAR));
-        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_2, COLUMN_2,ColumnType.VARCHAR));
-        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_3, COLUMN_3,ColumnType.VARCHAR));
-
-
-
-        return logicalWorkFlowCreator.addColumnName(COLUMN_1, COLUMN_2, COLUMN_3).addSelect(fields)
-                        .getLogicalWorkflow();
-    }
 
     private void insertRow(int ikey, ClusterName clusterNodeName) throws UnsupportedOperationException,
                     ExecutionException, UnsupportedException {

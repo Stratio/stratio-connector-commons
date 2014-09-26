@@ -25,6 +25,7 @@ import java.util.Map;
 
 import com.stratio.meta.common.connector.Operations;
 import com.stratio.meta.common.logicalplan.Filter;
+import com.stratio.meta.common.logicalplan.Limit;
 import com.stratio.meta.common.logicalplan.LogicalStep;
 import com.stratio.meta.common.logicalplan.LogicalWorkflow;
 import com.stratio.meta.common.logicalplan.Project;
@@ -58,6 +59,8 @@ public class LogicalWorkFlowCreator {
     public String catalog = "catalog_functional_test";
     List<ColumnName> columns = new ArrayList<>();
     List<Filter> filters = new ArrayList<>();
+    private Limit limit;
+
     public LogicalWorkFlowCreator(String catalog, String table, ClusterName clusterName) {
         this.catalog = catalog;
         this.table = table;
@@ -75,6 +78,11 @@ public class LogicalWorkFlowCreator {
         for (Filter filter : filters) {
             lastStep.setNextStep(filter);
             lastStep = filter;
+        }
+        if (limit!=null){
+            lastStep = limit;
+            lastStep.setNextStep(limit);
+
         }
         if (select ==null){
             Map<String, String> selectColumn = new LinkedHashMap<>();
@@ -255,7 +263,10 @@ public class LogicalWorkFlowCreator {
 
     }
 
-
+    public LogicalWorkFlowCreator addLimit(int limit) {
+        this.limit = new Limit(Operations.SELECT_LIMIT,limit);
+        return this;
+    }
 
     public  class ConnectorField {
         public String name;

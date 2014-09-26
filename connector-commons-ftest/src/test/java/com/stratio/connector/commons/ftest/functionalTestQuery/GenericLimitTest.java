@@ -27,6 +27,7 @@ import java.util.Map;
 import org.junit.Test;
 
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
+import com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator;
 import com.stratio.meta.common.data.Cell;
 import com.stratio.meta.common.data.Row;
 import com.stratio.meta.common.exceptions.ExecutionException;
@@ -50,8 +51,7 @@ public abstract class GenericLimitTest extends GenericConnectorTest {
     public void limitTest() throws Exception {
 
         ClusterName clusterName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST limitTest " + clusterName.getName()
-                + " ***********************************");
+        System.out.println("*********************************** INIT FUNCTIONAL TEST limitTest  ***********************************");
 
         insertRow(1, "text", 10, 20, clusterName);// row,text,money,age
         insertRow(2, "text", 9, 17, clusterName);
@@ -72,18 +72,9 @@ public abstract class GenericLimitTest extends GenericConnectorTest {
 
     private LogicalWorkflow createLogicalPlan(int limit) {
 
-        List<LogicalStep> stepList = new ArrayList<>();
-
-        List<ColumnName> columns = new ArrayList<>();
-
-        columns.add(new ColumnName(CATALOG, TABLE, COLUMN_TEXT)); //REVIEW todo esto se ha cambiado para que compile
-        columns.add(new ColumnName(CATALOG, TABLE, COLUMN_AGE));
-        TableName tableName = new TableName(CATALOG, TABLE);
-        Project project = new Project(null, tableName, getClusterName(),columns);
-        stepList.add(project);
-
-        //stepList.add(new Limit(limit));
-        //return new LogicalWorkflow(stepList);
+        LogicalWorkflow logicalPlan = new LogicalWorkFlowCreator(CATALOG,
+                TABLE, getClusterName()).addColumnName(COLUMN_TEXT, COLUMN_AGE,
+                COLUMN_MONEY).addLimit(limit).getLogicalWorkflow();
 
         throw new RuntimeException("Not yet generic supported");
 
