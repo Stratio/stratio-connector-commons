@@ -29,7 +29,7 @@ import com.stratio.meta2.common.data.ClusterName;
 /**
  * @author darroyo
  */
-public abstract class UniqueProjectQueryEngine extends CommonsQueryEngine implements IQueryEngine {
+public abstract class UniqueProjectQueryEngine<T> extends CommonsQueryEngine implements IQueryEngine {
 
     /**
      * Constructor.
@@ -55,7 +55,7 @@ public abstract class UniqueProjectQueryEngine extends CommonsQueryEngine implem
         return queryResult;
     }
 
-    protected abstract QueryResult execute(LogicalWorkflow workflow, Connection connection)
+    protected abstract QueryResult execute(LogicalWorkflow workflow, Connection<T> connection)
             throws UnsupportedException, ExecutionException;
 
     private void chekSupport(LogicalWorkflow workflow) throws UnsupportedException {

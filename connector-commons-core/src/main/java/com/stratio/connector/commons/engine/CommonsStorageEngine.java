@@ -18,7 +18,7 @@ import com.stratio.meta2.common.metadata.TableMetadata;
 /**
  * Created by dgomez on 22/09/14.
  */
-public abstract class CommonsStorageEngine implements IStorageEngine {
+public abstract class CommonsStorageEngine<T> implements IStorageEngine {
 
     /**
      * The Log.
@@ -70,10 +70,10 @@ public abstract class CommonsStorageEngine implements IStorageEngine {
         }
     }
 
-    protected abstract void insert(TableMetadata targetTable, Row row, Connection connection)
+    protected abstract void insert(TableMetadata targetTable, Row row, Connection<T> connection)
             throws UnsupportedException,
             ExecutionException;
 
-    protected abstract void insert(TableMetadata targetTable, Collection<Row> rows, Connection connection)
+    protected abstract void insert(TableMetadata targetTable, Collection<Row> rows, Connection<T> connection)
             throws UnsupportedException, ExecutionException;
 }

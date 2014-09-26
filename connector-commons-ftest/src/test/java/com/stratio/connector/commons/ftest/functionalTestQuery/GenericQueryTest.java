@@ -103,7 +103,9 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
 
             Map<String, Cell> cells = row.getCells();
             String[] columnName = cells.keySet().toArray(new String[0]);
+
             validateFieldOrder(columnName);
+
             for (String cell : row.getCells().keySet()) {
                 proveSet.add(cell + row.getCell(cell).getValue());
             }

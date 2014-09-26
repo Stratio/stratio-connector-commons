@@ -19,7 +19,7 @@ import com.stratio.meta2.common.metadata.TableMetadata;
 /**
  * Created by dgomez on 22/09/14.
  */
-public abstract class CommonsMetadataEngine implements IMetadataEngine {
+public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
 
     /**
      * The Log.
@@ -131,22 +131,25 @@ public abstract class CommonsMetadataEngine implements IMetadataEngine {
         }
     }
 
-    protected abstract void createCatalog(CatalogMetadata catalogMetadata, Connection connection)
+    protected abstract void createCatalog(CatalogMetadata catalogMetadata, Connection<T> connection)
             throws UnsupportedException, ExecutionException;
 
-    protected abstract void createTable(TableMetadata tableMetadata, Connection connection) throws UnsupportedException,
+    protected abstract void createTable(TableMetadata tableMetadata, Connection<T> connection) throws
+            UnsupportedException,
             ExecutionException;
 
-    protected abstract void dropCatalog(CatalogName name, Connection connection) throws UnsupportedException,
+    protected abstract void dropCatalog(CatalogName name, Connection<T> connection) throws UnsupportedException,
             ExecutionException;
 
-    protected abstract void dropTable(TableName name, Connection connection) throws UnsupportedException,
+    protected abstract void dropTable(TableName name, Connection<T> connection) throws UnsupportedException,
             ExecutionException;
 
-    protected abstract void createIndex(IndexMetadata indexMetadata, Connection connection) throws UnsupportedException,
+    protected abstract void createIndex(IndexMetadata indexMetadata, Connection<T> connection) throws
+            UnsupportedException,
             ExecutionException;
 
-    protected abstract void dropIndex(IndexMetadata indexMetadata, Connection connection) throws UnsupportedException,
+    protected abstract void dropIndex(IndexMetadata indexMetadata, Connection<T> connection) throws
+            UnsupportedException,
             ExecutionException;
 
 }
