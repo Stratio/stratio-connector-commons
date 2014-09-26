@@ -72,7 +72,7 @@ public abstract class GenericLimitTest extends GenericConnectorTest {
 
     private LogicalWorkflow createLogicalPlan(int limit) {
 
-        LogicalWorkflow logicalPlan = new LogicalWorkFlowCreator(CATALOG,
+        return  new LogicalWorkFlowCreator(CATALOG,
                 TABLE, getClusterName()).addColumnName(COLUMN_TEXT, COLUMN_AGE,
                 COLUMN_MONEY).addLimit(limit).getLogicalWorkflow();
 
