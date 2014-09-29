@@ -130,14 +130,14 @@ public class LogicalWorkFlowCreator {
         Selector columnSelector = new ColumnSelector(new ColumnName(catalog, table, columnName));
 
         Operations operation = Operations.FILTER_INDEXED_EQ;
-        if (pk){
+        if (pk) {
             operation = Operations.FILTER_PK_EQ;
-        }else if (indexed) {
+        } else if (indexed) {
             operation = Operations.FILTER_INDEXED_EQ;
         } else {
             operation = Operations.FILTER_NON_INDEXED_EQ;
         }
-        filters.add(new Filter(operation,  new Relation(columnSelector, Operator.EQ, returnSelector(value))));
+        filters.add(new Filter(operation, new Relation(columnSelector, Operator.EQ, returnSelector(value))));
         return this;
 
     }
@@ -234,6 +234,16 @@ public class LogicalWorkFlowCreator {
 
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)),
                         Operator.MATCH, returnSelector(textToFind));
+
+        filters.add(new Filter(Operations.FILTER_FULLTEXT, relation));
+
+        return this;
+    }
+
+    public LogicalWorkFlowCreator addLikeFilter(String columnName, String textToFind) {
+
+        Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)), Operator.LIKE,
+                        returnSelector(textToFind));
 
         filters.add(new Filter(Operations.FILTER_FULLTEXT, relation));
 
