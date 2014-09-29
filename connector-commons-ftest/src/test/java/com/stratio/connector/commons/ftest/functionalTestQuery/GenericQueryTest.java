@@ -19,23 +19,17 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-
-import java.util.Collections;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-
 import java.util.LinkedList;
 import java.util.List;
-
 import java.util.Map;
 import java.util.Set;
 
 import org.junit.Test;
 
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
-
 import com.stratio.connector.commons.ftest.schema.TableMetadataBuilder;
 import com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator;
 import com.stratio.meta.common.data.Cell;
@@ -44,12 +38,9 @@ import com.stratio.meta.common.data.Row;
 import com.stratio.meta.common.exceptions.ExecutionException;
 import com.stratio.meta.common.exceptions.UnsupportedException;
 import com.stratio.meta.common.logicalplan.LogicalWorkflow;
-
 import com.stratio.meta.common.metadata.structures.ColumnMetadata;
 import com.stratio.meta.common.result.QueryResult;
 import com.stratio.meta2.common.data.ClusterName;
-import com.stratio.meta2.common.data.TableName;
-
 import com.stratio.meta2.common.metadata.ColumnType;
 import com.stratio.meta2.common.metadata.TableMetadata;
 
@@ -83,14 +74,13 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
         refresh(CATALOG);
 
         LinkedList<LogicalWorkFlowCreator.ConnectorField> fields = new LinkedList<>();
-        LogicalWorkFlowCreator logicalWorkFlowCreator = new LogicalWorkFlowCreator(CATALOG,
-                TABLE, getClusterName());
+        LogicalWorkFlowCreator logicalWorkFlowCreator = new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName());
         fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_1, COLUMN_1, ColumnType.VARCHAR));
-        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_2, COLUMN_2,ColumnType.VARCHAR));
-        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_3, COLUMN_3,ColumnType.VARCHAR));
+        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_2, COLUMN_2, ColumnType.VARCHAR));
+        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_3, COLUMN_3, ColumnType.VARCHAR));
 
-
-        LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addColumnName(COLUMN_1, COLUMN_2, COLUMN_3).addSelect(fields).getLogicalWorkflow();
+        LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addColumnName(COLUMN_1, COLUMN_2, COLUMN_3)
+                        .addSelect(fields).getLogicalWorkflow();
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
         Set<Object> proveSet = new HashSet<>();
         ResultSet resultSet = queryResult.getResultSet();
@@ -98,8 +88,6 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
         Iterator<Row> rowIterator = resultSet.iterator();
         while (rowIterator.hasNext()) {
             Row row = rowIterator.next();
-
-
 
             Map<String, Cell> cells = row.getCells();
             String[] columnName = cells.keySet().toArray(new String[0]);
@@ -113,30 +101,25 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
 
         validateResult(proveSet, resultSet);
 
-
-
     }
-
 
     @Test
     public void validateMetadataTest() throws UnsupportedException, ExecutionException {
 
         ClusterName clusterNodeName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST selectAllFromTable ***********************************");
+        System.out.println("*********************************** INIT FUNCTIONAL TEST selectAllFromTable ***********************************");
         insertTypedRow();
 
         refresh(CATALOG);
 
         LinkedList<LogicalWorkFlowCreator.ConnectorField> fields = new LinkedList<>();
-        LogicalWorkFlowCreator logicalWorkFlowCreator = new LogicalWorkFlowCreator(CATALOG,
-                TABLE, getClusterName());
-        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_1, "alias"+COLUMN_1, ColumnType.TEXT));
-        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_2, "alias"+COLUMN_2,ColumnType.INT));
-        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_3, "alias"+COLUMN_3,ColumnType.BOOLEAN));
+        LogicalWorkFlowCreator logicalWorkFlowCreator = new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName());
+        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_1, "alias" + COLUMN_1, ColumnType.TEXT));
+        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_2, "alias" + COLUMN_2, ColumnType.INT));
+        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_3, "alias" + COLUMN_3, ColumnType.BOOLEAN));
 
-
-        LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addColumnName(COLUMN_1, COLUMN_2, COLUMN_3).addSelect(fields).getLogicalWorkflow();
+        LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addColumnName(COLUMN_1, COLUMN_2, COLUMN_3)
+                        .addSelect(fields).getLogicalWorkflow();
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
 
         ResultSet resultSet = queryResult.getResultSet();
@@ -153,38 +136,37 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
         cells.put(COLUMN_2, new Cell(new Integer(10)));
         cells.put(COLUMN_3, new Cell(true));
 
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
+        tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.INT)
+                        .addColumn(COLUMN_3, ColumnType.BOOLEAN);
+
+        TableMetadata targetTable = tableMetadataBuilder.build();
+
         row.setCells(cells);
-        connector.getStorageEngine().insert(getClusterName(),
-                new TableMetadata(new TableName(CATALOG, TABLE), null, null, null, null, Collections.EMPTY_LIST,
-                        Collections.EMPTY_LIST), row);
+        connector.getStorageEngine().insert(getClusterName(), targetTable, row);
     }
 
-    protected  void validateMetadata(List<ColumnMetadata> columnMetadata){
-        assertNotNull("The metadate is not null",columnMetadata);
-        ColumnMetadata[] metadata  =columnMetadata.toArray(new ColumnMetadata[0]);
+    protected void validateMetadata(List<ColumnMetadata> columnMetadata) {
+        assertNotNull("The metadate is not null", columnMetadata);
+        ColumnMetadata[] metadata = columnMetadata.toArray(new ColumnMetadata[0]);
 
-        assertEquals("the table name is correct",TABLE,metadata[0].getTableName());
-        assertEquals("the table name is correct",TABLE,metadata[1].getTableName());
-        assertEquals("the table name is correct",TABLE,metadata[2].getTableName());
+        assertEquals("the table name is correct", TABLE, metadata[0].getTableName());
+        assertEquals("the table name is correct", TABLE, metadata[1].getTableName());
+        assertEquals("the table name is correct", TABLE, metadata[2].getTableName());
 
-        assertEquals("The first column type is correct",ColumnType.TEXT,metadata[0].getType());
-        assertEquals("The second column type is correct",ColumnType.INT,metadata[1].getType());
-        assertEquals("The third column type is correct",ColumnType.BOOLEAN,metadata[2].getType());
+        assertEquals("The first column type is correct", ColumnType.TEXT, metadata[0].getType());
+        assertEquals("The second column type is correct", ColumnType.INT, metadata[1].getType());
+        assertEquals("The third column type is correct", ColumnType.BOOLEAN, metadata[2].getType());
 
-        assertEquals("The first column name is correct",COLUMN_1,metadata[0].getColumnName());
-        assertEquals("The first column name is correct",COLUMN_2,metadata[1].getColumnName());
-        assertEquals("The first column name is correct",COLUMN_3,metadata[2].getColumnName());
+        assertEquals("The first column name is correct", COLUMN_1, metadata[0].getColumnName());
+        assertEquals("The first column name is correct", COLUMN_2, metadata[1].getColumnName());
+        assertEquals("The first column name is correct", COLUMN_3, metadata[2].getColumnName());
 
+        assertEquals("The first column alias is correct", "alias" + COLUMN_1, metadata[0].getColumnAlias());
+        assertEquals("The first column alias is correct", "alias" + COLUMN_2, metadata[1].getColumnAlias());
+        assertEquals("The first column alias is correct", "alias" + COLUMN_3, metadata[2].getColumnAlias());
 
-        assertEquals("The first column alias is correct","alias"+COLUMN_1,metadata[0].getColumnAlias());
-        assertEquals("The first column alias is correct","alias"+COLUMN_2,metadata[1].getColumnAlias());
-        assertEquals("The first column alias is correct","alias"+COLUMN_3,metadata[2].getColumnAlias());
-
-
-
-
-        }
-
+    }
 
     private void validateResult(Set<Object> proveSet, ResultSet resultSet) {
         assertEquals("The record number is correct", getRowsToSearch(), (Integer) resultSet.size());
@@ -196,9 +178,9 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
     }
 
     private void validateFieldOrder(String[] columnName) {
-        assertEquals("The first column is sorted",COLUMN_1,columnName[0]);
-        assertEquals("The second column is sorted",COLUMN_2,columnName[1]);
-        assertEquals("The third column is sorted",COLUMN_3,columnName[2]);
+        assertEquals("The first column is sorted", COLUMN_1, columnName[0]);
+        assertEquals("The second column is sorted", COLUMN_2, columnName[1]);
+        assertEquals("The third column is sorted", COLUMN_3, columnName[2]);
     }
 
     private void insertRecordNotReturnedInSearch(ClusterName clusterNodeName) throws ExecutionException,
@@ -208,8 +190,6 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
         insertRow(1, "otherTable", clusterNodeName);
         insertRow(2, "otherTable", clusterNodeName);
     }
-
-
 
     private void insertRow(int ikey, ClusterName clusterNodeName) throws UnsupportedOperationException,
                     ExecutionException, UnsupportedException {
