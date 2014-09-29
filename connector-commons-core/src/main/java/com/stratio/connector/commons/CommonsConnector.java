@@ -52,7 +52,7 @@ public abstract class CommonsConnector implements IConnector {
     /**
      * The connectionHandler.
      */
-    private ConnectionHandler connectionHandler = null;
+    protected ConnectionHandler connectionHandler = null;
     
   
     
