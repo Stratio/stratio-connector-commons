@@ -17,7 +17,6 @@
 package com.stratio.connector.commons.ftest.workFlow;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -34,7 +33,6 @@ import com.stratio.meta.common.statements.structures.relationships.Operator;
 import com.stratio.meta.common.statements.structures.relationships.Relation;
 import com.stratio.meta2.common.data.ClusterName;
 import com.stratio.meta2.common.data.ColumnName;
-import com.stratio.meta2.common.data.NameType;
 import com.stratio.meta2.common.data.TableName;
 import com.stratio.meta2.common.metadata.ColumnType;
 import com.stratio.meta2.common.statements.structures.selectors.BooleanSelector;
@@ -67,33 +65,31 @@ public class LogicalWorkFlowCreator {
         this.clusterName = clusterName;
     }
 
-
-
     public LogicalWorkflow getLogicalWorkflow() {
 
         List<LogicalStep> logiclaSteps = new ArrayList<>();
 
-        Project project = new Project(Operations.PROJECT, new TableName(catalog, table), clusterName,columns);
+        Project project = new Project(Operations.PROJECT, new TableName(catalog, table), clusterName, columns);
         LogicalStep lastStep = project;
         for (Filter filter : filters) {
             lastStep.setNextStep(filter);
             lastStep = filter;
         }
-        if (limit!=null){
+        if (limit != null) {
 
             lastStep.setNextStep(limit);
             lastStep = limit;
 
         }
-        if (select ==null){
+        if (select == null) {
             Map<String, String> selectColumn = new LinkedHashMap<>();
-            Map<String, ColumnType> typeMap =  new LinkedHashMap();
-            for (ColumnName columnName : project.getColumnList()){
-                selectColumn.put(columnName.getName(),columnName.getName());
-                typeMap.put(columnName.getName(),ColumnType.VARCHAR);
+            Map<String, ColumnType> typeMap = new LinkedHashMap();
+            for (ColumnName columnName : project.getColumnList()) {
+                selectColumn.put(columnName.getName(), columnName.getName());
+                typeMap.put(columnName.getName(), ColumnType.VARCHAR);
             }
 
-            select = new Select(Operations.PROJECT, selectColumn, typeMap); //The select is mandatory. If it doesn't
+            select = new Select(Operations.PROJECT, selectColumn, typeMap); // The select is mandatory. If it doesn't
             // exist we
             // create with all project's columns with varchar type.
 
@@ -105,7 +101,6 @@ public class LogicalWorkFlowCreator {
         return new LogicalWorkflow(logiclaSteps);
 
     }
-
 
     public LogicalWorkFlowCreator addDefaultColumns() {
 
@@ -123,8 +118,6 @@ public class LogicalWorkFlowCreator {
         // return this;
     }
 
-
-
     public LogicalWorkFlowCreator addColumnName(String... columnName) {
         for (int i = 0; i < columnName.length; i++) {
             columns.add(new ColumnName(catalog, table, columnName[i]));
@@ -133,22 +126,18 @@ public class LogicalWorkFlowCreator {
         return this;
     }
 
-    public LogicalWorkFlowCreator addEqualFilter(String columnName, Object value, Boolean indexed) {
+    public LogicalWorkFlowCreator addEqualFilter(String columnName, Object value, Boolean indexed, boolean pk) {
         Selector columnSelector = new ColumnSelector(new ColumnName(catalog, table, columnName));
 
         Operations operation = Operations.FILTER_INDEXED_EQ;
         if (pk){
-
-        }
-        if (indexed) {
+            operation = Operations.FILTER_PK_EQ;
+        }else if (indexed) {
             operation = Operations.FILTER_INDEXED_EQ;
-
         } else {
-            filters.add(new Filter(Operations.FILTER_NON_INDEXED_EQ,
-                    new Relation(columnSelector, Operator.ASSIGN, returnSelector(value))));
+            operation = Operations.FILTER_NON_INDEXED_EQ;
         }
-        filters.add(new Filter(operation,
-                new Relation(columnSelector, Operator.EQ, returnSelector(value))));
+        filters.add(new Filter(operation,  new Relation(columnSelector, Operator.EQ, returnSelector(value))));
         return this;
 
     }
@@ -176,7 +165,7 @@ public class LogicalWorkFlowCreator {
     public LogicalWorkFlowCreator addGreaterEqualFilter(String columnName, Object term, Boolean indexed) {
 
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)), Operator.GET,
-                returnSelector(term));
+                        returnSelector(term));
 
         if (indexed) {
             filters.add(new Filter(Operations.FILTER_INDEXED_GET, relation));
@@ -192,7 +181,7 @@ public class LogicalWorkFlowCreator {
     public LogicalWorkFlowCreator addGreaterFilter(String columnName, Object term, Boolean indexed) {
 
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)), Operator.GT,
-                returnSelector(term));
+                        returnSelector(term));
         if (indexed) {
             filters.add(new Filter(Operations.FILTER_INDEXED_GT, relation));
         } else {
@@ -206,7 +195,7 @@ public class LogicalWorkFlowCreator {
     public LogicalWorkFlowCreator addLowerEqualFilter(String columnName, Object term, Boolean indexed) {
 
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)), Operator.LET,
-                returnSelector(term));
+                        returnSelector(term));
         if (indexed) {
             filters.add(new Filter(Operations.FILTER_INDEXED_LET, relation));
         } else {
@@ -219,7 +208,7 @@ public class LogicalWorkFlowCreator {
 
     public LogicalWorkFlowCreator addNLowerFilter(String columnName, Object term, Boolean indexed) {
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)), Operator.LT,
-                returnSelector(term));
+                        returnSelector(term));
         if (indexed) {
             filters.add(new Filter(Operations.FILTER_INDEXED_LT, relation));
         } else {
@@ -231,7 +220,7 @@ public class LogicalWorkFlowCreator {
 
     public LogicalWorkFlowCreator addDistinctFilter(String columnName, Object term, Boolean indexed) {
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)),
-                Operator.DISTINCT, returnSelector(term));
+                        Operator.DISTINCT, returnSelector(term));
         if (indexed) {
             filters.add(new Filter(Operations.FILTER_INDEXED_DISTINCT, relation));
         } else {
@@ -243,8 +232,8 @@ public class LogicalWorkFlowCreator {
 
     public LogicalWorkFlowCreator addMatchFilter(String columnName, String textToFind) {
 
-        Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)), Operator.MATCH,
-                returnSelector(textToFind));
+        Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)),
+                        Operator.MATCH, returnSelector(textToFind));
 
         filters.add(new Filter(Operations.FILTER_FULLTEXT, relation));
 
@@ -253,38 +242,39 @@ public class LogicalWorkFlowCreator {
 
     public LogicalWorkFlowCreator addSelect(LinkedList<ConnectorField> fields) {
         Map<String, String> mapping = new LinkedHashMap<>();
-        Map<String, ColumnType> types = new LinkedHashMap<>();;
-        for (ConnectorField connectorField : fields){
-            mapping.put(connectorField.name,connectorField.alias);
-            types.put(connectorField.name,connectorField.columnType);
+        Map<String, ColumnType> types = new LinkedHashMap<>();
+        ;
+        for (ConnectorField connectorField : fields) {
+            mapping.put(connectorField.name, connectorField.alias);
+            types.put(connectorField.name, connectorField.columnType);
         }
 
-        select = new Select(Operations.PROJECT, mapping,types);
+        select = new Select(Operations.PROJECT, mapping, types);
 
         return this;
 
     }
-    public  ConnectorField  createConnectorField(String name, String alias, ColumnType columnType){
-        return new ConnectorField(name,alias,columnType);
+
+    public ConnectorField createConnectorField(String name, String alias, ColumnType columnType) {
+        return new ConnectorField(name, alias, columnType);
 
     }
 
     public LogicalWorkFlowCreator addLimit(int limit) {
-        this.limit = new Limit(Operations.SELECT_LIMIT,limit);
+        this.limit = new Limit(Operations.SELECT_LIMIT, limit);
         return this;
     }
 
-    public  class ConnectorField {
+    public class ConnectorField {
         public String name;
         public String alias;
         public ColumnType columnType;
 
-        public  ConnectorField(String name, String alias, ColumnType columnType){
+        public ConnectorField(String name, String alias, ColumnType columnType) {
             this.name = name;
             this.alias = alias;
             this.columnType = columnType;
         }
-
 
     }
 }

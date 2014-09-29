@@ -27,6 +27,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
 
@@ -76,7 +77,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterTest extends GenericCon
         refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns()
-                        .addEqualFilter(COLUMN_AGE, new Integer(10), false).getLogicalWorkflow();
+                        .addEqualFilter(COLUMN_AGE, new Integer(10), false, false).getLogicalWorkflow();
 
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
 
@@ -98,7 +99,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterTest extends GenericCon
 
     }
 
-
+    @Test
     public void selectPKEqualsFilter() throws ExecutionException, UnsupportedException {
 
 
@@ -107,35 +108,38 @@ public abstract class GenericNotIndexedQueryIntegerFilterTest extends GenericCon
 
         insertRow(1, 1, 10, clusterNodeName, true);
         insertRow(2, 1, 9, clusterNodeName, true);
-        insertRow(1, 1, 11, clusterNodeName, true);
-        insertRow(0, 1, 11, clusterNodeName, true);
+        insertRow(3, 6, 11, clusterNodeName, true);
+        insertRow(4, 7, 11, clusterNodeName, true);
 
         refresh(CATALOG);
 
 
+        LinkedList<LogicalWorkFlowCreator.ConnectorField> conectorList = new LinkedList();
+        conectorList.add(logicalWorkFlowCreator.createConnectorField(COLUMN_1,COLUMN_1,ColumnType.TEXT));
+        conectorList.add(logicalWorkFlowCreator.createConnectorField(COLUMN_2,COLUMN_2,ColumnType.TEXT));
+        conectorList.add(logicalWorkFlowCreator.createConnectorField(COLUMN_3,COLUMN_3,ColumnType.TEXT));
+        conectorList.add(logicalWorkFlowCreator.createConnectorField(COLUMN_AGE,COLUMN_AGE,ColumnType.INT));
+        conectorList.add(logicalWorkFlowCreator.createConnectorField(COLUMN_MONEY,COLUMN_MONEY,ColumnType.INT));
+
+        logicalWorkFlowCreator.addSelect(conectorList);
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns()
-                .addEqualFilter(COLUMN_AGE, 1, false).getLogicalWorkflow();
+                .addEqualFilter(COLUMN_AGE, 1, false, true).getLogicalWorkflow();
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute( logicalPlan);
 
         Set<Object> proveSet = createCellsResult(queryResult);
 
-        assertEquals("The record number is correct", 14, proveSet.size());
-        assertTrue("Return correct record", proveSet.contains("bin1ValueBin1_r1"));
-        assertTrue("Return correct record", proveSet.contains("bin2ValueBin2_r1"));
-        assertTrue("Return correct record", proveSet.contains("bin1ValueBin1_r2"));
-        assertTrue("Return correct record", proveSet.contains("bin2ValueBin2_r2"));
-        assertTrue("Return correct record", proveSet.contains("bin1ValueBin1_r3"));
-        assertTrue("Return correct record", proveSet.contains("bin2ValueBin2_r3"));
-        assertTrue("Return correct record", proveSet.contains("bin2ValueBin2_r4"));
-        assertTrue("Return correct record", proveSet.contains("bin2ValueBin2_r4"));
-        assertTrue("Return correct record", proveSet.contains("bin2ValueBin2_r6"));
-        assertTrue("Return correct record", proveSet.contains("bin2ValueBin2_r6"));
-        assertTrue("Return correct record", proveSet.contains("money10"));
-        assertTrue("Return correct record", proveSet.contains("money9"));
-        assertTrue("Return correct record", proveSet.contains("money11"));
-        assertTrue("Return correct record", proveSet.contains("age1"));
+        assertEquals("The record number is correct", 2, queryResult.getResultSet().size());
 
 
+        assertTrue("Return correct record", proveSet.contains("money={9}"));
+        assertTrue("Return correct record", proveSet.contains("age={1}"));
+        assertTrue("Return correct record", proveSet.contains("column3={Row=1;Column3}"));
+        assertTrue("Return correct record", proveSet.contains("column1={Row=1;Column1}"));
+        assertTrue("Return correct record", proveSet.contains("column3={Row=2;Column3}"));
+        assertTrue("Return correct record", proveSet.contains("column3={Row=2;Column3}"));
+        assertTrue("Return correct record", proveSet.contains("column2={Row=2;Column2}"));
+        assertTrue("Return correct record", proveSet.contains("column1={Row=2;Column1}"));
+        assertTrue("Return correct record", proveSet.contains("money={10}"));
 
     }
 

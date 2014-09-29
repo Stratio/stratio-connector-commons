@@ -71,7 +71,7 @@ public abstract class GenericNotIndexedQueryStringFilterTest extends GenericConn
         refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addColumnName(COLUMN_TEXT)
-                        .addEqualFilter(COLUMN_TEXT, names[10], false).getLogicalWorkflow();
+                        .addEqualFilter(COLUMN_TEXT, names[10], false, false).getLogicalWorkflow();
 
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
 
@@ -107,7 +107,7 @@ public abstract class GenericNotIndexedQueryStringFilterTest extends GenericConn
         refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addColumnName(COLUMN_TEXT)
-                        .addEqualFilter(COLUMN_TEXT, names[10].toLowerCase(), false).getLogicalWorkflow();
+                        .addEqualFilter(COLUMN_TEXT, names[10].toLowerCase(), false, false).getLogicalWorkflow();
 
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute( logicalPlan);
 
