@@ -23,7 +23,9 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Before;
@@ -42,7 +44,13 @@ import com.stratio.meta.common.exceptions.UnsupportedException;
 import com.stratio.meta.common.logicalplan.LogicalWorkflow;
 import com.stratio.meta.common.result.QueryResult;
 import com.stratio.meta2.common.data.ClusterName;
+import com.stratio.meta2.common.data.ColumnName;
+import com.stratio.meta2.common.data.IndexName;
+import com.stratio.meta2.common.data.TableName;
+import com.stratio.meta2.common.metadata.ColumnMetadata;
 import com.stratio.meta2.common.metadata.ColumnType;
+import com.stratio.meta2.common.metadata.IndexMetadata;
+import com.stratio.meta2.common.metadata.IndexType;
 import com.stratio.meta2.common.metadata.TableMetadata;
 
 /**
@@ -109,7 +117,7 @@ public abstract class GenericNotIndexedQueryStringFilterTest extends GenericConn
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addColumnName(COLUMN_TEXT)
                         .addEqualFilter(COLUMN_TEXT, names[10].toLowerCase(), false, false).getLogicalWorkflow();
 
-        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute( logicalPlan);
+        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
 
         assertEquals("The record number is correct", 1, queryResult.getResultSet().size());
 
@@ -126,7 +134,7 @@ public abstract class GenericNotIndexedQueryStringFilterTest extends GenericConn
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addColumnName(COLUMN_TEXT)
                         .addDistinctFilter(COLUMN_TEXT, names[5].toLowerCase(), false).getLogicalWorkflow();
-        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute( logicalPlan);
+        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
 
         assertEquals("The record number is correct", names.length - 1, queryResult.getResultSet().size());
 
@@ -143,7 +151,7 @@ public abstract class GenericNotIndexedQueryStringFilterTest extends GenericConn
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addColumnName(COLUMN_TEXT)
                         .addMatchFilter(COLUMN_TEXT, "matter").getLogicalWorkflow();
-        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute( logicalPlan);
+        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
 
         ResultSet resultSet = queryResult.getResultSet();
         assertEquals("The record number is correct", 2, resultSet.size());
@@ -162,6 +170,21 @@ public abstract class GenericNotIndexedQueryStringFilterTest extends GenericConn
     private void insertRow(String[] text, ClusterName clusterNodeName, boolean toLowerCase)
                     throws UnsupportedOperationException, ExecutionException, UnsupportedException {
 
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
+        tableMetadataBuilder.addColumn("id", ColumnType.INT).addColumn(COLUMN_TEXT, ColumnType.VARCHAR);
+        tableMetadataBuilder.addIndex(IndexType.FULL_TEXT, "indexText", COLUMN_TEXT);
+        TableMetadata targetTable = tableMetadataBuilder.build();
+        TableName tableName = new TableName(CATALOG, TABLE);
+
+        // Creating indexMetadata
+        List<ColumnMetadata> columns = new ArrayList<>();
+        Object[] parameters = null;
+        columns.add(new ColumnMetadata(new ColumnName(tableName, COLUMN_TEXT), parameters, ColumnType.TEXT));
+        IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, "indexText"), columns,
+                        IndexType.FULL_TEXT, Collections.EMPTY_MAP);
+
+        connector.getMetadataEngine().createIndex(clusterNodeName, indexMetadata);
+
         Collection<Row> rows = new ArrayList();
 
         for (int i = 0; i < text.length; i++) {
@@ -178,10 +201,6 @@ public abstract class GenericNotIndexedQueryStringFilterTest extends GenericConn
             rows.add(row);
 
         }
-
-        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
-        tableMetadataBuilder.addColumn("id", ColumnType.INT).addColumn(COLUMN_TEXT, ColumnType.VARCHAR);
-        TableMetadata targetTable = tableMetadataBuilder.build();
 
         connector.getStorageEngine().insert(clusterNodeName, targetTable, rows);
 

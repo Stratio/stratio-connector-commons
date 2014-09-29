@@ -102,7 +102,6 @@ public abstract class GenericNotIndexedQueryIntegerFilterTest extends GenericCon
     @Test
     public void selectPKEqualsFilter() throws ExecutionException, UnsupportedException {
 
-
         ClusterName clusterNodeName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterBetween ***********************************");
 
@@ -113,23 +112,21 @@ public abstract class GenericNotIndexedQueryIntegerFilterTest extends GenericCon
 
         refresh(CATALOG);
 
-
         LinkedList<LogicalWorkFlowCreator.ConnectorField> conectorList = new LinkedList();
-        conectorList.add(logicalWorkFlowCreator.createConnectorField(COLUMN_1,COLUMN_1,ColumnType.TEXT));
-        conectorList.add(logicalWorkFlowCreator.createConnectorField(COLUMN_2,COLUMN_2,ColumnType.TEXT));
-        conectorList.add(logicalWorkFlowCreator.createConnectorField(COLUMN_3,COLUMN_3,ColumnType.TEXT));
-        conectorList.add(logicalWorkFlowCreator.createConnectorField(COLUMN_AGE,COLUMN_AGE,ColumnType.INT));
-        conectorList.add(logicalWorkFlowCreator.createConnectorField(COLUMN_MONEY,COLUMN_MONEY,ColumnType.INT));
+        conectorList.add(logicalWorkFlowCreator.createConnectorField(COLUMN_1, COLUMN_1, ColumnType.TEXT));
+        conectorList.add(logicalWorkFlowCreator.createConnectorField(COLUMN_2, COLUMN_2, ColumnType.TEXT));
+        conectorList.add(logicalWorkFlowCreator.createConnectorField(COLUMN_3, COLUMN_3, ColumnType.TEXT));
+        conectorList.add(logicalWorkFlowCreator.createConnectorField(COLUMN_AGE, COLUMN_AGE, ColumnType.INT));
+        conectorList.add(logicalWorkFlowCreator.createConnectorField(COLUMN_MONEY, COLUMN_MONEY, ColumnType.INT));
 
         logicalWorkFlowCreator.addSelect(conectorList);
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns()
-                .addEqualFilter(COLUMN_AGE, 1, false, true).getLogicalWorkflow();
-        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute( logicalPlan);
+                        .addEqualFilter(COLUMN_AGE, 1, false, true).getLogicalWorkflow();
+        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
 
         Set<Object> proveSet = createCellsResult(queryResult);
 
         assertEquals("The record number is correct", 2, queryResult.getResultSet().size());
-
 
         assertTrue("Return correct record", proveSet.contains("money={9}"));
         assertTrue("Return correct record", proveSet.contains("age={1}"));
@@ -162,7 +159,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterTest extends GenericCon
         // LogicalWorkflow logicalPlan = createLogicalWorkFlow(BETWEEN_FILTER);
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns()
                         .addBetweenFilter(COLUMN_AGE, null, null).getLogicalWorkflow();
-        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute( logicalPlan);
+        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
 
         Set<Object> proveSet = createCellsResult(queryResult);
 
@@ -203,7 +200,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterTest extends GenericCon
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns()
                         .addGreaterEqualFilter(COLUMN_AGE, new Integer("10"), false).getLogicalWorkflow();
 
-        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute( logicalPlan);
+        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
 
         Set<Object> proveSet = createCellsResult(queryResult);
 
@@ -346,7 +343,10 @@ public abstract class GenericNotIndexedQueryIntegerFilterTest extends GenericCon
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns()
                         .addLowerEqualFilter(COLUMN_AGE, new Integer("10"), false).getLogicalWorkflow();
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
-
+        /*
+         * Iterator<Row> iterator = queryResult.getResultSet().iterator(); while(iterator.hasNext()){
+         * System.out.println(iterator.next().getCells().keySet()) }
+         */
         Set<Object> proveSet = createCellsResult(queryResult);
 
         assertEquals("The record number is correct", 5, queryResult.getResultSet().size());
@@ -396,7 +396,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterTest extends GenericCon
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns()
                         .addDistinctFilter(COLUMN_AGE, new Integer("10"), false).getLogicalWorkflow();
-        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute( logicalPlan);
+        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
 
         Set<Object> proveSet = createCellsResult(queryResult);
 
@@ -429,8 +429,6 @@ public abstract class GenericNotIndexedQueryIntegerFilterTest extends GenericCon
         return proveSet;
     }
 
-
-
     private void insertRow(int ikey, int age, int money, ClusterName clusterNodeName, boolean withPk)
                     throws UnsupportedOperationException, ExecutionException, UnsupportedException {
 
@@ -446,7 +444,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterTest extends GenericCon
         tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.VARCHAR)
                         .addColumn(COLUMN_3, ColumnType.VARCHAR).addColumn(COLUMN_AGE, ColumnType.INT)
                         .addColumn(COLUMN_MONEY, ColumnType.INT);
-        if (withPk){
+        if (withPk) {
             tableMetadataBuilder.withPartitionKey(COLUMN_1);
         }
 
