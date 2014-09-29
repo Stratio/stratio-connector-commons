@@ -18,27 +18,22 @@ package com.stratio.connector.commons.ftest.functionalTestQuery;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
 
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
+import com.stratio.connector.commons.ftest.schema.TableMetadataBuilder;
 import com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator;
 import com.stratio.meta.common.data.Cell;
 import com.stratio.meta.common.data.Row;
 import com.stratio.meta.common.exceptions.ExecutionException;
 import com.stratio.meta.common.exceptions.UnsupportedException;
-import com.stratio.meta.common.logicalplan.LogicalStep;
 import com.stratio.meta.common.logicalplan.LogicalWorkflow;
-import com.stratio.meta.common.logicalplan.Project;
 import com.stratio.meta.common.result.QueryResult;
 import com.stratio.meta2.common.data.ClusterName;
-import com.stratio.meta2.common.data.ColumnName;
-import com.stratio.meta2.common.data.TableName;
+import com.stratio.meta2.common.metadata.ColumnType;
 import com.stratio.meta2.common.metadata.TableMetadata;
 
 public abstract class GenericLimitTest extends GenericConnectorTest {
@@ -46,7 +41,7 @@ public abstract class GenericLimitTest extends GenericConnectorTest {
     public static final String COLUMN_TEXT = "text";
     public static final String COLUMN_AGE = "age";
     public static final String COLUMN_MONEY = "money";
-	private static final int RESULT_NUMBER = 15456;
+    private static final int RESULT_NUMBER = 15456;
 
     @Test
     public void limitTest() throws Exception {
@@ -54,33 +49,29 @@ public abstract class GenericLimitTest extends GenericConnectorTest {
         ClusterName clusterName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST limitTest  ***********************************");
 
-        for (int i=0;i<25463;i++){
-        insertRow(i, "text",  clusterName);
-                }
+        for (int i = 0; i < 25463; i++) {
+            insertRow(i, "text", clusterName);
+        }
 
         refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = createLogicalPlan(RESULT_NUMBER);
 
-       
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
 
-        assertEquals("The limited result is correct",RESULT_NUMBER, queryResult.getResultSet().size());
+        assertEquals("The limited result is correct", RESULT_NUMBER, queryResult.getResultSet().size());
 
     }
 
     private LogicalWorkflow createLogicalPlan(int limit) {
 
-        return  new LogicalWorkFlowCreator(CATALOG,
-                TABLE, getClusterName()).addColumnName(COLUMN_TEXT, COLUMN_AGE,
-                COLUMN_MONEY).addLimit(limit).getLogicalWorkflow();
-
-
+        return new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName())
+                        .addColumnName(COLUMN_TEXT, COLUMN_AGE, COLUMN_MONEY).addLimit(limit).getLogicalWorkflow();
 
     }
 
-    private void insertRow(int ikey, String texto, ClusterName cLusterName)
-            throws UnsupportedOperationException, ExecutionException, UnsupportedException {
+    private void insertRow(int ikey, String texto, ClusterName cLusterName) throws UnsupportedOperationException,
+                    ExecutionException, UnsupportedException {
 
         Row row = new Row();
         Map<String, Cell> cells = new HashMap<>();
@@ -88,9 +79,14 @@ public abstract class GenericLimitTest extends GenericConnectorTest {
         cells.put(COLUMN_AGE, new Cell(10));
         cells.put(COLUMN_MONEY, new Cell(20));
         row.setCells(cells);
-        connector.getStorageEngine().insert(cLusterName,
-                new TableMetadata(new TableName(CATALOG, TABLE), null, null, null, null, Collections.EMPTY_LIST,
-                        Collections.EMPTY_LIST), row);
+
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
+        tableMetadataBuilder.addColumn(COLUMN_TEXT, ColumnType.VARCHAR).addColumn(COLUMN_AGE, ColumnType.INT)
+                        .addColumn(COLUMN_MONEY, ColumnType.INT);
+
+        TableMetadata targetTable = tableMetadataBuilder.build();
+
+        connector.getStorageEngine().insert(cLusterName, targetTable, row);
 
     }
 
