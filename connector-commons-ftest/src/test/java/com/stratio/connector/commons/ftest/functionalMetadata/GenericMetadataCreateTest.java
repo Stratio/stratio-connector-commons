@@ -224,8 +224,9 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
         } catch (Throwable t) {
             fail("Now I drop a catalog that exist. The operation must be correct.");
         }
-
-        connector.getMetadataEngine().dropCatalog(getClusterName(), new CatalogName(CATALOG));
+        if (getConnectorHelper().isCatalogMandatory()) {
+            connector.getMetadataEngine().dropCatalog(getClusterName(), new CatalogName(CATALOG));
+        }
 
     }
 
@@ -266,14 +267,16 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
         tableMap.put(tableName, tableMetadata);
 
         assertFalse(iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX));
-
-        connector.getMetadataEngine().createCatalog(getClusterName(),
-                        new CatalogMetadata(new CatalogName(CATALOG), Collections.EMPTY_MAP, tableMap));
+        if (getConnectorHelper().isCatalogMandatory()) {
+            connector.getMetadataEngine().createCatalog(getClusterName(),
+                    new CatalogMetadata(new CatalogName(CATALOG), Collections.EMPTY_MAP, tableMap));
+        }
         connector.getMetadataEngine().createTable(getClusterName(), tableMetadata);
 
         assertTrue(iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX));
-
-        connector.getMetadataEngine().dropCatalog(getClusterName(), new CatalogName(CATALOG));
+        if (getConnectorHelper().isCatalogMandatory()) {
+            connector.getMetadataEngine().dropCatalog(getClusterName(), new CatalogName(CATALOG));
+        }
 
         // check if when the catalog is dropped, all the meta-info is removed
         assertFalse(iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX));
