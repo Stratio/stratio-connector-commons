@@ -22,6 +22,9 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
+
+
 import com.stratio.connector.commons.connection.Connection;
 import com.stratio.connector.commons.connection.ConnectionHandler;
 import com.stratio.connector.commons.connection.exceptions.HandlerConnectionException;
@@ -49,7 +52,7 @@ public abstract class CommonsConnector implements IConnector {
     /**
      * The connectionHandler.
      */
-    private ConnectionHandler connectionHandler = getConnectionHandler();
+    private ConnectionHandler connectionHandler = null;
     
   
     
@@ -111,6 +114,6 @@ public abstract class CommonsConnector implements IConnector {
 
     }
     
-    protected abstract ConnectionHandler getConnectionHandler();
+    
 
 }
