@@ -136,14 +136,19 @@ public class LogicalWorkFlowCreator {
     public LogicalWorkFlowCreator addEqualFilter(String columnName, Object value, Boolean indexed) {
         Selector columnSelector = new ColumnSelector(new ColumnName(catalog, table, columnName));
 
+        Operations operation = Operations.FILTER_INDEXED_EQ;
+        if (pk){
+
+        }
         if (indexed) {
-            filters.add(new Filter(Operations.FILTER_INDEXED_EQ,
-                    new Relation(columnSelector, Operator.ASSIGN, returnSelector(value))));
+            operation = Operations.FILTER_INDEXED_EQ;
+
         } else {
             filters.add(new Filter(Operations.FILTER_NON_INDEXED_EQ,
                     new Relation(columnSelector, Operator.ASSIGN, returnSelector(value))));
         }
-
+        filters.add(new Filter(operation,
+                new Relation(columnSelector, Operator.EQ, returnSelector(value))));
         return this;
 
     }

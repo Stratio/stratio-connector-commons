@@ -118,6 +118,7 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
     }
 
 
+
     @Test
     public void validateMetadataTest() throws UnsupportedException, ExecutionException {
 
@@ -144,6 +145,8 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
         validateMetadata(columnMetadata);
 
     }
+
+
 
     protected void insertTypedRow() throws UnsupportedException, ExecutionException {
 

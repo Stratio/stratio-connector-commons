@@ -67,11 +67,11 @@ public abstract class GenericNotIndexedQueryIntegerFilterTest extends GenericCon
         ClusterName clusterNodeName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterEqual ***********************************");
 
-        insertRow(1, 10, 5, clusterNodeName);
-        insertRow(2, 9, 1, clusterNodeName);
-        insertRow(3, 11, 1, clusterNodeName);
-        insertRow(4, 10, 1, clusterNodeName);
-        insertRow(5, 20, 1, clusterNodeName);
+        insertRow(1, 10, 5, clusterNodeName, false);
+        insertRow(2, 9, 1, clusterNodeName, false);
+        insertRow(3, 11, 1, clusterNodeName, false);
+        insertRow(4, 10, 1, clusterNodeName, false);
+        insertRow(5, 20, 1, clusterNodeName, false);
 
         refresh(CATALOG);
 
@@ -98,19 +98,60 @@ public abstract class GenericNotIndexedQueryIntegerFilterTest extends GenericCon
 
     }
 
+
+    public void selectPKEqualsFilter() throws ExecutionException, UnsupportedException {
+
+
+        ClusterName clusterNodeName = getClusterName();
+        System.out.println("*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterBetween ***********************************");
+
+        insertRow(1, 1, 10, clusterNodeName, true);
+        insertRow(2, 1, 9, clusterNodeName, true);
+        insertRow(1, 1, 11, clusterNodeName, true);
+        insertRow(0, 1, 11, clusterNodeName, true);
+
+        refresh(CATALOG);
+
+
+        LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns()
+                .addEqualFilter(COLUMN_AGE, 1, false).getLogicalWorkflow();
+        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute( logicalPlan);
+
+        Set<Object> proveSet = createCellsResult(queryResult);
+
+        assertEquals("The record number is correct", 14, proveSet.size());
+        assertTrue("Return correct record", proveSet.contains("bin1ValueBin1_r1"));
+        assertTrue("Return correct record", proveSet.contains("bin2ValueBin2_r1"));
+        assertTrue("Return correct record", proveSet.contains("bin1ValueBin1_r2"));
+        assertTrue("Return correct record", proveSet.contains("bin2ValueBin2_r2"));
+        assertTrue("Return correct record", proveSet.contains("bin1ValueBin1_r3"));
+        assertTrue("Return correct record", proveSet.contains("bin2ValueBin2_r3"));
+        assertTrue("Return correct record", proveSet.contains("bin2ValueBin2_r4"));
+        assertTrue("Return correct record", proveSet.contains("bin2ValueBin2_r4"));
+        assertTrue("Return correct record", proveSet.contains("bin2ValueBin2_r6"));
+        assertTrue("Return correct record", proveSet.contains("bin2ValueBin2_r6"));
+        assertTrue("Return correct record", proveSet.contains("money10"));
+        assertTrue("Return correct record", proveSet.contains("money9"));
+        assertTrue("Return correct record", proveSet.contains("money11"));
+        assertTrue("Return correct record", proveSet.contains("age1"));
+
+
+
+    }
+
     @Test
     public void selectNotIndexedFilterBetween() throws ExecutionException, UnsupportedException {
         ClusterName clusterNodeName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterBetween ***********************************");
 
-        insertRow(1, 1, 10, clusterNodeName);
-        insertRow(2, 1, 9, clusterNodeName);
-        insertRow(3, 1, 11, clusterNodeName);
-        insertRow(4, 1, 10, clusterNodeName);
-        insertRow(5, 1, 20, clusterNodeName);
-        insertRow(6, 1, 11, clusterNodeName);
-        insertRow(7, 1, 8, clusterNodeName);
-        insertRow(8, 1, 12, clusterNodeName);
+        insertRow(1, 1, 10, clusterNodeName, false);
+        insertRow(2, 1, 9, clusterNodeName, false);
+        insertRow(3, 1, 11, clusterNodeName, false);
+        insertRow(4, 1, 10, clusterNodeName, false);
+        insertRow(5, 1, 20, clusterNodeName, false);
+        insertRow(6, 1, 11, clusterNodeName, false);
+        insertRow(7, 1, 8, clusterNodeName, false);
+        insertRow(8, 1, 12, clusterNodeName, false);
 
         refresh(CATALOG);
 
@@ -144,14 +185,14 @@ public abstract class GenericNotIndexedQueryIntegerFilterTest extends GenericCon
         ClusterName clusterNodeName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST selectNoNotIndexedFilterGreaterEqual ***********************************");
 
-        insertRow(1, 10, 15, clusterNodeName);
-        insertRow(2, 9, 10, clusterNodeName);
-        insertRow(3, 11, 9, clusterNodeName);
-        insertRow(4, 10, 7, clusterNodeName);
-        insertRow(5, 7, 9, clusterNodeName);
-        insertRow(6, 11, 100, clusterNodeName);
-        insertRow(7, 8, 1, clusterNodeName);
-        insertRow(8, 12, 10, clusterNodeName);
+        insertRow(1, 10, 15, clusterNodeName, false);
+        insertRow(2, 9, 10, clusterNodeName, false);
+        insertRow(3, 11, 9, clusterNodeName, false);
+        insertRow(4, 10, 7, clusterNodeName, false);
+        insertRow(5, 7, 9, clusterNodeName, false);
+        insertRow(6, 11, 100, clusterNodeName, false);
+        insertRow(7, 8, 1, clusterNodeName, false);
+        insertRow(8, 12, 10, clusterNodeName, false);
 
         refresh(CATALOG);
 
@@ -200,14 +241,14 @@ public abstract class GenericNotIndexedQueryIntegerFilterTest extends GenericCon
         ClusterName clusterNodeName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterGreater ***********************************");
 
-        insertRow(1, 10, 1, clusterNodeName);
-        insertRow(2, 9, 1, clusterNodeName);
-        insertRow(3, 11, 1, clusterNodeName);
-        insertRow(4, 10, 1, clusterNodeName);
-        insertRow(5, 20, 1, clusterNodeName);
-        insertRow(6, 7, 1, clusterNodeName);
-        insertRow(7, 8, 1, clusterNodeName);
-        insertRow(8, 12, 1, clusterNodeName);
+        insertRow(1, 10, 1, clusterNodeName, false);
+        insertRow(2, 9, 1, clusterNodeName, false);
+        insertRow(3, 11, 1, clusterNodeName, false);
+        insertRow(4, 10, 1, clusterNodeName, false);
+        insertRow(5, 20, 1, clusterNodeName, false);
+        insertRow(6, 7, 1, clusterNodeName, false);
+        insertRow(7, 8, 1, clusterNodeName, false);
+        insertRow(8, 12, 1, clusterNodeName, false);
 
         refresh(CATALOG);
 
@@ -243,14 +284,14 @@ public abstract class GenericNotIndexedQueryIntegerFilterTest extends GenericCon
         ClusterName clusterNodeName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterLower ***********************************");
 
-        insertRow(1, 10, 1, clusterNodeName);
-        insertRow(2, 9, 1, clusterNodeName);
-        insertRow(3, 11, 1, clusterNodeName);
-        insertRow(4, 10, 1, clusterNodeName);
-        insertRow(5, 20, 1, clusterNodeName);
-        insertRow(6, 7, 1, clusterNodeName);
-        insertRow(7, 8, 1, clusterNodeName);
-        insertRow(8, 12, 1, clusterNodeName);
+        insertRow(1, 10, 1, clusterNodeName, false);
+        insertRow(2, 9, 1, clusterNodeName, false);
+        insertRow(3, 11, 1, clusterNodeName, false);
+        insertRow(4, 10, 1, clusterNodeName, false);
+        insertRow(5, 20, 1, clusterNodeName, false);
+        insertRow(6, 7, 1, clusterNodeName, false);
+        insertRow(7, 8, 1, clusterNodeName, false);
+        insertRow(8, 12, 1, clusterNodeName, false);
 
         refresh(CATALOG);
 
@@ -287,14 +328,14 @@ public abstract class GenericNotIndexedQueryIntegerFilterTest extends GenericCon
         ClusterName clusterNodeName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterLowerEqual ***********************************");
 
-        insertRow(1, 10, 1, clusterNodeName);
-        insertRow(2, 9, 1, clusterNodeName);
-        insertRow(3, 11, 1, clusterNodeName);
-        insertRow(4, 10, 1, clusterNodeName);
-        insertRow(5, 20, 1, clusterNodeName);
-        insertRow(6, 7, 1, clusterNodeName);
-        insertRow(7, 8, 1, clusterNodeName);
-        insertRow(8, 12, 1, clusterNodeName);
+        insertRow(1, 10, 1, clusterNodeName, false);
+        insertRow(2, 9, 1, clusterNodeName, false);
+        insertRow(3, 11, 1, clusterNodeName, false);
+        insertRow(4, 10, 1, clusterNodeName, false);
+        insertRow(5, 20, 1, clusterNodeName, false);
+        insertRow(6, 7, 1, clusterNodeName, false);
+        insertRow(7, 8, 1, clusterNodeName, false);
+        insertRow(8, 12, 1, clusterNodeName, false);
 
         refresh(CATALOG);
 
@@ -341,11 +382,11 @@ public abstract class GenericNotIndexedQueryIntegerFilterTest extends GenericCon
         ClusterName clusterNodeName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST selectNoPKFilterDistinct ***********************************");
 
-        insertRow(1, 10, 1, clusterNodeName);
-        insertRow(2, 9, 1, clusterNodeName);
-        insertRow(3, 11, 5, clusterNodeName);
-        insertRow(4, 10, 1, clusterNodeName);
-        insertRow(5, 10, 7, clusterNodeName);
+        insertRow(1, 10, 1, clusterNodeName, false);
+        insertRow(2, 9, 1, clusterNodeName, false);
+        insertRow(3, 11, 5, clusterNodeName, false);
+        insertRow(4, 10, 1, clusterNodeName, false);
+        insertRow(5, 10, 7, clusterNodeName, false);
 
         refresh(CATALOG);
 
@@ -384,7 +425,9 @@ public abstract class GenericNotIndexedQueryIntegerFilterTest extends GenericCon
         return proveSet;
     }
 
-    private void insertRow(int ikey, int age, int money, ClusterName clusterNodeName)
+
+
+    private void insertRow(int ikey, int age, int money, ClusterName clusterNodeName, boolean withPk)
                     throws UnsupportedOperationException, ExecutionException, UnsupportedException {
 
         Row row = new Row();
@@ -399,6 +442,9 @@ public abstract class GenericNotIndexedQueryIntegerFilterTest extends GenericCon
         tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.VARCHAR)
                         .addColumn(COLUMN_3, ColumnType.VARCHAR).addColumn(COLUMN_AGE, ColumnType.INT)
                         .addColumn(COLUMN_MONEY, ColumnType.INT);
+        if (withPk){
+            tableMetadataBuilder.withPartitionKey(COLUMN_1);
+        }
 
         TableMetadata targetTable = tableMetadataBuilder.build();
 
