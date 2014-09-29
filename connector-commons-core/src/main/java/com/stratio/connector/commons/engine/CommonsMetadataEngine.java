@@ -47,7 +47,7 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
                     throws UnsupportedException, ExecutionException {
         try {
 
-            connectionHandler.startWork(targetCluster);
+            connectionHandler.startWork(targetCluster.getName());
             createCatalog(catalogMetadata, connectionHandler.getConnection(targetCluster.getName()));
 
         } catch (HandlerConnectionException e) {
@@ -55,7 +55,7 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
             logger.error(msg);
             throw new ExecutionException(msg, e);
         } finally {
-            connectionHandler.endWork(targetCluster);
+            connectionHandler.endWork(targetCluster.getName());
         }
     }
 
@@ -63,7 +63,7 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
     public final void createTable(ClusterName targetCluster, TableMetadata tableMetadata) throws UnsupportedException,
                     ExecutionException {
         try {
-            connectionHandler.startWork(targetCluster);
+            connectionHandler.startWork(targetCluster.getName());
             createTable(tableMetadata, connectionHandler.getConnection(targetCluster.getName()));
 
         } catch (HandlerConnectionException e) {
@@ -71,7 +71,7 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
             logger.error(msg);
             throw new ExecutionException(msg, e);
         } finally {
-            connectionHandler.endWork(targetCluster);
+            connectionHandler.endWork(targetCluster.getName());
         }
     }
 
@@ -79,7 +79,7 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
     public final void dropCatalog(ClusterName targetCluster, CatalogName name) throws UnsupportedException,
                     ExecutionException {
         try {
-            connectionHandler.startWork(targetCluster);
+            connectionHandler.startWork(targetCluster.getName());
             dropCatalog(name, connectionHandler.getConnection(targetCluster.getName()));
 
         } catch (HandlerConnectionException e) {
@@ -87,7 +87,7 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
             logger.error(msg);
             throw new ExecutionException(msg, e);
         } finally {
-            connectionHandler.endWork(targetCluster);
+            connectionHandler.endWork(targetCluster.getName());
         }
 
     }
@@ -96,7 +96,7 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
     public final void dropTable(ClusterName targetCluster, TableName name) throws UnsupportedException,
                     ExecutionException {
         try {
-            connectionHandler.startWork(targetCluster);
+            connectionHandler.startWork(targetCluster.getName());
             dropTable(name, connectionHandler.getConnection(targetCluster.getName()));
 
         } catch (HandlerConnectionException e) {
@@ -104,7 +104,7 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
             logger.error(msg);
             throw new ExecutionException(msg, e);
         } finally {
-            connectionHandler.endWork(targetCluster);
+            connectionHandler.endWork(targetCluster.getName());
         }
     }
 
@@ -112,7 +112,7 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
     public final void createIndex(ClusterName targetCluster, IndexMetadata indexMetadata) throws UnsupportedException,
                     ExecutionException {
         try {
-            connectionHandler.startWork(targetCluster);
+            connectionHandler.startWork(targetCluster.getName());
             createIndex(indexMetadata, connectionHandler.getConnection(targetCluster.getName()));
 
         } catch (HandlerConnectionException e) {
@@ -120,7 +120,7 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
             logger.error(msg);
             throw new ExecutionException(msg, e);
         } finally {
-            connectionHandler.endWork(targetCluster);
+            connectionHandler.endWork(targetCluster.getName());
         }
     }
 
@@ -128,14 +128,14 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
     public final void dropIndex(ClusterName targetCluster, IndexMetadata indexMetadata) throws UnsupportedException,
                     ExecutionException {
         try {
-            connectionHandler.startWork(targetCluster);
+            connectionHandler.startWork(targetCluster.getName());
             dropIndex(indexMetadata, connectionHandler.getConnection(targetCluster.getName()));
         } catch (HandlerConnectionException e) {
             String msg = "Error find Connection in " + targetCluster.getName() + ". " + e.getMessage();
             logger.error(msg);
             throw new ExecutionException(msg, e);
         } finally {
-            connectionHandler.endWork(targetCluster);
+            connectionHandler.endWork(targetCluster.getName());
         }
     }
 

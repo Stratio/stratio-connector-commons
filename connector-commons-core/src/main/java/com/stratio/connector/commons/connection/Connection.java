@@ -16,12 +16,22 @@
 
 package com.stratio.connector.commons.connection;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * This interface represents a generic connection to be handle.
  * Created by jmgomez on 29/08/14.
  */
 public abstract class Connection<T> {
 
+	
+    /**
+     * The dateFormat.
+     */
+    private static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    
     private String status;
     private String lastDateInfo;
     private Boolean workInProgress;
@@ -49,23 +59,24 @@ public abstract class Connection<T> {
         return lastDateInfo;
     }
 
-    public void setLastDateInfo(String lastDateInfo) {
-        this.lastDateInfo = lastDateInfo;
-    }
+
 
     public String getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Boolean getWorkInProgress() {
+    
+    public Boolean isWorkInProgress() {
         return workInProgress;
     }
 
     public void setWorkInProgress(Boolean workInProgress) {
+    	if (workInProgress){
+    		status = "Work in Progress";
+    	}else{
+    		status = "Work Finished";
+    	}
+        lastDateInfo = dateFormat.format(new Date());
         this.workInProgress = workInProgress;
     }
 }

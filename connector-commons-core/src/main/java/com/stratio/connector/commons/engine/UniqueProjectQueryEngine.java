@@ -47,7 +47,7 @@ public abstract class UniqueProjectQueryEngine<T> extends CommonsQueryEngine imp
         QueryResult queryResult = null;
         try {
             clusterName = ((Project) workflow.getInitialSteps().get(0)).getClusterName();
-            queryResult = execute(workflow, connectionHandler.getConnection(clusterName.getName()));
+            queryResult = execute((Project)workflow.getInitialSteps().get(0), connectionHandler.getConnection(clusterName.getName()));
         } catch (HandlerConnectionException e) {
             String msg = "Error find Connection in " + clusterName.getName() + ". " + e.getMessage();
             logger.error(msg);
@@ -56,7 +56,7 @@ public abstract class UniqueProjectQueryEngine<T> extends CommonsQueryEngine imp
         return queryResult;
     }
 
-    protected abstract QueryResult execute(LogicalWorkflow workflow, Connection<T> connection)
+    protected abstract QueryResult execute(Project workflow, Connection<T> connection)
             throws UnsupportedException, ExecutionException;
 
     private void chekSupport(LogicalWorkflow workflow) throws UnsupportedException {

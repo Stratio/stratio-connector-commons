@@ -37,10 +37,7 @@ import com.stratio.meta2.common.data.ClusterName;
  */
 public abstract class ConnectionHandler {
 
-    /**
-     * The dateFormat.
-     */
-    private static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
 
     /**
      * The Log.
@@ -142,13 +139,10 @@ public abstract class ConnectionHandler {
         return connection;
     }
 
-    public void startWork(ClusterName targetCluster) {
+    public void startWork(String targetCluster) {
         Connection conn = null;
         try {
-            conn = getConnection(targetCluster.getName());
-
-            conn.setLastDateInfo(dateFormat.format(new Date()));
-            conn.setStatus("Work in Progress");
+            conn = getConnection(targetCluster);
             conn.setWorkInProgress(true);
 
         } catch (HandlerConnectionException e) {
@@ -158,15 +152,11 @@ public abstract class ConnectionHandler {
         }
     }
 
-    public void endWork(ClusterName targetCluster) {
+    public void endWork(String targetCluster) {
         Connection conn = null;
         try {
-            conn = getConnection(targetCluster.getName());
-
-            conn.setLastDateInfo(new Date().toString());
-            conn.setStatus("Work Finished");
+            conn = getConnection(targetCluster);
             conn.setWorkInProgress(false);
-
         } catch (HandlerConnectionException e) {
             String msg = "fail getting the Connection. " + e.getMessage();
             logger.error(msg);

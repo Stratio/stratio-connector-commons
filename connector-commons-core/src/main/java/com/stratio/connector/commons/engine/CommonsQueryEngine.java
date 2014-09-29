@@ -54,13 +54,13 @@ public abstract class CommonsQueryEngine implements IQueryEngine {
         try {
             for (LogicalStep project : workflow.getInitialSteps()) {
                 clusterName = ((Project) project).getClusterName();
-                connectionHandler.startWork(clusterName);
+                connectionHandler.startWork(clusterName.getName());
             }
             result = executeWorkFlow(workflow);
 
         } finally {
             for (LogicalStep project : workflow.getInitialSteps()) {
-                connectionHandler.endWork(((Project) project).getClusterName());
+                connectionHandler.endWork(((Project) project).getClusterName().getName());
             }
         }
         return result;

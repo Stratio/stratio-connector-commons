@@ -42,7 +42,7 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
     public final void insert(ClusterName targetCluster, TableMetadata targetTable, Row row) throws UnsupportedException,
             ExecutionException {
         try {
-            connectionHandler.startWork(targetCluster);
+            connectionHandler.startWork(targetCluster.getName());
             insert(targetTable, row, connectionHandler.getConnection(targetCluster.getName()));
 
         } catch (HandlerConnectionException e) {
@@ -50,7 +50,7 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
             logger.error(msg);
             throw new ExecutionException(msg, e);
         } finally {
-            connectionHandler.endWork(targetCluster);
+            connectionHandler.endWork(targetCluster.getName());
         }
     }
 
@@ -58,7 +58,7 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
     public final void insert(ClusterName targetCluster, TableMetadata targetTable, Collection<Row> rows)
             throws UnsupportedException, ExecutionException {
         try {
-            connectionHandler.startWork(targetCluster);
+            connectionHandler.startWork(targetCluster.getName());
             insert(targetTable, rows, connectionHandler.getConnection(targetCluster.getName()));
 
         } catch (HandlerConnectionException e) {
@@ -66,7 +66,7 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
             logger.error(msg);
             throw new ExecutionException(msg, e);
         } finally {
-            connectionHandler.endWork(targetCluster);
+            connectionHandler.endWork(targetCluster.getName());
         }
     }
 
