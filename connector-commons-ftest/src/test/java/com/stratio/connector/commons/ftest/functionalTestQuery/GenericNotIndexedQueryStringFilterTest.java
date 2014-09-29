@@ -177,14 +177,16 @@ public abstract class GenericNotIndexedQueryStringFilterTest extends GenericConn
         TableName tableName = new TableName(CATALOG, TABLE);
 
         // Creating indexMetadata
-        List<ColumnMetadata> columns = new ArrayList<>();
-        Object[] parameters = null;
-        columns.add(new ColumnMetadata(new ColumnName(tableName, COLUMN_TEXT), parameters, ColumnType.TEXT));
-        IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, "indexText"), columns,
-                        IndexType.FULL_TEXT, Collections.EMPTY_MAP);
+       
 
-        connector.getMetadataEngine().createIndex(clusterNodeName, indexMetadata);
-
+        if (iConnectorHelper.isIndexMandatory()){
+        	 List<ColumnMetadata> columns = new ArrayList<>();
+             Object[] parameters = null;
+             columns.add(new ColumnMetadata(new ColumnName(tableName, COLUMN_TEXT), parameters, ColumnType.TEXT));
+             IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, "indexText"), columns,
+                             IndexType.FULL_TEXT, Collections.EMPTY_MAP);
+        	connector.getMetadataEngine().createIndex(clusterNodeName, indexMetadata);
+        }
         Collection<Row> rows = new ArrayList();
 
         for (int i = 0; i < text.length; i++) {

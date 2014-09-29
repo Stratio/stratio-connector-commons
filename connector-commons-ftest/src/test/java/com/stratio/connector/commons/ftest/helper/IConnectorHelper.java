@@ -52,4 +52,6 @@ public interface IConnectorHelper {
 	boolean isCatalogMandatory();
 
     boolean isTableMandatory();
+
+	boolean isIndexMandatory();
 }
