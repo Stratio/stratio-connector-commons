@@ -19,6 +19,7 @@ import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -42,8 +43,14 @@ import com.stratio.meta.common.result.QueryResult;
 import com.stratio.meta2.common.data.CatalogName;
 import com.stratio.meta2.common.data.ClusterName;
 import com.stratio.meta2.common.data.ColumnName;
+import com.stratio.meta2.common.data.IndexName;
 import com.stratio.meta2.common.data.TableName;
+import com.stratio.meta2.common.metadata.ColumnMetadata;
+import com.stratio.meta2.common.metadata.ColumnType;
+import com.stratio.meta2.common.metadata.IndexMetadata;
+import com.stratio.meta2.common.metadata.IndexType;
 import com.stratio.meta2.common.metadata.TableMetadata;
+import com.stratio.meta2.common.statements.structures.selectors.Selector;
 
 public abstract class GenericMetadataDropTest extends GenericConnectorTest {
 
@@ -60,6 +67,9 @@ public abstract class GenericMetadataDropTest extends GenericConnectorTest {
         cells.put(COLUMN_1, new Cell("value1"));
         cells.put(COLUMN_2, new Cell(2));
         row.setCells(cells);
+        if (iConnectorHelper.isTableMandatory()){
+            createTable();
+        }
 
         connector.getStorageEngine().insert(clusterName,
                 new TableMetadata(new TableName(CATALOG, TABLE), null, null, null, null, Collections.EMPTY_LIST,
@@ -85,7 +95,31 @@ public abstract class GenericMetadataDropTest extends GenericConnectorTest {
 
         queryResult = connector.getQueryEngine().execute(createLogicalWorkFlow(CATALOG, OTHER_TABLE));
         assertNotEquals("Table [" + CATALOG + "." + OTHER_TABLE + " exist", 0, queryResult.getResultSet().size());
+        if (iConnectorHelper.isTableMandatory()){
+            connector.getMetadataEngine().dropTable(getClusterName(),new TableName(CATALOG,TABLE));
+        }
+    }
 
+    private void createTable() throws UnsupportedException, ExecutionException {
+        TableName tableName = new TableName(CATALOG, TABLE);
+        Map<Selector, Selector> options = Collections.EMPTY_MAP;
+        Map<ColumnName, ColumnMetadata> columnsMap = new HashMap<>();
+
+        Collection<ColumnType> allSupportedColumnType = getConnectorHelper().getAllSupportedColumnType();
+
+        ColumnName columnName = new ColumnName(CATALOG, TABLE, COLUMN_1);
+        columnsMap.put(columnName, new ColumnMetadata(columnName, null, ColumnType.TEXT));
+        ColumnName otherColumnName = new ColumnName(CATALOG, TABLE, COLUMN_2);
+        columnsMap.put(otherColumnName, new ColumnMetadata(otherColumnName, null, ColumnType.INT));
+        // ColumnMetadata (list of columns to create a single index)
+        List<ColumnMetadata> columns = new ArrayList<>();
+        Object[] parameters = null;
+        columns.add(new ColumnMetadata(new ColumnName(tableName, "columnName_1"), parameters,
+                ColumnType.TEXT));
+
+        TableMetadata tableMetadata = new TableMetadata(tableName, options, columnsMap, Collections.EMPTY_MAP,
+                getClusterName(), Collections.EMPTY_LIST,Collections.EMPTY_LIST);
+        connector.getMetadataEngine().createTable(getClusterName(),tableMetadata);
     }
 
     @Test
