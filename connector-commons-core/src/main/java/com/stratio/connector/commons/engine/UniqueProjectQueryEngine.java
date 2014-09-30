@@ -34,20 +34,23 @@ public abstract class UniqueProjectQueryEngine<T> extends CommonsQueryEngine imp
     /**
      * Constructor.
      *
-     * @param connectionHandler the connector handler.
+     * @param connectionHandler
+     *            the connector handler.
      */
     public UniqueProjectQueryEngine(ConnectionHandler connectionHandler) {
         super(connectionHandler);
     }
 
     @Override
-    protected final QueryResult executeWorkFlow(LogicalWorkflow workflow) throws UnsupportedException, ExecutionException {
-        chekSupport(workflow);
+    protected final QueryResult executeWorkFlow(LogicalWorkflow workflow) throws UnsupportedException,
+                    ExecutionException {
+        checkIsSupported(workflow);
         ClusterName clusterName = null;
         QueryResult queryResult = null;
         try {
             clusterName = ((Project) workflow.getInitialSteps().get(0)).getClusterName();
-            queryResult = execute((Project)workflow.getInitialSteps().get(0), connectionHandler.getConnection(clusterName.getName()));
+            queryResult = execute((Project) workflow.getInitialSteps().get(0),
+                            connectionHandler.getConnection(clusterName.getName()));
         } catch (HandlerConnectionException e) {
             String msg = "Error find Connection in " + clusterName.getName() + ". " + e.getMessage();
             logger.error(msg);
@@ -56,10 +59,10 @@ public abstract class UniqueProjectQueryEngine<T> extends CommonsQueryEngine imp
         return queryResult;
     }
 
-    protected abstract QueryResult execute(Project workflow, Connection<T> connection)
-            throws UnsupportedException, ExecutionException;
+    protected abstract QueryResult execute(Project workflow, Connection<T> connection) throws UnsupportedException,
+                    ExecutionException;
 
-    private void chekSupport(LogicalWorkflow workflow) throws UnsupportedException {
+    private void checkIsSupported(LogicalWorkflow workflow) throws UnsupportedException {
         if (workflow.getInitialSteps().size() != 1) {
             throw new UnsupportedException("The connector can only execute queries with one Project");
         }
