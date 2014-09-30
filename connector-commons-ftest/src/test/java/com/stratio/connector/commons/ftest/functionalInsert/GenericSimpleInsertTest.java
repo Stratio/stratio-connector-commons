@@ -17,6 +17,7 @@ package com.stratio.connector.commons.ftest.functionalInsert;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,7 +34,9 @@ import com.stratio.meta.common.exceptions.ExecutionException;
 import com.stratio.meta.common.exceptions.UnsupportedException;
 import com.stratio.meta.common.logicalplan.LogicalWorkflow;
 import com.stratio.meta.common.result.QueryResult;
+import com.stratio.meta2.common.data.CatalogName;
 import com.stratio.meta2.common.data.ClusterName;
+import com.stratio.meta2.common.metadata.CatalogMetadata;
 import com.stratio.meta2.common.metadata.ColumnType;
 import com.stratio.meta2.common.metadata.TableMetadata;
 
@@ -248,6 +251,9 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
         }
         TableMetadata targetTable = tableMetadataBuilder.build();
 
+        if (getConnectorHelper().isTableMandatory()) {
+            connector.getMetadataEngine().createTable(getClusterName(), targetTable);
+        }
         connector.getStorageEngine().insert(cluesterName, targetTable, row);
         refresh(CATALOG);
     }
@@ -273,15 +279,20 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
         tableMetadataBuilder.withClusterKey(clusterKey);
 
         TableMetadata targetTable = tableMetadataBuilder.build();
-
+        if (getConnectorHelper().isCatalogMandatory()) {
+            connector.getMetadataEngine()
+                            .createCatalog(getClusterName(),
+                                            new CatalogMetadata(new CatalogName(CATALOG), Collections.EMPTY_MAP,
+                                                            Collections.EMPTY_MAP));
+        }
         connector.getStorageEngine().insert(cluesterName, targetTable, row);
         refresh(CATALOG);
     }
 
     private LogicalWorkflow createLogicalWorkFlow() {
 
-        return new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName()).addColumnName(COLUMN_1, COLUMN_2, COLUMN_3, COLUMN_4)
-                        .getLogicalWorkflow();
+        return new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName()).addColumnName(COLUMN_1, COLUMN_2, COLUMN_3,
+                        COLUMN_4).getLogicalWorkflow();
 
     }
 

@@ -16,24 +16,16 @@
 
 package com.stratio.connector.commons;
 
-import java.util.Iterator;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-
-
 import com.stratio.connector.commons.connection.Connection;
 import com.stratio.connector.commons.connection.ConnectionHandler;
 import com.stratio.connector.commons.connection.exceptions.HandlerConnectionException;
 import com.stratio.meta.common.connector.ConnectorClusterConfig;
-import com.stratio.meta.common.connector.IConfiguration;
 import com.stratio.meta.common.connector.IConnector;
-import com.stratio.meta.common.connector.IMetadataEngine;
-import com.stratio.meta.common.connector.IQueryEngine;
-import com.stratio.meta.common.connector.IStorageEngine;
 import com.stratio.meta.common.exceptions.ConnectionException;
 import com.stratio.meta.common.exceptions.ExecutionException;
 import com.stratio.meta.common.security.ICredentials;
@@ -53,19 +45,16 @@ public abstract class CommonsConnector implements IConnector {
      * The connectionHandler.
      */
     protected ConnectionHandler connectionHandler = null;
-    
-  
-    
-    
-
-    
 
     /**
      * Create a connection with ElasticSearch.
      *
-     * @param credentials the credentials.
-     * @param config      the connection configuration.
-     * @throws ConnectionException if the connection fail.
+     * @param credentials
+     *            the credentials.
+     * @param config
+     *            the connection configuration.
+     * @throws ConnectionException
+     *             if the connection fail.
      */
     @Override
     public final void connect(ICredentials credentials, ConnectorClusterConfig config) throws ConnectionException {
@@ -79,9 +68,10 @@ public abstract class CommonsConnector implements IConnector {
     }
 
     /**
-     * It close the  connection to ElasticSearch.
+     * It close the connection to ElasticSearch.
      *
-     * @param name the connection identifier.
+     * @param name
+     *            the connection identifier.
      */
     @Override
     public final void close(ClusterName clusterName) {
@@ -92,19 +82,18 @@ public abstract class CommonsConnector implements IConnector {
     @Override
     public final void shutdown() throws ExecutionException {
 
-
-    	Map<String, Connection> connections = connectionHandler.getConnections();
-		for(String connectionName: connections.keySet()){
-			connectionHandler.endWork(connectionName);
-			connectionHandler.closeConnection(connectionName);				
-			}
-		}
-   
+        Map<String, Connection> connections = connectionHandler.getConnections();
+        for (String connectionName : connections.keySet()) {
+            connectionHandler.endWork(connectionName);
+            connectionHandler.closeConnection(connectionName);
+        }
+    }
 
     /**
      * The connection status.
      *
-     * @param name the cluster Name.
+     * @param name
+     *            the cluster Name.
      * @return true if the driver's client is not null.
      */
     @Override
@@ -113,7 +102,5 @@ public abstract class CommonsConnector implements IConnector {
         return connectionHandler.isConnected(name.getName());
 
     }
-    
-    
 
 }

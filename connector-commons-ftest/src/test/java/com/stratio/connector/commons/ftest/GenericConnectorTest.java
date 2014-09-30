@@ -31,6 +31,7 @@ import com.stratio.meta.common.exceptions.UnsupportedException;
 import com.stratio.meta.common.security.ICredentials;
 import com.stratio.meta2.common.data.CatalogName;
 import com.stratio.meta2.common.data.ClusterName;
+import com.stratio.meta2.common.data.TableName;
 
 public abstract class GenericConnectorTest<T extends IConnector> {
 
@@ -76,6 +77,20 @@ public abstract class GenericConnectorTest<T extends IConnector> {
         }
     }
 
+    /**
+     * @param tABLE2
+     */
+    private void dropTable(String catalog, String table) {
+        try {
+            if (deleteBeteweenTest) {
+                connector.getMetadataEngine().dropTable(getClusterName(), new TableName(catalog, table));
+            }
+        } catch (Throwable t) {
+            logger.debug("Index does not exist");
+        }
+
+    }
+
     protected void refresh(String catalog) {
         iConnectorHelper.refresh(catalog);
     }
@@ -101,6 +116,7 @@ public abstract class GenericConnectorTest<T extends IConnector> {
 
         if (deleteBeteweenTest) {
             deleteCatalog(CATALOG);
+            dropTable(CATALOG, TABLE);
             if (logger.isDebugEnabled()) {
                 logger.debug("Delete Catalog: " + CATALOG);
 
@@ -109,4 +125,5 @@ public abstract class GenericConnectorTest<T extends IConnector> {
 
         }
     }
+
 }
