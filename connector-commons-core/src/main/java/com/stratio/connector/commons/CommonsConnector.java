@@ -70,7 +70,7 @@ public abstract class CommonsConnector implements IConnector {
     /**
      * It close the connection to ElasticSearch.
      *
-     * @param name
+     * @param clusterName
      *            the connection identifier.
      */
     @Override
@@ -97,7 +97,7 @@ public abstract class CommonsConnector implements IConnector {
      * @return true if the driver's client is not null.
      */
     @Override
-    public boolean isConnected(ClusterName name) {
+    public final boolean isConnected(ClusterName name) {
 
         return connectionHandler.isConnected(name.getName());
 

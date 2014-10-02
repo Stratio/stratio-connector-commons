@@ -121,11 +121,11 @@ public class ExampleWorkflows {
      * @return A {@link com.stratio.meta.common.logicalplan.Select}.
      */
     public Select getSelect(String[] alias, ColumnType[] types, ColumnName... columnNames) {
-        Map<String, String> columnMap = new HashMap<>();
+        Map<ColumnName, String> columnMap = new HashMap<>();
         Map<String, ColumnType> columntype = new HashMap<>();
         int aliasIndex = 0;
         for (ColumnName column : columnNames) {
-            columnMap.put(column.getQualifiedName(), alias[aliasIndex]);
+            columnMap.put(new ColumnName(catalog,table,column.getQualifiedName()), alias[aliasIndex]);
             columntype.put(column.getQualifiedName(),types[aliasIndex]);
             aliasIndex++;
         }
