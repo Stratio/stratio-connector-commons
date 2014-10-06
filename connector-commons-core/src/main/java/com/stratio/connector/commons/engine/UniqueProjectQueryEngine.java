@@ -29,7 +29,7 @@ import com.stratio.meta2.common.data.ClusterName;
 /**
  * @author darroyo
  */
-public abstract class UniqueProjectQueryEngine<T> extends CommonsQueryEngine implements IQueryEngine {
+public abstract class UniqueProjectQueryEngine<T> extends CommonsQueryEngine {
 
     /**
      * Constructor.
