@@ -85,7 +85,7 @@ public class LogicalWorkFlowCreator {
             Map<ColumnName, String> selectColumn = new LinkedHashMap<>();
             Map<String, ColumnType> typeMap = new LinkedHashMap();
             for (ColumnName columnName : project.getColumnList()) {
-                selectColumn.put(new ColumnName(catalog,table,columnName.getName()), columnName.getName());
+                selectColumn.put(new ColumnName(catalog, table, columnName.getName()), columnName.getName());
                 typeMap.put(columnName.getName(), ColumnType.VARCHAR);
             }
 
@@ -253,9 +253,9 @@ public class LogicalWorkFlowCreator {
     public LogicalWorkFlowCreator addSelect(LinkedList<ConnectorField> fields) {
         Map<ColumnName, String> mapping = new LinkedHashMap<>();
         Map<String, ColumnType> types = new LinkedHashMap<>();
-        ;
+
         for (ConnectorField connectorField : fields) {
-            mapping.put(new ColumnName(catalog, table,connectorField.name), connectorField.alias);
+            mapping.put(new ColumnName(catalog, table, connectorField.name), connectorField.alias);
             types.put(connectorField.name, connectorField.columnType);
         }
 

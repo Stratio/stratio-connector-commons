@@ -20,6 +20,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 import org.junit.Test;
@@ -27,6 +28,7 @@ import org.junit.Test;
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
 import com.stratio.connector.commons.ftest.schema.TableMetadataBuilder;
 import com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator;
+import com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator.ConnectorField;
 import com.stratio.meta.common.data.Cell;
 import com.stratio.meta.common.data.ResultSet;
 import com.stratio.meta.common.data.Row;
@@ -44,17 +46,17 @@ import com.stratio.meta2.common.metadata.TableMetadata;
  */
 public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
 
-    private static final String COLUMN_1 = "COLUMN 1";
-    private static final String COLUMN_2 = "COLUMN 2";
-    private static final String COLUMN_3 = "COLUMN 3";
-    private static final String COLUMN_4 = "COLUMN 4";
+    protected static final String COLUMN_1 = "COLUMN 1";
+    protected static final String COLUMN_2 = "COLUMN 2";
+    protected static final String COLUMN_3 = "COLUMN 3";
+    public static final String COLUMN_4 = "COLUMN 4";
 
-    private static final String VALUE_1 = "value1";
-    private static final String OTHER_VALUE_1 = "OTHER VALUE";
-    private static final String VALUE_4 = "value4";
-    private static final String OTHER_VALUE_4 = "other value 4";
-    private static final int VALUE_2 = 2;
-    private static final boolean VALUE_3 = true;
+    protected static final String OTHER_VALUE_1 = "OTHER VALUE";
+    protected static final String VALUE_4 = "value4";
+    protected static final String OTHER_VALUE_4 = "other value 4";
+    protected static final int VALUE_2 = 2;
+    protected static final boolean VALUE_3 = true;
+    public static final String VALUE_1 = "value1";
 
     @Test
     public void testSimpleInsertWithPK() throws UnsupportedException, ExecutionException {
@@ -132,7 +134,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
         insertRow(clusterName, value4, ColumnType.VARCHAR, VALUE_1, true);
 
         ResultSet resultIterator = createResultSet(clusterName);
-        assertEquals("It have only one result", 1, resultIterator.size());
+        assertEquals("It has only one result", 1, resultIterator.size());
         for (Row recoveredRow : resultIterator) {
             assertEquals("The type is correct ", String.class.getCanonicalName(), recoveredRow.getCell(COLUMN_4)
                             .getValue().getClass().getCanonicalName());
@@ -149,7 +151,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
         insertRow(clusterName, value4, ColumnType.INT, VALUE_1, true);
 
         ResultSet resultIterator = createResultSet(clusterName);
-        assertEquals("It have only one result", 1, resultIterator.size());
+        assertEquals("It has only one result", 1, resultIterator.size());
         for (Row recoveredRow : resultIterator) {
             assertEquals("The type is correct ", Integer.class.getCanonicalName(), recoveredRow.getCell(COLUMN_4)
                             .getValue().getClass().getCanonicalName());
@@ -167,7 +169,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
         insertRow(clusterName, value4, ColumnType.BIGINT, VALUE_1, true);
 
         ResultSet resultIterator = createResultSet(clusterName);
-        assertEquals("It have only one result", 1, resultIterator.size());
+        assertEquals("It has only one result", 1, resultIterator.size());
         for (Row recoveredRow : resultIterator) {
             assertEquals("The type is correct ", Long.class.getCanonicalName(), recoveredRow.getCell(COLUMN_4)
                             .getValue().getClass().getCanonicalName());
@@ -185,7 +187,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
         insertRow(clusterName, value4, ColumnType.BOOLEAN, VALUE_1, true);
 
         ResultSet resultIterator = createResultSet(clusterName);
-        assertEquals("It have only one result", 1, resultIterator.size());
+        assertEquals("It has only one result", 1, resultIterator.size());
         for (Row recoveredRow : resultIterator) {
             assertEquals("The type is correct ", Boolean.class.getCanonicalName(), recoveredRow.getCell(COLUMN_4)
                             .getValue().getClass().getCanonicalName());
@@ -203,9 +205,27 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
         insertRow(clusterName, value4, ColumnType.NATIVE, VALUE_1, true);
 
         ResultSet resultIterator = createResultSet(clusterName);
-        assertEquals("It have only one result", 1, resultIterator.size());
+        assertEquals("It has only one result", 1, resultIterator.size());
         for (Row recoveredRow : resultIterator) {
             assertEquals("The type is correct ", Date.class.getCanonicalName(), recoveredRow.getCell(COLUMN_4)
+                            .getValue().getClass().getCanonicalName());
+            assertEquals("The value is correct ", value4, recoveredRow.getCell(COLUMN_4).getValue());
+        }
+
+    }
+
+    @Test
+    public void testInsertDouble() throws UnsupportedException, ExecutionException {
+        ClusterName clusterName = getClusterName();
+        System.out.println("*********************************** INIT FUNCTIONAL TEST testInsertSamePK "
+                        + clusterName.getName() + " ***********************************");
+        Object value4 = new Double(25.32);
+        insertRow(clusterName, value4, ColumnType.DOUBLE, VALUE_1, true);
+
+        ResultSet resultIterator = createResultSet(clusterName);
+        assertEquals("It has only one result", 1, resultIterator.size());
+        for (Row recoveredRow : resultIterator) {
+            assertEquals("The type is correct ", Double.class.getCanonicalName(), recoveredRow.getCell(COLUMN_4)
                             .getValue().getClass().getCanonicalName());
             assertEquals("The value is correct ", value4, recoveredRow.getCell(COLUMN_4).getValue());
         }
@@ -226,12 +246,18 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
         assertEquals("The records number is correct " + clusterName.getName(), 1, resultIterator.size());
     }
 
-    private ResultSet createResultSet(ClusterName clusterName) throws UnsupportedException, ExecutionException {
+    protected ResultSet createResultSet(ClusterName clusterName) throws UnsupportedException, ExecutionException {
         QueryResult queryResult = connector.getQueryEngine().execute(createLogicalWorkFlow());
         return queryResult.getResultSet();
     }
 
-    private void insertRow(ClusterName cluesterName, Object value_4, ColumnType colType_4, String PK_VALUE,
+    protected ResultSet createResultSetTyped(ClusterName clusterName, ColumnType colType) throws UnsupportedException,
+                    ExecutionException {
+        QueryResult queryResult = connector.getQueryEngine().execute(createLogicalWorkFlowValue4Type(colType));
+        return queryResult.getResultSet();
+    }
+
+    protected void insertRow(ClusterName cluesterName, Object value_4, ColumnType colType_4, String PK_VALUE,
                     boolean withPK) throws UnsupportedException, ExecutionException {
         Row row = new Row();
         Map<String, Cell> cells = new HashMap<>();
@@ -293,6 +319,18 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
 
         return new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName()).addColumnName(COLUMN_1, COLUMN_2, COLUMN_3,
                         COLUMN_4).getLogicalWorkflow();
+
+    }
+
+    private LogicalWorkflow createLogicalWorkFlowValue4Type(ColumnType colType) {
+        LinkedList<ConnectorField> linkList = new LinkedList<ConnectorField>();
+        LogicalWorkFlowCreator lwfC = new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName());
+        linkList.add(lwfC.createConnectorField(COLUMN_1, COLUMN_1, ColumnType.VARCHAR));
+        linkList.add(lwfC.createConnectorField(COLUMN_2, COLUMN_2, ColumnType.VARCHAR));
+        linkList.add(lwfC.createConnectorField(COLUMN_3, COLUMN_3, ColumnType.VARCHAR));
+        linkList.add(lwfC.createConnectorField(COLUMN_4, COLUMN_4, colType));
+        return new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName())
+                        .addColumnName(COLUMN_1, COLUMN_2, COLUMN_3, COLUMN_4).addSelect(linkList).getLogicalWorkflow();
 
     }
 
