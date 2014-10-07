@@ -100,13 +100,13 @@ public class TableMetadataBuilder {
 
         IndexName indName = new IndexName(tableName.getName(), tableName.getName(), indexName);
 
-        List<ColumnMetadata> columnsMetadata = new ArrayList<ColumnMetadata>(fields.length);
+        Map<ColumnName, ColumnMetadata> columnsMetadata = new HashMap<ColumnName, ColumnMetadata>(fields.length);
         // recover the columns from the table metadata
         for (String field : fields) {
             ColumnMetadata cMetadata = columns.get(new ColumnName(tableName, field));
             if (cMetadata == null)
                 throw new RuntimeException("Trying to index a not existing column: " + field);
-            columnsMetadata.add(cMetadata);
+            columnsMetadata.put(new ColumnName(tableName, field), cMetadata);
         }
         IndexMetadata indMetadata = new IndexMetadata(indName, columnsMetadata, indType, null);
         indexes.put(indName, indMetadata);

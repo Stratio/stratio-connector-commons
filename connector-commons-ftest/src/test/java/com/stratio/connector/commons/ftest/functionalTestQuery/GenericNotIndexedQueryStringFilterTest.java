@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.junit.Before;
@@ -177,15 +176,15 @@ public abstract class GenericNotIndexedQueryStringFilterTest extends GenericConn
         TableName tableName = new TableName(CATALOG, TABLE);
 
         // Creating indexMetadata
-       
 
-        if (iConnectorHelper.isIndexMandatory()){
-        	 List<ColumnMetadata> columns = new ArrayList<>();
-             Object[] parameters = null;
-             columns.add(new ColumnMetadata(new ColumnName(tableName, COLUMN_TEXT), parameters, ColumnType.TEXT));
-             IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, "indexText"), columns,
-                             IndexType.FULL_TEXT, Collections.EMPTY_MAP);
-        	connector.getMetadataEngine().createIndex(clusterNodeName, indexMetadata);
+        if (iConnectorHelper.isIndexMandatory()) {
+            Map<ColumnName, ColumnMetadata> columns = new HashMap<>();
+            Object[] parameters = null;
+            columns.put(new ColumnName(tableName, COLUMN_TEXT), new ColumnMetadata(new ColumnName(tableName,
+                            COLUMN_TEXT), parameters, ColumnType.TEXT));
+            IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, "indexText"), columns,
+                            IndexType.FULL_TEXT, Collections.EMPTY_MAP);
+            connector.getMetadataEngine().createIndex(clusterNodeName, indexMetadata);
         }
         Collection<Row> rows = new ArrayList();
 

@@ -19,10 +19,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
@@ -66,16 +64,18 @@ public abstract class GenericMetadataIndexTest extends GenericConnectorTest {
         TableName tableName = new TableName(CATALOG, TABLE);
 
         // Creating the indexMetadata with the previous columns
-        List<ColumnMetadata> columns = new ArrayList<>();
+        Map<ColumnName, ColumnMetadata> columns = new HashMap<>();
         Object[] parameters = null;
-        columns.add(new ColumnMetadata(new ColumnName(tableName, "columnName_1"), parameters, ColumnType.TEXT));
+        ColumnName colName = new ColumnName(tableName, "columnName_1");
+        columns.put(colName, new ColumnMetadata(colName, parameters, ColumnType.TEXT));
         IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, INDEX_NAME), columns,
                         IndexType.DEFAULT, Collections.EMPTY_MAP);
 
         // Creating other indexMetadata with columnName insteadOf indexName
-        List<ColumnMetadata> columns2 = new ArrayList<>();
+        Map<ColumnName, ColumnMetadata> columns2 = new HashMap<>();
         Object[] parameters2 = null;
-        columns2.add(new ColumnMetadata(new ColumnName(tableName, COLUMN_INDEX_NAME), parameters2, ColumnType.TEXT));
+        ColumnName colName2 = new ColumnName(tableName, COLUMN_INDEX_NAME);
+        columns2.put(colName2, new ColumnMetadata(colName2, parameters2, ColumnType.TEXT));
         IndexMetadata indexMetadata2 = new IndexMetadata(new IndexName(tableName, COLUMN_INDEX_NAME), columns2,
                         IndexType.DEFAULT, Collections.EMPTY_MAP);
 
@@ -104,17 +104,21 @@ public abstract class GenericMetadataIndexTest extends GenericConnectorTest {
         TableName tableName = new TableName(CATALOG, TABLE);
 
         // Creating the indexMetadata with 1 column
-        List<ColumnMetadata> columns = new ArrayList<>();
+        Map<ColumnName, ColumnMetadata> columns = new HashMap<>();
         Object[] parameters = null;
-        columns.add(new ColumnMetadata(new ColumnName(tableName, "columnName_1"), parameters, ColumnType.TEXT));
+        ColumnName colName = new ColumnName(tableName, "columnName_1");
+        columns.put(colName, new ColumnMetadata(colName, parameters, ColumnType.TEXT));
         IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, INDEX_NAME), columns,
                         IndexType.FULL_TEXT, Collections.EMPTY_MAP);
 
         // Creating other indexMetadata with 2 columns
-        List<ColumnMetadata> columns2 = new ArrayList<>();
+        Map<ColumnName, ColumnMetadata> columns2 = new HashMap<>();
         Object[] parameters2 = null;
-        columns2.add(new ColumnMetadata(new ColumnName(tableName, "columnName_2"), parameters2, ColumnType.VARCHAR));
-        columns2.add(new ColumnMetadata(new ColumnName(tableName, "columnName_3"), parameters2, ColumnType.TEXT));
+
+        columns2.put(new ColumnName(tableName, "columnName_2"), new ColumnMetadata(new ColumnName(tableName,
+                        "columnName_2"), parameters2, ColumnType.VARCHAR));
+        columns2.put(new ColumnName(tableName, "columnName_3"), new ColumnMetadata(new ColumnName(tableName,
+                        "columnName_3"), parameters2, ColumnType.TEXT));
         IndexMetadata indexMetadata2 = new IndexMetadata(new IndexName(tableName, INDEX_NAME_2), columns2,
                         IndexType.FULL_TEXT, Collections.EMPTY_MAP);
 
@@ -153,11 +157,13 @@ public abstract class GenericMetadataIndexTest extends GenericConnectorTest {
         TableName tableName = new TableName(CATALOG, TABLE);
 
         // Creating other indexMetadata with 2 columns
-        List<ColumnMetadata> columns2 = new ArrayList<>();
+        Map<ColumnName, ColumnMetadata> columns = new HashMap<>();
         Object[] parameters2 = null;
-        columns2.add(new ColumnMetadata(new ColumnName(tableName, "columnName_2"), parameters2, ColumnType.VARCHAR));
-        columns2.add(new ColumnMetadata(new ColumnName(tableName, "columnName_3"), parameters2, ColumnType.TEXT));
-        IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, INDEX_NAME), columns2,
+        columns.put(new ColumnName(tableName, "columnName_2"), new ColumnMetadata(new ColumnName(tableName,
+                        "columnName_2"), parameters2, ColumnType.VARCHAR));
+        columns.put(new ColumnName(tableName, "columnName_2"), new ColumnMetadata(new ColumnName(tableName,
+                        "columnName_3"), parameters2, ColumnType.TEXT));
+        IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, INDEX_NAME), columns,
                         IndexType.DEFAULT, Collections.EMPTY_MAP);
 
         // Creating the index
@@ -181,10 +187,12 @@ public abstract class GenericMetadataIndexTest extends GenericConnectorTest {
         TableName tableName = new TableName(CATALOG, TABLE);
 
         // Creating a indexMetadata with 1 columns
-        List<ColumnMetadata> columns2 = new ArrayList<>();
+        Map<ColumnName, ColumnMetadata> columns = new HashMap<>();
         Object[] parameters2 = null;
-        columns2.add(new ColumnMetadata(new ColumnName(tableName, "columnName_2"), parameters2, ColumnType.VARCHAR));
-        columns2.add(new ColumnMetadata(new ColumnName(tableName, "columnName_3"), parameters2, ColumnType.TEXT));
+        columns.put(new ColumnName(tableName, "columnName_2"), new ColumnMetadata(new ColumnName(tableName,
+                        "columnName_2"), parameters2, ColumnType.VARCHAR));
+        columns.put(new ColumnName(tableName, "columnName_3"), new ColumnMetadata(new ColumnName(tableName,
+                        "columnName_3"), parameters2, ColumnType.TEXT));
 
         // Options
         Map<Selector, Selector> options = new HashMap<Selector, Selector>();
@@ -198,7 +206,7 @@ public abstract class GenericMetadataIndexTest extends GenericConnectorTest {
         StringSelector optValue2 = new StringSelector("field1:asc, field2:desc");
         options.put(optSelector2, optValue2);
 
-        IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, INDEX_NAME), columns2,
+        IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, INDEX_NAME), columns,
                         IndexType.CUSTOM, options);
 
         // Creating the index
@@ -215,11 +223,13 @@ public abstract class GenericMetadataIndexTest extends GenericConnectorTest {
         TableName tableName = new TableName(CATALOG, TABLE);
 
         // Creating other indexMetadata with 2 columns
-        List<ColumnMetadata> columns2 = new ArrayList<>();
+        Map<ColumnName, ColumnMetadata> columns = new HashMap<>();
         Object[] parameters2 = null;
-        columns2.add(new ColumnMetadata(new ColumnName(tableName, "columnName_2"), parameters2, ColumnType.VARCHAR));
-        columns2.add(new ColumnMetadata(new ColumnName(tableName, "columnName_3"), parameters2, ColumnType.TEXT));
-        IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, INDEX_NAME), columns2,
+        columns.put(new ColumnName(tableName, "columnName_2"), new ColumnMetadata(new ColumnName(tableName,
+                        "columnName_2"), parameters2, ColumnType.VARCHAR));
+        columns.put(new ColumnName(tableName, "columnName_3"), new ColumnMetadata(new ColumnName(tableName,
+                        "columnName_3"), parameters2, ColumnType.TEXT));
+        IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, INDEX_NAME), columns,
                         IndexType.DEFAULT, Collections.EMPTY_MAP);
 
         // Creating the index
@@ -246,9 +256,10 @@ public abstract class GenericMetadataIndexTest extends GenericConnectorTest {
         TableName tableName = new TableName(CATALOG, TABLE);
 
         // Creating the indexMetadata with 1 column
-        List<ColumnMetadata> columns = new ArrayList<>();
+        Map<ColumnName, ColumnMetadata> columns = new HashMap<>();
         Object[] parameters = null;
-        columns.add(new ColumnMetadata(new ColumnName(tableName, "columnName_1"), parameters, ColumnType.TEXT));
+        columns.put(new ColumnName(tableName, "columnName_1"), new ColumnMetadata(new ColumnName(tableName,
+                        "columnName_1"), parameters, ColumnType.TEXT));
         IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, INDEX_NAME), columns,
                         IndexType.DEFAULT, Collections.EMPTY_MAP);
 
@@ -257,9 +268,10 @@ public abstract class GenericMetadataIndexTest extends GenericConnectorTest {
         assertTrue(iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
 
         // Creating other indexMetadata
-        List<ColumnMetadata> columns2 = new ArrayList<>();
+        Map<ColumnName, ColumnMetadata> columns2 = new HashMap<>();
         Object[] parameters2 = null;
-        columns2.add(new ColumnMetadata(new ColumnName(tableName, "columnName_2"), parameters2, ColumnType.VARCHAR));
+        columns2.put(new ColumnName(tableName, "columnName_2"), new ColumnMetadata(new ColumnName(tableName,
+                        "columnName_2"), parameters2, ColumnType.VARCHAR));
         IndexMetadata indexMetadata2 = new IndexMetadata(new IndexName(tableName, INDEX_NAME_2), columns2,
                         IndexType.FULL_TEXT, Collections.EMPTY_MAP);
 
@@ -279,7 +291,6 @@ public abstract class GenericMetadataIndexTest extends GenericConnectorTest {
             logger.debug("Dropping a not existing index does not cause an exception");
         } catch (Exception e) {
         }
-        ;
 
     }
 
