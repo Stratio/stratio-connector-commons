@@ -33,6 +33,7 @@ import com.stratio.meta.common.statements.structures.relationships.Operator;
 import com.stratio.meta.common.statements.structures.relationships.Relation;
 import com.stratio.meta2.common.data.ClusterName;
 import com.stratio.meta2.common.data.ColumnName;
+import com.stratio.meta2.common.data.QualifiedNames;
 import com.stratio.meta2.common.data.TableName;
 import com.stratio.meta2.common.metadata.ColumnType;
 import com.stratio.meta2.common.statements.structures.selectors.BooleanSelector;
@@ -86,7 +87,7 @@ public class LogicalWorkFlowCreator {
             Map<String, ColumnType> typeMap = new LinkedHashMap();
             for (ColumnName columnName : project.getColumnList()) {
                 selectColumn.put(new ColumnName(catalog, table, columnName.getName()), columnName.getName());
-                typeMap.put(columnName.getName(), ColumnType.VARCHAR);
+                typeMap.put(columnName.getQualifiedName(), ColumnType.VARCHAR);
             }
 
             select = new Select(Operations.PROJECT, selectColumn, typeMap); // The select is mandatory. If it doesn't
@@ -256,7 +257,8 @@ public class LogicalWorkFlowCreator {
 
         for (ConnectorField connectorField : fields) {
             mapping.put(new ColumnName(catalog, table, connectorField.name), connectorField.alias);
-            types.put(connectorField.name, connectorField.columnType);
+            types.put(QualifiedNames.getColumnQualifiedName(catalog, table, connectorField.name),
+                            connectorField.columnType);
         }
 
         select = new Select(Operations.PROJECT, mapping, types);
