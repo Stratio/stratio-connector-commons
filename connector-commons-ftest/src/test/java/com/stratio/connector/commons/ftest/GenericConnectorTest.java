@@ -78,7 +78,7 @@ public abstract class GenericConnectorTest<T extends IConnector> {
     }
 
     /**
-     * @param tABLE2
+     * @param table
      */
     private void dropTable(String catalog, String table) {
         try {

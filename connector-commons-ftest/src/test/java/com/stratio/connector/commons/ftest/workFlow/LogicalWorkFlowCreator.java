@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.stratio.meta.common.connector.Operations;
+import com.stratio.meta.common.exceptions.UnsupportedException;
 import com.stratio.meta.common.logicalplan.Filter;
 import com.stratio.meta.common.logicalplan.Limit;
 import com.stratio.meta.common.logicalplan.LogicalStep;
@@ -31,6 +32,9 @@ import com.stratio.meta.common.logicalplan.Project;
 import com.stratio.meta.common.logicalplan.Select;
 import com.stratio.meta.common.statements.structures.relationships.Operator;
 import com.stratio.meta.common.statements.structures.relationships.Relation;
+import com.stratio.meta.common.statements.structures.window.TimeUnit;
+import com.stratio.meta.common.statements.structures.window.Window;
+import com.stratio.meta.common.statements.structures.window.WindowType;
 import com.stratio.meta2.common.data.ClusterName;
 import com.stratio.meta2.common.data.ColumnName;
 import com.stratio.meta2.common.data.QualifiedNames;
@@ -59,6 +63,7 @@ public class LogicalWorkFlowCreator {
     List<ColumnName> columns = new ArrayList<>();
     List<Filter> filters = new ArrayList<>();
     private Limit limit;
+    private Window window;
 
     public LogicalWorkFlowCreator(String catalog, String table, ClusterName clusterName) {
         this.catalog = catalog;
@@ -267,6 +272,25 @@ public class LogicalWorkFlowCreator {
 
     }
 
+    public LogicalWorkFlowCreator addWindow(WindowType type, int limit) throws UnsupportedException {
+
+        window = new Window(type);
+        switch (type) {
+        case NUM_ROWS:
+            window.setNumRows(limit);
+            break;
+        case TEMPORAL:
+            window.setTimeWindow(limit, TimeUnit.SECONDS);
+            break;
+        default:
+            throw new UnsupportedException("Window " + type + " not supported");
+
+        }
+         return this;
+    }
+
+
+
     public ConnectorField createConnectorField(String name, String alias, ColumnType columnType) {
         return new ConnectorField(name, alias, columnType);
 
@@ -289,4 +313,6 @@ public class LogicalWorkFlowCreator {
         }
 
     }
+
+
 }

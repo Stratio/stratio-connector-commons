@@ -16,6 +16,7 @@
 package com.stratio.connector.commons.ftest.schema;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,11 +46,11 @@ public class TableMetadataBuilder {
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private TableName tableName;
-    private Map<Selector, Selector> options;
-    private Map<ColumnName, ColumnMetadata> columns;
-    private Map<IndexName, IndexMetadata> indexes;
-    private ArrayList<ColumnName> partitionKey;
-    private ArrayList<ColumnName> clusterKey;
+    private Map<Selector, Selector> options = Collections.EMPTY_MAP;
+    private Map<ColumnName, ColumnMetadata> columns = Collections.EMPTY_MAP;
+    private Map<IndexName, IndexMetadata> indexes = Collections.EMPTY_MAP;
+    private List<ColumnName> partitionKey = Collections.EMPTY_LIST;
+    private List<ColumnName> clusterKey = Collections.EMPTY_LIST;
 
     public TableMetadataBuilder(String catalogName, String tableName) {
         this.tableName = new TableName(catalogName, tableName);
