@@ -38,6 +38,7 @@ import com.stratio.connector.commons.ftest.GenericConnectorTest;
 import com.stratio.connector.commons.ftest.schema.TableMetadataBuilder;
 import com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator;
 import com.stratio.meta.common.data.Cell;
+import com.stratio.meta.common.data.ResultSet;
 import com.stratio.meta.common.data.Row;
 import com.stratio.meta.common.exceptions.ConnectionException;
 import com.stratio.meta.common.exceptions.ExecutionException;
@@ -201,6 +202,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterTest extends GenericCon
                         .addGreaterEqualFilter(COLUMN_AGE, new Integer("10"), false).getLogicalWorkflow();
 
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
+        ResultSet aux = queryResult.getResultSet();
 
         Set<Object> proveSet = createCellsResult(queryResult);
 

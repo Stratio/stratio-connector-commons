@@ -37,6 +37,7 @@ import com.stratio.meta2.common.metadata.ColumnMetadata;
 import com.stratio.meta2.common.metadata.ColumnType;
 import com.stratio.meta2.common.metadata.IndexMetadata;
 import com.stratio.meta2.common.metadata.IndexType;
+import com.stratio.meta2.common.statements.structures.selectors.BooleanSelector;
 import com.stratio.meta2.common.statements.structures.selectors.Selector;
 import com.stratio.meta2.common.statements.structures.selectors.StringSelector;
 
@@ -205,6 +206,11 @@ public abstract class GenericMetadataIndexTest extends GenericConnectorTest {
         optSelector2.setAlias("compound_fields");
         StringSelector optValue2 = new StringSelector("field1:asc, field2:desc");
         options.put(optSelector2, optValue2);
+        
+        StringSelector optSelector3 = new StringSelector("unique");
+        optSelector3.setAlias("unique");
+        BooleanSelector optValue3 = new BooleanSelector(true);
+        options.put(optSelector3, optValue3);
 
         IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, INDEX_NAME), columns,
                         IndexType.CUSTOM, options);
