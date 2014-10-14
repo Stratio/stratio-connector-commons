@@ -33,7 +33,7 @@ import com.stratio.meta.common.logicalplan.Select;
 import com.stratio.meta.common.statements.structures.relationships.Operator;
 import com.stratio.meta.common.statements.structures.relationships.Relation;
 import com.stratio.meta.common.statements.structures.window.TimeUnit;
-import com.stratio.meta.common.statements.structures.window.Window;
+import com.stratio.meta.common.logicalplan.Window;
 import com.stratio.meta.common.statements.structures.window.WindowType;
 import com.stratio.meta2.common.data.ClusterName;
 import com.stratio.meta2.common.data.ColumnName;
@@ -86,6 +86,10 @@ public class LogicalWorkFlowCreator {
             lastStep.setNextStep(limit);
             lastStep = limit;
 
+        }
+        if (window != null){
+            lastStep.setNextStep(window);
+            lastStep = window;
         }
         if (select == null) {
             Map<ColumnName, String> selectColumn = new LinkedHashMap<>();
@@ -274,7 +278,7 @@ public class LogicalWorkFlowCreator {
 
     public LogicalWorkFlowCreator addWindow(WindowType type, int limit) throws UnsupportedException {
 
-        window = new Window(type);
+        window = new Window(Operations.FILTER_FUNCTION_EQ,type);
         switch (type) {
         case NUM_ROWS:
             window.setNumRows(limit);
