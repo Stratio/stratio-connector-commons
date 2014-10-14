@@ -81,9 +81,9 @@ public abstract class GenericPKQueryIntegerFilterTest extends GenericConnectorTe
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns().addColumnName(COLUMN_PK)
                         .addEqualFilter(COLUMN_PK, new Integer(2), false, true).getLogicalWorkflow();
 
-        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
+        QueryResult queryResult = connector.getQueryEngine().execute(logicalPlan);
 
-        
+
 
         assertEquals("The record number is correct", 1, queryResult.getResultSet().size());
         assertEquals("The value is correct",new Integer(2),queryResult.getResultSet().getRows().get(0).getCell
@@ -92,6 +92,68 @@ public abstract class GenericPKQueryIntegerFilterTest extends GenericConnectorTe
 
 
     }
+
+
+    @Test
+    public void selectPKDoubleFilterEqual() throws ExecutionException, UnsupportedException {
+
+        ClusterName clusterNodeName = getClusterName();
+        System.out.println("*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterEqual ***********************************");
+
+        insertRow(1, 10, 5, clusterNodeName, false);
+        insertRow(2, 9, 1, clusterNodeName, false);
+        insertRow(3, 11, 1, clusterNodeName, false);
+        insertRow(4, 10, 1, clusterNodeName, false);
+        insertRow(5, 20, 1, clusterNodeName, false);
+
+        refresh(CATALOG);
+
+
+
+
+        LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns().addColumnName(COLUMN_PK)
+                .addEqualFilter(COLUMN_PK, new Integer(2), false, true).addEqualFilter(COLUMN_PK, new Integer(3),
+                        false, true).getLogicalWorkflow();
+
+        QueryResult queryResult = connector.getQueryEngine().execute(logicalPlan);
+
+
+
+        assertEquals("The record number is correct", 0, queryResult.getResultSet().size());
+
+    }
+
+
+    @Test
+    public void selectPKGeatEqualFilterEqual() throws ExecutionException, UnsupportedException {
+
+        ClusterName clusterNodeName = getClusterName();
+        System.out.println("*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterEqual ***********************************");
+
+        insertRow(1, 10, 5, clusterNodeName, false);
+        insertRow(2, 9, 1, clusterNodeName, false);
+        insertRow(3, 11, 1, clusterNodeName, false);
+        insertRow(4, 10, 1, clusterNodeName, false);
+        insertRow(5, 20, 1, clusterNodeName, false);
+
+        refresh(CATALOG);
+
+
+
+
+        LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns().addColumnName(COLUMN_PK)
+                .addGreaterEqualFilter(COLUMN_PK, new Integer(2), false, true).getLogicalWorkflow();
+
+        QueryResult queryResult = connector.getQueryEngine().execute(logicalPlan);
+
+
+
+        assertEquals("The record number is correct", 4, queryResult.getResultSet().size());
+
+    }
+
+
+
 
 
     private Set<Object> createCellsResult(QueryResult queryResult) {

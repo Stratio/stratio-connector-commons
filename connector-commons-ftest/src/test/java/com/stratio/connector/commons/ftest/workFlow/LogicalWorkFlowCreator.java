@@ -172,12 +172,14 @@ public class LogicalWorkFlowCreator {
         return valueSelector;
     }
 
-    public LogicalWorkFlowCreator addGreaterEqualFilter(String columnName, Object term, Boolean indexed) {
+    public LogicalWorkFlowCreator addGreaterEqualFilter(String columnName, Object term, Boolean indexed, boolean pk) {
 
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)), Operator.GET,
                         returnSelector(term));
 
-        if (indexed) {
+        if (pk){
+            filters.add(new Filter(Operations.FILTER_PK_GET, relation));
+        }else  if (indexed) {
             filters.add(new Filter(Operations.FILTER_INDEXED_GET, relation));
         } else {
             filters.add(new Filter(Operations.FILTER_NON_INDEXED_GET, relation));
