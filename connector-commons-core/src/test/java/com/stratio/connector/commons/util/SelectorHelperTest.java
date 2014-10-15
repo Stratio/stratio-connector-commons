@@ -100,6 +100,7 @@ public void testGetValueInteger() throws Exception {
 
     }
 
+
     @Test
     public void testGetClassException()  {
 
