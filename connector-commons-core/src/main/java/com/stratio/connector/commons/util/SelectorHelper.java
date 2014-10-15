@@ -92,6 +92,29 @@ public class SelectorHelper {
 
     }
 
+    public static Class getClass(Selector selector) throws ExecutionException {
+        Class returnClass = null;
+        switch (selector.getType()) {
+        case STRING:
+        case COLUMN:
+            returnClass = String.class;
+            break;
+        case BOOLEAN:
+            returnClass = Boolean.class;
+            break;
+        case INTEGER:
+            returnClass = Long.class;
+            break;
+        case FLOATING_POINT:
+            returnClass = Double.class;
+            break;
+        default:
+            throw new ExecutionException("Selector " + selector.getType() + " not supported get value operation.");
+        }
+
+        return returnClass;
+    }
+
 
 
     private static <T> T convert(Object field, Class<T> type) throws ExecutionException {
@@ -176,6 +199,7 @@ public class SelectorHelper {
 
         return returnValue;
     }
+
 
 
 

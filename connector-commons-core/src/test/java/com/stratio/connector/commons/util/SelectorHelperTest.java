@@ -2,15 +2,26 @@ package com.stratio.connector.commons.util;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
+import static org.mockito.Mockito.mock;
+
+import java.util.Collections;
 
 import org.junit.Test;
 import org.junit.Before; 
 import org.junit.After;
 
 import com.stratio.meta.common.exceptions.ExecutionException;
+import com.stratio.meta.common.statements.structures.relationships.Relation;
+import com.stratio.meta2.common.data.ColumnName;
+import com.stratio.meta2.common.statements.structures.selectors.AsteriskSelector;
 import com.stratio.meta2.common.statements.structures.selectors.BooleanSelector;
+import com.stratio.meta2.common.statements.structures.selectors.ColumnSelector;
 import com.stratio.meta2.common.statements.structures.selectors.FloatingPointSelector;
+import com.stratio.meta2.common.statements.structures.selectors.FunctionSelector;
 import com.stratio.meta2.common.statements.structures.selectors.IntegerSelector;
+import com.stratio.meta2.common.statements.structures.selectors.RelationSelector;
+import com.stratio.meta2.common.statements.structures.selectors.Selector;
 import com.stratio.meta2.common.statements.structures.selectors.StringSelector;
 
 /** 
@@ -28,7 +39,8 @@ public class SelectorHelperTest {
 * 
 * Method: getValue(Class<T> type, Selector selector) 
 * 
-*/ 
+*/
+
 @Test
 public void testGetValueInteger() throws Exception {
       Object returnValue = null;
@@ -73,6 +85,38 @@ public void testGetValueInteger() throws Exception {
     }catch(ExecutionException e){//Is not a number
     }
 }
+
+
+    @Test
+    public void testGetClass() throws ExecutionException {
+
+        Selector[] selector = {new StringSelector(""),new ColumnSelector(mock(ColumnName.class)),
+                new BooleanSelector(true),new FloatingPointSelector("1"),new IntegerSelector(1)};
+
+        Class[] returnClass = {String.class,String.class,Boolean.class,Double.class,Long.class};
+        for (int i=0;i<selector.length;i++){
+            assertEquals("The retur class is correct",returnClass[i],SelectorHelper.getClass(selector[i]));
+        }
+
+    }
+
+    @Test
+    public void testGetClassException()  {
+
+
+        Selector[] exceptionSelector = {new AsteriskSelector(),new FunctionSelector("", Collections.EMPTY_LIST),
+                new RelationSelector(mock (Relation.class))};
+
+        for (int i=0;i<exceptionSelector.length;i++){
+
+            try {
+                SelectorHelper.getClass(exceptionSelector[i]);
+                fail("Not must are here");
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     @Test
     public void testGetValueLong() throws Exception {
