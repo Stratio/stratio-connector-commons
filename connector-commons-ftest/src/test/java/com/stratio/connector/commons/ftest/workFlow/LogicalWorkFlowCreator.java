@@ -1,17 +1,19 @@
 /*
- * Stratio Deep
+ * Licensed to STRATIO (C) under one or more contributor license agreements.
+ *  See the NOTICE file distributed with this work for additional information
+ *  regarding copyright ownership. The STRATIO (C) licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ *  "License"); you may not use this file except in compliance
+ *  with the License. You may obtain a copy of the License at
  *
- *   Copyright (c) 2014, Stratio, All rights reserved.
+ *  http://www.apache.org/licenses/LICENSE-2.0
  *
- *   This library is free software; you can redistribute it and/or modify it under the terms of the
- *   GNU Lesser General Public License as published by the Free Software Foundation; either version
- *   3.0 of the License, or (at your option) any later version.
- *
- *   This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
- *   even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- *   Lesser General Public License for more details.
- *
- *   You should have received a copy of the GNU Lesser General Public License along with this library.
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied. See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
  */
 
 package com.stratio.connector.commons.ftest.workFlow;
@@ -30,10 +32,10 @@ import com.stratio.meta.common.logicalplan.LogicalStep;
 import com.stratio.meta.common.logicalplan.LogicalWorkflow;
 import com.stratio.meta.common.logicalplan.Project;
 import com.stratio.meta.common.logicalplan.Select;
+import com.stratio.meta.common.logicalplan.Window;
 import com.stratio.meta.common.statements.structures.relationships.Operator;
 import com.stratio.meta.common.statements.structures.relationships.Relation;
 import com.stratio.meta.common.statements.structures.window.TimeUnit;
-import com.stratio.meta.common.logicalplan.Window;
 import com.stratio.meta.common.statements.structures.window.WindowType;
 import com.stratio.meta2.common.data.ClusterName;
 import com.stratio.meta2.common.data.ColumnName;
@@ -51,15 +53,15 @@ import com.stratio.meta2.common.statements.structures.selectors.StringSelector;
  */
 public class LogicalWorkFlowCreator {
 
-    private final ClusterName clusterName;
-    Select select;
     public static final String COLUMN_1 = "column1";
     public static final String COLUMN_2 = "column2";
     public static final String COLUMN_3 = "column3";
     public static final String COLUMN_AGE = "age";
     public static final String COLUMN_MONEY = "money";
+    private final ClusterName clusterName;
     public String table = this.getClass().getSimpleName();
     public String catalog = "catalog_functional_test";
+    Select select;
     List<ColumnName> columns = new ArrayList<>();
     List<Filter> filters = new ArrayList<>();
     private Limit limit;
@@ -87,7 +89,7 @@ public class LogicalWorkFlowCreator {
             lastStep = limit;
 
         }
-        if (window != null){
+        if (window != null) {
             lastStep.setNextStep(window);
             lastStep = window;
         }
@@ -175,11 +177,11 @@ public class LogicalWorkFlowCreator {
     public LogicalWorkFlowCreator addGreaterEqualFilter(String columnName, Object term, Boolean indexed, boolean pk) {
 
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)), Operator.GET,
-                        returnSelector(term));
+                returnSelector(term));
 
-        if (pk){
+        if (pk) {
             filters.add(new Filter(Operations.FILTER_PK_GET, relation));
-        }else  if (indexed) {
+        } else if (indexed) {
             filters.add(new Filter(Operations.FILTER_INDEXED_GET, relation));
         } else {
             filters.add(new Filter(Operations.FILTER_NON_INDEXED_GET, relation));
@@ -193,7 +195,7 @@ public class LogicalWorkFlowCreator {
     public LogicalWorkFlowCreator addGreaterFilter(String columnName, Object term, Boolean indexed) {
 
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)), Operator.GT,
-                        returnSelector(term));
+                returnSelector(term));
         if (indexed) {
             filters.add(new Filter(Operations.FILTER_INDEXED_GT, relation));
         } else {
@@ -207,7 +209,7 @@ public class LogicalWorkFlowCreator {
     public LogicalWorkFlowCreator addLowerEqualFilter(String columnName, Object term, Boolean indexed) {
 
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)), Operator.LET,
-                        returnSelector(term));
+                returnSelector(term));
         if (indexed) {
             filters.add(new Filter(Operations.FILTER_INDEXED_LET, relation));
         } else {
@@ -220,7 +222,7 @@ public class LogicalWorkFlowCreator {
 
     public LogicalWorkFlowCreator addNLowerFilter(String columnName, Object term, Boolean indexed) {
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)), Operator.LT,
-                        returnSelector(term));
+                returnSelector(term));
         if (indexed) {
             filters.add(new Filter(Operations.FILTER_INDEXED_LT, relation));
         } else {
@@ -232,7 +234,7 @@ public class LogicalWorkFlowCreator {
 
     public LogicalWorkFlowCreator addDistinctFilter(String columnName, Object term, Boolean indexed) {
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)),
-                        Operator.DISTINCT, returnSelector(term));
+                Operator.DISTINCT, returnSelector(term));
         if (indexed) {
             filters.add(new Filter(Operations.FILTER_INDEXED_DISTINCT, relation));
         } else {
@@ -245,7 +247,7 @@ public class LogicalWorkFlowCreator {
     public LogicalWorkFlowCreator addMatchFilter(String columnName, String textToFind) {
 
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)),
-                        Operator.MATCH, returnSelector(textToFind));
+                Operator.MATCH, returnSelector(textToFind));
 
         filters.add(new Filter(Operations.FILTER_FULLTEXT, relation));
 
@@ -255,7 +257,7 @@ public class LogicalWorkFlowCreator {
     public LogicalWorkFlowCreator addLikeFilter(String columnName, String textToFind) {
 
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)), Operator.LIKE,
-                        returnSelector(textToFind));
+                returnSelector(textToFind));
 
         filters.add(new Filter(Operations.FILTER_FULLTEXT, relation));
 
@@ -269,7 +271,7 @@ public class LogicalWorkFlowCreator {
         for (ConnectorField connectorField : fields) {
             mapping.put(new ColumnName(catalog, table, connectorField.name), connectorField.alias);
             types.put(QualifiedNames.getColumnQualifiedName(catalog, table, connectorField.name),
-                            connectorField.columnType);
+                    connectorField.columnType);
         }
 
         select = new Select(Operations.PROJECT, mapping, types);
@@ -280,7 +282,7 @@ public class LogicalWorkFlowCreator {
 
     public LogicalWorkFlowCreator addWindow(WindowType type, int limit) throws UnsupportedException {
 
-        window = new Window(Operations.FILTER_FUNCTION_EQ,type);
+        window = new Window(Operations.FILTER_FUNCTION_EQ, type);
         switch (type) {
         case NUM_ROWS:
             window.setNumRows(limit);
@@ -292,10 +294,8 @@ public class LogicalWorkFlowCreator {
             throw new UnsupportedException("Window " + type + " not supported");
 
         }
-         return this;
+        return this;
     }
-
-
 
     public ConnectorField createConnectorField(String name, String alias, ColumnType columnType) {
         return new ConnectorField(name, alias, columnType);
@@ -319,6 +319,5 @@ public class LogicalWorkFlowCreator {
         }
 
     }
-
 
 }

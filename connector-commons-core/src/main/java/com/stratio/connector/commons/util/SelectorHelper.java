@@ -1,23 +1,22 @@
 /*
- * Stratio Deep
+ * Licensed to STRATIO (C) under one or more contributor license agreements.
+ *  See the NOTICE file distributed with this work for additional information
+ *  regarding copyright ownership. The STRATIO (C) licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ *  "License"); you may not use this file except in compliance
+ *  with the License. You may obtain a copy of the License at
  *
- *   Copyright (c) 2014, Stratio, All rights reserved.
+ *  http://www.apache.org/licenses/LICENSE-2.0
  *
- *   This library is free software; you can redistribute it and/or modify it under the terms of the
- *   GNU Lesser General Public License as published by the Free Software Foundation; either version
- *   3.0 of the License, or (at your option) any later version.
- *
- *   This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
- *   even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- *   Lesser General Public License for more details.
- *
- *   You should have received a copy of the GNU Lesser General Public License along with this library.
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied. See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
  */
 
 package com.stratio.connector.commons.util;
-
-import java.util.regex.Pattern;
-
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +38,6 @@ public class SelectorHelper {
      * The Log.
      */
     final transient static Logger logger = LoggerFactory.getLogger(SelectorHelper.class);
-
 
     public static <T> T getValue(Class<T> type, Selector selector) throws ExecutionException {
         Object field = null;
@@ -115,8 +113,6 @@ public class SelectorHelper {
         return returnClass;
     }
 
-
-
     private static <T> T convert(Object field, Class<T> type) throws ExecutionException {
         T returnValue = null;
         try {
@@ -125,86 +121,75 @@ public class SelectorHelper {
                 value = convertInteger(field);
             } else if (isLong(type)) {
                 value = convertLong(field);
-            }else if (isDouble(type)){
+            } else if (isDouble(type)) {
                 value = convertDouble(field);
-            }else if (isString(type)){
+            } else if (isString(type)) {
                 value = field.toString();
             }
-                returnValue = type.cast(value);
+            returnValue = type.cast(value);
 
-        }catch(ClassCastException | NumberFormatException e) {
-            String msg = "Error recovering selector value. "+e.getMessage();
+        } catch (ClassCastException | NumberFormatException e) {
+            String msg = "Error recovering selector value. " + e.getMessage();
             logger.error(msg);
-            throw new ExecutionException(msg,e);
+            throw new ExecutionException(msg, e);
         }
         return returnValue;
     }
 
     private static Double convertDouble(Object field) throws ExecutionException {
         Double returnValue;
-        if (isString(field.getClass())){
+        if (isString(field.getClass())) {
             returnValue = Double.parseDouble((String) field);
-        }else if (isNumber(field.getClass())) {
-            returnValue = convertNumeric(Double.class, (Number)field);
-        }else {
-            returnValue = (Double)field;
+        } else if (isNumber(field.getClass())) {
+            returnValue = convertNumeric(Double.class, (Number) field);
+        } else {
+            returnValue = (Double) field;
         }
         return returnValue;
-
 
     }
 
     private static Long convertLong(Object field) throws ExecutionException {
         Long returnValue;
-        if (isString(field.getClass())){
+        if (isString(field.getClass())) {
             returnValue = Long.parseLong((String) field);
-        }else if (isNumber(field.getClass())) {
+        } else if (isNumber(field.getClass())) {
             returnValue = convertNumeric(Long.class, (Number) field);
-        }else {
-            returnValue = (Long)field;
+        } else {
+            returnValue = (Long) field;
         }
         return returnValue;
     }
 
     private static Integer convertInteger(Object field) throws ExecutionException {
         Integer returnValue;
-        if (isString(field.getClass())){
-            returnValue = Integer.parseInt((String)field);
-        }else if (isNumber(field.getClass())) {
+        if (isString(field.getClass())) {
+            returnValue = Integer.parseInt((String) field);
+        } else if (isNumber(field.getClass())) {
             returnValue = convertNumeric(Integer.class, (Number) field);
         } else {
-            returnValue = (Integer)field;
+            returnValue = (Integer) field;
         }
         return returnValue;
 
-
     }
-
-
-
 
     private static <T extends Number> T convertNumeric(Class<T> type, Number field) throws ExecutionException {
         T returnValue;
         if (isInteger(type)) {
-            returnValue = (T)new Integer(field.intValue());
-        }else if (isLong(type)){
-            returnValue = (T)new Long(field.longValue());
-        }else if (isDouble(type)){
-            returnValue = (T)new Double(field.doubleValue());
-        }else {
-            String msg ="The number "+field+"can not be parse into "+type+".";
+            returnValue = (T) new Integer(field.intValue());
+        } else if (isLong(type)) {
+            returnValue = (T) new Long(field.longValue());
+        } else if (isDouble(type)) {
+            returnValue = (T) new Double(field.doubleValue());
+        } else {
+            String msg = "The number " + field + "can not be parse into " + type + ".";
             logger.error(msg);
-            throw  new ExecutionException(msg);
+            throw new ExecutionException(msg);
         }
 
         return returnValue;
     }
-
-
-
-
-
-
 
     private static boolean isString(Class field) {
         return String.class.getCanonicalName().equals(field.getCanonicalName());
@@ -214,7 +199,6 @@ public class SelectorHelper {
     private static boolean isDouble(Class field) {
         return Double.class.isAssignableFrom(field);
     }
-
 
     private static <T> boolean isInteger(Class<T> field) {
         return Integer.class.isAssignableFrom(field);
@@ -226,11 +210,7 @@ public class SelectorHelper {
 
     private static boolean isNumber(Class field) {
 
-
         return Number.class.isAssignableFrom(field);
     }
-
-
-
 
 }

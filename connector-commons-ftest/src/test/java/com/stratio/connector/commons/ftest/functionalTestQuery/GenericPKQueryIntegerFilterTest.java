@@ -1,17 +1,19 @@
 /*
- * Stratio Deep
+ * Licensed to STRATIO (C) under one or more contributor license agreements.
+ *  See the NOTICE file distributed with this work for additional information
+ *  regarding copyright ownership. The STRATIO (C) licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ *  "License"); you may not use this file except in compliance
+ *  with the License. You may obtain a copy of the License at
  *
- *   Copyright (c) 2014, Stratio, All rights reserved.
+ *  http://www.apache.org/licenses/LICENSE-2.0
  *
- *   This library is free software; you can redistribute it and/or modify it under the terms of the
- *   GNU Lesser General Public License as published by the Free Software Foundation; either version
- *   3.0 of the License, or (at your option) any later version.
- *
- *   This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
- *   even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- *   Lesser General Public License for more details.
- *
- *   You should have received a copy of the GNU Lesser General Public License along with this library.
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied. See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
  */
 
 package com.stratio.connector.commons.ftest.functionalTestQuery;
@@ -22,12 +24,10 @@ import static com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreato
 import static com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator.COLUMN_AGE;
 import static com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator.COLUMN_MONEY;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
 
@@ -38,7 +38,6 @@ import com.stratio.connector.commons.ftest.GenericConnectorTest;
 import com.stratio.connector.commons.ftest.schema.TableMetadataBuilder;
 import com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator;
 import com.stratio.meta.common.data.Cell;
-import com.stratio.meta.common.data.ResultSet;
 import com.stratio.meta.common.data.Row;
 import com.stratio.meta.common.exceptions.ConnectionException;
 import com.stratio.meta.common.exceptions.ExecutionException;
@@ -68,7 +67,8 @@ public abstract class GenericPKQueryIntegerFilterTest extends GenericConnectorTe
     public void selectPKFilterEqual() throws ExecutionException, UnsupportedException {
 
         ClusterName clusterNodeName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterEqual ***********************************");
+        System.out.println(
+                "*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterEqual ***********************************");
 
         insertRow(1, 10, 5, clusterNodeName, false);
         insertRow(2, 9, 1, clusterNodeName, false);
@@ -79,26 +79,23 @@ public abstract class GenericPKQueryIntegerFilterTest extends GenericConnectorTe
         refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns().addColumnName(COLUMN_PK)
-                        .addEqualFilter(COLUMN_PK, new Integer(2), false, true).getLogicalWorkflow();
+                .addEqualFilter(COLUMN_PK, new Integer(2), false, true).getLogicalWorkflow();
 
         QueryResult queryResult = connector.getQueryEngine().execute(logicalPlan);
 
-
-
         assertEquals("The record number is correct", 1, queryResult.getResultSet().size());
-        assertEquals("The value is correct",new Integer(2),queryResult.getResultSet().getRows().get(0).getCell
+        assertEquals("The value is correct", new Integer(2), queryResult.getResultSet().getRows().get(0).getCell
                 (COLUMN_PK)
                 .getValue());
 
-
     }
-
 
     @Test
     public void selectPKDoubleFilterEqual() throws ExecutionException, UnsupportedException {
 
         ClusterName clusterNodeName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterEqual ***********************************");
+        System.out.println(
+                "*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterEqual ***********************************");
 
         insertRow(1, 10, 5, clusterNodeName, false);
         insertRow(2, 9, 1, clusterNodeName, false);
@@ -107,9 +104,6 @@ public abstract class GenericPKQueryIntegerFilterTest extends GenericConnectorTe
         insertRow(5, 20, 1, clusterNodeName, false);
 
         refresh(CATALOG);
-
-
-
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns().addColumnName(COLUMN_PK)
                 .addEqualFilter(COLUMN_PK, new Integer(2), false, true).addEqualFilter(COLUMN_PK, new Integer(3),
@@ -117,18 +111,16 @@ public abstract class GenericPKQueryIntegerFilterTest extends GenericConnectorTe
 
         QueryResult queryResult = connector.getQueryEngine().execute(logicalPlan);
 
-
-
         assertEquals("The record number is correct", 0, queryResult.getResultSet().size());
 
     }
-
 
     @Test
     public void selectPKGeatEqualFilterEqual() throws ExecutionException, UnsupportedException {
 
         ClusterName clusterNodeName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterEqual ***********************************");
+        System.out.println(
+                "*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterEqual ***********************************");
 
         insertRow(1, 10, 5, clusterNodeName, false);
         insertRow(2, 9, 1, clusterNodeName, false);
@@ -138,23 +130,14 @@ public abstract class GenericPKQueryIntegerFilterTest extends GenericConnectorTe
 
         refresh(CATALOG);
 
-
-
-
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns().addColumnName(COLUMN_PK)
                 .addGreaterEqualFilter(COLUMN_PK, new Integer(2), false, true).getLogicalWorkflow();
 
         QueryResult queryResult = connector.getQueryEngine().execute(logicalPlan);
 
-
-
         assertEquals("The record number is correct", 4, queryResult.getResultSet().size());
 
     }
-
-
-
-
 
     private Set<Object> createCellsResult(QueryResult queryResult) {
         Set<Object> proveSet = new HashSet<>();
@@ -170,7 +153,7 @@ public abstract class GenericPKQueryIntegerFilterTest extends GenericConnectorTe
     }
 
     private void insertRow(int ikey, int age, int money, ClusterName clusterNodeName, boolean withPk)
-                    throws UnsupportedOperationException, ExecutionException, UnsupportedException {
+            throws UnsupportedOperationException, ExecutionException, UnsupportedException {
 
         Row row = new Row();
         Map<String, Cell> cells = new HashMap<>();
@@ -183,10 +166,9 @@ public abstract class GenericPKQueryIntegerFilterTest extends GenericConnectorTe
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
         tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.VARCHAR)
-                        .addColumn(COLUMN_3, ColumnType.VARCHAR).addColumn(COLUMN_AGE, ColumnType.INT)
-                        .addColumn(COLUMN_MONEY, ColumnType.INT);
+                .addColumn(COLUMN_3, ColumnType.VARCHAR).addColumn(COLUMN_AGE, ColumnType.INT)
+                .addColumn(COLUMN_MONEY, ColumnType.INT);
         tableMetadataBuilder.withPartitionKey(COLUMN_PK);
-        
 
         TableMetadata targetTable = tableMetadataBuilder.build();
 

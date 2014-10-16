@@ -1,17 +1,19 @@
 /*
- * Stratio Deep
+ * Licensed to STRATIO (C) under one or more contributor license agreements.
+ *  See the NOTICE file distributed with this work for additional information
+ *  regarding copyright ownership. The STRATIO (C) licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ *  "License"); you may not use this file except in compliance
+ *  with the License. You may obtain a copy of the License at
  *
- *   Copyright (c) 2014, Stratio, All rights reserved.
+ *  http://www.apache.org/licenses/LICENSE-2.0
  *
- *   This library is free software; you can redistribute it and/or modify it under the terms of the
- *   GNU Lesser General Public License as published by the Free Software Foundation; either version
- *   3.0 of the License, or (at your option) any later version.
- *
- *   This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
- *   even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- *   Lesser General Public License for more details.
- *
- *   You should have received a copy of the GNU Lesser General Public License along with this library.
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied. See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
  */
 
 package com.stratio.connector.commons.ftest.workFlow;
@@ -118,23 +120,20 @@ public class ExampleWorkflows {
      * Get a project operator taking the table name from the first column. This operation assumes all columns belong to
      * the same table.
      *
-     * @param columnNames
-     *            The list of columns.
+     * @param columnNames The list of columns.
      * @return A {@link com.stratio.meta.common.logicalplan.Project}.
      */
     public Project getProject(ColumnName... columnNames) {
         TableName table = new TableName(columnNames[0].getTableName().getCatalogName().getName(), columnNames[0]
-                        .getTableName().getName());
+                .getTableName().getName());
         return new Project(Operations.PROJECT, table, clusterName, Arrays.asList(columnNames));
     }
 
     /**
      * Get a select operator.
      *
-     * @param alias
-     *            The alias
-     * @param columnNames
-     *            The list of columns.
+     * @param alias       The alias
+     * @param columnNames The list of columns.
      * @return A {@link com.stratio.meta.common.logicalplan.Select}.
      */
     public Select getSelect(String[] alias, ColumnType[] types, ColumnName... columnNames) {
@@ -152,14 +151,10 @@ public class ExampleWorkflows {
     /**
      * Get a filter operator.
      *
-     * @param filterOp
-     *            The Filter operation.
-     * @param column
-     *            The column name.
-     * @param op
-     *            The relationship operator.
-     * @param right
-     *            The right select.
+     * @param filterOp The Filter operation.
+     * @param column   The column name.
+     * @param op       The relationship operator.
+     * @param right    The right select.
      * @return A {@link com.stratio.meta.common.logicalplan.Filter}.
      */
     public Filter getFilter(Operations filterOp, ColumnName column, Operator op, Selector right) {
@@ -198,7 +193,7 @@ public class ExampleWorkflows {
         String[] outputNames = { COLUMN_ID, COLUMN_NAME, COLUMN_AGE, COLUMN_BOOL };
         LogicalStep project = getProject(id, name, age, bool);
         LogicalStep select = getSelect(outputNames, new ColumnType[] { ColumnType.INT, ColumnType.TEXT, ColumnType.INT,
-                        ColumnType.BOOLEAN }, id, name, age, bool);
+                ColumnType.BOOLEAN }, id, name, age, bool);
         project.setNextStep(select);
         LogicalWorkflow lw = new LogicalWorkflow(Arrays.asList(project));
         return lw;
@@ -218,7 +213,7 @@ public class ExampleWorkflows {
         ColumnType[] types = { ColumnType.VARCHAR, ColumnType.INT };
         LogicalStep project = getProject(id, name, age);
         LogicalStep filter = getFilter(Operations.FILTER_INDEXED_EQ, name, Operator.EQ,
-                        new StringSelector(names[0].toLowerCase()));
+                new StringSelector(names[0].toLowerCase()));
         project.setNextStep(filter);
         LogicalStep select = getSelect(outputNames, types, name, age);
         filter.setNextStep(select);
@@ -261,7 +256,7 @@ public class ExampleWorkflows {
         ColumnType[] types = { ColumnType.INT, ColumnType.VARCHAR, ColumnType.INT };
         LogicalStep project = getProject(id, name, age);
         LogicalStep filterName = getFilter(Operations.FILTER_INDEXED_EQ, name, Operator.EQ,
-                        new StringSelector(names[1].toLowerCase()));
+                new StringSelector(names[1].toLowerCase()));
         project.setNextStep(filterName);
         LogicalStep filterAge = getFilter(Operations.FILTER_NON_INDEXED_EQ, age, Operator.EQ, new IntegerSelector(40));
         filterName.setNextStep(filterAge);

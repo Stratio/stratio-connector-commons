@@ -1,17 +1,19 @@
 /*
- * Stratio Deep
+ * Licensed to STRATIO (C) under one or more contributor license agreements.
+ *  See the NOTICE file distributed with this work for additional information
+ *  regarding copyright ownership. The STRATIO (C) licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ *  "License"); you may not use this file except in compliance
+ *  with the License. You may obtain a copy of the License at
  *
- *   Copyright (c) 2014, Stratio, All rights reserved.
+ *  http://www.apache.org/licenses/LICENSE-2.0
  *
- *   This library is free software; you can redistribute it and/or modify it under the terms of the
- *   GNU Lesser General Public License as published by the Free Software Foundation; either version
- *   3.0 of the License, or (at your option) any later version.
- *
- *   This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
- *   even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- *   Lesser General Public License for more details.
- *
- *   You should have received a copy of the GNU Lesser General Public License along with this library.
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied. See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
  */
 package com.stratio.connector.commons.ftest.functionalTestQuery;
 
@@ -63,7 +65,8 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
     public void selectAllFromTable() throws UnsupportedException, ExecutionException {
 
         ClusterName clusterNodeName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST selectAllFromTable ***********************************");
+        System.out.println(
+                "*********************************** INIT FUNCTIONAL TEST selectAllFromTable ***********************************");
 
         for (int i = 0; i < getRowsToSearch(); i++) {
             insertRow(i, clusterNodeName);
@@ -80,7 +83,7 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
         fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_3, COLUMN_3, ColumnType.VARCHAR));
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addColumnName(COLUMN_1, COLUMN_2, COLUMN_3)
-                        .addSelect(fields).getLogicalWorkflow();
+                .addSelect(fields).getLogicalWorkflow();
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
         Set<Object> proveSet = new HashSet<>();
         ResultSet resultSet = queryResult.getResultSet();
@@ -103,12 +106,12 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
 
     }
 
-
     @Test
     public void validateMetadataTest() throws UnsupportedException, ExecutionException {
 
         ClusterName clusterNodeName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST selectAllFromTable ***********************************");
+        System.out.println(
+                "*********************************** INIT FUNCTIONAL TEST selectAllFromTable ***********************************");
         insertTypedRow();
 
         refresh(CATALOG);
@@ -120,7 +123,7 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
         fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_3, "alias" + COLUMN_3, ColumnType.BOOLEAN));
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addColumnName(COLUMN_1, COLUMN_2, COLUMN_3)
-                        .addSelect(fields).getLogicalWorkflow();
+                .addSelect(fields).getLogicalWorkflow();
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
 
         ResultSet resultSet = queryResult.getResultSet();
@@ -128,8 +131,6 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
         validateMetadata(columnMetadata);
 
     }
-
-
 
     protected void insertTypedRow() throws UnsupportedException, ExecutionException {
 
@@ -141,7 +142,7 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
         tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.INT)
-                        .addColumn(COLUMN_3, ColumnType.BOOLEAN);
+                .addColumn(COLUMN_3, ColumnType.BOOLEAN);
 
         TableMetadata targetTable = tableMetadataBuilder.build();
 
@@ -187,7 +188,7 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
     }
 
     private void insertRecordNotReturnedInSearch(ClusterName clusterNodeName) throws ExecutionException,
-                    UnsupportedException {
+            UnsupportedException {
         insertRow(1, "type2", clusterNodeName);
         insertRow(2, "type2", clusterNodeName);
         insertRow(1, "otherTable", clusterNodeName);
@@ -195,12 +196,12 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
     }
 
     private void insertRow(int ikey, ClusterName clusterNodeName) throws UnsupportedOperationException,
-                    ExecutionException, UnsupportedException {
+            ExecutionException, UnsupportedException {
         insertRow(ikey, TABLE, clusterNodeName);
     }
 
     private void insertRow(int ikey, String Table, ClusterName clusterNodeName) throws UnsupportedOperationException,
-                    ExecutionException, UnsupportedException {
+            ExecutionException, UnsupportedException {
 
         Row row = new Row();
         Map<String, Cell> cells = new HashMap<>();
@@ -211,7 +212,7 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, Table);
         tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.VARCHAR)
-                        .addColumn(COLUMN_3, ColumnType.VARCHAR);
+                .addColumn(COLUMN_3, ColumnType.VARCHAR);
 
         TableMetadata targetTable = tableMetadataBuilder.build();
 
