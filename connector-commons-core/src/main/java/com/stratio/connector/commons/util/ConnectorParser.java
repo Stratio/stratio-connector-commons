@@ -30,7 +30,7 @@ public class ConnectorParser {
      * @return the hosts in an Array.
      */
     public static String[] hosts(String hosts) {
-        return hosts.replaceAll("\\s+", "").split(",");
+        return hosts.replaceAll("\\s+", "").replaceAll("\\[","").replaceAll("]","").split(",");
 
     }
 
@@ -41,6 +41,6 @@ public class ConnectorParser {
      * @return the ips in an Array.
      */
     public static String[] ports(String ips) {
-        return ips.replaceAll("\\s+", "").split(",");
+        return ips.replaceAll("\\s+", "").replaceAll("\\[","").replaceAll("]","").split(",");
     }
 }

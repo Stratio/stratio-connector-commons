@@ -34,7 +34,7 @@ public class ConnectorParserTest {
     @Test
     public void parseHosts() {
 
-        String[] hosts = ConnectorParser.hosts("10.70.90.12,10.70.90.14");
+        String[] hosts = ConnectorParser.hosts("[10.70.90.12,10.70.90.14]");
 
         assertEquals("The length is correct", 2, hosts.length);
         assertEquals("The fist ip is correct", "10.70.90.12", hosts[0]);
@@ -44,7 +44,7 @@ public class ConnectorParserTest {
     @Test
     public void parsePorts() {
 
-        String[] ips = ConnectorParser.ports("2000,3000");
+        String[] ips = ConnectorParser.ports("[2000,3000]");
 
         assertEquals("The length is correct", 2, ips.length);
         assertEquals("The fist port is correct", "2000", ips[0]);
