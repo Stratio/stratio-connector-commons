@@ -35,26 +35,6 @@ import com.stratio.meta2.common.metadata.IndexType;
 import com.stratio.meta2.common.statements.structures.selectors.BooleanSelector;
 import com.stratio.meta2.common.statements.structures.selectors.IntegerSelector;
 import com.stratio.meta2.common.statements.structures.selectors.Selector;
-/**
- * @author darroyo
- */
-/*
- * Licensed to STRATIO (C) under one or more contributor license agreements.
- *  See the NOTICE file distributed with this work for additional information
- *  regarding copyright ownership. The STRATIO (C) licenses this file
- *  to you under the Apache License, Version 2.0 (the
- *  "License"); you may not use this file except in compliance
- *  with the License. You may obtain a copy of the License at
- *
- *  http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing,
- *  software distributed under the License is distributed on an
- *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- *  KIND, either express or implied. See the License for the
- *  specific language governing permissions and limitations
- *  under the License.
- */
 import com.stratio.meta2.common.statements.structures.selectors.StringSelector;
 
 /**
@@ -77,42 +57,6 @@ public class IndexMetadataBuilder {
     private Map<ColumnName, ColumnMetadata> columns = Collections.EMPTY_MAP;
     private IndexType indexType;
     
-    
-    
-    // TODO create the catalog and the table if needed
-
-//    System.out.println(
-//            "*********************************** INIT FUNCTIONAL TEST createCompoundIndexTest ***********************************");
-//    TableName tableName = new TableName(CATALOG, TABLE);
-//
-//    // Creating a indexMetadata with 1 columns
-//    Map<ColumnName, ColumnMetadata> columns = new HashMap<>();
-//    Object[] parameters2 = null;
-//    columns.put(new ColumnName(tableName, "columnName_2"), new ColumnMetadata(new ColumnName(tableName,
-//            "columnName_2"), parameters2, ColumnType.VARCHAR));
-//    columns.put(new ColumnName(tableName, "columnName_3"), new ColumnMetadata(new ColumnName(tableName,
-//            "columnName_3"), parameters2, ColumnType.TEXT));
-//
-//    // Options
-//    Map<Selector, Selector> options = new HashMap<Selector, Selector>();
-//    StringSelector optSelector = new StringSelector("index_type");
-//    optSelector.setAlias("index_type");
-//    StringSelector optValue = new StringSelector("compound");
-//    options.put(optSelector, optValue);
-//
-//    StringSelector optSelector2 = new StringSelector("compound_fields");
-//    optSelector2.setAlias("compound_fields");
-//    StringSelector optValue2 = new StringSelector("field1:asc, field2:desc");
-//    options.put(optSelector2, optValue2);
-//
-//    StringSelector optSelector3 = new StringSelector("unique");
-//    optSelector3.setAlias("unique");
-//    BooleanSelector optValue3 = new BooleanSelector(true);
-//    options.put(optSelector3, optValue3);
-//
-//    IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, INDEX_NAME), columns,
-//            IndexType.CUSTOM, options);
-
     
     
     
