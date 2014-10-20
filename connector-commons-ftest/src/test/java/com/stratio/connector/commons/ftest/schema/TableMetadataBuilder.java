@@ -95,7 +95,8 @@ public class TableMetadataBuilder {
      *
      * @param type
      * @param indexName
-     * @param fields    the columns which define the index
+     * @param fields
+     *            the columns which define the index
      * @return
      */
     public TableMetadataBuilder addIndex(IndexType indType, String indexName, String... fields) {
@@ -134,9 +135,9 @@ public class TableMetadataBuilder {
         }
         return this;
     }
-    
+
     public TableMetadataBuilder withClusterNameRef(ClusterName clusterName) {
-       this.clusterName=clusterName;
+        this.clusterName = clusterName;
         return this;
     }
 

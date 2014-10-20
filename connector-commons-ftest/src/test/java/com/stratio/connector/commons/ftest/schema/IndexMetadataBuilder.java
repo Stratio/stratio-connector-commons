@@ -45,8 +45,7 @@ public class IndexMetadataBuilder {
      * The Log.
      */
     final Logger logger = LoggerFactory.getLogger(this.getClass());
-    
-    
+
     static final String INDEX_NAME = "index1";
     static final String INDEX_NAME_2 = "index2";
     static final String COLUMN_INDEX_NAME = "columnName_2";
@@ -56,13 +55,10 @@ public class IndexMetadataBuilder {
     private Map<Selector, Selector> options = Collections.EMPTY_MAP;
     private Map<ColumnName, ColumnMetadata> columns = Collections.EMPTY_MAP;
     private IndexType indexType;
-    
-    
-    
-    
+
     public IndexMetadataBuilder(String catalogName, String tableName, String indexName, IndexType type) {
-    	this.tableName = new TableName(catalogName, tableName);
-    	this.indexName = new IndexName(this.tableName, indexName);
+        this.tableName = new TableName(catalogName, tableName);
+        this.indexName = new IndexName(this.tableName, indexName);
         columns = new HashMap<ColumnName, ColumnMetadata>();
         options = null;
         this.indexType = type;
@@ -93,24 +89,27 @@ public class IndexMetadataBuilder {
         columns.put(colName, colMetadata);
         return this;
     }
-    
-    public IndexMetadataBuilder addOption(String option, String value) {   	
-    	if(options == null) options = new HashMap<Selector, Selector>();
-    	options.put(new StringSelector(option), new StringSelector(value));
+
+    public IndexMetadataBuilder addOption(String option, String value) {
+        if (options == null)
+            options = new HashMap<Selector, Selector>();
+        options.put(new StringSelector(option), new StringSelector(value));
         return this;
     }
-    public IndexMetadataBuilder addOption(String option, Integer value) {   	
-    	if(options == null) options = new HashMap<Selector, Selector>();
-    	options.put(new StringSelector(option), new IntegerSelector(value));
+
+    public IndexMetadataBuilder addOption(String option, Integer value) {
+        if (options == null)
+            options = new HashMap<Selector, Selector>();
+        options.put(new StringSelector(option), new IntegerSelector(value));
         return this;
     }
-    public IndexMetadataBuilder addOption(String option, Boolean value) {   	
-    	if(options == null) options = new HashMap<Selector, Selector>();
-    	options.put(new StringSelector(option), new BooleanSelector(value));
+
+    public IndexMetadataBuilder addOption(String option, Boolean value) {
+        if (options == null)
+            options = new HashMap<Selector, Selector>();
+        options.put(new StringSelector(option), new BooleanSelector(value));
         return this;
     }
-   
-  
 
     public IndexMetadata build() {
         // TODO logger.debug()
@@ -119,4 +118,3 @@ public class IndexMetadataBuilder {
     }
 
 }
-
