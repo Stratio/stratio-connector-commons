@@ -52,6 +52,7 @@ public class TableMetadataBuilder {
     private Map<IndexName, IndexMetadata> indexes = Collections.EMPTY_MAP;
     private List<ColumnName> partitionKey = Collections.EMPTY_LIST;
     private List<ColumnName> clusterKey = Collections.EMPTY_LIST;
+    private ClusterName clusterName = null;
 
     public TableMetadataBuilder(String catalogName, String tableName) {
         this.tableName = new TableName(catalogName, tableName);
@@ -94,7 +95,8 @@ public class TableMetadataBuilder {
      *
      * @param type
      * @param indexName
-     * @param fields    the columns which define the index
+     * @param fields
+     *            the columns which define the index
      * @return
      */
     public TableMetadataBuilder addIndex(IndexType indType, String indexName, String... fields) {
@@ -134,9 +136,12 @@ public class TableMetadataBuilder {
         return this;
     }
 
-    public TableMetadata build() {
-        ClusterName clusterName = null;
+    public TableMetadataBuilder withClusterNameRef(ClusterName clusterName) {
+        this.clusterName = clusterName;
+        return this;
+    }
 
+    public TableMetadata build() {
         // TODO logger.debug()
         return new TableMetadata(tableName, options, columns, indexes, clusterName, partitionKey, clusterKey);
 
