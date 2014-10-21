@@ -83,7 +83,7 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
             connectionHandler.startWork(targetCluster.getName());
             createTable(tableMetadata, connectionHandler.getConnection(targetCluster.getName()));
 
-        } catch (HandlerConnectionException e) {
+        } catch (Throwable e) {
             String msg = "Error find Connection in " + targetCluster.getName() + ". " + e.getMessage();
             logger.error(msg);
             throw new ExecutionException(msg, e);

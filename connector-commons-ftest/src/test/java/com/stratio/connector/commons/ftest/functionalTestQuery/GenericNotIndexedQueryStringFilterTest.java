@@ -147,7 +147,7 @@ public abstract class GenericNotIndexedQueryStringFilterTest extends GenericConn
 
     @Test
     public void selectNotIndexedFilterMatch() throws UnsupportedException, ExecutionException {
-        ClusterName clusterNodeName = getClusterName();
+
         System.out.println(
                 "*********************************** INIT FUNCTIONAL TEST selectNoPKFilterDistinct ***********************************");
 
@@ -162,10 +162,7 @@ public abstract class GenericNotIndexedQueryStringFilterTest extends GenericConn
         ResultSet resultSet = queryResult.getResultSet();
         assertEquals("The record number is correct", 2, resultSet.size());
 
-        String[] result = {
-                "That memory cannot follow.  Nathless all, That in my thoughts I of that sacred realm Could store, shall now be matter of my song",
-                "Yet is it true, That as ofttimes but ill accords the form To the design of art, through sluggishness Of unreplying matter, so this course Is sometimes quitted by the creature, who Hath power, directed thus, to bend elsewhere;," };
-        int i = 0;
+
         for (Row row : resultSet) {
             assertTrue("the return text contains matter",
                     ((String) row.getCell(COLUMN_TEXT).getValue()).contains("matter"));

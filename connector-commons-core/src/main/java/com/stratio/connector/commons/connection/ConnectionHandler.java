@@ -69,7 +69,7 @@ public abstract class ConnectionHandler {
     public void createConnection(ICredentials credentials, ConnectorClusterConfig config)
             throws HandlerConnectionException {
         Connection connection = createNativeConnection(credentials, config);
-
+        
         String connectionName = config.getName().getName();
         if (!connections.containsKey(connectionName)) {
             connections.put(connectionName, connection);
