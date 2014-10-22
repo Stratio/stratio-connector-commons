@@ -40,28 +40,8 @@ public class SelectorHelper {
     final transient static Logger logger = LoggerFactory.getLogger(SelectorHelper.class);
 
     public static <T> T getValue(Class<T> type, Selector selector) throws ExecutionException {
-        Object field = null;
-        switch (selector.getType()) {
-        case COLUMN:
-            field = ((ColumnSelector) selector).getName().getName();
-            break;
-        case BOOLEAN:
-            field = ((BooleanSelector) selector).getValue();
-            break;
-        case STRING:
-            field = ((StringSelector) selector).getValue();
-            break;
-        case INTEGER:
-            field = ((IntegerSelector) selector).getValue();
-            break;
-        case FLOATING_POINT:
-            field = ((FloatingPointSelector) selector).getValue();
-            break;
-        default:
-            throw new ExecutionException("Selector " + selector.getType() + " not supported get value operation.");
-        }
 
-        return convert(field, type);
+        return convert(getValue(selector), type);
     }
 
     public static Object getValue(Selector selector) throws ExecutionException {
