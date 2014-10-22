@@ -32,15 +32,15 @@ import org.junit.Test;
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
 import com.stratio.connector.commons.ftest.schema.TableMetadataBuilder;
 import com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator;
-import com.stratio.meta.common.data.Cell;
-import com.stratio.meta.common.data.Row;
-import com.stratio.meta.common.exceptions.ExecutionException;
-import com.stratio.meta.common.exceptions.UnsupportedException;
-import com.stratio.meta.common.logicalplan.LogicalWorkflow;
-import com.stratio.meta.common.result.QueryResult;
-import com.stratio.meta2.common.data.ClusterName;
-import com.stratio.meta2.common.metadata.ColumnType;
-import com.stratio.meta2.common.metadata.TableMetadata;
+import com.stratio.crossdata.common.data.Cell;
+import com.stratio.crossdata.common.data.ClusterName;
+import com.stratio.crossdata.common.data.Row;
+import com.stratio.crossdata.common.exceptions.ExecutionException;
+import com.stratio.crossdata.common.exceptions.UnsupportedException;
+import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
+import com.stratio.crossdata.common.metadata.ColumnType;
+import com.stratio.crossdata.common.metadata.TableMetadata;
+import com.stratio.crossdata.common.result.QueryResult;
 
 /**
  *
@@ -60,12 +60,11 @@ public abstract class GenericQueryProjectTest extends GenericConnectorTest {
     public void selectFilterProject() throws UnsupportedException, ExecutionException {
 
         ClusterName clusterNodeName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST selectFilterProject ***********************************");
+        System.out.println("*********************************** INIT FUNCTIONAL TEST selectFilterProject ***********************************");
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
         tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.VARCHAR)
-                .addColumn(COLUMN_3, ColumnType.VARCHAR);
+                        .addColumn(COLUMN_3, ColumnType.VARCHAR);
 
         TableMetadata targetTable = tableMetadataBuilder.build();
 
@@ -105,11 +104,11 @@ public abstract class GenericQueryProjectTest extends GenericConnectorTest {
     private LogicalWorkflow createLogicalWorkFlow() {
 
         return new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName()).addColumnName(COLUMN_1, COLUMN_2)
-                .getLogicalWorkflow();
+                        .getLogicalWorkflow();
     }
 
     private void insertRow(int ikey, ClusterName clusterNodeName, TableMetadata targetTable)
-            throws UnsupportedOperationException, ExecutionException, UnsupportedException {
+                    throws UnsupportedOperationException, ExecutionException, UnsupportedException {
 
         Row row = new Row();
         Map<String, Cell> cells = new HashMap<>();

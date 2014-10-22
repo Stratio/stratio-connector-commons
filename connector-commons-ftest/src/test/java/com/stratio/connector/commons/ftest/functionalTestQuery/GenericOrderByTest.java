@@ -18,6 +18,7 @@
 
 package com.stratio.connector.commons.ftest.functionalTestQuery;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -30,18 +31,18 @@ import java.util.Map;
 import org.junit.Test;
 
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
-import com.stratio.meta.common.data.Cell;
-import com.stratio.meta.common.data.Row;
-import com.stratio.meta.common.exceptions.ExecutionException;
-import com.stratio.meta.common.exceptions.UnsupportedException;
-import com.stratio.meta.common.logicalplan.LogicalStep;
-import com.stratio.meta.common.logicalplan.LogicalWorkflow;
-import com.stratio.meta.common.logicalplan.Project;
-import com.stratio.meta.common.result.QueryResult;
-import com.stratio.meta2.common.data.ClusterName;
-import com.stratio.meta2.common.data.ColumnName;
-import com.stratio.meta2.common.data.TableName;
-import com.stratio.meta2.common.metadata.TableMetadata;
+import com.stratio.crossdata.common.data.Cell;
+import com.stratio.crossdata.common.data.ClusterName;
+import com.stratio.crossdata.common.data.ColumnName;
+import com.stratio.crossdata.common.data.Row;
+import com.stratio.crossdata.common.data.TableName;
+import com.stratio.crossdata.common.exceptions.ExecutionException;
+import com.stratio.crossdata.common.exceptions.UnsupportedException;
+import com.stratio.crossdata.common.logicalplan.LogicalStep;
+import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
+import com.stratio.crossdata.common.logicalplan.Project;
+import com.stratio.crossdata.common.metadata.TableMetadata;
+import com.stratio.crossdata.common.result.QueryResult;
 
 public abstract class GenericOrderByTest extends GenericConnectorTest {
 
@@ -55,11 +56,10 @@ public abstract class GenericOrderByTest extends GenericConnectorTest {
     public void sortDescTest() throws UnsupportedException, ExecutionException {
 
         ClusterName clusterName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST sortDescTest " + clusterName.getName()
-                        + " ***********************************");
+        System.out.println("*********************************** INIT FUNCTIONAL TEST sortDescTest "
+                        + clusterName.getName() + " ***********************************");
 
-        insertRow(1, "text", 10, 20, clusterName);//row,text,money,age
+        insertRow(1, "text", 10, 20, clusterName);// row,text,money,age
         insertRow(2, "text", 9, 17, clusterName);
         insertRow(3, "text", 11, 26, clusterName);
         insertRow(4, "text", 10, 30, clusterName);
@@ -69,7 +69,7 @@ public abstract class GenericOrderByTest extends GenericConnectorTest {
 
         LogicalWorkflow logicalPlan = createLogicalPlanLimit(SORT_AGE);
 
-        //return COLUMN_TEXT order by age DESC
+        // return COLUMN_TEXT order by age DESC
 
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
 
@@ -89,11 +89,10 @@ public abstract class GenericOrderByTest extends GenericConnectorTest {
     public void sortTestMultifield() throws ExecutionException, UnsupportedException {
 
         ClusterName clusterName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST sortDescTest " + clusterName.getName()
-                        + " ***********************************");
+        System.out.println("*********************************** INIT FUNCTIONAL TEST sortDescTest "
+                        + clusterName.getName() + " ***********************************");
 
-        insertRow(1, "text", 10, 20, clusterName);//row,text,money,age
+        insertRow(1, "text", 10, 20, clusterName);// row,text,money,age
         insertRow(2, "text", 9, 17, clusterName);
         insertRow(3, "text", 11, 26, clusterName);
         insertRow(4, "text", 10, 30, clusterName);
@@ -104,7 +103,7 @@ public abstract class GenericOrderByTest extends GenericConnectorTest {
 
         LogicalWorkflow logicalPlan = createLogicalPlanMultifield();
 
-        //return COLUMN_TEXT order by money asc, age asc
+        // return COLUMN_TEXT order by money asc, age asc
 
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
 
@@ -132,27 +131,29 @@ public abstract class GenericOrderByTest extends GenericConnectorTest {
 
         List<ColumnName> columns = new ArrayList<>();
 
-        //Limit limit = new Limit(10);
-        //stepList.add(limit);
+        // Limit limit = new Limit(10);
+        // stepList.add(limit);
 
         //
         //
-        //	     columns.add(new ColumnName(CATALOG,TABLE,COLUMN_TEXT)); //REVIEW cambiado para que compile
-        //	     columns.add(new ColumnName(CATALOG,TABLE,COLUMN_AGE));
-        //        TableName tableName = new TableName(CATALOG,TABLE);
-        //	     Project project = new Project(null,tableName,columns);
-        //	     stepList.add(project);
+        // columns.add(new ColumnName(CATALOG,TABLE,COLUMN_TEXT)); //REVIEW cambiado para que compile
+        // columns.add(new ColumnName(CATALOG,TABLE,COLUMN_AGE));
+        // TableName tableName = new TableName(CATALOG,TABLE);
+        // Project project = new Project(null,tableName,columns);
+        // stepList.add(project);
         //
         //
-        //	        switch (sortAge){
-        //	        	case SORT_AGE: //stepList.add(new Sort(COLUMN_AGE, Sort.DESC)); break; //REVIEW cuando haya SORT de meta
-        //	        	            throw new RuntimeException("Esperando a meta");
-        //	// 2 Sort? o uno con lista de parámetros y luego lista de tipo ASC o DESC
-        ////    	        	case SORT_AGE_MONEY: stepList.add(createNotEqualsFilter(filterType, object)); stepList.add(createBetweenFilter(9,11)); break;
-        ////    	        	case SORT_AGE_TEXT: stepList.add(createNotEqualsFilter(filterType, object)); stepList.add(createBetweenFilter(9,11)); break;
-        //	        }
-        //	        return new LogicalWorkflow(stepList);
-        //REVIEW cuando haya LIMIT de meta
+        // switch (sortAge){
+        // case SORT_AGE: //stepList.add(new Sort(COLUMN_AGE, Sort.DESC)); break; //REVIEW cuando haya SORT de meta
+        // throw new RuntimeException("Esperando a meta");
+        // // 2 Sort? o uno con lista de parámetros y luego lista de tipo ASC o DESC
+        // // case SORT_AGE_MONEY: stepList.add(createNotEqualsFilter(filterType, object));
+        // stepList.add(createBetweenFilter(9,11)); break;
+        // // case SORT_AGE_TEXT: stepList.add(createNotEqualsFilter(filterType, object));
+        // stepList.add(createBetweenFilter(9,11)); break;
+        // }
+        // return new LogicalWorkflow(stepList);
+        // REVIEW cuando haya LIMIT de meta
         throw new RuntimeException("Not yet generic supported.");
     }
 
@@ -162,20 +163,22 @@ public abstract class GenericOrderByTest extends GenericConnectorTest {
 
         List<ColumnName> columns = new ArrayList<>();
 
-        columns.add(new ColumnName(CATALOG, TABLE, COLUMN_TEXT)); //REVIEW cambiado para que compile
+        columns.add(new ColumnName(CATALOG, TABLE, COLUMN_TEXT)); // REVIEW cambiado para que compile
         columns.add(new ColumnName(CATALOG, TABLE, COLUMN_AGE));
         TableName tableName = new TableName(CATALOG, TABLE);
         Project project = new Project(null, tableName, getClusterName(), columns);
         stepList.add(project);
 
         switch (sortAge) {
-        case SORT_AGE: //stepList.add(new Sort(COLUMN_AGE, Sort.DESC)); break;
-            //REVIEW cuando haya SORT de meta
+        case SORT_AGE: // stepList.add(new Sort(COLUMN_AGE, Sort.DESC)); break;
+            // REVIEW cuando haya SORT de meta
             throw new RuntimeException("Not yet generic supported.\n");
 
             // 2 Sort? o uno con lista de parámetros y luego lista de tipo ASC o DESC
-            //        	case SORT_AGE_MONEY: stepList.add(createNotEqualsFilter(filterType, object)); stepList.add(createBetweenFilter(9,11)); break;
-            //        	case SORT_AGE_TEXT: stepList.add(createNotEqualsFilter(filterType, object)); stepList.add(createBetweenFilter(9,11)); break;
+            // case SORT_AGE_MONEY: stepList.add(createNotEqualsFilter(filterType, object));
+            // stepList.add(createBetweenFilter(9,11)); break;
+            // case SORT_AGE_TEXT: stepList.add(createNotEqualsFilter(filterType, object));
+            // stepList.add(createBetweenFilter(9,11)); break;
         }
         return new LogicalWorkflow(stepList);
 
@@ -191,24 +194,24 @@ public abstract class GenericOrderByTest extends GenericConnectorTest {
         columns.add(new ColumnName(CATALOG, TABLE, COLUMN_AGE));
 
         TableName tableName = new TableName(CATALOG, TABLE);
-        Project project = new Project(null, tableName, getClusterName(), columns); //REVIEW cambiado para que compile
+        Project project = new Project(null, tableName, getClusterName(), columns); // REVIEW cambiado para que compile
 
         stepList.add(project);
         LogicalStep gropuBy;
 
-        //stepList.add(new Sort(COLUMN_MONEY, Sort.ASC));
-        //stepList.add(new Sort(COLUMN_AGE, Sort.ASC));
+        // stepList.add(new Sort(COLUMN_MONEY, Sort.ASC));
+        // stepList.add(new Sort(COLUMN_AGE, Sort.ASC));
 
-        //Limit limit = new Limit(10);
-        //stepList.add(limit);
-        //return new LogicalWorkflow(stepList);
-        //REVIEW cuando haya SORT de meta
+        // Limit limit = new Limit(10);
+        // stepList.add(limit);
+        // return new LogicalWorkflow(stepList);
+        // REVIEW cuando haya SORT de meta
         throw new RuntimeException("Not yet generic supported.");
 
     }
 
     private void insertRow(int ikey, String texto, int money, int age, ClusterName clusterName)
-            throws UnsupportedOperationException, ExecutionException, UnsupportedException {
+                    throws UnsupportedOperationException, ExecutionException, UnsupportedException {
 
         Row row = new Row();
         Map<String, Cell> cells = new HashMap<>();
@@ -216,9 +219,10 @@ public abstract class GenericOrderByTest extends GenericConnectorTest {
         cells.put(COLUMN_AGE, new Cell(age));
         cells.put(COLUMN_MONEY, new Cell(money));
         row.setCells(cells);
-        connector.getStorageEngine().insert(clusterName,
-                new TableMetadata(new TableName(CATALOG, TABLE), null, null, null, null, Collections.EMPTY_LIST,
-                        Collections.EMPTY_LIST), row);
+        connector.getStorageEngine().insert(
+                        clusterName,
+                        new TableMetadata(new TableName(CATALOG, TABLE), null, null, null, null,
+                                        Collections.EMPTY_LIST, Collections.EMPTY_LIST), row);
 
     }
 

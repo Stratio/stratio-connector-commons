@@ -21,11 +21,11 @@ package com.stratio.connector.commons.ftest.helper;
 import java.util.Collection;
 import java.util.Map;
 
-import com.stratio.meta.common.connector.ConnectorClusterConfig;
-import com.stratio.meta.common.connector.IConfiguration;
-import com.stratio.meta.common.connector.IConnector;
-import com.stratio.meta.common.security.ICredentials;
-import com.stratio.meta2.common.metadata.ColumnType;
+import com.stratio.crossdata.common.connector.ConnectorClusterConfig;
+import com.stratio.crossdata.common.connector.IConfiguration;
+import com.stratio.crossdata.common.connector.IConnector;
+import com.stratio.crossdata.common.metadata.ColumnType;
+import com.stratio.crossdata.common.security.ICredentials;
 
 /**
  * Created by jmgomez on 4/09/14.

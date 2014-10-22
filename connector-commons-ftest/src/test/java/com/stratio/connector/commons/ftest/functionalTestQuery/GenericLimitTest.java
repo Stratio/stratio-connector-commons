@@ -18,6 +18,8 @@
 
 package com.stratio.connector.commons.ftest.functionalTestQuery;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,15 +28,15 @@ import org.junit.Test;
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
 import com.stratio.connector.commons.ftest.schema.TableMetadataBuilder;
 import com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator;
-import com.stratio.meta.common.data.Cell;
-import com.stratio.meta.common.data.Row;
-import com.stratio.meta.common.exceptions.ExecutionException;
-import com.stratio.meta.common.exceptions.UnsupportedException;
-import com.stratio.meta.common.logicalplan.LogicalWorkflow;
-import com.stratio.meta.common.result.QueryResult;
-import com.stratio.meta2.common.data.ClusterName;
-import com.stratio.meta2.common.metadata.ColumnType;
-import com.stratio.meta2.common.metadata.TableMetadata;
+import com.stratio.crossdata.common.data.Cell;
+import com.stratio.crossdata.common.data.ClusterName;
+import com.stratio.crossdata.common.data.Row;
+import com.stratio.crossdata.common.exceptions.ExecutionException;
+import com.stratio.crossdata.common.exceptions.UnsupportedException;
+import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
+import com.stratio.crossdata.common.metadata.ColumnType;
+import com.stratio.crossdata.common.metadata.TableMetadata;
+import com.stratio.crossdata.common.result.QueryResult;
 
 public abstract class GenericLimitTest extends GenericConnectorTest {
 
@@ -47,8 +49,7 @@ public abstract class GenericLimitTest extends GenericConnectorTest {
     public void limitTest() throws Exception {
 
         ClusterName clusterName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST limitTest  ***********************************");
+        System.out.println("*********************************** INIT FUNCTIONAL TEST limitTest  ***********************************");
 
         for (int i = 0; i < 25463; i++) {
             insertRow(i, "text", clusterName);
@@ -67,12 +68,12 @@ public abstract class GenericLimitTest extends GenericConnectorTest {
     private LogicalWorkflow createLogicalPlan(int limit) {
 
         return new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName())
-                .addColumnName(COLUMN_TEXT, COLUMN_AGE, COLUMN_MONEY).addLimit(limit).getLogicalWorkflow();
+                        .addColumnName(COLUMN_TEXT, COLUMN_AGE, COLUMN_MONEY).addLimit(limit).getLogicalWorkflow();
 
     }
 
     private void insertRow(int ikey, String texto, ClusterName cLusterName) throws UnsupportedOperationException,
-            ExecutionException, UnsupportedException {
+                    ExecutionException, UnsupportedException {
 
         Row row = new Row();
         Map<String, Cell> cells = new HashMap<>();
@@ -83,7 +84,7 @@ public abstract class GenericLimitTest extends GenericConnectorTest {
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
         tableMetadataBuilder.addColumn(COLUMN_TEXT, ColumnType.VARCHAR).addColumn(COLUMN_AGE, ColumnType.INT)
-                .addColumn(COLUMN_MONEY, ColumnType.INT);
+                        .addColumn(COLUMN_MONEY, ColumnType.INT);
 
         TableMetadata targetTable = tableMetadataBuilder.build();
 

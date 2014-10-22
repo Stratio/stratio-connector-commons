@@ -26,24 +26,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.stratio.meta.common.connector.Operations;
-import com.stratio.meta.common.data.Cell;
-import com.stratio.meta.common.data.Row;
-import com.stratio.meta.common.logicalplan.Filter;
-import com.stratio.meta.common.logicalplan.LogicalStep;
-import com.stratio.meta.common.logicalplan.LogicalWorkflow;
-import com.stratio.meta.common.logicalplan.Project;
-import com.stratio.meta.common.logicalplan.Select;
-import com.stratio.meta.common.statements.structures.relationships.Operator;
-import com.stratio.meta.common.statements.structures.relationships.Relation;
-import com.stratio.meta2.common.data.ClusterName;
-import com.stratio.meta2.common.data.ColumnName;
-import com.stratio.meta2.common.data.TableName;
-import com.stratio.meta2.common.metadata.ColumnType;
-import com.stratio.meta2.common.statements.structures.selectors.ColumnSelector;
-import com.stratio.meta2.common.statements.structures.selectors.IntegerSelector;
-import com.stratio.meta2.common.statements.structures.selectors.Selector;
-import com.stratio.meta2.common.statements.structures.selectors.StringSelector;
+import com.stratio.crossdata.common.connector.Operations;
+import com.stratio.crossdata.common.data.Cell;
+import com.stratio.crossdata.common.data.ClusterName;
+import com.stratio.crossdata.common.data.ColumnName;
+import com.stratio.crossdata.common.data.Row;
+import com.stratio.crossdata.common.data.TableName;
+import com.stratio.crossdata.common.logicalplan.Filter;
+import com.stratio.crossdata.common.logicalplan.LogicalStep;
+import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
+import com.stratio.crossdata.common.logicalplan.Project;
+import com.stratio.crossdata.common.logicalplan.Select;
+import com.stratio.crossdata.common.metadata.ColumnType;
+import com.stratio.crossdata.common.statements.structures.relationships.Operator;
+import com.stratio.crossdata.common.statements.structures.relationships.Relation;
+import com.stratio.crossdata.common.statements.structures.selectors.ColumnSelector;
+import com.stratio.crossdata.common.statements.structures.selectors.IntegerSelector;
+import com.stratio.crossdata.common.statements.structures.selectors.Selector;
+import com.stratio.crossdata.common.statements.structures.selectors.StringSelector;
 
 /**
  * Example workflows to test basic functionality of the different connectors. This class assumes the existence of a
@@ -120,20 +120,23 @@ public class ExampleWorkflows {
      * Get a project operator taking the table name from the first column. This operation assumes all columns belong to
      * the same table.
      *
-     * @param columnNames The list of columns.
+     * @param columnNames
+     *            The list of columns.
      * @return A {@link com.stratio.meta.common.logicalplan.Project}.
      */
     public Project getProject(ColumnName... columnNames) {
         TableName table = new TableName(columnNames[0].getTableName().getCatalogName().getName(), columnNames[0]
-                .getTableName().getName());
+                        .getTableName().getName());
         return new Project(Operations.PROJECT, table, clusterName, Arrays.asList(columnNames));
     }
 
     /**
      * Get a select operator.
      *
-     * @param alias       The alias
-     * @param columnNames The list of columns.
+     * @param alias
+     *            The alias
+     * @param columnNames
+     *            The list of columns.
      * @return A {@link com.stratio.meta.common.logicalplan.Select}.
      */
     public Select getSelect(String[] alias, ColumnType[] types, ColumnName... columnNames) {
@@ -151,10 +154,14 @@ public class ExampleWorkflows {
     /**
      * Get a filter operator.
      *
-     * @param filterOp The Filter operation.
-     * @param column   The column name.
-     * @param op       The relationship operator.
-     * @param right    The right select.
+     * @param filterOp
+     *            The Filter operation.
+     * @param column
+     *            The column name.
+     * @param op
+     *            The relationship operator.
+     * @param right
+     *            The right select.
      * @return A {@link com.stratio.meta.common.logicalplan.Filter}.
      */
     public Filter getFilter(Operations filterOp, ColumnName column, Operator op, Selector right) {
@@ -193,7 +200,7 @@ public class ExampleWorkflows {
         String[] outputNames = { COLUMN_ID, COLUMN_NAME, COLUMN_AGE, COLUMN_BOOL };
         LogicalStep project = getProject(id, name, age, bool);
         LogicalStep select = getSelect(outputNames, new ColumnType[] { ColumnType.INT, ColumnType.TEXT, ColumnType.INT,
-                ColumnType.BOOLEAN }, id, name, age, bool);
+                        ColumnType.BOOLEAN }, id, name, age, bool);
         project.setNextStep(select);
         LogicalWorkflow lw = new LogicalWorkflow(Arrays.asList(project));
         return lw;
@@ -213,7 +220,7 @@ public class ExampleWorkflows {
         ColumnType[] types = { ColumnType.VARCHAR, ColumnType.INT };
         LogicalStep project = getProject(id, name, age);
         LogicalStep filter = getFilter(Operations.FILTER_INDEXED_EQ, name, Operator.EQ,
-                new StringSelector(names[0].toLowerCase()));
+                        new StringSelector(names[0].toLowerCase()));
         project.setNextStep(filter);
         LogicalStep select = getSelect(outputNames, types, name, age);
         filter.setNextStep(select);
@@ -256,7 +263,7 @@ public class ExampleWorkflows {
         ColumnType[] types = { ColumnType.INT, ColumnType.VARCHAR, ColumnType.INT };
         LogicalStep project = getProject(id, name, age);
         LogicalStep filterName = getFilter(Operations.FILTER_INDEXED_EQ, name, Operator.EQ,
-                new StringSelector(names[1].toLowerCase()));
+                        new StringSelector(names[1].toLowerCase()));
         project.setNextStep(filterName);
         LogicalStep filterAge = getFilter(Operations.FILTER_NON_INDEXED_EQ, age, Operator.EQ, new IntegerSelector(40));
         filterName.setNextStep(filterAge);

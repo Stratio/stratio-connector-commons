@@ -20,6 +20,7 @@ package com.stratio.connector.commons.ftest.functionalTestQuery;
 
 import static com.stratio.connector.commons.ftest.helper.TextConstant.danteParadise;
 import static com.stratio.connector.commons.ftest.helper.TextConstant.names;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -34,24 +35,24 @@ import org.junit.Test;
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
 import com.stratio.connector.commons.ftest.schema.TableMetadataBuilder;
 import com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator;
-import com.stratio.meta.common.data.Cell;
-import com.stratio.meta.common.data.ResultSet;
-import com.stratio.meta.common.data.Row;
-import com.stratio.meta.common.exceptions.ConnectionException;
-import com.stratio.meta.common.exceptions.ExecutionException;
-import com.stratio.meta.common.exceptions.InitializationException;
-import com.stratio.meta.common.exceptions.UnsupportedException;
-import com.stratio.meta.common.logicalplan.LogicalWorkflow;
-import com.stratio.meta.common.result.QueryResult;
-import com.stratio.meta2.common.data.ClusterName;
-import com.stratio.meta2.common.data.ColumnName;
-import com.stratio.meta2.common.data.IndexName;
-import com.stratio.meta2.common.data.TableName;
-import com.stratio.meta2.common.metadata.ColumnMetadata;
-import com.stratio.meta2.common.metadata.ColumnType;
-import com.stratio.meta2.common.metadata.IndexMetadata;
-import com.stratio.meta2.common.metadata.IndexType;
-import com.stratio.meta2.common.metadata.TableMetadata;
+import com.stratio.crossdata.common.data.Cell;
+import com.stratio.crossdata.common.data.ClusterName;
+import com.stratio.crossdata.common.data.ColumnName;
+import com.stratio.crossdata.common.data.IndexName;
+import com.stratio.crossdata.common.data.ResultSet;
+import com.stratio.crossdata.common.data.Row;
+import com.stratio.crossdata.common.data.TableName;
+import com.stratio.crossdata.common.exceptions.ConnectionException;
+import com.stratio.crossdata.common.exceptions.ExecutionException;
+import com.stratio.crossdata.common.exceptions.InitializationException;
+import com.stratio.crossdata.common.exceptions.UnsupportedException;
+import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
+import com.stratio.crossdata.common.metadata.ColumnMetadata;
+import com.stratio.crossdata.common.metadata.ColumnType;
+import com.stratio.crossdata.common.metadata.IndexMetadata;
+import com.stratio.crossdata.common.metadata.IndexType;
+import com.stratio.crossdata.common.metadata.TableMetadata;
+import com.stratio.crossdata.common.result.QueryResult;
 
 /**
  * Created by jmgomez on 17/07/14.
@@ -72,15 +73,14 @@ public abstract class GenericNotIndexedQueryStringFilterTest extends GenericConn
     public void selectNotIndexedFilterUpperCaseEqual() throws ExecutionException, UnsupportedException {
 
         ClusterName clusterNodeName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterUpperCaseEqual ***********************************");
+        System.out.println("*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterUpperCaseEqual ***********************************");
 
         insertRow(names, clusterNodeName, false);
 
         refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addColumnName(COLUMN_TEXT)
-                .addEqualFilter(COLUMN_TEXT, names[10], false, false).getLogicalWorkflow();
+                        .addEqualFilter(COLUMN_TEXT, names[10], false, false).getLogicalWorkflow();
 
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
 
@@ -91,15 +91,14 @@ public abstract class GenericNotIndexedQueryStringFilterTest extends GenericConn
     @Test
     public void selectNotIndexedFilterUpperCaseDistinct() throws UnsupportedException, ExecutionException {
         ClusterName clusterNodeName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST selectNoPKFilterDistinct ***********************************");
+        System.out.println("*********************************** INIT FUNCTIONAL TEST selectNoPKFilterDistinct ***********************************");
 
         insertRow(names, clusterNodeName, false);
 
         refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addColumnName(COLUMN_TEXT)
-                .addDistinctFilter(COLUMN_TEXT, names[5], false).getLogicalWorkflow();
+                        .addDistinctFilter(COLUMN_TEXT, names[5], false).getLogicalWorkflow();
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
 
         assertEquals("The record number is correct", names.length - 1, queryResult.getResultSet().size());
@@ -110,15 +109,14 @@ public abstract class GenericNotIndexedQueryStringFilterTest extends GenericConn
     public void selectNotIndexedFilterLowerCaseEqual() throws ExecutionException, UnsupportedException {
 
         ClusterName clusterNodeName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterUpperCaseEqual ***********************************");
+        System.out.println("*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterUpperCaseEqual ***********************************");
 
         insertRow(names, clusterNodeName, true);
 
         refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addColumnName(COLUMN_TEXT)
-                .addEqualFilter(COLUMN_TEXT, names[10].toLowerCase(), false, false).getLogicalWorkflow();
+                        .addEqualFilter(COLUMN_TEXT, names[10].toLowerCase(), false, false).getLogicalWorkflow();
 
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
 
@@ -129,15 +127,14 @@ public abstract class GenericNotIndexedQueryStringFilterTest extends GenericConn
     @Test
     public void selectNotIndexedFilterLowerCaseCaseDistinct() throws UnsupportedException, ExecutionException {
         ClusterName clusterNodeName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST selectNoPKFilterDistinct ***********************************");
+        System.out.println("*********************************** INIT FUNCTIONAL TEST selectNoPKFilterDistinct ***********************************");
 
         insertRow(names, clusterNodeName, true);
 
         refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addColumnName(COLUMN_TEXT)
-                .addDistinctFilter(COLUMN_TEXT, names[5].toLowerCase(), false).getLogicalWorkflow();
+                        .addDistinctFilter(COLUMN_TEXT, names[5].toLowerCase(), false).getLogicalWorkflow();
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
 
         assertEquals("The record number is correct", names.length - 1, queryResult.getResultSet().size());
@@ -147,15 +144,14 @@ public abstract class GenericNotIndexedQueryStringFilterTest extends GenericConn
     @Test
     public void selectNotIndexedFilterMatch() throws UnsupportedException, ExecutionException {
 
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST selectNoPKFilterDistinct ***********************************");
+        System.out.println("*********************************** INIT FUNCTIONAL TEST selectNoPKFilterDistinct ***********************************");
 
         insertRow(danteParadise, getClusterName(), false);
 
         refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addColumnName(COLUMN_TEXT)
-                .addMatchFilter(COLUMN_TEXT, "matter").getLogicalWorkflow();
+                        .addMatchFilter(COLUMN_TEXT, "matter").getLogicalWorkflow();
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
 
         ResultSet resultSet = queryResult.getResultSet();
@@ -163,13 +159,13 @@ public abstract class GenericNotIndexedQueryStringFilterTest extends GenericConn
 
         for (Row row : resultSet) {
             assertTrue("the return text contains matter",
-                    ((String) row.getCell(COLUMN_TEXT).getValue()).contains("matter"));
+                            ((String) row.getCell(COLUMN_TEXT).getValue()).contains("matter"));
         }
 
     }
 
     private void insertRow(String[] text, ClusterName clusterNodeName, boolean toLowerCase)
-            throws UnsupportedOperationException, ExecutionException, UnsupportedException {
+                    throws UnsupportedOperationException, ExecutionException, UnsupportedException {
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
         tableMetadataBuilder.addColumn("id", ColumnType.INT).addColumn(COLUMN_TEXT, ColumnType.VARCHAR);
@@ -183,9 +179,9 @@ public abstract class GenericNotIndexedQueryStringFilterTest extends GenericConn
             Map<ColumnName, ColumnMetadata> columns = new HashMap<>();
             Object[] parameters = null;
             columns.put(new ColumnName(tableName, COLUMN_TEXT), new ColumnMetadata(new ColumnName(tableName,
-                    COLUMN_TEXT), parameters, ColumnType.TEXT));
+                            COLUMN_TEXT), parameters, ColumnType.TEXT));
             IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, "indexText"), columns,
-                    IndexType.FULL_TEXT, Collections.EMPTY_MAP);
+                            IndexType.FULL_TEXT, Collections.EMPTY_MAP);
             connector.getMetadataEngine().createIndex(clusterNodeName, indexMetadata);
         }
         Collection<Row> rows = new ArrayList();

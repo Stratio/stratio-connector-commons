@@ -28,13 +28,13 @@ import java.util.Map;
 import org.junit.Test;
 
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
-import com.stratio.meta.common.data.Cell;
-import com.stratio.meta.common.data.Row;
-import com.stratio.meta.common.exceptions.ExecutionException;
-import com.stratio.meta.common.logicalplan.Filter;
-import com.stratio.meta.common.logicalplan.LogicalStep;
-import com.stratio.meta.common.metadata.structures.ColumnMetadata;
-import com.stratio.meta2.common.data.ClusterName;
+import com.stratio.crossdata.common.data.Cell;
+import com.stratio.crossdata.common.data.ClusterName;
+import com.stratio.crossdata.common.data.Row;
+import com.stratio.crossdata.common.exceptions.ExecutionException;
+import com.stratio.crossdata.common.logicalplan.Filter;
+import com.stratio.crossdata.common.logicalplan.LogicalStep;
+import com.stratio.crossdata.common.metadata.structures.ColumnMetadata;
 
 public abstract class GenericDeleteTest extends GenericConnectorTest {
 
@@ -50,11 +50,10 @@ public abstract class GenericDeleteTest extends GenericConnectorTest {
     public void deleteFilterEqualString() throws Exception {
 
         ClusterName clusterName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST deleteFilterEqualString " + clusterName
-                        .getName() + " ***********************************");
+        System.out.println("*********************************** INIT FUNCTIONAL TEST deleteFilterEqualString "
+                        + clusterName.getName() + " ***********************************");
 
-        insertRow(1, "text", 10, 20);//row,text,money,age
+        insertRow(1, "text", 10, 20);// row,text,money,age
         insertRow(2, "text", 9, 17);
         insertRow(3, "text", 11, 26);
         insertRow(4, "text", 10, 30);
@@ -72,11 +71,10 @@ public abstract class GenericDeleteTest extends GenericConnectorTest {
     public void deleteFilterEqualInt() throws ExecutionException {
 
         ClusterName clusterName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST deleteFilterEqualInt " + clusterName.getName()
-                        + " ***********************************");
+        System.out.println("*********************************** INIT FUNCTIONAL TEST deleteFilterEqualInt "
+                        + clusterName.getName() + " ***********************************");
 
-        insertRow(1, "text", 10, 20);//row,text,money,age
+        insertRow(1, "text", 10, 20);// row,text,money,age
         insertRow(2, "text", 9, 17);
         insertRow(3, "text", 11, 20);
         insertRow(4, "text", 10, 30);
@@ -94,11 +92,10 @@ public abstract class GenericDeleteTest extends GenericConnectorTest {
     public void deleteFilterNotEqualInt() throws Exception {
 
         ClusterName clusterName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST deleteFilterNotEqualInt " + clusterName
-                        .getName() + " ***********************************");
+        System.out.println("*********************************** INIT FUNCTIONAL TEST deleteFilterNotEqualInt "
+                        + clusterName.getName() + " ***********************************");
 
-        insertRow(1, "text", 10, 20);//row,text,money,age
+        insertRow(1, "text", 10, 20);// row,text,money,age
         insertRow(2, "text", 9, 17);
         insertRow(3, "text", 11, 20);
         insertRow(4, "text", 10, 30);
@@ -106,7 +103,7 @@ public abstract class GenericDeleteTest extends GenericConnectorTest {
 
         refresh(CATALOG);
 
-        //age notequal 20 and money between 9,11
+        // age notequal 20 and money between 9,11
         Filter[] filterSet = createFilterCollection(NOTEQUAL_BETWEEN, 20);
 
         fail("Not yet generic supported");
@@ -128,59 +125,61 @@ public abstract class GenericDeleteTest extends GenericConnectorTest {
             coll.add(createBetweenFilter(9, 11));
             break;
         }
-        //     if (EQUAL_FILTER==filterType
-        //    		 || HIGH_FILTER == filterType
-        //    		 || LOW_FILTER == filterType
-        //    		 || HIGH_BETWEEN_FILTER == filterType)
-        //    	 coll.add(createEqualsFilter(filterType, object));
-        //     if (BETWEEN_FILTER==filterType || HIGH_BETWEEN_FILTER==filterType) coll.add(createBetweenFilter());
+        // if (EQUAL_FILTER==filterType
+        // || HIGH_FILTER == filterType
+        // || LOW_FILTER == filterType
+        // || HIGH_BETWEEN_FILTER == filterType)
+        // coll.add(createEqualsFilter(filterType, object));
+        // if (BETWEEN_FILTER==filterType || HIGH_BETWEEN_FILTER==filterType) coll.add(createBetweenFilter());
         Filter[] filArray = new Filter[coll.size()];
         return coll.toArray(filArray);
 
     }
 
     private Filter createNotEqualsFilter(int filterType, Object object) {
-        //	RelationCompare relCom;
-        //	if(object instanceof String) relCom = new RelationCompare(COLUMN_TEXT, "!=", new StringTerm((String)object));
-        //	else if(object instanceof Integer) relCom = new RelationCompare(COLUMN_AGE, "<>", new IntegerTerm(String.valueOf(object)));
-        //	else throw new Exception("unsupported type"+ object.getClass());
+        // RelationCompare relCom;
+        // if(object instanceof String) relCom = new RelationCompare(COLUMN_TEXT, "!=", new StringTerm((String)object));
+        // else if(object instanceof Integer) relCom = new RelationCompare(COLUMN_AGE, "<>", new
+        // IntegerTerm(String.valueOf(object)));
+        // else throw new Exception("unsupported type"+ object.getClass());
         //
-        //	Filter f = new Filter(Operations.SELECT_WHERE_MATCH, RelationType.COMPARE, relCom);
-        //	return f;
-        return null; //REVIEW por la nueva version de meta
+        // Filter f = new Filter(Operations.SELECT_WHERE_MATCH, RelationType.COMPARE, relCom);
+        // return f;
+        return null; // REVIEW por la nueva version de meta
 
     }
 
     private Filter createBetweenFilter(int min, int max) {
 
-        //	 Relation relation = new RelationBetween(COLUMN_MONEY);
-        //     relation.setType(Relation.TYPE_BETWEEN);
-        //     List<Term<?>> terms = new ArrayList<>();
-        //     terms.add(new IntegerTerm(String.valueOf(min)));
-        //     terms.add(new IntegerTerm(String.valueOf(max)));
-        //     relation.setTerms(terms);
-        //     Filter f = new Filter(Operations.SELECT_WHERE_BETWEEN, RelationType.BETWEEN, relation);
-        //     return f;
+        // Relation relation = new RelationBetween(COLUMN_MONEY);
+        // relation.setType(Relation.TYPE_BETWEEN);
+        // List<Term<?>> terms = new ArrayList<>();
+        // terms.add(new IntegerTerm(String.valueOf(min)));
+        // terms.add(new IntegerTerm(String.valueOf(max)));
+        // relation.setTerms(terms);
+        // Filter f = new Filter(Operations.SELECT_WHERE_BETWEEN, RelationType.BETWEEN, relation);
+        // return f;
 
-        return null; //REVIEW por la nueva version de meta
+        return null; // REVIEW por la nueva version de meta
 
     }
 
     private Filter createEqualsFilter(int filterType, Object object) {
-        //	RelationCompare relCom;
-        //	if(object instanceof String) relCom = new RelationCompare(COLUMN_TEXT, "=", new StringTerm((String)object));
-        //	else if(object instanceof Integer) relCom = new RelationCompare(COLUMN_AGE, "=", new IntegerTerm(String.valueOf(object)));
-        //	else throw new Exception("unsupported type"+ object.getClass());
+        // RelationCompare relCom;
+        // if(object instanceof String) relCom = new RelationCompare(COLUMN_TEXT, "=", new StringTerm((String)object));
+        // else if(object instanceof Integer) relCom = new RelationCompare(COLUMN_AGE, "=", new
+        // IntegerTerm(String.valueOf(object)));
+        // else throw new Exception("unsupported type"+ object.getClass());
         //
-        //	Filter f = new Filter(Operations.SELECT_WHERE_MATCH, RelationType.COMPARE, relCom);
-        //	return f;
+        // Filter f = new Filter(Operations.SELECT_WHERE_MATCH, RelationType.COMPARE, relCom);
+        // return f;
         fail("Not yet generic supported");
-        return null; //REVIEW por la nueva version de meta
+        return null; // REVIEW por la nueva version de meta
 
     }
 
-    private void insertRow(int ikey, String texto, int money, int age)
-            throws UnsupportedOperationException, ExecutionException {
+    private void insertRow(int ikey, String texto, int money, int age) throws UnsupportedOperationException,
+                    ExecutionException {
 
         Row row = new Row();
         Map<String, Cell> cells = new HashMap<>();
@@ -189,7 +188,7 @@ public abstract class GenericDeleteTest extends GenericConnectorTest {
         cells.put(COLUMN_AGE, new Cell(age));
         row.setCells(cells);
 
-        //       ((ElasticsearchStorageEngine) connector.getStorageEngine()).insert(CATALOG, TABLE, row);
+        // ((ElasticsearchStorageEngine) connector.getStorageEngine()).insert(CATALOG, TABLE, row);
         fail("Not yet generic supported");
     }
 

@@ -26,25 +26,27 @@ import java.util.Collections;
 
 import org.junit.Test;
 
-import com.stratio.meta.common.exceptions.ExecutionException;
-import com.stratio.meta.common.statements.structures.relationships.Relation;
-import com.stratio.meta2.common.data.ColumnName;
-import com.stratio.meta2.common.statements.structures.selectors.AsteriskSelector;
-import com.stratio.meta2.common.statements.structures.selectors.BooleanSelector;
-import com.stratio.meta2.common.statements.structures.selectors.ColumnSelector;
-import com.stratio.meta2.common.statements.structures.selectors.FloatingPointSelector;
-import com.stratio.meta2.common.statements.structures.selectors.FunctionSelector;
-import com.stratio.meta2.common.statements.structures.selectors.IntegerSelector;
-import com.stratio.meta2.common.statements.structures.selectors.RelationSelector;
-import com.stratio.meta2.common.statements.structures.selectors.Selector;
-import com.stratio.meta2.common.statements.structures.selectors.StringSelector;
+import com.stratio.crossdata.common.data.ColumnName;
+import com.stratio.crossdata.common.exceptions.ExecutionException;
+import com.stratio.crossdata.common.statements.structures.relationships.Relation;
+import com.stratio.crossdata.common.statements.structures.selectors.AsteriskSelector;
+import com.stratio.crossdata.common.statements.structures.selectors.BooleanSelector;
+import com.stratio.crossdata.common.statements.structures.selectors.ColumnSelector;
+import com.stratio.crossdata.common.statements.structures.selectors.FloatingPointSelector;
+import com.stratio.crossdata.common.statements.structures.selectors.FunctionSelector;
+import com.stratio.crossdata.common.statements.structures.selectors.IntegerSelector;
+import com.stratio.crossdata.common.statements.structures.selectors.RelationSelector;
+import com.stratio.crossdata.common.statements.structures.selectors.Selector;
+import com.stratio.crossdata.common.statements.structures.selectors.StringSelector;
 
 /**
  * SelectorHelper Tester.
  *
  * @author <Authors name>
  * @version 1.0
- * @since <pre>oct 2, 2014</pre>
+ * @since <pre>
+ * oct 2, 2014
+ * </pre>
  */
 public class SelectorHelperTest {
 
@@ -57,41 +59,41 @@ public class SelectorHelperTest {
         Object returnValue = null;
 
         returnValue = SelectorHelper.getValue(Integer.class, new IntegerSelector(10));
-        assertEquals("The class is correct", Integer.class.getCanonicalName(),
-                returnValue.getClass().getCanonicalName());
+        assertEquals("The class is correct", Integer.class.getCanonicalName(), returnValue.getClass()
+                        .getCanonicalName());
         assertEquals("The value  is correct", 10, returnValue);
 
         returnValue = SelectorHelper.getValue(Integer.class, new StringSelector("10"));
-        assertEquals("The class is correct", Integer.class.getCanonicalName(),
-                returnValue.getClass().getCanonicalName());
+        assertEquals("The class is correct", Integer.class.getCanonicalName(), returnValue.getClass()
+                        .getCanonicalName());
         assertEquals("The value  is correct", 10, returnValue);
 
         try {
             SelectorHelper.getValue(Integer.class, new StringSelector("10999898999989"));
             fail("It must not are here!");
-        } catch (ExecutionException e) { //the number is too big
+        } catch (ExecutionException e) { // the number is too big
         }
 
         SelectorHelper.getValue(Integer.class, new FloatingPointSelector(new Double(10)));
-        assertEquals("The class is correct", Integer.class.getCanonicalName(),
-                returnValue.getClass().getCanonicalName());
+        assertEquals("The class is correct", Integer.class.getCanonicalName(), returnValue.getClass()
+                        .getCanonicalName());
         assertEquals("The value  is correct", 10, returnValue);
 
         SelectorHelper.getValue(Integer.class, new FloatingPointSelector(new Double(10.3)));
-        assertEquals("The class is correct", Integer.class.getCanonicalName(),
-                returnValue.getClass().getCanonicalName());
+        assertEquals("The class is correct", Integer.class.getCanonicalName(), returnValue.getClass()
+                        .getCanonicalName());
         assertEquals("The value  is correct", 10, returnValue);
 
         try {
             SelectorHelper.getValue(Integer.class, new BooleanSelector(false));
             fail("It must not are here!");
-        } catch (ExecutionException e) {//Is not possible cast a boolean to a int at now
+        } catch (ExecutionException e) {// Is not possible cast a boolean to a int at now
         }
 
         try {
             returnValue = SelectorHelper.getValue(Integer.class, new StringSelector("LLfe3"));
             fail("It must not are here!");
-        } catch (ExecutionException e) {//Is not a number
+        } catch (ExecutionException e) {// Is not a number
         }
     }
 
@@ -99,7 +101,7 @@ public class SelectorHelperTest {
     public void testGetClass() throws ExecutionException {
 
         Selector[] selector = { new StringSelector(""), new ColumnSelector(mock(ColumnName.class)),
-                new BooleanSelector(true), new FloatingPointSelector("1"), new IntegerSelector(1) };
+                        new BooleanSelector(true), new FloatingPointSelector("1"), new IntegerSelector(1) };
 
         Class[] returnClass = { String.class, String.class, Boolean.class, Double.class, Long.class };
         for (int i = 0; i < selector.length; i++) {
@@ -112,7 +114,7 @@ public class SelectorHelperTest {
     public void testGetClassException() {
 
         Selector[] exceptionSelector = { new AsteriskSelector(), new FunctionSelector("", Collections.EMPTY_LIST),
-                new RelationSelector(mock(Relation.class)) };
+                        new RelationSelector(mock(Relation.class)) };
 
         for (int i = 0; i < exceptionSelector.length; i++) {
 
@@ -148,7 +150,7 @@ public class SelectorHelperTest {
         try {
             SelectorHelper.getValue(Integer.class, new StringSelector("10999898999989"));
             fail("It must not are here!");
-        } catch (ExecutionException e) { //the number is too big
+        } catch (ExecutionException e) { // the number is too big
         }
 
         returnValue = SelectorHelper.getValue(Long.class, new FloatingPointSelector(new Double(10)));
@@ -158,13 +160,13 @@ public class SelectorHelperTest {
         try {
             SelectorHelper.getValue(Long.class, new BooleanSelector(false));
             fail("It must not are here!");
-        } catch (ExecutionException e) {//Is not possible cast a boolean to a int at now
+        } catch (ExecutionException e) {// Is not possible cast a boolean to a int at now
         }
 
         try {
             SelectorHelper.getValue(Long.class, new StringSelector("LLfe3"));
             fail("It must not are here!");
-        } catch (ExecutionException e) {//Is not a number
+        } catch (ExecutionException e) {// Is not a number
         }
     }
 
@@ -173,23 +175,19 @@ public class SelectorHelperTest {
         Object returnValue = null;
 
         returnValue = SelectorHelper.getValue(String.class, new IntegerSelector(10));
-        assertEquals("The class is correct", String.class.getCanonicalName(),
-                returnValue.getClass().getCanonicalName());
+        assertEquals("The class is correct", String.class.getCanonicalName(), returnValue.getClass().getCanonicalName());
         assertEquals("The value  is correct", new String("10"), returnValue);
 
         returnValue = SelectorHelper.getValue(String.class, new StringSelector("10"));
-        assertEquals("The class is correct", String.class.getCanonicalName(),
-                returnValue.getClass().getCanonicalName());
+        assertEquals("The class is correct", String.class.getCanonicalName(), returnValue.getClass().getCanonicalName());
         assertEquals("The value  is correct", new String("10"), returnValue);
 
         SelectorHelper.getValue(String.class, new FloatingPointSelector(new Double(10)));
-        assertEquals("The class is correct", String.class.getCanonicalName(),
-                returnValue.getClass().getCanonicalName());
+        assertEquals("The class is correct", String.class.getCanonicalName(), returnValue.getClass().getCanonicalName());
         assertEquals("The value  is correct", new String("10"), returnValue);
 
         returnValue = SelectorHelper.getValue(String.class, new BooleanSelector(false));
-        assertEquals("The class is correct", String.class.getCanonicalName(),
-                returnValue.getClass().getCanonicalName());
+        assertEquals("The class is correct", String.class.getCanonicalName(), returnValue.getClass().getCanonicalName());
         assertEquals("The value  is correct", new String("false"), returnValue);
 
     }
@@ -199,23 +197,19 @@ public class SelectorHelperTest {
         Object returnValue = null;
 
         returnValue = SelectorHelper.getValue(Double.class, new IntegerSelector(10));
-        assertEquals("The class is correct", Double.class.getCanonicalName(),
-                returnValue.getClass().getCanonicalName());
+        assertEquals("The class is correct", Double.class.getCanonicalName(), returnValue.getClass().getCanonicalName());
         assertEquals("The value  is correct", new Double("10"), returnValue);
 
         returnValue = SelectorHelper.getValue(Double.class, new StringSelector("10"));
-        assertEquals("The class is correct", Double.class.getCanonicalName(),
-                returnValue.getClass().getCanonicalName());
+        assertEquals("The class is correct", Double.class.getCanonicalName(), returnValue.getClass().getCanonicalName());
         assertEquals("The value  is correct", new Double("10"), returnValue);
 
         returnValue = SelectorHelper.getValue(String.class, new FloatingPointSelector(new Double(10)));
-        assertEquals("The class is correct", String.class.getCanonicalName(),
-                returnValue.getClass().getCanonicalName());
+        assertEquals("The class is correct", String.class.getCanonicalName(), returnValue.getClass().getCanonicalName());
         assertEquals("The value  is correct", new String("10.0"), returnValue);
 
         returnValue = SelectorHelper.getValue(String.class, new BooleanSelector(false));
-        assertEquals("The class is correct", String.class.getCanonicalName(),
-                returnValue.getClass().getCanonicalName());
+        assertEquals("The class is correct", String.class.getCanonicalName(), returnValue.getClass().getCanonicalName());
         assertEquals("The value  is correct", new String("false"), returnValue);
 
     }
@@ -228,29 +222,27 @@ public class SelectorHelperTest {
             SelectorHelper.getValue(Boolean.class, new IntegerSelector(10));
             fail("It must not are here!");
         } catch (ExecutionException e) {
-            //Is not boolean
+            // Is not boolean
         }
 
         try {
             SelectorHelper.getValue(Boolean.class, new StringSelector("true"));
             fail("It must not are here!");
         } catch (ExecutionException e) {
-            //Is not boolean
+            // Is not boolean
         }
 
         try {
             SelectorHelper.getValue(Boolean.class, new FloatingPointSelector(new Double(10)));
             fail("It must not are here!");
         } catch (ExecutionException e) {
-            //Is not boolean
+            // Is not boolean
         }
 
         returnValue = SelectorHelper.getValue(Boolean.class, new BooleanSelector(true));
-        assertEquals("The class is correct", Boolean.class.getCanonicalName(),
-                returnValue.getClass().getCanonicalName());
+        assertEquals("The class is correct", Boolean.class.getCanonicalName(), returnValue.getClass()
+                        .getCanonicalName());
         assertEquals("The value  is correct", new Boolean(true), returnValue);
 
     }
 }
-
-
