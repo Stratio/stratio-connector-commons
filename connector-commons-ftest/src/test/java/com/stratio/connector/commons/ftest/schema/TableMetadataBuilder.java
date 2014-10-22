@@ -95,8 +95,7 @@ public class TableMetadataBuilder {
      *
      * @param type
      * @param indexName
-     * @param fields
-     *            the columns which define the index
+     * @param fields    the columns which define the index
      * @return
      */
     public TableMetadataBuilder addIndex(IndexType indType, String indexName, String... fields) {

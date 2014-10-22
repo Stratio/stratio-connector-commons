@@ -23,7 +23,6 @@ import static com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreato
 import static com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator.COLUMN_3;
 import static com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator.COLUMN_AGE;
 import static com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator.COLUMN_MONEY;
-import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 import java.util.HashSet;

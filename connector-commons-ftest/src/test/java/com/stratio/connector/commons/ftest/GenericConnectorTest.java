@@ -38,7 +38,7 @@ import com.stratio.meta2.common.data.TableName;
 public abstract class GenericConnectorTest<T extends IConnector> {
 
     protected static IConnectorHelper iConnectorHelper;
-    public final String TABLE = this.getClass().getSimpleName();
+    public final String TABLE = this.getClass().getSimpleName().toLowerCase();
     /**
      * The Log.
      */

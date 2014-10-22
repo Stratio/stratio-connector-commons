@@ -26,12 +26,12 @@ import org.slf4j.LoggerFactory;
 import com.stratio.connector.commons.connection.Connection;
 import com.stratio.connector.commons.connection.ConnectionHandler;
 import com.stratio.connector.commons.connection.exceptions.HandlerConnectionException;
-import com.stratio.meta.common.connector.IStorageEngine;
-import com.stratio.meta.common.data.Row;
-import com.stratio.meta.common.exceptions.ExecutionException;
-import com.stratio.meta.common.exceptions.UnsupportedException;
-import com.stratio.meta2.common.data.ClusterName;
-import com.stratio.meta2.common.metadata.TableMetadata;
+import com.stratio.crossdata.common.connector.IStorageEngine;
+import com.stratio.crossdata.common.data.ClusterName;
+import com.stratio.crossdata.common.data.Row;
+import com.stratio.crossdata.common.exceptions.ExecutionException;
+import com.stratio.crossdata.common.exceptions.UnsupportedException;
+import com.stratio.crossdata.common.metadata.TableMetadata;
 
 /**
  * Created by dgomez on 22/09/14.

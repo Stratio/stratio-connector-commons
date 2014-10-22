@@ -20,12 +20,12 @@ package com.stratio.connector.commons.engine;
 import com.stratio.connector.commons.connection.Connection;
 import com.stratio.connector.commons.connection.ConnectionHandler;
 import com.stratio.connector.commons.connection.exceptions.HandlerConnectionException;
-import com.stratio.meta.common.exceptions.ExecutionException;
-import com.stratio.meta.common.exceptions.UnsupportedException;
-import com.stratio.meta.common.logicalplan.LogicalWorkflow;
-import com.stratio.meta.common.logicalplan.Project;
-import com.stratio.meta.common.result.QueryResult;
-import com.stratio.meta2.common.data.ClusterName;
+import com.stratio.crossdata.common.data.ClusterName;
+import com.stratio.crossdata.common.exceptions.ExecutionException;
+import com.stratio.crossdata.common.exceptions.UnsupportedException;
+import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
+import com.stratio.crossdata.common.logicalplan.Project;
+import com.stratio.crossdata.common.result.QueryResult;
 
 /**
  * @author darroyo

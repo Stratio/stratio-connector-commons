@@ -17,9 +17,6 @@
  */
 package com.stratio.connector.commons.ftest.functionalMetadata;
 
-import static junit.framework.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;

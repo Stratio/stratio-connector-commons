@@ -18,9 +18,9 @@
 
 package com.stratio.connector.commons.connection;
 
-import com.stratio.meta.common.connector.ConnectorClusterConfig;
-import com.stratio.meta.common.connector.IConfiguration;
-import com.stratio.meta.common.security.ICredentials;
+import com.stratio.crossdata.common.connector.ConnectorClusterConfig;
+import com.stratio.crossdata.common.connector.IConfiguration;
+import com.stratio.crossdata.common.security.ICredentials;
 
 /**
  * Created by jmgomez on 9/09/14.

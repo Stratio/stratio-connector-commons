@@ -26,12 +26,12 @@ import org.slf4j.LoggerFactory;
 import com.stratio.connector.commons.connection.Connection;
 import com.stratio.connector.commons.connection.ConnectionHandler;
 import com.stratio.connector.commons.connection.exceptions.HandlerConnectionException;
-import com.stratio.meta.common.connector.ConnectorClusterConfig;
-import com.stratio.meta.common.connector.IConnector;
-import com.stratio.meta.common.exceptions.ConnectionException;
-import com.stratio.meta.common.exceptions.ExecutionException;
-import com.stratio.meta.common.security.ICredentials;
-import com.stratio.meta2.common.data.ClusterName;
+import com.stratio.crossdata.common.connector.ConnectorClusterConfig;
+import com.stratio.crossdata.common.connector.IConnector;
+import com.stratio.crossdata.common.data.ClusterName;
+import com.stratio.crossdata.common.exceptions.ConnectionException;
+import com.stratio.crossdata.common.exceptions.ExecutionException;
+import com.stratio.crossdata.common.security.ICredentials;
 
 /**
  * This class implements the connector for Elasticsearch.

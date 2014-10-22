@@ -41,15 +41,13 @@ import com.stratio.meta2.common.statements.structures.selectors.StringSelector;
  * @author darroyo
  */
 public class IndexMetadataBuilder {
+    static final String INDEX_NAME = "index1";
+    static final String INDEX_NAME_2 = "index2";
+    static final String COLUMN_INDEX_NAME = "columnName_2";
     /**
      * The Log.
      */
     final Logger logger = LoggerFactory.getLogger(this.getClass());
-
-    static final String INDEX_NAME = "index1";
-    static final String INDEX_NAME_2 = "index2";
-    static final String COLUMN_INDEX_NAME = "columnName_2";
-
     private IndexName indexName;
     private TableName tableName;
     private Map<Selector, Selector> options = Collections.EMPTY_MAP;
@@ -91,22 +89,25 @@ public class IndexMetadataBuilder {
     }
 
     public IndexMetadataBuilder addOption(String option, String value) {
-        if (options == null)
+        if (options == null) {
             options = new HashMap<Selector, Selector>();
+        }
         options.put(new StringSelector(option), new StringSelector(value));
         return this;
     }
 
     public IndexMetadataBuilder addOption(String option, Integer value) {
-        if (options == null)
+        if (options == null) {
             options = new HashMap<Selector, Selector>();
+        }
         options.put(new StringSelector(option), new IntegerSelector(value));
         return this;
     }
 
     public IndexMetadataBuilder addOption(String option, Boolean value) {
-        if (options == null)
+        if (options == null) {
             options = new HashMap<Selector, Selector>();
+        }
         options.put(new StringSelector(option), new BooleanSelector(value));
         return this;
     }

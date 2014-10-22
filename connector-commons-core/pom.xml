@@ -30,8 +30,8 @@
     <dependencies>
 
         <dependency>
-            <artifactId>meta-common</artifactId>
-            <groupId>com.stratio.meta</groupId>
+            <artifactId>crossdata-common</artifactId>
+            <groupId>com.stratio.crossdata</groupId>
             <version>0.1.0-SNAPSHOT</version>
         </dependency>
 

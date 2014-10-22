@@ -25,9 +25,9 @@ import org.slf4j.LoggerFactory;
 
 import com.stratio.connector.commons.connection.exceptions.CreateNativeConnectionException;
 import com.stratio.connector.commons.connection.exceptions.HandlerConnectionException;
-import com.stratio.meta.common.connector.ConnectorClusterConfig;
-import com.stratio.meta.common.connector.IConfiguration;
-import com.stratio.meta.common.security.ICredentials;
+import com.stratio.crossdata.common.connector.ConnectorClusterConfig;
+import com.stratio.crossdata.common.connector.IConfiguration;
+import com.stratio.crossdata.common.security.ICredentials;
 
 /**
  * This class is the responsible to handle the connections.
@@ -69,7 +69,7 @@ public abstract class ConnectionHandler {
     public void createConnection(ICredentials credentials, ConnectorClusterConfig config)
             throws HandlerConnectionException {
         Connection connection = createNativeConnection(credentials, config);
-        
+
         String connectionName = config.getName().getName();
         if (!connections.containsKey(connectionName)) {
             connections.put(connectionName, connection);

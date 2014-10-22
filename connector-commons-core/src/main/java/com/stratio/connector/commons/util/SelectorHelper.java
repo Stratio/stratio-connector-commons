@@ -21,13 +21,13 @@ package com.stratio.connector.commons.util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.stratio.meta.common.exceptions.ExecutionException;
-import com.stratio.meta2.common.statements.structures.selectors.BooleanSelector;
-import com.stratio.meta2.common.statements.structures.selectors.ColumnSelector;
-import com.stratio.meta2.common.statements.structures.selectors.FloatingPointSelector;
-import com.stratio.meta2.common.statements.structures.selectors.IntegerSelector;
-import com.stratio.meta2.common.statements.structures.selectors.Selector;
-import com.stratio.meta2.common.statements.structures.selectors.StringSelector;
+import com.stratio.crossdata.common.exceptions.ExecutionException;
+import com.stratio.crossdata.common.statements.structures.selectors.BooleanSelector;
+import com.stratio.crossdata.common.statements.structures.selectors.ColumnSelector;
+import com.stratio.crossdata.common.statements.structures.selectors.FloatingPointSelector;
+import com.stratio.crossdata.common.statements.structures.selectors.IntegerSelector;
+import com.stratio.crossdata.common.statements.structures.selectors.Selector;
+import com.stratio.crossdata.common.statements.structures.selectors.StringSelector;
 
 /**
  * Created by jmgomez on 17/09/14.

@@ -18,8 +18,6 @@
 
 package com.stratio.connector.commons.ftest.functionalInsert;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;

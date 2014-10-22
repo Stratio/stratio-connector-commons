@@ -66,7 +66,8 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
     public void selectAllFromTable() throws UnsupportedException, ExecutionException {
 
         ClusterName clusterNodeName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST selectAllFromTable ***********************************");
+        System.out.println(
+                "*********************************** INIT FUNCTIONAL TEST selectAllFromTable ***********************************");
 
         for (int i = 0; i < getRowsToSearch(); i++) {
             insertRow(i, clusterNodeName);
@@ -83,7 +84,7 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
         fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_3, COLUMN_3, ColumnType.VARCHAR));
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addColumnName(COLUMN_1, COLUMN_2, COLUMN_3)
-                        .addSelect(fields).getLogicalWorkflow();
+                .addSelect(fields).getLogicalWorkflow();
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
         Set<Object> proveSet = new HashSet<>();
         ResultSet resultSet = queryResult.getResultSet();
@@ -110,7 +111,8 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
     public void validateMetadataTest() throws UnsupportedException, ExecutionException {
 
         ClusterName clusterNodeName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST selectAllFromTable ***********************************");
+        System.out.println(
+                "*********************************** INIT FUNCTIONAL TEST selectAllFromTable ***********************************");
         insertTypedRow();
 
         refresh(CATALOG);
@@ -122,7 +124,7 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
         fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_3, "alias" + COLUMN_3, ColumnType.BOOLEAN));
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addColumnName(COLUMN_1, COLUMN_2, COLUMN_3)
-                        .addSelect(fields).getLogicalWorkflow();
+                .addSelect(fields).getLogicalWorkflow();
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
 
         ResultSet resultSet = queryResult.getResultSet();
@@ -141,7 +143,7 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
         tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.INT)
-                        .addColumn(COLUMN_3, ColumnType.BOOLEAN);
+                .addColumn(COLUMN_3, ColumnType.BOOLEAN);
 
         TableMetadata targetTable = tableMetadataBuilder.build();
 
@@ -154,22 +156,22 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
         ColumnMetadata[] metadata = columnMetadata.toArray(new ColumnMetadata[0]);
 
         assertEquals("the table name is correct", QualifiedNames.getTableQualifiedName(CATALOG, TABLE),
-                        metadata[0].getTableName());
+                metadata[0].getTableName());
         assertEquals("the table name is correct", QualifiedNames.getTableQualifiedName(CATALOG, TABLE),
-                        metadata[1].getTableName());
+                metadata[1].getTableName());
         assertEquals("the table name is correct", QualifiedNames.getTableQualifiedName(CATALOG, TABLE),
-                        metadata[2].getTableName());
+                metadata[2].getTableName());
 
         assertEquals("The first column type is correct", ColumnType.TEXT, metadata[0].getType());
         assertEquals("The second column type is correct", ColumnType.INT, metadata[1].getType());
         assertEquals("The third column type is correct", ColumnType.BOOLEAN, metadata[2].getType());
 
         assertEquals("The first column name is correct",
-                        QualifiedNames.getColumnQualifiedName(CATALOG, TABLE, COLUMN_1), metadata[0].getColumnName());
+                QualifiedNames.getColumnQualifiedName(CATALOG, TABLE, COLUMN_1), metadata[0].getColumnName());
         assertEquals("The first column name is correct",
-                        QualifiedNames.getColumnQualifiedName(CATALOG, TABLE, COLUMN_2), metadata[1].getColumnName());
+                QualifiedNames.getColumnQualifiedName(CATALOG, TABLE, COLUMN_2), metadata[1].getColumnName());
         assertEquals("The first column name is correct",
-                        QualifiedNames.getColumnQualifiedName(CATALOG, TABLE, COLUMN_3), metadata[2].getColumnName());
+                QualifiedNames.getColumnQualifiedName(CATALOG, TABLE, COLUMN_3), metadata[2].getColumnName());
 
         assertEquals("The first column alias is correct", "alias" + COLUMN_1, metadata[0].getColumnAlias());
         assertEquals("The first column alias is correct", "alias" + COLUMN_2, metadata[1].getColumnAlias());
@@ -193,7 +195,7 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
     }
 
     private void insertRecordNotReturnedInSearch(ClusterName clusterNodeName) throws ExecutionException,
-                    UnsupportedException {
+            UnsupportedException {
         insertRow(1, "type2", clusterNodeName);
         insertRow(2, "type2", clusterNodeName);
         insertRow(1, "otherTable", clusterNodeName);
@@ -201,12 +203,12 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
     }
 
     private void insertRow(int ikey, ClusterName clusterNodeName) throws UnsupportedOperationException,
-                    ExecutionException, UnsupportedException {
+            ExecutionException, UnsupportedException {
         insertRow(ikey, TABLE, clusterNodeName);
     }
 
     private void insertRow(int ikey, String Table, ClusterName clusterNodeName) throws UnsupportedOperationException,
-                    ExecutionException, UnsupportedException {
+            ExecutionException, UnsupportedException {
 
         Row row = new Row();
         Map<String, Cell> cells = new HashMap<>();
@@ -217,7 +219,7 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, Table);
         tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.VARCHAR)
-                        .addColumn(COLUMN_3, ColumnType.VARCHAR);
+                .addColumn(COLUMN_3, ColumnType.VARCHAR);
 
         TableMetadata targetTable = tableMetadataBuilder.build();
 

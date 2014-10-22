@@ -20,7 +20,6 @@ package com.stratio.connector.commons.ftest.functionalTestQuery;
 
 import static com.stratio.connector.commons.ftest.helper.TextConstant.danteParadise;
 import static com.stratio.connector.commons.ftest.helper.TextConstant.names;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -161,7 +160,6 @@ public abstract class GenericNotIndexedQueryStringFilterTest extends GenericConn
 
         ResultSet resultSet = queryResult.getResultSet();
         assertEquals("The record number is correct", 2, resultSet.size());
-
 
         for (Row row : resultSet) {
             assertTrue("the return text contains matter",
