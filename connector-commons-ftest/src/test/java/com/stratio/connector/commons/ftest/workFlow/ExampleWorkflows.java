@@ -116,29 +116,14 @@ public class ExampleWorkflows {
         return rows;
     }
 
-    /**
-     * Get a project operator taking the table name from the first column. This operation assumes all columns belong to
-     * the same table.
-     *
-     * @param columnNames
-     *            The list of columns.
-     * @return A {@link com.stratio.meta.common.logicalplan.Project}.
-     */
+
     public Project getProject(ColumnName... columnNames) {
         TableName table = new TableName(columnNames[0].getTableName().getCatalogName().getName(), columnNames[0]
                         .getTableName().getName());
         return new Project(Operations.PROJECT, table, clusterName, Arrays.asList(columnNames));
     }
 
-    /**
-     * Get a select operator.
-     *
-     * @param alias
-     *            The alias
-     * @param columnNames
-     *            The list of columns.
-     * @return A {@link com.stratio.meta.common.logicalplan.Select}.
-     */
+
     public Select getSelect(String[] alias, ColumnType[] types, ColumnName... columnNames) {
         Map<ColumnName, String> columnMap = new HashMap<>();
         Map<String, ColumnType> columntype = new HashMap<>();
@@ -151,30 +136,14 @@ public class ExampleWorkflows {
         return new Select(Operations.SELECT_OPERATOR, columnMap, columntype);
     }
 
-    /**
-     * Get a filter operator.
-     *
-     * @param filterOp
-     *            The Filter operation.
-     * @param column
-     *            The column name.
-     * @param op
-     *            The relationship operator.
-     * @param right
-     *            The right select.
-     * @return A {@link com.stratio.meta.common.logicalplan.Filter}.
-     */
+
     public Filter getFilter(Operations filterOp, ColumnName column, Operator op, Selector right) {
         Selector left = new ColumnSelector(column);
         Relation r = new Relation(left, op, right);
         return new Filter(filterOp, r);
     }
 
-    /**
-     * Get a basic select. SELECT name, users.age FROM example.users;
-     *
-     * @return A {@link com.stratio.meta.common.logicalplan.LogicalWorkflow}.
-     */
+
     public LogicalWorkflow getBasicSelect() {
         ColumnName name = new ColumnName(catalog, table, COLUMN_NAME);
         ColumnName age = new ColumnName(catalog, table, COLUMN_AGE);
@@ -190,7 +159,7 @@ public class ExampleWorkflows {
     /**
      * Get a basic select. SELECT * FROM example.users;
      *
-     * @return A {@link com.stratio.meta.common.logicalplan.LogicalWorkflow}.
+     * @return A {@link com.stratio.cossdata.common.logicalplan.LogicalWorkflow}.
      */
     public LogicalWorkflow getBasicSelectAsterisk() {
         ColumnName id = new ColumnName(catalog, table, COLUMN_ID);
@@ -206,12 +175,6 @@ public class ExampleWorkflows {
         return lw;
     }
 
-    /**
-     * Get a basic select with a single where clause on an indexed field. SELECT users.id, users.name, users.age FROM
-     * example.users WHERE users.name='user1';
-     *
-     * @return A {@link com.stratio.meta.common.logicalplan.LogicalWorkflow}.
-     */
     public LogicalWorkflow getSelectIndexedField() {
         ColumnName id = new ColumnName(catalog, table, COLUMN_ID);
         ColumnName name = new ColumnName(catalog, table, COLUMN_NAME);
@@ -249,12 +212,7 @@ public class ExampleWorkflows {
         return lw;
     }
 
-    /**
-     * Get a basic select with two where clauses. SELECT users.id, users.name, users.age FROM example.users WHERE
-     * users.name='user1' AND users.age=42;
-     *
-     * @return A {@link com.stratio.meta.common.logicalplan.LogicalWorkflow}.
-     */
+
     public LogicalWorkflow getSelectMixedWhere() {
         ColumnName id = new ColumnName(catalog, table, COLUMN_ID);
         ColumnName name = new ColumnName(catalog, table, COLUMN_NAME);
