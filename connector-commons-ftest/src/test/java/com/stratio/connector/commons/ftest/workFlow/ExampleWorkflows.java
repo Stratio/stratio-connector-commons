@@ -22,11 +22,10 @@ import static com.stratio.connector.commons.ftest.helper.TextConstant.names;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.stratio.crossdata.common.metadata.Operations;
 import com.stratio.crossdata.common.data.Cell;
 import com.stratio.crossdata.common.data.ClusterName;
 import com.stratio.crossdata.common.data.ColumnName;
@@ -38,12 +37,13 @@ import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
 import com.stratio.crossdata.common.logicalplan.Project;
 import com.stratio.crossdata.common.logicalplan.Select;
 import com.stratio.crossdata.common.metadata.ColumnType;
-import com.stratio.crossdata.common.statements.structures.relationships.Operator;
-import com.stratio.crossdata.common.statements.structures.relationships.Relation;
-import com.stratio.crossdata.common.statements.structures.selectors.ColumnSelector;
-import com.stratio.crossdata.common.statements.structures.selectors.IntegerSelector;
-import com.stratio.crossdata.common.statements.structures.selectors.Selector;
-import com.stratio.crossdata.common.statements.structures.selectors.StringSelector;
+import com.stratio.crossdata.common.metadata.Operations;
+import com.stratio.crossdata.common.statements.structures.ColumnSelector;
+import com.stratio.crossdata.common.statements.structures.IntegerSelector;
+import com.stratio.crossdata.common.statements.structures.Operator;
+import com.stratio.crossdata.common.statements.structures.Relation;
+import com.stratio.crossdata.common.statements.structures.Selector;
+import com.stratio.crossdata.common.statements.structures.StringSelector;
 
 /**
  * Example workflows to test basic functionality of the different connectors. This class assumes the existence of a
@@ -125,15 +125,19 @@ public class ExampleWorkflows {
 
 
     public Select getSelect(String[] alias, ColumnType[] types, ColumnName... columnNames) {
-        Map<ColumnName, String> columnMap = new HashMap<>();
-        Map<String, ColumnType> columntype = new HashMap<>();
+        Map<ColumnName, String> columnMap = new LinkedHashMap<>();
+        Map<String, ColumnType> columntype = new LinkedHashMap<>();
         int aliasIndex = 0;
+        Map<ColumnName, ColumnType> typeMapFromColumnName = new LinkedHashMap();
         for (ColumnName column : columnNames) {
-            columnMap.put(new ColumnName(catalog, table, column.getName()), alias[aliasIndex]);
+            ColumnName columnName = new ColumnName(catalog, table, column.getName());
+            columnMap.put(columnName, alias[aliasIndex]);
             columntype.put(column.getQualifiedName(), types[aliasIndex]);
+            typeMapFromColumnName.put(columnName,types[aliasIndex]);
             aliasIndex++;
         }
-        return new Select(Operations.SELECT_OPERATOR, columnMap, columntype);
+
+        return new Select(Operations.SELECT_OPERATOR, columnMap, columntype, typeMapFromColumnName);
     }
 
 
@@ -159,7 +163,7 @@ public class ExampleWorkflows {
     /**
      * Get a basic select. SELECT * FROM example.users;
      *
-     * @return A {@link com.stratio.cossdata.common.logicalplan.LogicalWorkflow}.
+     *
      */
     public LogicalWorkflow getBasicSelectAsterisk() {
         ColumnName id = new ColumnName(catalog, table, COLUMN_ID);
