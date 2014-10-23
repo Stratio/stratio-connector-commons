@@ -31,8 +31,7 @@ import com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator;
 import com.stratio.crossdata.common.data.Cell;
 import com.stratio.crossdata.common.data.ClusterName;
 import com.stratio.crossdata.common.data.Row;
-import com.stratio.crossdata.common.exceptions.ExecutionException;
-import com.stratio.crossdata.common.exceptions.UnsupportedException;
+import com.stratio.crossdata.common.exceptions.ConnectorException;
 import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
 import com.stratio.crossdata.common.metadata.ColumnType;
 import com.stratio.crossdata.common.metadata.TableMetadata;
@@ -73,7 +72,7 @@ public abstract class GenericLimitTest extends GenericConnectorTest {
     }
 
     private void insertRow(int ikey, String texto, ClusterName cLusterName) throws UnsupportedOperationException,
-                    ExecutionException, UnsupportedException {
+            ConnectorException {
 
         Row row = new Row();
         Map<String, Cell> cells = new HashMap<>();

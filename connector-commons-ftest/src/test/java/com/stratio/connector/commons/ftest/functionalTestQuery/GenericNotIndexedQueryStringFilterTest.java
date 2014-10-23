@@ -42,10 +42,7 @@ import com.stratio.crossdata.common.data.IndexName;
 import com.stratio.crossdata.common.data.ResultSet;
 import com.stratio.crossdata.common.data.Row;
 import com.stratio.crossdata.common.data.TableName;
-import com.stratio.crossdata.common.exceptions.ConnectionException;
-import com.stratio.crossdata.common.exceptions.ExecutionException;
-import com.stratio.crossdata.common.exceptions.InitializationException;
-import com.stratio.crossdata.common.exceptions.UnsupportedException;
+import com.stratio.crossdata.common.exceptions.ConnectorException;
 import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
 import com.stratio.crossdata.common.metadata.ColumnMetadata;
 import com.stratio.crossdata.common.metadata.ColumnType;
@@ -64,13 +61,13 @@ public abstract class GenericNotIndexedQueryStringFilterTest extends GenericConn
     LogicalWorkFlowCreator logicalWorkFlowCreator;
 
     @Before
-    public void setUp() throws ConnectionException, ExecutionException, InitializationException, UnsupportedException {
+    public void setUp() throws ConnectorException {
         super.setUp();
         logicalWorkFlowCreator = new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName());
     }
 
     @Test
-    public void selectNotIndexedFilterUpperCaseEqual() throws ExecutionException, UnsupportedException {
+    public void selectNotIndexedFilterUpperCaseEqual() throws ConnectorException {
 
         ClusterName clusterNodeName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterUpperCaseEqual ***********************************");
@@ -89,7 +86,7 @@ public abstract class GenericNotIndexedQueryStringFilterTest extends GenericConn
     }
 
     @Test
-    public void selectNotIndexedFilterUpperCaseDistinct() throws UnsupportedException, ExecutionException {
+    public void selectNotIndexedFilterUpperCaseDistinct() throws ConnectorException {
         ClusterName clusterNodeName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST selectNoPKFilterDistinct ***********************************");
 
@@ -106,7 +103,7 @@ public abstract class GenericNotIndexedQueryStringFilterTest extends GenericConn
     }
 
     @Test
-    public void selectNotIndexedFilterLowerCaseEqual() throws ExecutionException, UnsupportedException {
+    public void selectNotIndexedFilterLowerCaseEqual() throws ConnectorException {
 
         ClusterName clusterNodeName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterUpperCaseEqual ***********************************");
@@ -125,7 +122,7 @@ public abstract class GenericNotIndexedQueryStringFilterTest extends GenericConn
     }
 
     @Test
-    public void selectNotIndexedFilterLowerCaseCaseDistinct() throws UnsupportedException, ExecutionException {
+    public void selectNotIndexedFilterLowerCaseCaseDistinct() throws ConnectorException {
         ClusterName clusterNodeName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST selectNoPKFilterDistinct ***********************************");
 
@@ -142,7 +139,7 @@ public abstract class GenericNotIndexedQueryStringFilterTest extends GenericConn
     }
 
     @Test
-    public void selectNotIndexedFilterMatch() throws UnsupportedException, ExecutionException {
+    public void selectNotIndexedFilterMatch() throws ConnectorException {
 
         System.out.println("*********************************** INIT FUNCTIONAL TEST selectNoPKFilterDistinct ***********************************");
 
@@ -165,7 +162,7 @@ public abstract class GenericNotIndexedQueryStringFilterTest extends GenericConn
     }
 
     private void insertRow(String[] text, ClusterName clusterNodeName, boolean toLowerCase)
-                    throws UnsupportedOperationException, ExecutionException, UnsupportedException {
+            throws UnsupportedOperationException, ConnectorException {
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
         tableMetadataBuilder.addColumn("id", ColumnType.INT).addColumn(COLUMN_TEXT, ColumnType.VARCHAR);

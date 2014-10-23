@@ -34,8 +34,7 @@ import com.stratio.crossdata.common.data.Cell;
 import com.stratio.crossdata.common.data.ClusterName;
 import com.stratio.crossdata.common.data.ResultSet;
 import com.stratio.crossdata.common.data.Row;
-import com.stratio.crossdata.common.exceptions.ExecutionException;
-import com.stratio.crossdata.common.exceptions.UnsupportedException;
+import com.stratio.crossdata.common.exceptions.ConnectorException;
 import com.stratio.crossdata.common.exceptions.ValidationException;
 import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
 import com.stratio.crossdata.common.metadata.ColumnType;
@@ -61,8 +60,7 @@ public abstract class GenericBulkInsertTest extends GenericConnectorTest {
     }
 
     @Test
-    public void testBulkInsertWithPK() throws ExecutionException, ValidationException, UnsupportedOperationException,
-                    UnsupportedException {
+    public void testBulkInsertWithPK() throws ConnectorException, ValidationException, UnsupportedOperationException {
 
         ClusterName clusterName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST testBulkInsertWithPK ***********************************");
@@ -72,8 +70,8 @@ public abstract class GenericBulkInsertTest extends GenericConnectorTest {
     }
 
     @Test
-    public void testBulkInsertWithoutPK() throws ExecutionException, ValidationException,
-                    UnsupportedOperationException, UnsupportedException {
+    public void testBulkInsertWithoutPK() throws ConnectorException, ValidationException,
+            UnsupportedOperationException {
 
         ClusterName clusterName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST testBulkInsertWithoutPK ***********************************");
@@ -82,7 +80,7 @@ public abstract class GenericBulkInsertTest extends GenericConnectorTest {
 
     }
 
-    private void insertBulk(ClusterName cluesterName, boolean withPK) throws UnsupportedException, ExecutionException {
+    private void insertBulk(ClusterName cluesterName, boolean withPK) throws ConnectorException {
         Set<Row> rows = new HashSet<Row>();
 
         for (int i = 0; i < getRowToInsert(); i++) {
@@ -110,7 +108,7 @@ public abstract class GenericBulkInsertTest extends GenericConnectorTest {
         refresh(CATALOG);
     }
 
-    private void verifyInsert(ClusterName cluesterName) throws UnsupportedException, ExecutionException {
+    private void verifyInsert(ClusterName cluesterName) throws ConnectorException {
         QueryResult queryResult = connector.getQueryEngine().execute(createLogicalWorkFlow());
         ResultSet resultIterator = queryResult.getResultSet();
 

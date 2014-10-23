@@ -40,6 +40,7 @@ import com.stratio.crossdata.common.data.ColumnName;
 import com.stratio.crossdata.common.data.Row;
 import com.stratio.crossdata.common.data.TableName;
 import com.stratio.crossdata.common.exceptions.ConnectionException;
+import com.stratio.crossdata.common.exceptions.ConnectorException;
 import com.stratio.crossdata.common.exceptions.ExecutionException;
 import com.stratio.crossdata.common.exceptions.UnsupportedException;
 import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
@@ -57,7 +58,7 @@ public abstract class GenericMetadataDropTest extends GenericConnectorTest {
     private String OTHER_CATALOG = "other_" + CATALOG;
 
     @Test
-    public void dropTableTest() throws UnsupportedException, ExecutionException {
+    public void dropTableTest() throws ConnectorException {
         ClusterName clusterName = getClusterName();
         Row row = new Row();
         Map<String, Cell> cells = new HashMap<>();
@@ -98,7 +99,7 @@ public abstract class GenericMetadataDropTest extends GenericConnectorTest {
         }
     }
 
-    private void createTable() throws UnsupportedException, ExecutionException {
+    private void createTable() throws ConnectorException {
         TableName tableName = new TableName(CATALOG, TABLE);
         Map<Selector, Selector> options = Collections.EMPTY_MAP;
         Map<ColumnName, ColumnMetadata> columnsMap = new HashMap<>();
@@ -120,7 +121,7 @@ public abstract class GenericMetadataDropTest extends GenericConnectorTest {
     }
 
     @Test
-    public void dropCatalogTest() throws UnsupportedException, ExecutionException {
+    public void dropCatalogTest() throws ConnectorException {
 
         ClusterName clusterName = getClusterName();
         Row row = new Row();

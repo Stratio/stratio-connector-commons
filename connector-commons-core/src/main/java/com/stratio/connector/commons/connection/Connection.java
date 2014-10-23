@@ -23,7 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * This interface represents a generic connection to be handle.
+ * This interface represents a generic logic connection.
  * Created by jmgomez on 29/08/14.
  */
 public abstract class Connection<T> {
@@ -34,7 +34,13 @@ public abstract class Connection<T> {
     private static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
     private String status;
+    /**
+     * The last use date.
+     */
     private String lastDateInfo;
+    /**
+     * The work connection state.
+     */
     private Boolean workInProgress;
 
     /**
@@ -56,18 +62,34 @@ public abstract class Connection<T> {
      */
     public abstract T getNativeConnection();
 
+    /**
+     * Return the  date of last use.
+     * @return the date of last use.
+     */
     public String getLastDateInfo() {
         return lastDateInfo;
     }
 
+    /**
+     * Return the work status.
+     * @return the work status.
+     */
     public String getStatus() {
         return status;
     }
 
+    /**
+     * Check the connection status.
+     * @return true if the connections is in use. False in other case.
+     */
     public Boolean isWorkInProgress() {
         return workInProgress;
     }
 
+    /**
+     * Set the connection status.
+     * @param workInProgress the connection work status.
+     */
     public void setWorkInProgress(Boolean workInProgress) {
         if (workInProgress) {
             status = "Work in Progress";

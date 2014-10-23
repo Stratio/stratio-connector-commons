@@ -40,10 +40,7 @@ import com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator;
 import com.stratio.crossdata.common.data.Cell;
 import com.stratio.crossdata.common.data.ClusterName;
 import com.stratio.crossdata.common.data.Row;
-import com.stratio.crossdata.common.exceptions.ConnectionException;
-import com.stratio.crossdata.common.exceptions.ExecutionException;
-import com.stratio.crossdata.common.exceptions.InitializationException;
-import com.stratio.crossdata.common.exceptions.UnsupportedException;
+import com.stratio.crossdata.common.exceptions.ConnectorException;
 import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
 import com.stratio.crossdata.common.metadata.ColumnType;
 import com.stratio.crossdata.common.metadata.TableMetadata;
@@ -58,13 +55,13 @@ public abstract class GenericPKQueryIntegerFilterTest extends GenericConnectorTe
     LogicalWorkFlowCreator logicalWorkFlowCreator;
 
     @Before
-    public void setUp() throws ConnectionException, ExecutionException, InitializationException, UnsupportedException {
+    public void setUp() throws ConnectorException {
         super.setUp();
         logicalWorkFlowCreator = new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName());
     }
 
     @Test
-    public void selectPKFilterEqual() throws ExecutionException, UnsupportedException {
+    public void selectPKFilterEqual() throws ConnectorException {
 
         ClusterName clusterNodeName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterEqual ***********************************");
@@ -89,7 +86,7 @@ public abstract class GenericPKQueryIntegerFilterTest extends GenericConnectorTe
     }
 
     @Test
-    public void selectPKDoubleFilterEqual() throws ExecutionException, UnsupportedException {
+    public void selectPKDoubleFilterEqual() throws ConnectorException {
 
         ClusterName clusterNodeName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterEqual ***********************************");
@@ -113,7 +110,7 @@ public abstract class GenericPKQueryIntegerFilterTest extends GenericConnectorTe
     }
 
     @Test
-    public void selectPKGeatEqualFilterEqual() throws ExecutionException, UnsupportedException {
+    public void selectPKGeatEqualFilterEqual() throws ConnectorException {
 
         ClusterName clusterNodeName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterEqual ***********************************");
@@ -149,7 +146,7 @@ public abstract class GenericPKQueryIntegerFilterTest extends GenericConnectorTe
     }
 
     private void insertRow(int ikey, int age, int money, ClusterName clusterNodeName, boolean withPk)
-                    throws UnsupportedOperationException, ExecutionException, UnsupportedException {
+            throws UnsupportedOperationException, ConnectorException {
 
         Row row = new Row();
         Map<String, Cell> cells = new HashMap<>();

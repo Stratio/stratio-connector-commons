@@ -19,7 +19,7 @@
 package com.stratio.connector.commons.connection.exceptions;
 
 /**
- * This exception represents a exception in the handling of a connection.
+ * This class represents a exception in the handling of a connection.
  * Created by jmgomez on 9/09/14.
  */
 public class CreateNativeConnectionException extends HandlerConnectionException {

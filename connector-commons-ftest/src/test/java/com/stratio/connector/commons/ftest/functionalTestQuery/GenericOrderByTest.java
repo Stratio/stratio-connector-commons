@@ -36,8 +36,7 @@ import com.stratio.crossdata.common.data.ClusterName;
 import com.stratio.crossdata.common.data.ColumnName;
 import com.stratio.crossdata.common.data.Row;
 import com.stratio.crossdata.common.data.TableName;
-import com.stratio.crossdata.common.exceptions.ExecutionException;
-import com.stratio.crossdata.common.exceptions.UnsupportedException;
+import com.stratio.crossdata.common.exceptions.ConnectorException;
 import com.stratio.crossdata.common.logicalplan.LogicalStep;
 import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
 import com.stratio.crossdata.common.logicalplan.Project;
@@ -53,7 +52,7 @@ public abstract class GenericOrderByTest extends GenericConnectorTest {
     public static final int SORT_AGE = 1;
 
     @Test
-    public void sortDescTest() throws UnsupportedException, ExecutionException {
+    public void sortDescTest() throws ConnectorException {
 
         ClusterName clusterName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST sortDescTest "
@@ -86,7 +85,7 @@ public abstract class GenericOrderByTest extends GenericConnectorTest {
     }
 
     @Test
-    public void sortTestMultifield() throws ExecutionException, UnsupportedException {
+    public void sortTestMultifield() throws ConnectorException {
 
         ClusterName clusterName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST sortDescTest "
@@ -180,7 +179,7 @@ public abstract class GenericOrderByTest extends GenericConnectorTest {
     }
 
     private void insertRow(int ikey, String texto, int money, int age, ClusterName clusterName)
-                    throws UnsupportedOperationException, ExecutionException, UnsupportedException {
+            throws UnsupportedOperationException, ConnectorException {
 
         Row row = new Row();
         Map<String, Cell> cells = new HashMap<>();

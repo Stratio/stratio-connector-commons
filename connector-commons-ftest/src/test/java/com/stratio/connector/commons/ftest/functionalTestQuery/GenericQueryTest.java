@@ -39,8 +39,7 @@ import com.stratio.crossdata.common.data.ClusterName;
 import com.stratio.crossdata.common.data.QualifiedNames;
 import com.stratio.crossdata.common.data.ResultSet;
 import com.stratio.crossdata.common.data.Row;
-import com.stratio.crossdata.common.exceptions.ExecutionException;
-import com.stratio.crossdata.common.exceptions.UnsupportedException;
+import com.stratio.crossdata.common.exceptions.ConnectorException;
 import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
 import com.stratio.crossdata.common.metadata.ColumnType;
 import com.stratio.crossdata.common.metadata.TableMetadata;
@@ -63,7 +62,7 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
     }
 
     @Test
-    public void selectAllFromTable() throws UnsupportedException, ExecutionException {
+    public void selectAllFromTable() throws ConnectorException {
 
         ClusterName clusterNodeName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST selectAllFromTable ***********************************");
@@ -107,7 +106,7 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
     }
 
     @Test
-    public void validateMetadataTest() throws UnsupportedException, ExecutionException {
+    public void validateMetadataTest() throws ConnectorException {
 
         ClusterName clusterNodeName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST selectAllFromTable ***********************************");
@@ -131,7 +130,7 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
 
     }
 
-    protected void insertTypedRow() throws UnsupportedException, ExecutionException {
+    protected void insertTypedRow() throws ConnectorException {
 
         Row row = new Row();
         Map<String, Cell> cells = new HashMap<>();
@@ -192,8 +191,7 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
         assertEquals("The third column is sorted", COLUMN_3, columnName[2]);
     }
 
-    private void insertRecordNotReturnedInSearch(ClusterName clusterNodeName) throws ExecutionException,
-                    UnsupportedException {
+    private void insertRecordNotReturnedInSearch(ClusterName clusterNodeName) throws ConnectorException {
         insertRow(1, "type2", clusterNodeName);
         insertRow(2, "type2", clusterNodeName);
         insertRow(1, "otherTable", clusterNodeName);
@@ -201,12 +199,12 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
     }
 
     private void insertRow(int ikey, ClusterName clusterNodeName) throws UnsupportedOperationException,
-                    ExecutionException, UnsupportedException {
+            ConnectorException {
         insertRow(ikey, TABLE, clusterNodeName);
     }
 
     private void insertRow(int ikey, String Table, ClusterName clusterNodeName) throws UnsupportedOperationException,
-                    ExecutionException, UnsupportedException {
+            ConnectorException {
 
         Row row = new Row();
         Map<String, Cell> cells = new HashMap<>();

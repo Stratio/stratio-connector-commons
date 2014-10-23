@@ -27,10 +27,7 @@ import org.junit.Test;
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
 import com.stratio.connector.commons.ftest.schema.TableMetadataBuilder;
 import com.stratio.crossdata.common.data.Row;
-import com.stratio.crossdata.common.exceptions.ConnectionException;
-import com.stratio.crossdata.common.exceptions.ExecutionException;
-import com.stratio.crossdata.common.exceptions.InitializationException;
-import com.stratio.crossdata.common.exceptions.UnsupportedException;
+import com.stratio.crossdata.common.exceptions.ConnectorException;
 import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
 import com.stratio.crossdata.common.metadata.ColumnType;
 import com.stratio.crossdata.common.metadata.TableMetadata;
@@ -45,7 +42,7 @@ public abstract class ExampleWorkflowsTest extends GenericConnectorTest {
     private ExampleWorkflows exampleWorkflows;
 
     @Before
-    public void setUp() throws InitializationException, ConnectionException, UnsupportedException, ExecutionException {
+    public void setUp() throws ConnectorException {
         setDeleteBeteweenTest(false);
         super.setUp();
 
@@ -74,7 +71,7 @@ public abstract class ExampleWorkflowsTest extends GenericConnectorTest {
     }
 
     @Test
-    public void basicSelect() throws UnsupportedException, ExecutionException {
+    public void basicSelect() throws ConnectorException {
 
         System.out.println("*********************************** INIT FUNCTIONAL TEST basicSelect ***********************************");
 
@@ -88,7 +85,7 @@ public abstract class ExampleWorkflowsTest extends GenericConnectorTest {
     }
 
     @Test
-    public void basicSelectAsterisk() throws UnsupportedException, ExecutionException {
+    public void basicSelectAsterisk() throws ConnectorException {
         System.out.println("*********************************** INIT FUNCTIONAL TEST basicSelectAsterisk ***********************************");
 
         LogicalWorkflow logicalWorkflow = exampleWorkflows.getBasicSelectAsterisk();
@@ -97,7 +94,7 @@ public abstract class ExampleWorkflowsTest extends GenericConnectorTest {
     }
 
     @Test
-    public void selectIndexedField() throws UnsupportedException, ExecutionException {
+    public void selectIndexedField() throws ConnectorException {
 
         System.out.println("*********************************** INIT FUNCTIONAL TEST basicSelectAsterisk ***********************************");
 
@@ -113,7 +110,7 @@ public abstract class ExampleWorkflowsTest extends GenericConnectorTest {
     }
 
     @Test
-    public void selectNonIndexedField() throws UnsupportedException, ExecutionException {
+    public void selectNonIndexedField() throws ConnectorException {
         System.out.println("*********************************** INIT FUNCTIONAL TEST selectNonIndexedField ***********************************");
 
         LogicalWorkflow logicalWorkflow = exampleWorkflows.getSelectNonIndexedField();
@@ -131,7 +128,7 @@ public abstract class ExampleWorkflowsTest extends GenericConnectorTest {
     }
 
     @Test
-    public void selectMixedWhere() throws UnsupportedException, ExecutionException {
+    public void selectMixedWhere() throws ConnectorException {
         System.out.println("*********************************** INIT FUNCTIONAL TEST selectMixedWhere ***********************************");
 
         LogicalWorkflow logicalWorkflow = exampleWorkflows.getSelectMixedWhere();

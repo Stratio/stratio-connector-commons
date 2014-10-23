@@ -33,6 +33,7 @@ import com.stratio.connector.commons.ftest.GenericConnectorTest;
 import com.stratio.crossdata.common.data.ColumnName;
 import com.stratio.crossdata.common.data.IndexName;
 import com.stratio.crossdata.common.data.TableName;
+import com.stratio.crossdata.common.exceptions.ConnectorException;
 import com.stratio.crossdata.common.exceptions.ExecutionException;
 import com.stratio.crossdata.common.exceptions.UnsupportedException;
 import com.stratio.crossdata.common.metadata.ColumnMetadata;
@@ -60,7 +61,7 @@ public abstract class GenericMetadataIndexTest extends GenericConnectorTest {
      * @throws ExecutionException
      */
     @Test
-    public void createDefaultIndexTest() throws UnsupportedException, ExecutionException {
+    public void createDefaultIndexTest() throws ConnectorException {
 
         // TODO create the catalog and the table if needed
         System.out.println("*********************************** INIT FUNCTIONAL TEST createDefaultIndexTest ***********************************");
@@ -98,7 +99,7 @@ public abstract class GenericMetadataIndexTest extends GenericConnectorTest {
      * @throws ExecutionException
      */
     @Test
-    public void createTextIndexTest() throws UnsupportedException, ExecutionException {
+    public void createTextIndexTest() throws ConnectorException {
 
         // TODO create the catalog and the table if needed
         // TODO the connectors must check the columnType (Varchar, fulltext?)
@@ -152,7 +153,7 @@ public abstract class GenericMetadataIndexTest extends GenericConnectorTest {
      * @throws ExecutionException
      */
     @Test
-    public void createMultiIndexTest() throws UnsupportedException, ExecutionException {
+    public void createMultiIndexTest() throws ConnectorException {
 
         // TODO create the catalog and the table if needed
 
@@ -182,7 +183,7 @@ public abstract class GenericMetadataIndexTest extends GenericConnectorTest {
      * @throws ExecutionException
      */
     @Test
-    public void createCustomIndexTest() throws UnsupportedException, ExecutionException {
+    public void createCustomIndexTest() throws ConnectorException {
 
         // TODO create the catalog and the table if needed
 
@@ -224,7 +225,7 @@ public abstract class GenericMetadataIndexTest extends GenericConnectorTest {
     }
 
     @Test
-    public void createDuplicatedIndexTest() throws UnsupportedException, ExecutionException { // TODO create the catalog
+    public void createDuplicatedIndexTest() throws ConnectorException { // TODO create the catalog
         // and the table if needed
 
         System.out.println("*********************************** INIT FUNCTIONAL TEST createDuplicatedIndexTest ***********************************");
@@ -259,7 +260,7 @@ public abstract class GenericMetadataIndexTest extends GenericConnectorTest {
     }
 
     @Test
-    public void dropIndexTest() throws UnsupportedException, ExecutionException {
+    public void dropIndexTest() throws ConnectorException {
         System.out.println("*********************************** INIT FUNCTIONAL TEST dropIndexTest ***********************************");
         TableName tableName = new TableName(CATALOG, TABLE);
 

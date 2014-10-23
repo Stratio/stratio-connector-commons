@@ -35,8 +35,7 @@ import com.stratio.crossdata.common.data.CatalogName;
 import com.stratio.crossdata.common.data.ClusterName;
 import com.stratio.crossdata.common.data.ColumnName;
 import com.stratio.crossdata.common.data.TableName;
-import com.stratio.crossdata.common.exceptions.ExecutionException;
-import com.stratio.crossdata.common.exceptions.UnsupportedException;
+import com.stratio.crossdata.common.exceptions.ConnectorException;
 import com.stratio.crossdata.common.metadata.CatalogMetadata;
 import com.stratio.crossdata.common.metadata.ColumnMetadata;
 import com.stratio.crossdata.common.metadata.ColumnType;
@@ -52,7 +51,7 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
     private static final String INDEX = "index1";
 
     @Test
-    public void createCatalogTest() throws UnsupportedException, ExecutionException {
+    public void createCatalogTest() throws ConnectorException {
         ClusterName clusterName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST createCatalogTest "
                         + clusterName.getName() + " ***********************************");
@@ -76,7 +75,7 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
     }
 
     @Test
-    public void createCatalogWithOptionsTest() throws UnsupportedException, ExecutionException {
+    public void createCatalogWithOptionsTest() throws ConnectorException {
         ClusterName clusterName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST createCatalogTest "
                         + clusterName.getName() + " ***********************************");
@@ -115,7 +114,7 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
     }
 
     @Test
-    public void createCatalogExceptionCreateTwoCatalogTest() throws UnsupportedException, ExecutionException {
+    public void createCatalogExceptionCreateTwoCatalogTest() throws ConnectorException {
         ClusterName clusterName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST createCatalogTest "
                         + clusterName.getName() + " ***********************************");
@@ -145,7 +144,7 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
     }
 
     @Test
-    public void createTableWithoutTableTest() throws UnsupportedException, ExecutionException {
+    public void createTableWithoutTableTest() throws ConnectorException {
         ClusterName clusterName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST createTableTest ***********************************");
 
@@ -182,7 +181,7 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
     }
 
     @Test
-    public void createTableTest() throws UnsupportedException, ExecutionException {
+    public void createTableTest() throws ConnectorException {
         ClusterName clusterName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST createTableTest ***********************************");
 
