@@ -34,6 +34,7 @@ import com.stratio.crossdata.common.exceptions.UnsupportedException;
 import com.stratio.crossdata.common.metadata.TableMetadata;
 
 /**
+ * This abstract class is a Template for CommonsStorageEngine.
  * Created by dgomez on 22/09/14.
  */
 public abstract class CommonsStorageEngine<T> implements IStorageEngine {
@@ -56,6 +57,16 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
         this.connectionHandler = connectionHandler;
     }
 
+
+    /**
+     * This method insert  a rows in a database.
+     * @param targetCluster the target cluster to insert.
+     * @param targetTable the target table to insert.
+     * @param row the row to insert.
+     *
+     * @throws UnsupportedException if an operation is not supported.
+     * @throws ExecutionException if a error happens.
+     */
     @Override
     public final void insert(ClusterName targetCluster, TableMetadata targetTable, Row row) throws UnsupportedException,
             ExecutionException {
@@ -72,6 +83,17 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
         }
     }
 
+
+
+    /**
+     * This method insert  rows in a database.
+     * @param targetCluster the target cluster to insert.
+     * @param targetTable the target table to insert.
+     * @param rows the rows to insert.
+     *
+     * @throws UnsupportedException if an operation is not supported.
+     * @throws ExecutionException if a error happens.
+     */
     @Override
     public final void insert(ClusterName targetCluster, TableMetadata targetTable, Collection<Row> rows)
             throws UnsupportedException, ExecutionException {
@@ -88,10 +110,28 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
         }
     }
 
+    /**
+     * Abstract method which must be implemented by the concrete database metadataEngine to execute a simple insert.
+     * @param targetTable the target table to insert.
+     * @param row the row to insert.
+     * @param connection the database connection.
+     *
+     * @throws UnsupportedException if an operation is not supported.
+     * @throws ExecutionException if a error happens.
+     */
     protected abstract void insert(TableMetadata targetTable, Row row, Connection<T> connection)
             throws UnsupportedException,
             ExecutionException;
 
+    /**
+     * Abstract method which must be implemented by the concrete database metadataEngine to execute a bulk insert.
+     * @param targetTable the target table to insert.
+     * @param rows the row to insert.
+     * @param connection the database connection.
+     *
+     * @throws UnsupportedException if an operation is not supported.
+     * @throws ExecutionException if a error happens.
+     */
     protected abstract void insert(TableMetadata targetTable, Collection<Row> rows, Connection<T> connection)
             throws UnsupportedException, ExecutionException;
 }

@@ -34,7 +34,7 @@ import com.stratio.crossdata.common.exceptions.ExecutionException;
 import com.stratio.crossdata.common.security.ICredentials;
 
 /**
- * This class implements the connector for Elasticsearch.
+ * This class represent a logical connection to a database.
  */
 public abstract class CommonsConnector implements IConnector {
 
@@ -49,7 +49,7 @@ public abstract class CommonsConnector implements IConnector {
     protected ConnectionHandler connectionHandler = null;
 
     /**
-     * Create a connection with ElasticSearch.
+     * Create a logical connection.
      *
      * @param credentials the credentials.
      * @param config      the connection configuration.
@@ -67,7 +67,7 @@ public abstract class CommonsConnector implements IConnector {
     }
 
     /**
-     * It close the connection to ElasticSearch.
+     * It close the logical connection.
      *
      * @param clusterName the connection identifier.
      */
@@ -77,6 +77,10 @@ public abstract class CommonsConnector implements IConnector {
 
     }
 
+    /**
+     * This method shutdown the connector.
+     * @throws ExecutionException if an error happens.
+     */
     @Override
     public final void shutdown() throws ExecutionException {
 
@@ -91,7 +95,7 @@ public abstract class CommonsConnector implements IConnector {
      * The connection status.
      *
      * @param name the cluster Name.
-     * @return true if the driver's client is not null.
+     * @return true if connection is open. False in other case.
      */
     @Override
     public final boolean isConnected(ClusterName name) {

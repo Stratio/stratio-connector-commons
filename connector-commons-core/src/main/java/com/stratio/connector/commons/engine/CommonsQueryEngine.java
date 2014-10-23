@@ -32,6 +32,7 @@ import com.stratio.crossdata.common.logicalplan.Project;
 import com.stratio.crossdata.common.result.QueryResult;
 
 /**
+ * This abstract class is a Template for CommonsQueryEngine.
  * Created by dgomez on 22/09/14.
  */
 public abstract class CommonsQueryEngine implements IQueryEngine {
@@ -55,16 +56,13 @@ public abstract class CommonsQueryEngine implements IQueryEngine {
         this.connectionHandler = connectionHandler;
     }
 
-    public QueryResult execute(ClusterName targetCluster, LogicalWorkflow workflow)
-            throws UnsupportedException,
-            ExecutionException {
-        throw new UnsupportedException("This method is deprecated");
-    }
-
-    protected abstract QueryResult executeWorkFlow(LogicalWorkflow workflow) throws
-            UnsupportedException,
-            ExecutionException;
-
+    /**
+     * This method execute a query.
+     * @param workflow the workflow to be executed.
+     * @return the query result.
+     * @throws UnsupportedException if an operation is not supported.
+     * @throws ExecutionException if a error happens.
+     */
     @Override
     public final QueryResult execute(LogicalWorkflow workflow) throws UnsupportedException, ExecutionException {
         QueryResult result = null;
@@ -83,4 +81,15 @@ public abstract class CommonsQueryEngine implements IQueryEngine {
         }
         return result;
     }
+
+    /**
+     * Abstract method which must be implemented by the concrete database metadataEngine to execute a workflow.
+     * @param workflow the workflow.
+     *
+     * @throws UnsupportedException if an operation is not supported.
+     * @throws ExecutionException if a error happens.
+     */
+    protected abstract QueryResult executeWorkFlow(LogicalWorkflow workflow) throws
+            UnsupportedException,
+            ExecutionException;
 }

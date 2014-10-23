@@ -135,6 +135,10 @@ public abstract class ConnectionHandler {
         return connection;
     }
 
+    /**
+     * This method start a work for a connections.
+     * @param targetCluster the connections cluster name.
+     */
     public void startWork(String targetCluster) {
         Connection conn = null;
         try {
@@ -147,7 +151,10 @@ public abstract class ConnectionHandler {
 
         }
     }
-
+   /**
+     * This method finalize a work for a connections.
+     * @param targetCluster the connections cluster name.
+     */
     public void endWork(String targetCluster) {
         Connection conn = null;
         try {
@@ -159,6 +166,10 @@ public abstract class ConnectionHandler {
         }
     }
 
+    /**
+     * This method return the connections.
+     * @return the connection.
+     */
     public Map<String, Connection> getConnections() {
         return connections;
     }

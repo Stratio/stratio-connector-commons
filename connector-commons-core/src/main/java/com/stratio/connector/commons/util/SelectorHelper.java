@@ -30,6 +30,7 @@ import com.stratio.crossdata.common.statements.structures.selectors.Selector;
 import com.stratio.crossdata.common.statements.structures.selectors.StringSelector;
 
 /**
+ * This class is a helper for the selector crossdata.
  * Created by jmgomez on 17/09/14.
  */
 public class SelectorHelper {
@@ -39,11 +40,26 @@ public class SelectorHelper {
      */
     final transient static Logger logger = LoggerFactory.getLogger(SelectorHelper.class);
 
+    /**
+     * Return the selector value represents in the type class.
+     * @param type the type in witch the value will be return.
+     * @param selector the selector.
+     *
+     * @return the type value.
+     * @throws ExecutionException if an error happens.
+     */
     public static <T> T getValue(Class<T> type, Selector selector) throws ExecutionException {
 
         return convert(getValue(selector), type);
     }
-
+    /**
+     * Return the selector value.
+     *
+     * @param selector the selector.
+     *
+     * @return the type value.
+     * @throws ExecutionException if an error happens.
+     */
     public static Object getValue(Selector selector) throws ExecutionException {
         Object field = null;
         switch (selector.getType()) {
@@ -70,6 +86,12 @@ public class SelectorHelper {
 
     }
 
+    /**
+     * Return the selector value class.
+     * @param selector the selector.
+     * @return the selector class.
+     * @throws ExecutionException if an error happens.
+     */
     public static Class getClass(Selector selector) throws ExecutionException {
         Class returnClass = null;
         switch (selector.getType()) {
