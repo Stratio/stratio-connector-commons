@@ -26,7 +26,6 @@ import java.util.Map;
 
 import com.stratio.crossdata.common.data.ClusterName;
 import com.stratio.crossdata.common.data.ColumnName;
-import com.stratio.crossdata.common.data.QualifiedNames;
 import com.stratio.crossdata.common.data.TableName;
 import com.stratio.crossdata.common.exceptions.UnsupportedException;
 import com.stratio.crossdata.common.logicalplan.Filter;
@@ -96,16 +95,16 @@ public class LogicalWorkFlowCreator {
         if (select == null) {
             Map<ColumnName, String> selectColumn = new LinkedHashMap<>();
             Map<String, ColumnType> typeMap = new LinkedHashMap();
-            Map<ColumnName, ColumnType> typeMapColumnName   = new LinkedHashMap<>();
+            Map<ColumnName, ColumnType> typeMapColumnName = new LinkedHashMap<>();
             for (ColumnName columnName : project.getColumnList()) {
                 ColumnName columnNameTemp = new ColumnName(catalog, table, columnName.getName());
-                selectColumn.put(columnNameTemp, "alias_"+columnName.getName());
+                selectColumn.put(columnNameTemp, "alias_" + columnName.getName());
                 typeMap.put(columnName.getQualifiedName(), ColumnType.VARCHAR);
-                typeMapColumnName.put(columnNameTemp,ColumnType.VARCHAR);
+                typeMapColumnName.put(columnNameTemp, ColumnType.VARCHAR);
             }
 
-
-            select = new Select(Operations.PROJECT, selectColumn, typeMap,typeMapColumnName); // The select is mandatory
+            select = new Select(Operations.PROJECT, selectColumn, typeMap, typeMapColumnName); // The select is
+                                                                                               // mandatory
             // . If it
             // doesn't
             // exist we
@@ -241,9 +240,9 @@ public class LogicalWorkFlowCreator {
     public LogicalWorkFlowCreator addDistinctFilter(String columnName, Object term, Boolean indexed, Boolean PK) {
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)),
                         Operator.DISTINCT, returnSelector(term));
-        if (PK){
+        if (PK) {
             filters.add(new Filter(Operations.FILTER_PK_DISTINCT, relation));
-        }else if (indexed) {
+        } else if (indexed) {
             filters.add(new Filter(Operations.FILTER_INDEXED_DISTINCT, relation));
         } else {
             filters.add(new Filter(Operations.FILTER_NON_INDEXED_DISTINCT, relation));
@@ -279,13 +278,11 @@ public class LogicalWorkFlowCreator {
         for (ConnectorField connectorField : fields) {
             ColumnName columName = new ColumnName(catalog, table, connectorField.name);
             mapping.put(columName, connectorField.alias);
-            types.put(QualifiedNames.getColumnQualifiedName(catalog, table, connectorField.name),
-                            connectorField.columnType);
-            typeMapFormColumnName.put(columName,connectorField.columnType);
+            types.put(connectorField.alias, connectorField.columnType);
+            typeMapFormColumnName.put(columName, connectorField.columnType);
         }
 
-
-        select = new Select(Operations.PROJECT, mapping, types,typeMapFormColumnName);
+        select = new Select(Operations.PROJECT, mapping, types, typeMapFormColumnName);
 
         return this;
 
