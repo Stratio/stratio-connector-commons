@@ -20,6 +20,10 @@ package com.stratio.connector.commons.util;
 
 import java.math.BigInteger;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.stratio.crossdata.common.exceptions.ExecutionException;
 import com.stratio.crossdata.common.metadata.ColumnType;
 
 /**
@@ -27,6 +31,11 @@ import com.stratio.crossdata.common.metadata.ColumnType;
  * Created by jmgomez on 24/10/14.
  */
 public final class ColumnTypeHelper {
+
+    /**
+     * The Log.
+     */
+    final transient static Logger logger = LoggerFactory.getLogger(SelectorHelper.class);
 
     /**
      * Constructor.
@@ -38,15 +47,27 @@ public final class ColumnTypeHelper {
      * @param columnType the columnType.
      * @param value the value.
      * @return the casting value.
+     *
+     * @throws ExecutionException if the casting is not possible.
      */
-    public static Object getCastingValue(ColumnType columnType, Object value){
+    public static Object getCastingValue(ColumnType columnType, Object value) throws ExecutionException {
         Object returnValue;
         switch (columnType){
 
-            case BIGINT: returnValue = new BigInteger(value.toString()); break; //TODO review for other types.
-            case DOUBLE:  returnValue = new Double(value.toString());break;
-            case FLOAT: returnValue = new Float(value.toString());break;
-            case INT: returnValue = new Integer(value.toString());break;
+            case BIGINT:
+                ensureNumber(value);
+                returnValue = new BigInteger(new Integer(((Number)value).intValue()).toString());
+                break;
+            case DOUBLE:
+                ensureNumber(value);
+                returnValue = new Double(value.toString());break;
+            case FLOAT:
+                ensureNumber(value);
+                returnValue = new Float(value.toString());break;
+            case INT:
+                 ensureNumber(value);
+                returnValue = ((Number)value).intValue();
+                break;
             default: returnValue = value;
 
 
@@ -55,5 +76,30 @@ public final class ColumnTypeHelper {
         return returnValue;
     }
 
+    /**
+     * check if a object is a number.
+     * @param value the objet.
+     * @return true if is a number false in other case.
+     */
+    private static boolean isNumber(Object value) {
+
+        return Number.class.isAssignableFrom(value.getClass());
+    }
+
+    /**
+     * Ensure if a object is a number.
+     * @param value the objet.
+     *
+     * @throws  ExecutionException if is not a number.
+     *
+     */
+    private static void ensureNumber(Object value) throws ExecutionException {
+
+        if (!isNumber(value)){
+            String message = value.getClass().getCanonicalName() + " can not cast to BigInteger.";
+            logger.error(message);
+            throw new ExecutionException(message);
+        }
+    }
 
 }
