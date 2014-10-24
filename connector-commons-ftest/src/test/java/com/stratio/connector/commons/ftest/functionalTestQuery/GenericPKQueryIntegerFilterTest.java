@@ -28,6 +28,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
 
@@ -52,6 +53,8 @@ import com.stratio.crossdata.common.result.QueryResult;
 public abstract class GenericPKQueryIntegerFilterTest extends GenericConnectorTest {
 
     private static final String COLUMN_PK = "COLUMN_PK";
+    public static final String ALIAS_COLUMN_1 = "alias_"+COLUMN_1;
+    private static final String ALIAS_COLUMN_AGE = "alais_"+COLUMN_AGE;
     LogicalWorkFlowCreator logicalWorkFlowCreator;
 
     @Before
@@ -108,6 +111,38 @@ public abstract class GenericPKQueryIntegerFilterTest extends GenericConnectorTe
         assertEquals("The record number is correct", 0, queryResult.getResultSet().size());
 
     }
+
+
+    @Test
+    public void selectPKDoubleFilterDistinct() throws ConnectorException {
+
+        ClusterName clusterNodeName = getClusterName();
+        System.out.println("*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterEqual ***********************************");
+
+        insertRow(1, 10, 5, clusterNodeName, true);
+        insertRow(2, 9, 1, clusterNodeName, true);
+        insertRow(3, 11, 1, clusterNodeName, true);
+        insertRow(4, 10, 1, clusterNodeName, true);
+        insertRow(5, 20, 1, clusterNodeName, true);
+
+        refresh(CATALOG);
+
+        LinkedList<LogicalWorkFlowCreator.ConnectorField> connectorFields = new LinkedList<>();
+        connectorFields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_1, ALIAS_COLUMN_1,
+                ColumnType.VARCHAR));
+        connectorFields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_AGE, ALIAS_COLUMN_AGE,
+                ColumnType.INT));
+        LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns().addColumnName(COLUMN_PK).addSelect
+                (connectorFields)
+                .addDistinctFilter(COLUMN_PK, new Integer(2), false, true)
+                .addDistinctFilter(COLUMN_PK, new Integer(3), false, true).getLogicalWorkflow();
+
+        QueryResult queryResult = connector.getQueryEngine().execute(logicalPlan);
+
+        assertEquals("The record number is correct", 0, queryResult.getResultSet().size());
+
+    }
+
 
     @Test
     public void selectPKGeatEqualFilterEqual() throws ConnectorException {

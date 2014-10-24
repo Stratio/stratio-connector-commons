@@ -95,7 +95,7 @@ public abstract class GenericNotIndexedQueryStringFilterTest extends GenericConn
         refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addColumnName(COLUMN_TEXT)
-                        .addDistinctFilter(COLUMN_TEXT, names[5], false).getLogicalWorkflow();
+                        .addDistinctFilter(COLUMN_TEXT, names[5], false,false).getLogicalWorkflow();
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
 
         assertEquals("The record number is correct", names.length - 1, queryResult.getResultSet().size());
@@ -131,8 +131,8 @@ public abstract class GenericNotIndexedQueryStringFilterTest extends GenericConn
         refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addColumnName(COLUMN_TEXT)
-                        .addDistinctFilter(COLUMN_TEXT, names[5].toLowerCase(), false).getLogicalWorkflow();
-        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
+                        .addDistinctFilter(COLUMN_TEXT, names[5].toLowerCase(), false,false).getLogicalWorkflow();
+        QueryResult queryResult =  connector.getQueryEngine().execute(logicalPlan);
 
         assertEquals("The record number is correct", names.length - 1, queryResult.getResultSet().size());
 

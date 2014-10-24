@@ -99,7 +99,7 @@ public class LogicalWorkFlowCreator {
             Map<ColumnName, ColumnType> typeMapColumnName   = new LinkedHashMap<>();
             for (ColumnName columnName : project.getColumnList()) {
                 ColumnName columnNameTemp = new ColumnName(catalog, table, columnName.getName());
-                selectColumn.put(columnNameTemp, columnName.getName());
+                selectColumn.put(columnNameTemp, "alias_"+columnName.getName());
                 typeMap.put(columnName.getQualifiedName(), ColumnType.VARCHAR);
                 typeMapColumnName.put(columnNameTemp,ColumnType.VARCHAR);
             }
@@ -238,10 +238,12 @@ public class LogicalWorkFlowCreator {
         return this;
     }
 
-    public LogicalWorkFlowCreator addDistinctFilter(String columnName, Object term, Boolean indexed) {
+    public LogicalWorkFlowCreator addDistinctFilter(String columnName, Object term, Boolean indexed, Boolean PK) {
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)),
                         Operator.DISTINCT, returnSelector(term));
-        if (indexed) {
+        if (PK){
+            filters.add(new Filter(Operations.FILTER_PK_DISTINCT, relation));
+        }else if (indexed) {
             filters.add(new Filter(Operations.FILTER_INDEXED_DISTINCT, relation));
         } else {
             filters.add(new Filter(Operations.FILTER_NON_INDEXED_DISTINCT, relation));

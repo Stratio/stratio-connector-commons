@@ -393,7 +393,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterTest extends GenericCon
         refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns()
-                        .addDistinctFilter(COLUMN_AGE, new Integer("10"), false).getLogicalWorkflow();
+                        .addDistinctFilter(COLUMN_AGE, new Integer("10"), false,false).getLogicalWorkflow();
         QueryResult queryResult =  connector.getQueryEngine().execute(logicalPlan);
 
         Set<Object> proveSet = createCellsResult(queryResult);

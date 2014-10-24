@@ -52,8 +52,11 @@ import com.stratio.crossdata.common.result.QueryResult;
 public abstract class GenericQueryTest extends GenericConnectorTest {
 
     public static final String COLUMN_1 = "bin1";
+    public static final String ALIAS_COLUMN_1 = "alias_" + COLUMN_1;
     public static final String COLUMN_2 = "bin2";
+    public static final String ALIAS_COLUMN_2 = "alias_" + COLUMN_2;
     public static final String COLUMN_3 = "bin3";
+    public static final String ALIAS_COLUMN_3 = "alias_" + COLUMN_3;
 
     private Integer DEFAULT_GET_TO_SEARCH = 100;
 
@@ -77,9 +80,9 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
 
         LinkedList<LogicalWorkFlowCreator.ConnectorField> fields = new LinkedList<>();
         LogicalWorkFlowCreator logicalWorkFlowCreator = new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName());
-        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_1, COLUMN_1, ColumnType.VARCHAR));
-        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_2, COLUMN_2, ColumnType.VARCHAR));
-        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_3, COLUMN_3, ColumnType.VARCHAR));
+        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_1, ALIAS_COLUMN_1, ColumnType.VARCHAR));
+        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_2, ALIAS_COLUMN_2, ColumnType.VARCHAR));
+        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_3, ALIAS_COLUMN_3, ColumnType.VARCHAR));
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addColumnName(COLUMN_1, COLUMN_2, COLUMN_3)
                         .addSelect(fields).getLogicalWorkflow();
@@ -116,9 +119,9 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
 
         LinkedList<LogicalWorkFlowCreator.ConnectorField> fields = new LinkedList<>();
         LogicalWorkFlowCreator logicalWorkFlowCreator = new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName());
-        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_1, "alias" + COLUMN_1, ColumnType.TEXT));
-        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_2, "alias" + COLUMN_2, ColumnType.INT));
-        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_3, "alias" + COLUMN_3, ColumnType.BOOLEAN));
+        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_1, ALIAS_COLUMN_1, ColumnType.TEXT));
+        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_2, ALIAS_COLUMN_2, ColumnType.INT));
+        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_3, ALIAS_COLUMN_3, ColumnType.BOOLEAN));
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addColumnName(COLUMN_1, COLUMN_2, COLUMN_3)
                         .addSelect(fields).getLogicalWorkflow();
@@ -170,9 +173,9 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
         assertEquals("The first column name is correct",
                         QualifiedNames.getColumnQualifiedName(CATALOG, TABLE, COLUMN_3), metadata[2].getColumnName());
 
-        assertEquals("The first column alias is correct", "alias" + COLUMN_1, metadata[0].getColumnAlias());
-        assertEquals("The first column alias is correct", "alias" + COLUMN_2, metadata[1].getColumnAlias());
-        assertEquals("The first column alias is correct", "alias" + COLUMN_3, metadata[2].getColumnAlias());
+        assertEquals("The first column alias is correct",ALIAS_COLUMN_1, metadata[0].getColumnAlias());
+        assertEquals("The first column alias is correct", ALIAS_COLUMN_2, metadata[1].getColumnAlias());
+        assertEquals("The first column alias is correct", ALIAS_COLUMN_3, metadata[2].getColumnAlias());
 
     }
 
@@ -186,9 +189,9 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
     }
 
     private void validateFieldOrder(String[] columnName) {
-        assertEquals("The first column is sorted", COLUMN_1, columnName[0]);
-        assertEquals("The second column is sorted", COLUMN_2, columnName[1]);
-        assertEquals("The third column is sorted", COLUMN_3, columnName[2]);
+        assertEquals("The first column is sorted", ALIAS_COLUMN_1, columnName[0]);
+        assertEquals("The second column is sorted", ALIAS_COLUMN_2, columnName[1]);
+        assertEquals("The third column is sorted", ALIAS_COLUMN_3, columnName[2]);
     }
 
     private void insertRecordNotReturnedInSearch(ClusterName clusterNodeName) throws ConnectorException {
