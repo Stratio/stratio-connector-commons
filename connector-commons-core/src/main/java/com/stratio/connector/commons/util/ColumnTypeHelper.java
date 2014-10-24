@@ -43,10 +43,10 @@ public final class ColumnTypeHelper {
         Object returnValue;
         switch (columnType){
 
-            case BIGINT: returnValue = new BigInteger(value.toString()); //TODO review for other types.
-            case DOUBLE:  returnValue = new Double(value.toString());
-            case FLOAT: returnValue = new Float(value.toString());
-            case INT: returnValue = new Integer(value.toString());
+            case BIGINT: returnValue = new BigInteger(value.toString()); break; //TODO review for other types.
+            case DOUBLE:  returnValue = new Double(value.toString());break;
+            case FLOAT: returnValue = new Float(value.toString());break;
+            case INT: returnValue = new Integer(value.toString());break;
             default: returnValue = value;
 
 
