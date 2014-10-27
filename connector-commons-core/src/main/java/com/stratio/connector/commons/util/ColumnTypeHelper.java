@@ -40,36 +40,39 @@ public final class ColumnTypeHelper {
     /**
      * Constructor.
      */
-    private ColumnTypeHelper(){}
+    private ColumnTypeHelper() {
+    }
 
     /**
      * Return a casting value adapt to columntType.
-     * @param columnType the columnType.
-     * @param value the value.
-     * @return the casting value.
      *
+     * @param columnType the columnType.
+     * @param value      the value.
+     * @return the casting value.
      * @throws ExecutionException if the casting is not possible.
      */
     public static Object getCastingValue(ColumnType columnType, Object value) throws ExecutionException {
         Object returnValue;
-        switch (columnType){
+        switch (columnType) {
 
-            case BIGINT:
-                ensureNumber(value);
-                returnValue = new BigInteger(new Integer(((Number)value).intValue()).toString());
-                break;
-            case DOUBLE:
-                ensureNumber(value);
-                returnValue = new Double(value.toString());break;
-            case FLOAT:
-                ensureNumber(value);
-                returnValue = new Float(value.toString());break;
-            case INT:
-                 ensureNumber(value);
-                returnValue = ((Number)value).intValue();
-                break;
-            default: returnValue = value;
-
+        case BIGINT:
+            ensureNumber(value);
+            returnValue = new BigInteger(new Integer(((Number) value).intValue()).toString());
+            break;
+        case DOUBLE:
+            ensureNumber(value);
+            returnValue = new Double(value.toString());
+            break;
+        case FLOAT:
+            ensureNumber(value);
+            returnValue = new Float(value.toString());
+            break;
+        case INT:
+            ensureNumber(value);
+            returnValue = ((Number) value).intValue();
+            break;
+        default:
+            returnValue = value;
 
         }
 
@@ -78,6 +81,7 @@ public final class ColumnTypeHelper {
 
     /**
      * check if a object is a number.
+     *
      * @param value the objet.
      * @return true if is a number false in other case.
      */
@@ -88,15 +92,14 @@ public final class ColumnTypeHelper {
 
     /**
      * Ensure if a object is a number.
+     *
      * @param value the objet.
-     *
-     * @throws  ExecutionException if is not a number.
-     *
+     * @throws ExecutionException if is not a number.
      */
     private static void ensureNumber(Object value) throws ExecutionException {
 
-        if (!isNumber(value)){
-            String message = value.getClass().getCanonicalName() + " can not cast to BigInteger.";
+        if (!isNumber(value)) {
+            String message = value.getClass().getCanonicalName() + " can not cast to a Number.";
             logger.error(message);
             throw new ExecutionException(message);
         }

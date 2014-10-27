@@ -29,6 +29,7 @@ import com.stratio.crossdata.common.result.QueryResult;
 
 /**
  * This abstract class is a Template for CommonsQueryEngine. This template only supports a project in the workflow.
+ *
  * @author darroyo
  */
 public abstract class UniqueProjectQueryEngine<T> extends CommonsQueryEngine {
@@ -44,10 +45,11 @@ public abstract class UniqueProjectQueryEngine<T> extends CommonsQueryEngine {
 
     /**
      * This method execute a query with only a project.
+     *
      * @param workflow the workflow to be executed.
      * @return the query result.
      * @throws UnsupportedException if an operation is not supported.
-     * @throws ExecutionException if a error happens.
+     * @throws ExecutionException   if a error happens.
      */
     @Override
     protected final QueryResult executeWorkFlow(LogicalWorkflow workflow) throws UnsupportedException,
@@ -70,17 +72,18 @@ public abstract class UniqueProjectQueryEngine<T> extends CommonsQueryEngine {
     /**
      * Abstract method which must be implemented by the concrete database metadataEngine to execute a workflow with
      * only a project.
-     * @param workflow the workflow.
-     * @param connection the connection to the database.
      *
+     * @param workflow   the workflow.
+     * @param connection the connection to the database.
      * @throws UnsupportedException if an operation is not supported.
-     * @throws ExecutionException if a error happens.
+     * @throws ExecutionException   if a error happens.
      */
     protected abstract QueryResult execute(Project workflow, Connection<T> connection) throws UnsupportedException,
             ExecutionException;
 
     /**
      * Check if the workflow is supported.
+     *
      * @param workflow the workflow
      * @throws UnsupportedException if the workflow is not supported.
      */

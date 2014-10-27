@@ -22,7 +22,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.stratio.crossdata.common.exceptions.ExecutionException;
-import com.stratio.crossdata.common.statements.structures.*;
+import com.stratio.crossdata.common.statements.structures.BooleanSelector;
+import com.stratio.crossdata.common.statements.structures.ColumnSelector;
+import com.stratio.crossdata.common.statements.structures.FloatingPointSelector;
+import com.stratio.crossdata.common.statements.structures.IntegerSelector;
+import com.stratio.crossdata.common.statements.structures.Selector;
+import com.stratio.crossdata.common.statements.structures.StringSelector;
 
 /**
  * This class is a helper for the selector crossdata.
@@ -37,9 +42,9 @@ public class SelectorHelper {
 
     /**
      * Return the selector value represents in the type class.
-     * @param type the type in witch the value will be return.
-     * @param selector the selector.
      *
+     * @param type     the type in witch the value will be return.
+     * @param selector the selector.
      * @return the type value.
      * @throws ExecutionException if an error happens.
      */
@@ -47,11 +52,11 @@ public class SelectorHelper {
 
         return convert(getValue(selector), type);
     }
+
     /**
      * Return the selector value.
      *
      * @param selector the selector.
-     *
      * @return the type value.
      * @throws ExecutionException if an error happens.
      */
@@ -83,6 +88,7 @@ public class SelectorHelper {
 
     /**
      * Return the selector value class.
+     *
      * @param selector the selector.
      * @return the selector class.
      * @throws ExecutionException if an error happens.

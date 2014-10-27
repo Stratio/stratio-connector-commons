@@ -18,75 +18,67 @@ import com.stratio.crossdata.common.exceptions.UnsupportedException;
 import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
 import com.stratio.crossdata.common.result.QueryResult;
 
-/** 
-* CommonsQueryEngine Tester. 
-* 
-* @author <Authors name> 
-* @since <pre>oct 24, 2014</pre> 
-* @version 1.0 
-*/
+/**
+ * CommonsQueryEngine Tester.
+ *
+ * @author <Authors name>
+ * @version 1.0
+ * @since <pre>oct 24, 2014</pre>
+ */
 @RunWith(PowerMockRunner.class)
 public class CommonsQueryEngineTest {
 
-    private IResultHandler resultHandlerSend;
-    LogicalWorkflow workflowSend=null;
+    LogicalWorkflow workflowSend = null;
     Boolean executeWorkFlow = false;
     String queryIdSend;
-    private boolean executeAsyncExecute = false;
-    private boolean executeStop = false;
     CommonsQueryEngineStub commonsQueryEngineStub;
     @Mock ConnectionHandler connectionHandler;
-    @Before
-public void before() throws Exception {
+    private IResultHandler resultHandlerSend;
+    private boolean executeAsyncExecute = false;
+    private boolean executeStop = false;
 
+    @Before
+    public void before() throws Exception {
 
         resultHandlerSend = null;
-        workflowSend=null;
+        workflowSend = null;
         executeWorkFlow = false;
-        String queryIdSend ="";
+        String queryIdSend = "";
         executeAsyncExecute = false;
         executeStop = false;
 
         commonsQueryEngineStub = new CommonsQueryEngineStub(connectionHandler);
-} 
-
-
-
-/** 
-* 
-* Method: execute(LogicalWorkflow workflow) 
-* 
-*/ 
-@Test
-public void testasyncExecute() throws Exception {
-    String queriID = "queryID";
-    LogicalWorkflow logicalworkFlow = mock(LogicalWorkflow.class);
-    IResultHandler resultHandler = mock (IResultHandler.class);
-
-    commonsQueryEngineStub.asyncExecute(queriID, logicalworkFlow, resultHandler);
-
-    assertTrue("executeWorkFlow is executed",executeAsyncExecute);
-    assertEquals("The queryId is correct",queryIdSend,queriID);
-    assertEquals("The workflow is correct",workflowSend,logicalworkFlow);
-    assertEquals("The resultHandler is correct",resultHandler,resultHandlerSend);
-
-}
-
-
+    }
 
     /**
-* 
-* Method: executeWorkFlow(LogicalWorkflow workflow) 
-* 
-*/ 
-@Test
-public void testExecuteWorkFlow() throws Exception {
-    LogicalWorkflow logicalworkFlow = mock(LogicalWorkflow.class);
-    commonsQueryEngineStub.executeWorkFlow(logicalworkFlow);
+     * Method: execute(LogicalWorkflow workflow)
+     */
+    @Test
+    public void testasyncExecute() throws Exception {
+        String queriID = "queryID";
+        LogicalWorkflow logicalworkFlow = mock(LogicalWorkflow.class);
+        IResultHandler resultHandler = mock(IResultHandler.class);
 
-    assertTrue("executeWorkFlow is executed",executeWorkFlow);
-    assertEquals("The workflow is correct",workflowSend,logicalworkFlow);
-}
+        commonsQueryEngineStub.asyncExecute(queriID, logicalworkFlow, resultHandler);
+
+        assertTrue("executeWorkFlow is executed", executeAsyncExecute);
+        assertEquals("The queryId is correct", queryIdSend, queriID);
+        assertEquals("The workflow is correct", workflowSend, logicalworkFlow);
+        assertEquals("The resultHandler is correct", resultHandler, resultHandlerSend);
+
+    }
+
+    /**
+     * Method: executeWorkFlow(LogicalWorkflow workflow)
+     */
+    @Test
+    public void testExecuteWorkFlow() throws Exception {
+        LogicalWorkflow logicalworkFlow = mock(LogicalWorkflow.class);
+        commonsQueryEngineStub.executeWorkFlow(logicalworkFlow);
+
+        assertTrue("executeWorkFlow is executed", executeWorkFlow);
+        assertEquals("The workflow is correct", workflowSend, logicalworkFlow);
+    }
 
     @Test
     public void testStop() throws ConnectorException {
@@ -94,13 +86,11 @@ public void testExecuteWorkFlow() throws Exception {
 
         commonsQueryEngineStub.stop(queriID);
 
-        assertTrue("executeWorkFlow is executed",executeStop);
-        assertEquals("The queryId is correct",queryIdSend,queriID);
+        assertTrue("executeWorkFlow is executed", executeStop);
+        assertEquals("The queryId is correct", queryIdSend, queriID);
     }
 
-    class CommonsQueryEngineStub extends CommonsQueryEngine{
-
-
+    class CommonsQueryEngineStub extends CommonsQueryEngine {
 
         /**
          * Constructor.
@@ -114,7 +104,7 @@ public void testExecuteWorkFlow() throws Exception {
         @Override protected QueryResult executeWorkFlow(LogicalWorkflow workflow)
                 throws UnsupportedException, ExecutionException {
             workflowSend = workflow;
-            executeWorkFlow  =true;
+            executeWorkFlow = true;
             return null;
         }
 
