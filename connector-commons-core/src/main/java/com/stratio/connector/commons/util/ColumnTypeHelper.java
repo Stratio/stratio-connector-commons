@@ -96,7 +96,7 @@ public final class ColumnTypeHelper {
     private static void ensureNumber(Object value) throws ExecutionException {
 
         if (!isNumber(value)){
-            String message = value.getClass().getCanonicalName() + " can not cast to BigInteger.";
+            String message = value.getClass().getCanonicalName() + " can not cast to a Number.";
             logger.error(message);
             throw new ExecutionException(message);
         }
