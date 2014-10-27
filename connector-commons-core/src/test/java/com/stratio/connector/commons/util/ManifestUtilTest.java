@@ -23,7 +23,7 @@ public class ManifestUtilTest {
 @Test
 
 public void testGetDatastoreName() throws Exception {
-    String[] datastoreName = ManifestUtil.getDatastoreName("ElasticSearchConnector.xml");
+    String[] datastoreName = ManifestUtil.getDatastoreName("ExampleConnector.xml");
     assertEquals("The datastore number is correct",2,datastoreName.length);
     assertEquals("The datastore 1  is correct","elasticsearch1",datastoreName[0]);
     assertEquals("The datastore 2  is correct","elasticsearch2",datastoreName[1]);
@@ -38,7 +38,7 @@ public void testGetDatastoreName() throws Exception {
 @Test
 public void testGetConectorName() throws Exception {
 
-    assertEquals("The connectorName is correct","elasticsearch",ManifestUtil.getConectorName("ElasticSearchConnector" +
+    assertEquals("The connectorName is correct","elasticsearch",ManifestUtil.getConectorName("ExampleConnector" +
             ".xml"));
 } 
 
