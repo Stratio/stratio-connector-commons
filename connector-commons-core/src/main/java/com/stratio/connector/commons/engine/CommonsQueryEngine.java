@@ -58,10 +58,11 @@ public abstract class CommonsQueryEngine implements IQueryEngine {
 
     /**
      * This method execute a query.
+     *
      * @param workflow the workflow to be executed.
      * @return the query result.
      * @throws UnsupportedException if an operation is not supported.
-     * @throws ExecutionException if a error happens.
+     * @throws ExecutionException   if a error happens.
      */
     @Override
     public final QueryResult execute(LogicalWorkflow workflow) throws UnsupportedException, ExecutionException {
@@ -84,10 +85,10 @@ public abstract class CommonsQueryEngine implements IQueryEngine {
 
     /**
      * Abstract method which must be implemented by the concrete database metadataEngine to execute a workflow.
-     * @param workflow the workflow.
      *
+     * @param workflow the workflow.
      * @throws UnsupportedException if an operation is not supported.
-     * @throws ExecutionException if a error happens.
+     * @throws ExecutionException   if a error happens.
      */
     protected abstract QueryResult executeWorkFlow(LogicalWorkflow workflow) throws
             UnsupportedException,

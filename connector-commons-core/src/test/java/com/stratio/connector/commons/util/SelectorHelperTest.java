@@ -29,8 +29,11 @@ import org.junit.Test;
 import com.stratio.crossdata.common.data.ColumnName;
 import com.stratio.crossdata.common.exceptions.ExecutionException;
 import com.stratio.crossdata.common.statements.structures.AsteriskSelector;
-import com.stratio.crossdata.common.statements.structures.*;
+import com.stratio.crossdata.common.statements.structures.BooleanSelector;
+import com.stratio.crossdata.common.statements.structures.ColumnSelector;
+import com.stratio.crossdata.common.statements.structures.FloatingPointSelector;
 import com.stratio.crossdata.common.statements.structures.FunctionSelector;
+import com.stratio.crossdata.common.statements.structures.IntegerSelector;
 import com.stratio.crossdata.common.statements.structures.Relation;
 import com.stratio.crossdata.common.statements.structures.RelationSelector;
 import com.stratio.crossdata.common.statements.structures.Selector;
@@ -57,12 +60,12 @@ public class SelectorHelperTest {
 
         returnValue = SelectorHelper.getValue(Integer.class, new IntegerSelector(10));
         assertEquals("The class is correct", Integer.class.getCanonicalName(), returnValue.getClass()
-                        .getCanonicalName());
+                .getCanonicalName());
         assertEquals("The value  is correct", 10, returnValue);
 
         returnValue = SelectorHelper.getValue(Integer.class, new StringSelector("10"));
         assertEquals("The class is correct", Integer.class.getCanonicalName(), returnValue.getClass()
-                        .getCanonicalName());
+                .getCanonicalName());
         assertEquals("The value  is correct", 10, returnValue);
 
         try {
@@ -73,12 +76,12 @@ public class SelectorHelperTest {
 
         SelectorHelper.getValue(Integer.class, new FloatingPointSelector(new Double(10)));
         assertEquals("The class is correct", Integer.class.getCanonicalName(), returnValue.getClass()
-                        .getCanonicalName());
+                .getCanonicalName());
         assertEquals("The value  is correct", 10, returnValue);
 
         SelectorHelper.getValue(Integer.class, new FloatingPointSelector(new Double(10.3)));
         assertEquals("The class is correct", Integer.class.getCanonicalName(), returnValue.getClass()
-                        .getCanonicalName());
+                .getCanonicalName());
         assertEquals("The value  is correct", 10, returnValue);
 
         try {
@@ -98,7 +101,7 @@ public class SelectorHelperTest {
     public void testGetClass() throws ExecutionException {
 
         Selector[] selector = { new StringSelector(""), new ColumnSelector(mock(ColumnName.class)),
-                        new BooleanSelector(true), new FloatingPointSelector("1"), new IntegerSelector(1) };
+                new BooleanSelector(true), new FloatingPointSelector("1"), new IntegerSelector(1) };
 
         Class[] returnClass = { String.class, String.class, Boolean.class, Double.class, Long.class };
         for (int i = 0; i < selector.length; i++) {
@@ -111,7 +114,7 @@ public class SelectorHelperTest {
     public void testGetClassException() {
 
         Selector[] exceptionSelector = { new AsteriskSelector(), new FunctionSelector("", Collections.EMPTY_LIST),
-                        new RelationSelector(mock(Relation.class)) };
+                new RelationSelector(mock(Relation.class)) };
 
         for (int i = 0; i < exceptionSelector.length; i++) {
 
@@ -172,19 +175,23 @@ public class SelectorHelperTest {
         Object returnValue = null;
 
         returnValue = SelectorHelper.getValue(String.class, new IntegerSelector(10));
-        assertEquals("The class is correct", String.class.getCanonicalName(), returnValue.getClass().getCanonicalName());
+        assertEquals("The class is correct", String.class.getCanonicalName(),
+                returnValue.getClass().getCanonicalName());
         assertEquals("The value  is correct", new String("10"), returnValue);
 
         returnValue = SelectorHelper.getValue(String.class, new StringSelector("10"));
-        assertEquals("The class is correct", String.class.getCanonicalName(), returnValue.getClass().getCanonicalName());
+        assertEquals("The class is correct", String.class.getCanonicalName(),
+                returnValue.getClass().getCanonicalName());
         assertEquals("The value  is correct", new String("10"), returnValue);
 
         SelectorHelper.getValue(String.class, new FloatingPointSelector(new Double(10)));
-        assertEquals("The class is correct", String.class.getCanonicalName(), returnValue.getClass().getCanonicalName());
+        assertEquals("The class is correct", String.class.getCanonicalName(),
+                returnValue.getClass().getCanonicalName());
         assertEquals("The value  is correct", new String("10"), returnValue);
 
         returnValue = SelectorHelper.getValue(String.class, new BooleanSelector(false));
-        assertEquals("The class is correct", String.class.getCanonicalName(), returnValue.getClass().getCanonicalName());
+        assertEquals("The class is correct", String.class.getCanonicalName(),
+                returnValue.getClass().getCanonicalName());
         assertEquals("The value  is correct", new String("false"), returnValue);
 
     }
@@ -194,19 +201,23 @@ public class SelectorHelperTest {
         Object returnValue = null;
 
         returnValue = SelectorHelper.getValue(Double.class, new IntegerSelector(10));
-        assertEquals("The class is correct", Double.class.getCanonicalName(), returnValue.getClass().getCanonicalName());
+        assertEquals("The class is correct", Double.class.getCanonicalName(),
+                returnValue.getClass().getCanonicalName());
         assertEquals("The value  is correct", new Double("10"), returnValue);
 
         returnValue = SelectorHelper.getValue(Double.class, new StringSelector("10"));
-        assertEquals("The class is correct", Double.class.getCanonicalName(), returnValue.getClass().getCanonicalName());
+        assertEquals("The class is correct", Double.class.getCanonicalName(),
+                returnValue.getClass().getCanonicalName());
         assertEquals("The value  is correct", new Double("10"), returnValue);
 
         returnValue = SelectorHelper.getValue(String.class, new FloatingPointSelector(new Double(10)));
-        assertEquals("The class is correct", String.class.getCanonicalName(), returnValue.getClass().getCanonicalName());
+        assertEquals("The class is correct", String.class.getCanonicalName(),
+                returnValue.getClass().getCanonicalName());
         assertEquals("The value  is correct", new String("10.0"), returnValue);
 
         returnValue = SelectorHelper.getValue(String.class, new BooleanSelector(false));
-        assertEquals("The class is correct", String.class.getCanonicalName(), returnValue.getClass().getCanonicalName());
+        assertEquals("The class is correct", String.class.getCanonicalName(),
+                returnValue.getClass().getCanonicalName());
         assertEquals("The value  is correct", new String("false"), returnValue);
 
     }
@@ -238,7 +249,7 @@ public class SelectorHelperTest {
 
         returnValue = SelectorHelper.getValue(Boolean.class, new BooleanSelector(true));
         assertEquals("The class is correct", Boolean.class.getCanonicalName(), returnValue.getClass()
-                        .getCanonicalName());
+                .getCanonicalName());
         assertEquals("The value  is correct", new Boolean(true), returnValue);
 
     }

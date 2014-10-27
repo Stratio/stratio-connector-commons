@@ -44,24 +44,26 @@ import com.stratio.crossdata.common.exceptions.InitializationException;
 public final class ManifestUtil {
 
     /**
-     * Constructor.
-     */
-    private ManifestUtil(){}
-
-    /**
      * The Log.
      */
     final transient static Logger logger = LoggerFactory.getLogger(ManifestUtil.class);
 
     /**
+     * Constructor.
+     */
+    private ManifestUtil() {
+    }
+
+    /**
      * Recovered the datastoreName form Manifest.
+     *
      * @param pathManifest the manifest path.
      * @return the datastoreName.
      * @throws InitializationException if an error happens while XML is reading.
      */
     public static String[] getDatastoreName(String pathManifest) throws InitializationException {
 
-        String[] datastoreName ={""};
+        String[] datastoreName = { "" };
         try {
             Document document = getDocument(pathManifest);
             //Search for the limit properties and connectorName
@@ -71,36 +73,37 @@ public final class ManifestUtil {
             for (int i = 0; i < ((NodeList) result).getLength(); i++) {
                 datastoreName[i] = ((NodeList) result).item(i).getNodeValue();
             }
-        } catch (SAXException |XPathExpressionException | IOException | ParserConfigurationException e) {
-            String msg = "Impossible to read DataStoreName in Manifest with the connector configuration."+e.getCause();
+        } catch (SAXException | XPathExpressionException | IOException | ParserConfigurationException e) {
+            String msg =
+                    "Impossible to read DataStoreName in Manifest with the connector configuration." + e.getCause();
             logger.error(msg);
-            throw new InitializationException(msg,e);
+            throw new InitializationException(msg, e);
         }
 
         return datastoreName;
     }
 
-
-
     /**
      * Recovered the ConecrtorName form Manifest.
+     *
      * @param pathManifest the manifest path.
      * @return the ConectionName.
      * @throws InitializationException if an error happens while XML is reading.
      */
     public static String getConectorName(String pathManifest) throws InitializationException {
 
-        String connectionName ="";
+        String connectionName = "";
         try {
             Document document = getDocument(pathManifest);
 
             Object result = getResult(document, "//ConnectorName/text()");
             connectionName = ((NodeList) result).item(0).getNodeValue();
 
-        } catch (SAXException |XPathExpressionException | IOException | ParserConfigurationException e) {
-            String msg = "Impossible to read DataStoreName in Manifest with the connector configuration."+e.getCause();
+        } catch (SAXException | XPathExpressionException | IOException | ParserConfigurationException e) {
+            String msg =
+                    "Impossible to read DataStoreName in Manifest with the connector configuration." + e.getCause();
             logger.error(msg);
-            throw new InitializationException(msg,e);
+            throw new InitializationException(msg, e);
         }
 
         return connectionName;
@@ -108,8 +111,9 @@ public final class ManifestUtil {
 
     /**
      * Get the node value.
+     *
      * @param document the document.
-     * @param node the node.
+     * @param node     the node.
      * @return the node value.
      * @throws XPathExpressionException if an exception happens.
      */
@@ -125,10 +129,11 @@ public final class ManifestUtil {
 
     /**
      * Create the documento.
+     *
      * @param pathManifest the manifest Path.
      * @return the document.
-     * @throws SAXException if an exception happens.
-     * @throws IOException if an exception happens.
+     * @throws SAXException                 if an exception happens.
+     * @throws IOException                  if an exception happens.
      * @throws ParserConfigurationException if an exception happens.
      */
     private static Document getDocument(String pathManifest)

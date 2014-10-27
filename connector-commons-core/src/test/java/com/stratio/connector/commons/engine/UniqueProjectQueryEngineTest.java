@@ -1,4 +1,4 @@
-package com.stratio.connector.commons.engine; 
+package com.stratio.connector.commons.engine;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -20,34 +20,32 @@ import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
 import com.stratio.crossdata.common.logicalplan.Project;
 import com.stratio.crossdata.common.result.QueryResult;
 
-/** 
-* UniqueProjectQueryEngine Tester. 
-* 
-* @author <Authors name> 
-* @since <pre>oct 24, 2014</pre> 
-* @version 1.0 
-*/
+/**
+ * UniqueProjectQueryEngine Tester.
+ *
+ * @author <Authors name>
+ * @version 1.0
+ * @since <pre>oct 24, 2014</pre>
+ */
 @RunWith(PowerMockRunner.class)
 public class UniqueProjectQueryEngineTest {
 
+    UniqueProjectQueryEngineStub uniqueProjectQueryEngineStub;
     private String queryIdSend;
     private LogicalWorkflow workflowSend;
     private IResultHandler resultHandlerSend;
     private boolean executeAsyncExecute;
     private boolean executeStop;
-
-
-    UniqueProjectQueryEngineStub uniqueProjectQueryEngineStub;
     private boolean executeExecute;
     private Project projectSend;
     private Connection connectionSend = null;
     @Mock private ConnectionHandler connectionHandler;
 
     @Before
-public void before() throws Exception {
+    public void before() throws Exception {
 
         resultHandlerSend = null;
-        workflowSend=null;
+        workflowSend = null;
         projectSend = null;
         connectionSend = null;
 
@@ -56,70 +54,55 @@ public void before() throws Exception {
         executeExecute = false;
 
         uniqueProjectQueryEngineStub = new UniqueProjectQueryEngineStub(connectionHandler);
-} 
+    }
 
+    /**
+     * Method: executeWorkFlow(LogicalWorkflow workflow)
+     */
+    @Test
+    public void testasyncExecute() throws Exception {
 
+        String queryID = "queryID";
+        LogicalWorkflow workflow = mock(LogicalWorkflow.class);
+        IResultHandler resultHandler = mock(IResultHandler.class);
 
-/** 
-* 
-* Method: executeWorkFlow(LogicalWorkflow workflow) 
-* 
-*/ 
-@Test
-public void testasyncExecute() throws Exception {
+        uniqueProjectQueryEngineStub.asyncExecute(queryID, workflow, resultHandler);
 
-    String queryID ="queryID";
-    LogicalWorkflow workflow = mock(LogicalWorkflow.class);
-    IResultHandler resultHandler = mock (IResultHandler.class);
-
-    uniqueProjectQueryEngineStub.asyncExecute(queryID,workflow,resultHandler);
-
-    assertTrue("executeWorkFlow is executed",executeAsyncExecute);
-    assertEquals("The queryId is correct",queryIdSend,queryID);
-    assertEquals("The workflow is correct",workflowSend,workflow);
-    assertEquals("The resultHandler is correct",resultHandler,resultHandlerSend);
-}
-
-
+        assertTrue("executeWorkFlow is executed", executeAsyncExecute);
+        assertEquals("The queryId is correct", queryIdSend, queryID);
+        assertEquals("The workflow is correct", workflowSend, workflow);
+        assertEquals("The resultHandler is correct", resultHandler, resultHandlerSend);
+    }
 
     @Test
     public void testStop() throws Exception {
 
-        String queryID ="queryID";
-
+        String queryID = "queryID";
 
         uniqueProjectQueryEngineStub.stop(queryID);
 
-        assertTrue("executeWorkFlow is executed",executeStop);
-        assertEquals("The queryId is correct",queryIdSend,queryID);
+        assertTrue("executeWorkFlow is executed", executeStop);
+        assertEquals("The queryId is correct", queryIdSend, queryID);
 
     }
 
+    /**
+     * Method: execute(Project workflow, Connection<T> connection)
+     */
+    @Test
+    public void testExecute() throws Exception {
 
+        Project project = mock(Project.class);
+        Connection connection = mock(Connection.class);
+        uniqueProjectQueryEngineStub.execute(project, connection);
 
-/** 
-* 
-* Method: execute(Project workflow, Connection<T> connection) 
-* 
-*/ 
-@Test
-public void testExecute() throws Exception {
+        assertTrue("executeWorkFlow is executed", executeExecute);
+        assertEquals("The workflow is correct", project, projectSend);
+        assertEquals("The connection is correct", connection, connectionSend);
 
+    }
 
-
-    Project project = mock(Project.class);
-    Connection connection = mock(Connection.class);
-    uniqueProjectQueryEngineStub.execute(project,connection);
-
-    assertTrue("executeWorkFlow is executed", executeExecute);
-    assertEquals("The workflow is correct",project,projectSend);
-    assertEquals("The connection is correct",connection,connectionSend);
-
-} 
-
-
-
-    class UniqueProjectQueryEngineStub extends UniqueProjectQueryEngine{
+    class UniqueProjectQueryEngineStub extends UniqueProjectQueryEngine {
 
         /**
          * Constructor.

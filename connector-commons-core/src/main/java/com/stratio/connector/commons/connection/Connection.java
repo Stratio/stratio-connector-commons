@@ -64,6 +64,7 @@ public abstract class Connection<T> {
 
     /**
      * Return the  date of last use.
+     *
      * @return the date of last use.
      */
     public String getLastDateInfo() {
@@ -72,6 +73,7 @@ public abstract class Connection<T> {
 
     /**
      * Return the work status.
+     *
      * @return the work status.
      */
     public String getStatus() {
@@ -80,6 +82,7 @@ public abstract class Connection<T> {
 
     /**
      * Check the connection status.
+     *
      * @return true if the connections is in use. False in other case.
      */
     public Boolean isWorkInProgress() {
@@ -88,6 +91,7 @@ public abstract class Connection<T> {
 
     /**
      * Set the connection status.
+     *
      * @param workInProgress the connection work status.
      */
     public void setWorkInProgress(Boolean workInProgress) {

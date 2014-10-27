@@ -79,6 +79,7 @@ public abstract class CommonsConnector implements IConnector {
 
     /**
      * This method shutdown the connector.
+     *
      * @throws ExecutionException if an error happens.
      */
     @Override
