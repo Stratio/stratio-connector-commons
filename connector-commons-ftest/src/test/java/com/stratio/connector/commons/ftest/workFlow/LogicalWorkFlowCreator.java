@@ -98,7 +98,7 @@ public class LogicalWorkFlowCreator {
             Map<ColumnName, ColumnType> typeMapColumnName = new LinkedHashMap<>();
             for (ColumnName columnName : project.getColumnList()) {
                 ColumnName columnNameTemp = new ColumnName(catalog, table, columnName.getName());
-                selectColumn.put(columnNameTemp, "alias_" + columnName.getName());
+                selectColumn.put(columnNameTemp, columnName.getName());
                 typeMap.put(columnName.getQualifiedName(), ColumnType.VARCHAR);
                 typeMapColumnName.put(columnNameTemp, ColumnType.VARCHAR);
             }

@@ -173,7 +173,7 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
         assertEquals("The first column name is correct",
                         QualifiedNames.getColumnQualifiedName(CATALOG, TABLE, COLUMN_3), metadata[2].getColumnName());
 
-        assertEquals("The first column alias is correct",ALIAS_COLUMN_1, metadata[0].getColumnAlias());
+        assertEquals("The first column alias is correct", ALIAS_COLUMN_1, metadata[0].getColumnAlias());
         assertEquals("The first column alias is correct", ALIAS_COLUMN_2, metadata[1].getColumnAlias());
         assertEquals("The first column alias is correct", ALIAS_COLUMN_3, metadata[2].getColumnAlias());
 
@@ -182,9 +182,9 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
     private void validateResult(Set<Object> proveSet, ResultSet resultSet) {
         assertEquals("The record number is correct", getRowsToSearch(), (Integer) resultSet.size());
         for (int i = 0; i < getRowsToSearch(); i++) {
-            assertTrue("Return correct record", proveSet.contains("bin1ValueBin1_r" + i));
-            assertTrue("Return correct record", proveSet.contains("bin2ValueBin2_r" + i));
-            assertTrue("Return correct record", proveSet.contains("bin3ValueBin3_r" + i));
+            assertTrue("Return correct record", proveSet.contains(ALIAS_COLUMN_1 + "ValueBin1_r" + i));
+            assertTrue("Return correct record", proveSet.contains(ALIAS_COLUMN_2 + "ValueBin2_r" + i));
+            assertTrue("Return correct record", proveSet.contains(ALIAS_COLUMN_3 + "ValueBin3_r" + i));
         }
     }
 
@@ -202,12 +202,12 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
     }
 
     private void insertRow(int ikey, ClusterName clusterNodeName) throws UnsupportedOperationException,
-            ConnectorException {
+                    ConnectorException {
         insertRow(ikey, TABLE, clusterNodeName);
     }
 
     private void insertRow(int ikey, String Table, ClusterName clusterNodeName) throws UnsupportedOperationException,
-            ConnectorException {
+                    ConnectorException {
 
         Row row = new Row();
         Map<String, Cell> cells = new HashMap<>();
