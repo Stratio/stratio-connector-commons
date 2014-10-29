@@ -52,9 +52,9 @@ import com.stratio.crossdata.common.result.QueryResult;
  */
 public abstract class GenericPKQueryIntegerFilterTest extends GenericConnectorTest {
 
-    private static final String COLUMN_PK = "COLUMN_PK";
-    public static final String ALIAS_COLUMN_1 = "alias_"+COLUMN_1;
-    private static final String ALIAS_COLUMN_AGE = "alais_"+COLUMN_AGE;
+    private static final String COLUMN_PK = "column_pk";
+    public static final String ALIAS_COLUMN_1 = "alias_" + COLUMN_1;
+    private static final String ALIAS_COLUMN_AGE = "alias_" + COLUMN_AGE;
     LogicalWorkFlowCreator logicalWorkFlowCreator;
 
     @Before
@@ -112,7 +112,6 @@ public abstract class GenericPKQueryIntegerFilterTest extends GenericConnectorTe
 
     }
 
-
     @Test
     public void selectPKDoubleFilterDistinct() throws ConnectorException {
 
@@ -128,21 +127,17 @@ public abstract class GenericPKQueryIntegerFilterTest extends GenericConnectorTe
         refresh(CATALOG);
 
         LinkedList<LogicalWorkFlowCreator.ConnectorField> connectorFields = new LinkedList<>();
-        connectorFields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_1, ALIAS_COLUMN_1,
-                ColumnType.VARCHAR));
-        connectorFields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_AGE, ALIAS_COLUMN_AGE,
-                ColumnType.INT));
-        LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns().addColumnName(COLUMN_PK).addSelect
-                (connectorFields)
-                .addDistinctFilter(COLUMN_PK, new Integer(2), false, true)
-                .addDistinctFilter(COLUMN_PK, new Integer(3), false, true).getLogicalWorkflow();
+        connectorFields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_1, ALIAS_COLUMN_1, ColumnType.VARCHAR));
+        connectorFields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_AGE, ALIAS_COLUMN_AGE, ColumnType.INT));
+        LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns().addColumnName(COLUMN_PK)
+                        .addSelect(connectorFields).addDistinctFilter(COLUMN_PK, new Integer(2), false, true)
+                        .addDistinctFilter(COLUMN_PK, new Integer(3), false, true).getLogicalWorkflow();
 
         QueryResult queryResult = connector.getQueryEngine().execute(logicalPlan);
 
-        assertEquals("The record number is correct", 0, queryResult.getResultSet().size());
+        assertEquals("The record number is correct", 3, queryResult.getResultSet().size());
 
     }
-
 
     @Test
     public void selectPKGeatEqualFilterEqual() throws ConnectorException {
@@ -181,7 +176,7 @@ public abstract class GenericPKQueryIntegerFilterTest extends GenericConnectorTe
     }
 
     private void insertRow(int ikey, int age, int money, ClusterName clusterNodeName, boolean withPk)
-            throws UnsupportedOperationException, ConnectorException {
+                    throws UnsupportedOperationException, ConnectorException {
 
         Row row = new Row();
         Map<String, Cell> cells = new HashMap<>();
@@ -195,7 +190,7 @@ public abstract class GenericPKQueryIntegerFilterTest extends GenericConnectorTe
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
         tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.VARCHAR)
                         .addColumn(COLUMN_3, ColumnType.VARCHAR).addColumn(COLUMN_AGE, ColumnType.INT)
-                        .addColumn(COLUMN_MONEY, ColumnType.INT);
+                        .addColumn(COLUMN_MONEY, ColumnType.INT).addColumn(COLUMN_PK, ColumnType.INT);
         tableMetadataBuilder.withPartitionKey(COLUMN_PK);
 
         TableMetadata targetTable = tableMetadataBuilder.build();

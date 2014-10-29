@@ -168,7 +168,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
         Object value4 = 1L;
         insertRow(clusterName, value4, ColumnType.BIGINT, VALUE_1, true);
 
-        ResultSet resultIterator = createResultSet(clusterName);
+        ResultSet resultIterator = createResultSetTyped(clusterName, ColumnType.BIGINT);
         assertEquals("It has only one result", 1, resultIterator.size());
         for (Row recoveredRow : resultIterator) {
             assertEquals("The type is correct ", Long.class.getCanonicalName(), recoveredRow.getCell(COLUMN_4)
@@ -268,8 +268,8 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
         row.setCells(cells);
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
-        tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.VARCHAR)
-                        .addColumn(COLUMN_3, ColumnType.VARCHAR).addColumn(COLUMN_4, colType_4);
+        tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.INT)
+                        .addColumn(COLUMN_3, ColumnType.BOOLEAN).addColumn(COLUMN_4, colType_4);
         if (withPK) {
             tableMetadataBuilder.withPartitionKey(COLUMN_1);
         }
@@ -283,7 +283,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
     }
 
     private void insertRowCompositePK(ClusterName cluesterName, String partitionKey, String clusterKey)
-            throws ConnectorException {
+                    throws ConnectorException {
 
         Row row = new Row();
         Map<String, Cell> cells = new HashMap<>();
