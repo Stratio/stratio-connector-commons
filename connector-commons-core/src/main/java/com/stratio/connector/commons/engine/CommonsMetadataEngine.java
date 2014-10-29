@@ -36,7 +36,7 @@ import com.stratio.crossdata.common.metadata.TableMetadata;
 
 /**
  * This abstract class is a Template for MetadataEngines.
- * <p/>
+ * 
  * Created by dgomez on 22/09/14.
  *
  * @param <T>
@@ -102,6 +102,7 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
      * @param targetCluster
      *            the target cluster witch the table will be created.
      * @param tableMetadata
+     *            the table metadata
      * @throws UnsupportedException
      *             if an operation is not supported.
      * @throws ExecutionException
