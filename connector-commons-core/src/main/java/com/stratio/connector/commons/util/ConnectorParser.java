@@ -20,7 +20,7 @@ package com.stratio.connector.commons.util;
 /**
  * This class is the responsible to parse the information. Created by jmgomez on 3/09/14.
  */
-public class ConnectorParser {
+public final class ConnectorParser {
 
     /**
      * Private constructor.

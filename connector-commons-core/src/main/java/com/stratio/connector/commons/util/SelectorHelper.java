@@ -32,7 +32,7 @@ import com.stratio.crossdata.common.statements.structures.StringSelector;
 /**
  * This class is a helper for the selector crossdata. Created by jmgomez on 17/09/14.
  */
-public class SelectorHelper {
+public final class SelectorHelper {
 
     /**
      * The Log.
