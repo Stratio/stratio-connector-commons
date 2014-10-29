@@ -23,15 +23,17 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * This interface represents a generic logic connection.
- * Created by jmgomez on 29/08/14.
+ * This interface represents a generic logic connection. Created by jmgomez on 29/08/14.
+ *
+ * @param <T>
+ *            the native client
  */
 public abstract class Connection<T> {
 
     /**
      * The dateFormat.
      */
-    private static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    private static final String FILENAME_DATE_PATTERN = "yyyy-MM-dd HH:mm";
 
     private String status;
     /**
@@ -63,7 +65,7 @@ public abstract class Connection<T> {
     public abstract T getNativeConnection();
 
     /**
-     * Return the  date of last use.
+     * Return the date of last use.
      *
      * @return the date of last use.
      */
@@ -92,14 +94,18 @@ public abstract class Connection<T> {
     /**
      * Set the connection status.
      *
-     * @param workInProgress the connection work status.
+     * @param workInProgress
+     *            the connection work status.
      */
     public void setWorkInProgress(Boolean workInProgress) {
+        final DateFormat dateFormat = new SimpleDateFormat(FILENAME_DATE_PATTERN);
+
         if (workInProgress) {
             status = "Work in Progress";
         } else {
             status = "Work Finished";
         }
+
         lastDateInfo = dateFormat.format(new Date());
         this.workInProgress = workInProgress;
     }

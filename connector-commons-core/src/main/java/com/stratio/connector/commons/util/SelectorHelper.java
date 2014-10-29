@@ -30,23 +30,32 @@ import com.stratio.crossdata.common.statements.structures.Selector;
 import com.stratio.crossdata.common.statements.structures.StringSelector;
 
 /**
- * This class is a helper for the selector crossdata.
- * Created by jmgomez on 17/09/14.
+ * This class is a helper for the selector crossdata. Created by jmgomez on 17/09/14.
  */
 public class SelectorHelper {
 
     /**
      * The Log.
      */
-    final transient static Logger logger = LoggerFactory.getLogger(SelectorHelper.class);
+    static final transient Logger LOGGER = LoggerFactory.getLogger(SelectorHelper.class);
+
+    /**
+     * Private constructor.
+     */
+    private SelectorHelper() {
+
+    }
 
     /**
      * Return the selector value represents in the type class.
      *
-     * @param type     the type in witch the value will be return.
-     * @param selector the selector.
+     * @param type
+     *            the type in witch the value will be return.
+     * @param selector
+     *            the selector.
      * @return the type value.
-     * @throws ExecutionException if an error happens.
+     * @throws ExecutionException
+     *             if an error happens.
      */
     public static <T> T getValue(Class<T> type, Selector selector) throws ExecutionException {
 
@@ -56,9 +65,11 @@ public class SelectorHelper {
     /**
      * Return the selector value.
      *
-     * @param selector the selector.
+     * @param selector
+     *            the selector.
      * @return the type value.
-     * @throws ExecutionException if an error happens.
+     * @throws ExecutionException
+     *             if an error happens.
      */
     public static Object getValue(Selector selector) throws ExecutionException {
         Object field = null;
@@ -89,9 +100,11 @@ public class SelectorHelper {
     /**
      * Return the selector value class.
      *
-     * @param selector the selector.
+     * @param selector
+     *            the selector.
      * @return the selector class.
-     * @throws ExecutionException if an error happens.
+     * @throws ExecutionException
+     *             if an error happens.
      */
     public static Class getClass(Selector selector) throws ExecutionException {
         Class returnClass = null;
@@ -133,7 +146,7 @@ public class SelectorHelper {
 
         } catch (ClassCastException | NumberFormatException e) {
             String msg = "Error recovering selector value. " + e.getMessage();
-            logger.error(msg);
+            LOGGER.error(msg);
             throw new ExecutionException(msg, e);
         }
         return returnValue;
@@ -180,14 +193,14 @@ public class SelectorHelper {
     private static <T extends Number> T convertNumeric(Class<T> type, Number field) throws ExecutionException {
         T returnValue;
         if (isInteger(type)) {
-            returnValue = (T) new Integer(field.intValue());
+            returnValue = (T) Integer.valueOf(field.intValue());
         } else if (isLong(type)) {
-            returnValue = (T) new Long(field.longValue());
+            returnValue = (T) Long.valueOf(field.longValue());
         } else if (isDouble(type)) {
-            returnValue = (T) new Double(field.doubleValue());
+            returnValue = (T) Double.valueOf(field.doubleValue());
         } else {
             String msg = "The number " + field + "can not be parse into " + type + ".";
-            logger.error(msg);
+            LOGGER.error(msg);
             throw new ExecutionException(msg);
         }
 

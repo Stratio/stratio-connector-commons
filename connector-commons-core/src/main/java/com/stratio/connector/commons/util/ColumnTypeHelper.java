@@ -18,8 +18,6 @@
 
 package com.stratio.connector.commons.util;
 
-import java.math.BigInteger;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,15 +25,14 @@ import com.stratio.crossdata.common.exceptions.ExecutionException;
 import com.stratio.crossdata.common.metadata.ColumnType;
 
 /**
- * This class is a helper for CrossData ColumnType
- * Created by jmgomez on 24/10/14.
+ * This class is a helper for CrossData ColumnType Created by jmgomez on 24/10/14.
  */
 public final class ColumnTypeHelper {
 
     /**
      * The Log.
      */
-    final transient static Logger logger = LoggerFactory.getLogger(SelectorHelper.class);
+    static final transient Logger LOGGER = LoggerFactory.getLogger(SelectorHelper.class);
 
     /**
      * Constructor.
@@ -46,10 +43,13 @@ public final class ColumnTypeHelper {
     /**
      * Return a casting value adapt to columntType.
      *
-     * @param columnType the columnType.
-     * @param value      the value.
+     * @param columnType
+     *            the columnType.
+     * @param value
+     *            the value.
      * @return the casting value.
-     * @throws ExecutionException if the casting is not possible.
+     * @throws ExecutionException
+     *             if the casting is not possible.
      */
     public static Object getCastingValue(ColumnType columnType, Object value) throws ExecutionException {
         Object returnValue;
@@ -57,15 +57,15 @@ public final class ColumnTypeHelper {
 
         case BIGINT:
             ensureNumber(value);
-            returnValue = new BigInteger(new Integer(((Number) value).intValue()).toString());
+            returnValue = ((Number) value).longValue();
             break;
         case DOUBLE:
             ensureNumber(value);
-            returnValue = new Double(value.toString());
+            returnValue = ((Number) value).doubleValue();
             break;
         case FLOAT:
             ensureNumber(value);
-            returnValue = new Float(value.toString());
+            returnValue = ((Number) value).floatValue();
             break;
         case INT:
             ensureNumber(value);
@@ -82,7 +82,8 @@ public final class ColumnTypeHelper {
     /**
      * check if a object is a number.
      *
-     * @param value the objet.
+     * @param value
+     *            the objet.
      * @return true if is a number false in other case.
      */
     private static boolean isNumber(Object value) {
@@ -93,14 +94,16 @@ public final class ColumnTypeHelper {
     /**
      * Ensure if a object is a number.
      *
-     * @param value the objet.
-     * @throws ExecutionException if is not a number.
+     * @param value
+     *            the objet.
+     * @throws ExecutionException
+     *             if is not a number.
      */
     private static void ensureNumber(Object value) throws ExecutionException {
 
         if (!isNumber(value)) {
             String message = value.getClass().getCanonicalName() + " can not cast to a Number.";
-            logger.error(message);
+            LOGGER.error(message);
             throw new ExecutionException(message);
         }
     }

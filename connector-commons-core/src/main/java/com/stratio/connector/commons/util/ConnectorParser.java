@@ -18,15 +18,22 @@
 package com.stratio.connector.commons.util;
 
 /**
- * This class is the responsible to parse the information.
- * Created by jmgomez on 3/09/14.
+ * This class is the responsible to parse the information. Created by jmgomez on 3/09/14.
  */
 public class ConnectorParser {
 
     /**
+     * Private constructor.
+     */
+    private ConnectorParser() {
+
+    }
+
+    /**
      * This method parse the hosts string.
      *
-     * @param hosts the hosts string.
+     * @param hosts
+     *            the hosts string.
      * @return the hosts in an Array.
      */
     public static String[] hosts(String hosts) {
@@ -37,7 +44,8 @@ public class ConnectorParser {
     /**
      * This method parse the ips string.
      *
-     * @param ips the ips string.
+     * @param ips
+     *            the ips string.
      * @return the ips in an Array.
      */
     public static String[] ports(String ips) {
