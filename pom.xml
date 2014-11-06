@@ -16,7 +16,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.stratio.connector</groupId>
     <artifactId>stratio-connector-commons</artifactId>
-    <version>0.1.0</version>
+    <version>0.2.0</version>
     <url>http://www.stratio.com</url>
     <name>Connector commons</name>
     <description>Connector commons</description>
@@ -129,7 +129,7 @@
             </plugin>
 
 
-        </plugins>
+         <plugin><groupId>org.jacoco</groupId><artifactId>jacoco-maven-plugin</artifactId><version>0.7.1.201405082137</version><executions><execution><id>pre-test</id><goals><goal>prepare-agent</goal></goals><configuration><destFile>${project.build.directory}/jacoco.exec</destFile><propertyName>jacoco-argline</propertyName></configuration></execution></executions></plugin> </plugins>
     </build>
 
 

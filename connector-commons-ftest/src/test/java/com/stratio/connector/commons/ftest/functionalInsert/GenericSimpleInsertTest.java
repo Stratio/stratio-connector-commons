@@ -54,7 +54,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
     protected static final String COLUMN_3 = "COLUMN_3".toLowerCase();
     protected static final String OTHER_VALUE_1 = "OTHER VALUE";
     protected static final String VALUE_4 = "value4";
-    protected static final String OTHER_VALUE_4 = "other value 4";
+    protected static final String OTHER_VALUE_4 = "other_value_4";
     protected static final int VALUE_2 = 2;
     protected static final boolean VALUE_3 = true;
 
@@ -84,8 +84,9 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
         System.out.println("*********************************** INIT FUNCTIONAL TEST testInsertSamePK "
                         + clusterName.getName() + " ***********************************");
 
-        insertRow(clusterName, VALUE_4, ColumnType.VARCHAR, VALUE_1, true);
         insertRow(clusterName, OTHER_VALUE_4, ColumnType.VARCHAR, VALUE_1, true);
+        insertRow(clusterName, VALUE_4, ColumnType.VARCHAR, VALUE_1, true);
+
 
         verifyInsert(clusterName, OTHER_VALUE_4);
 
@@ -273,7 +274,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
         if (withPK) {
             tableMetadataBuilder.withPartitionKey(COLUMN_1);
         }
-        TableMetadata targetTable = tableMetadataBuilder.build();
+        TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper());
 
         if (getConnectorHelper().isTableMandatory()) {
             connector.getMetadataEngine().createTable(getClusterName(), targetTable);
@@ -302,7 +303,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
         tableMetadataBuilder.withPartitionKey(COLUMN_1);
         tableMetadataBuilder.withClusterKey(clusterKey);
 
-        TableMetadata targetTable = tableMetadataBuilder.build();
+        TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper());
         if (getConnectorHelper().isCatalogMandatory()) {
             connector.getMetadataEngine()
                             .createCatalog(getClusterName(),

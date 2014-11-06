@@ -193,7 +193,7 @@ public abstract class GenericPKQueryIntegerFilterTest extends GenericConnectorTe
                         .addColumn(COLUMN_MONEY, ColumnType.INT).addColumn(COLUMN_PK, ColumnType.INT);
         tableMetadataBuilder.withPartitionKey(COLUMN_PK);
 
-        TableMetadata targetTable = tableMetadataBuilder.build();
+        TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper());
 
         row.setCells(cells);
         connector.getStorageEngine().insert(clusterNodeName, targetTable, row);

@@ -26,6 +26,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.stratio.connector.commons.ftest.helper.IConnectorHelper;
 import com.stratio.crossdata.common.data.ClusterName;
 import com.stratio.crossdata.common.data.ColumnName;
 import com.stratio.crossdata.common.data.IndexName;
@@ -141,9 +142,20 @@ public class TableMetadataBuilder {
         return this;
     }
 
-    public TableMetadata build() {
-        // TODO logger.debug()
-        return new TableMetadata(tableName, options, columns, indexes, clusterName, partitionKey, clusterKey);
+    public TableMetadata build(IConnectorHelper connectorHelper) {
+        TableMetadata tableMetadata = new TableMetadata(tableName, options, columns, indexes, clusterName, partitionKey,
+                clusterKey);
+        if (connectorHelper.isPKMandatory()){
+            if (tableMetadata.getPrimaryKey().isEmpty()){
+                ColumnName columnName  = columns.keySet().toArray(new ColumnName[0])[0];
+                List<ColumnName> keyList = new ArrayList<>();
+                keyList.add(columnName);
+                tableMetadata = new TableMetadata(tableName, options, columns, indexes, clusterName, partitionKey,
+                        keyList);
+            }
+        }
+
+        return tableMetadata;
 
     }
 

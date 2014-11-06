@@ -145,14 +145,14 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
         tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.INT)
                         .addColumn(COLUMN_3, ColumnType.BOOLEAN);
 
-        TableMetadata targetTable = tableMetadataBuilder.build();
+        TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper());
 
         row.setCells(cells);
         connector.getStorageEngine().insert(getClusterName(), targetTable, row);
     }
 
     protected void validateMetadata(List<ColumnMetadata> columnMetadata) {
-        assertNotNull("The metadate is not null", columnMetadata);
+        assertNotNull("The metadata is not null", columnMetadata);
         ColumnMetadata[] metadata = columnMetadata.toArray(new ColumnMetadata[0]);
 
         assertEquals("the table name is correct", QualifiedNames.getTableQualifiedName(CATALOG, TABLE),
@@ -220,7 +220,7 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
         tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.VARCHAR)
                         .addColumn(COLUMN_3, ColumnType.VARCHAR);
 
-        TableMetadata targetTable = tableMetadataBuilder.build();
+        TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper());
 
         connector.getStorageEngine().insert(clusterNodeName, targetTable, row);
 

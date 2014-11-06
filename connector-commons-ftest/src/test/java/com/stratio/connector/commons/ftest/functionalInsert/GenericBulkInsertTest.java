@@ -101,7 +101,7 @@ public abstract class GenericBulkInsertTest extends GenericConnectorTest {
         if (withPK) {
             tableMetadataBuilder.withPartitionKey(COLUMN_1);
         }
-        TableMetadata targetTable = tableMetadataBuilder.build();
+        TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper());
 
         connector.getStorageEngine().insert(cluesterName, targetTable, rows);
 

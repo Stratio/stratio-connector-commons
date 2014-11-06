@@ -56,4 +56,6 @@ public interface IConnectorHelper {
     boolean isTableMandatory();
 
     boolean isIndexMandatory();
+
+    boolean isPKMandatory();
 }

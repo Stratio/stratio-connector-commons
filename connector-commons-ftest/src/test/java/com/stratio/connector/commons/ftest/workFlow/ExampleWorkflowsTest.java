@@ -58,7 +58,7 @@ public abstract class ExampleWorkflowsTest extends GenericConnectorTest {
                             .addColumn(ExampleWorkflows.COLUMN_AGE, ColumnType.INT)
                             .addColumn(ExampleWorkflows.COLUMN_BOOL, ColumnType.BOOLEAN);
 
-            TableMetadata targetTable = tableMetadataBuilder.build();
+            TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper());
 
             for (int i = 0; i < 100; i++) {
                 connector.getStorageEngine().insert(getClusterName(), targetTable, exampleWorkflows.getRows(i));

@@ -85,7 +85,7 @@ public abstract class GenericLimitTest extends GenericConnectorTest {
         tableMetadataBuilder.addColumn(COLUMN_TEXT, ColumnType.VARCHAR).addColumn(COLUMN_AGE, ColumnType.INT)
                         .addColumn(COLUMN_MONEY, ColumnType.INT);
 
-        TableMetadata targetTable = tableMetadataBuilder.build();
+        TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper());
 
         connector.getStorageEngine().insert(cLusterName, targetTable, row);
 
