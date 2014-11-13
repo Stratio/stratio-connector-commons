@@ -185,6 +185,7 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
 
     /**
      * This method deletes all the rows of a table.
+     *
      * @param targetCluster
      *              Target cluster.
      * @param tableName
@@ -208,7 +209,8 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
     }
 
     /**
-     * Abstract method which must be implemented by the concrete daatabase metadataEngine to execute a truncate.
+     * Abstract method which must be implemented by the concrete database metadataEngine to execute a truncate.
+     *
      * @param tableName
      *          Target table name including fully qualified including catalog.
      * @param connection
@@ -216,8 +218,7 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
      * @throws UnsupportedException
      * @throws ExecutionException
      */
-
-    protected abstract void truncate(TableName tableName, Connection connection)  throws UnsupportedException, ExecutionException;
+    protected abstract void truncate(TableName tableName, Connection<T> connection)  throws UnsupportedException, ExecutionException;
 
     /**
      * Abstract method which must be implemented by the concrete database metadataEngine to execute a delete.
@@ -233,7 +234,7 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
      * @throws ExecutionException
      *             if a error happens.
      */
-    protected abstract void delete(TableName tableName, Collection<Filter> whereClauses, Connection connection)  throws UnsupportedException, ExecutionException;
+    protected abstract void delete(TableName tableName, Collection<Filter> whereClauses, Connection<T> connection)  throws UnsupportedException, ExecutionException;
 
 
     /**
@@ -252,7 +253,7 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
      * @throws ExecutionException
      *             if a error happens.
      */
-    protected abstract void update(TableName tableName, Collection<Relation> assignments, Collection<Filter> whereClauses, Connection connection)  throws UnsupportedException, ExecutionException;
+    protected abstract void update(TableName tableName, Collection<Relation> assignments, Collection<Filter> whereClauses, Connection<T> connection)  throws UnsupportedException, ExecutionException;
 
 
     /**
