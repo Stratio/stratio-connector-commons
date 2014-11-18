@@ -18,34 +18,18 @@
 
 package com.stratio.connector.commons.ftest.workFlow;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
 import com.stratio.crossdata.common.data.ClusterName;
 import com.stratio.crossdata.common.data.ColumnName;
 import com.stratio.crossdata.common.data.TableName;
 import com.stratio.crossdata.common.exceptions.UnsupportedException;
-import com.stratio.crossdata.common.logicalplan.Filter;
-import com.stratio.crossdata.common.logicalplan.Limit;
-import com.stratio.crossdata.common.logicalplan.LogicalStep;
-import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
-import com.stratio.crossdata.common.logicalplan.Project;
-import com.stratio.crossdata.common.logicalplan.Select;
-import com.stratio.crossdata.common.logicalplan.Window;
+import com.stratio.crossdata.common.logicalplan.*;
 import com.stratio.crossdata.common.metadata.ColumnType;
 import com.stratio.crossdata.common.metadata.Operations;
-import com.stratio.crossdata.common.statements.structures.BooleanSelector;
-import com.stratio.crossdata.common.statements.structures.ColumnSelector;
-import com.stratio.crossdata.common.statements.structures.IntegerSelector;
-import com.stratio.crossdata.common.statements.structures.Operator;
-import com.stratio.crossdata.common.statements.structures.Relation;
-import com.stratio.crossdata.common.statements.structures.Selector;
-import com.stratio.crossdata.common.statements.structures.StringSelector;
+import com.stratio.crossdata.common.statements.structures.*;
 import com.stratio.crossdata.common.statements.structures.window.TimeUnit;
 import com.stratio.crossdata.common.statements.structures.window.WindowType;
+
+import java.util.*;
 
 /**
  * Created by jmgomez on 16/09/14.
@@ -256,7 +240,7 @@ public class LogicalWorkFlowCreator {
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)),
                         Operator.MATCH, returnSelector(textToFind));
 
-        filters.add(new Filter(Operations.FILTER_FULLTEXT, relation));
+        filters.add(new Filter(Operations.FILTER_INDEXED_MATCH, relation));
 
         return this;
     }
@@ -266,7 +250,7 @@ public class LogicalWorkFlowCreator {
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)), Operator.LIKE,
                         returnSelector(textToFind));
 
-        filters.add(new Filter(Operations.FILTER_FULLTEXT, relation));
+        filters.add(new Filter(Operations.FILTER_INDEXED_MATCH, relation));
 
         return this;
     }
