@@ -41,9 +41,9 @@ import com.stratio.crossdata.common.data.ResultSet;
 import com.stratio.crossdata.common.data.Row;
 import com.stratio.crossdata.common.exceptions.ConnectorException;
 import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
+import com.stratio.crossdata.common.metadata.ColumnMetadata;
 import com.stratio.crossdata.common.metadata.ColumnType;
 import com.stratio.crossdata.common.metadata.TableMetadata;
-import com.stratio.crossdata.common.metadata.structures.ColumnMetadata;
 import com.stratio.crossdata.common.result.QueryResult;
 
 /**
@@ -156,26 +156,27 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
         ColumnMetadata[] metadata = columnMetadata.toArray(new ColumnMetadata[0]);
 
         assertEquals("the table name is correct", QualifiedNames.getTableQualifiedName(CATALOG, TABLE),
-                        metadata[0].getTableName());
+                        metadata[0].getName().getTableName());
         assertEquals("the table name is correct", QualifiedNames.getTableQualifiedName(CATALOG, TABLE),
-                        metadata[1].getTableName());
+                        metadata[1].getName().getTableName());
         assertEquals("the table name is correct", QualifiedNames.getTableQualifiedName(CATALOG, TABLE),
-                        metadata[2].getTableName());
+                        metadata[2].getName().getTableName());
 
-        assertEquals("The first column type is correct", ColumnType.TEXT, metadata[0].getType());
-        assertEquals("The second column type is correct", ColumnType.INT, metadata[1].getType());
-        assertEquals("The third column type is correct", ColumnType.BOOLEAN, metadata[2].getType());
+        assertEquals("The first column type is correct", ColumnType.TEXT, metadata[0].getColumnType() );
+        assertEquals("The second column type is correct", ColumnType.INT, metadata[1].getColumnType());
+        assertEquals("The third column type is correct", ColumnType.BOOLEAN, metadata[2].getColumnType());
 
         assertEquals("The first column name is correct",
-                        QualifiedNames.getColumnQualifiedName(CATALOG, TABLE, COLUMN_1), metadata[0].getColumnName());
+                        QualifiedNames.getColumnQualifiedName(CATALOG, TABLE, COLUMN_1), metadata[0].getName());
         assertEquals("The first column name is correct",
-                        QualifiedNames.getColumnQualifiedName(CATALOG, TABLE, COLUMN_2), metadata[1].getColumnName());
+                        QualifiedNames.getColumnQualifiedName(CATALOG, TABLE, COLUMN_2),
+                metadata[1].getName());
         assertEquals("The first column name is correct",
-                        QualifiedNames.getColumnQualifiedName(CATALOG, TABLE, COLUMN_3), metadata[2].getColumnName());
+                        QualifiedNames.getColumnQualifiedName(CATALOG, TABLE, COLUMN_3), metadata[2].getName());
 
-        assertEquals("The first column alias is correct", ALIAS_COLUMN_1, metadata[0].getColumnAlias());
-        assertEquals("The first column alias is correct", ALIAS_COLUMN_2, metadata[1].getColumnAlias());
-        assertEquals("The first column alias is correct", ALIAS_COLUMN_3, metadata[2].getColumnAlias());
+        assertEquals("The first column alias is correct", ALIAS_COLUMN_1, metadata[0].getName().getAlias());
+        assertEquals("The first column alias is correct", ALIAS_COLUMN_2, metadata[1].getName().getAlias());
+        assertEquals("The first column alias is correct", ALIAS_COLUMN_3, metadata[2].getName().getAlias());
 
     }
 
