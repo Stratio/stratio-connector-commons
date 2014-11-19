@@ -18,13 +18,11 @@
 
 package com.stratio.connector.commons.engine;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.stratio.connector.commons.connection.Connection;
 import com.stratio.connector.commons.connection.ConnectionHandler;
 import com.stratio.connector.commons.connection.exceptions.HandlerConnectionException;
 import com.stratio.crossdata.common.connector.IMetadataEngine;
+import com.stratio.crossdata.common.data.AlterOptions;
 import com.stratio.crossdata.common.data.CatalogName;
 import com.stratio.crossdata.common.data.ClusterName;
 import com.stratio.crossdata.common.data.TableName;
@@ -33,6 +31,8 @@ import com.stratio.crossdata.common.exceptions.UnsupportedException;
 import com.stratio.crossdata.common.metadata.CatalogMetadata;
 import com.stratio.crossdata.common.metadata.IndexMetadata;
 import com.stratio.crossdata.common.metadata.TableMetadata;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This abstract class is a Template for MetadataEngines.
@@ -71,13 +71,13 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
      * This method creates a catalog.
      *
      * @param targetCluster
-     *            the target cluster witch the catalog will be created.
+     *            the target cluster where the catalog will be created.
      * @param catalogMetadata
      *            the catalog metadata info.
      * @throws UnsupportedException
      *             if an operation is not supported.
      * @throws ExecutionException
-     *             if a error happens.
+     *             if an error happens.
      */
     @Override
     public final void createCatalog(ClusterName targetCluster, CatalogMetadata catalogMetadata)
@@ -100,13 +100,13 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
      * This method creates a table.
      *
      * @param targetCluster
-     *            the target cluster witch the table will be created.
+     *            the target cluster where the table will be created.
      * @param tableMetadata
-     *            the table metadata
+     *            the table metadata.
      * @throws UnsupportedException
      *             if an operation is not supported.
      * @throws ExecutionException
-     *             if a error happens.
+     *             if an error happens.
      */
     @Override
     public final void createTable(ClusterName targetCluster, TableMetadata tableMetadata) throws UnsupportedException,
@@ -128,13 +128,13 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
      * This method drop a catalog.
      *
      * @param targetCluster
-     *            the target cluster witch the catalog will be dropped.
+     *            the target cluster where the catalog will be dropped.
      * @param name
      *            the catalog name.
      * @throws UnsupportedException
      *             if an operation is not supported.
      * @throws ExecutionException
-     *             if a error happens.
+     *             if an error happens.
      */
     @Override
     public final void dropCatalog(ClusterName targetCluster, CatalogName name) throws UnsupportedException,
@@ -157,13 +157,13 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
      * This method drop a table.
      *
      * @param targetCluster
-     *            the target cluster witch the table will be dropped.
+     *            the target cluster where the table will be dropped.
      * @param name
      *            the table name.
      * @throws UnsupportedException
      *             if an operation is not supported.
      * @throws ExecutionException
-     *             if a error happens.
+     *             if an error happens.
      */
     @Override
     public final void dropTable(ClusterName targetCluster, TableName name) throws UnsupportedException,
@@ -181,17 +181,18 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
         }
     }
 
+   
     /**
      * This method creates an index.
      *
      * @param targetCluster
-     *            the target cluster witch the index will be created.
+     *            the target cluster where the index will be created.
      * @param indexMetadata
      *            the index metainformation.
      * @throws UnsupportedException
      *             if an operation is not supported.
      * @throws ExecutionException
-     *             if a error happens.
+     *             if an error happens.
      */
     @Override
     public final void createIndex(ClusterName targetCluster, IndexMetadata indexMetadata) throws UnsupportedException,
@@ -213,13 +214,13 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
      * This method drop an index.
      *
      * @param targetCluster
-     *            the target cluster witch the index will be dropped.
+     *            the target cluster where the index will be dropped.
      * @param indexMetadata
      *            the index metainformation.
      * @throws UnsupportedException
      *             if an operation is not supported.
      * @throws ExecutionException
-     *             if a error happens.
+     *             if an error happens.
      */
     @Override
     public final void dropIndex(ClusterName targetCluster, IndexMetadata indexMetadata) throws UnsupportedException,
@@ -237,6 +238,44 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
     }
 
     /**
+     * This method add, delete, or modify columns in an existing table.
+     * 
+     * @param targetCluster
+     *              the target cluster where the table will be altered.
+     * @param name
+     *              the table name.
+     * @param alterOptions
+     *              the alter options.
+     * @throws 
+     */
+    @Override
+    public void alterTable(ClusterName targetCluster, TableName name, AlterOptions alterOptions) throws UnsupportedException, ExecutionException {
+        try {
+            connectionHandler.startWork(targetCluster.getName());
+            alterTable(name, alterOptions, connectionHandler.getConnection(targetCluster.getName()));
+        } catch (HandlerConnectionException e) {
+            String msg = String.format(GENERIC_CONNECTOR_UNAVAILABLE, targetCluster.getName(), e.getMessage());
+            logger.error(msg);
+            throw new ExecutionException(msg, e);
+        } finally {
+            connectionHandler.endWork(targetCluster.getName());
+        }
+    }
+
+    /**
+     * Abstract method which must be implemented by the concrete database metadataEngine to add, delete, or modify columns in an existing table.
+     * 
+     * @param name
+     *          the table name.
+     * @param alterOptions
+     *          the alter options.
+     * @param connection
+     *          the connection.
+     */
+    protected abstract void alterTable(TableName name, AlterOptions alterOptions, Connection<T> connection) throws UnsupportedException, ExecutionException ;
+
+
+    /**
      * Abstract method which must be implemented by the concrete database metadataEngine to create a catalog.
      *
      * @param catalogMetadata
@@ -246,7 +285,7 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
      * @throws UnsupportedException
      *             if an operation is not supported.
      * @throws ExecutionException
-     *             if a error happens.
+     *             if an error happens.
      */
     protected abstract void createCatalog(CatalogMetadata catalogMetadata, Connection<T> connection)
                     throws UnsupportedException, ExecutionException;
@@ -261,7 +300,7 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
      * @throws UnsupportedException
      *             if an operation is not supported.
      * @throws ExecutionException
-     *             if a error happens.
+     *             if an error happens.
      */
     protected abstract void createTable(TableMetadata tableMetadata, Connection<T> connection)
                     throws UnsupportedException, ExecutionException;
@@ -276,7 +315,7 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
      * @throws UnsupportedException
      *             if an operation is not supported.
      * @throws ExecutionException
-     *             if a error happens.
+     *             if an error happens.
      */
     protected abstract void dropCatalog(CatalogName name, Connection<T> connection) throws UnsupportedException,
                     ExecutionException;
@@ -291,13 +330,13 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
      * @throws UnsupportedException
      *             if an operation is not supported.
      * @throws ExecutionException
-     *             if a error happens.
+     *             if an error happens.
      */
     protected abstract void dropTable(TableName name, Connection<T> connection) throws UnsupportedException,
                     ExecutionException;
 
     /**
-     * Abstract method which must be implemented by the concrete database metadataEngine to create a index.
+     * Abstract method which must be implemented by the concrete database metadataEngine to create an index.
      *
      * @param indexMetadata
      *            the index metadata.
@@ -306,13 +345,13 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
      * @throws UnsupportedException
      *             if an operation is not supported.
      * @throws ExecutionException
-     *             if a error happens.
+     *             if an error happens.
      */
     protected abstract void createIndex(IndexMetadata indexMetadata, Connection<T> connection)
                     throws UnsupportedException, ExecutionException;
 
     /**
-     * Abstract method which must be implemented by the concrete database metadataEngine to drop a index.
+     * Abstract method which must be implemented by the concrete database metadataEngine to drop an index.
      *
      * @param indexMetadata
      *            the index metadata.
@@ -321,7 +360,7 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
      * @throws UnsupportedException
      *             if an operation is not supported.
      * @throws ExecutionException
-     *             if a error happens.
+     *             if an error happens.
      */
     protected abstract void dropIndex(IndexMetadata indexMetadata, Connection<T> connection)
                     throws UnsupportedException, ExecutionException;

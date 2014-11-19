@@ -18,20 +18,22 @@
 
 package com.stratio.connector.commons.engine;
 
-import java.util.Collection;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.stratio.connector.commons.connection.Connection;
 import com.stratio.connector.commons.connection.ConnectionHandler;
 import com.stratio.connector.commons.connection.exceptions.HandlerConnectionException;
 import com.stratio.crossdata.common.connector.IStorageEngine;
 import com.stratio.crossdata.common.data.ClusterName;
 import com.stratio.crossdata.common.data.Row;
+import com.stratio.crossdata.common.data.TableName;
 import com.stratio.crossdata.common.exceptions.ExecutionException;
 import com.stratio.crossdata.common.exceptions.UnsupportedException;
+import com.stratio.crossdata.common.logicalplan.Filter;
 import com.stratio.crossdata.common.metadata.TableMetadata;
+import com.stratio.crossdata.common.statements.structures.Relation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Collection;
 
 /**
  * This abstract class is a Template for CommonsStorageEngine. Created by dgomez on 22/09/14.
@@ -61,7 +63,7 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
     }
 
     /**
-     * This method insert a rows in a database.
+     * This method inserts a single row in a table.
      *
      * @param targetCluster
      *            the target cluster to insert.
@@ -91,7 +93,7 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
     }
 
     /**
-     * This method insert rows in a database.
+     * This method inserts a collection of rows in a table.
      *
      * @param targetCluster
      *            the target cluster to insert.
@@ -102,7 +104,7 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
      * @throws UnsupportedException
      *             if an operation is not supported.
      * @throws ExecutionException
-     *             if a error happens.
+     *             if an error happens.
      */
     @Override
     public final void insert(ClusterName targetCluster, TableMetadata targetTable, Collection<Row> rows)
@@ -119,6 +121,140 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
             connectionHandler.endWork(targetCluster.getName());
         }
     }
+
+    /**
+     * This method updates data of a table according to some conditions.
+     *
+     * @param targetCluster
+     *              the target cluster to insert.
+     * @param tableName
+     *              Target table name including fully qualified including catalog.
+     * @param assignments
+     *              Operations to be executed for every row.
+     * @param whereClauses
+     *              Where clauses.
+     * @throws ExecutionException
+     *              if an error occurs during the connection.
+     * @throws UnsupportedException
+
+     */
+    @Override
+    public void update(ClusterName targetCluster, TableName tableName, Collection<Relation> assignments, Collection<Filter> whereClauses) throws UnsupportedException, ExecutionException {
+        try {
+            connectionHandler.startWork(targetCluster.getName());
+            update(tableName, assignments, whereClauses, connectionHandler.getConnection(targetCluster.getName()));
+
+        } catch (HandlerConnectionException e) {
+            String msg = "Error find Connection in " + targetCluster.getName() + ". " + e.getMessage();
+            logger.error(msg);
+            throw new ExecutionException(msg, e);
+        } finally {
+            connectionHandler.endWork(targetCluster.getName());
+        }
+    }
+
+
+    /**
+     * This method deletes rows, on the indicated cluster, that meet the conditions of the where clauses.
+     *
+     * @param targetCluster
+     *              the target cluster to insert.
+     * @param tableName
+     *              Target table name including fully qualified including catalog.
+     * @param whereClauses
+     *              Where clauses.
+     * @throws ExecutionException
+     *              if an error occurs during the connection.
+     * @throws UnsupportedException
+
+     */
+    @Override
+    public void delete(ClusterName targetCluster, TableName tableName, Collection<Filter> whereClauses) throws UnsupportedException,ExecutionException {
+        try {
+            connectionHandler.startWork(targetCluster.getName());
+            delete(tableName, whereClauses, connectionHandler.getConnection(targetCluster.getName()));
+
+        } catch (HandlerConnectionException e) {
+            String msg = "Error find Connection in " + targetCluster.getName() + ". " + e.getMessage();
+            logger.error(msg);
+            throw new ExecutionException(msg, e);
+        } finally {
+            connectionHandler.endWork(targetCluster.getName());
+        }
+    }
+
+    /**
+     * This method deletes all the rows of a table.
+     *
+     * @param targetCluster
+     *              Target cluster.
+     * @param tableName
+     *              Target table name including fully qualified including catalog.
+     * @throws UnsupportedException
+     * @throws ExecutionException
+     */
+    @Override
+    public void truncate(ClusterName targetCluster, TableName tableName) throws UnsupportedException,ExecutionException {
+        try {
+            connectionHandler.startWork(targetCluster.getName());
+            truncate(tableName, connectionHandler.getConnection(targetCluster.getName()));
+
+        } catch (HandlerConnectionException e) {
+            String msg = "Error find Connection in " + targetCluster.getName() + ". " + e.getMessage();
+            logger.error(msg);
+            throw new ExecutionException(msg, e);
+        } finally {
+            connectionHandler.endWork(targetCluster.getName());
+        }
+    }
+
+    /**
+     * Abstract method which must be implemented by the concrete database metadataEngine to execute a truncate.
+     *
+     * @param tableName
+     *          Target table name including fully qualified including catalog.
+     * @param connection
+     *          the database connection.
+     * @throws UnsupportedException
+     * @throws ExecutionException
+     */
+    protected abstract void truncate(TableName tableName, Connection<T> connection)  throws UnsupportedException, ExecutionException;
+
+    /**
+     * Abstract method which must be implemented by the concrete database metadataEngine to execute a delete.
+     *
+     * @param tableName
+     *              Target table name including fully qualified including catalog.
+     * @param whereClauses
+     *              the filters to be applied.
+     * @param connection
+     *              the database connection.
+     * @throws UnsupportedException
+     *             if an operation is not supported.
+     * @throws ExecutionException
+     *             if a error happens.
+     */
+    protected abstract void delete(TableName tableName, Collection<Filter> whereClauses, Connection<T> connection)  throws UnsupportedException, ExecutionException;
+
+
+    /**
+     * Abstract method which must be implemented by the concrete database metadataEngine to execute an update.
+     *
+     * @param tableName
+     *              Target table name including fully qualified including catalog.
+     * @param assignments
+     *              the assignments to update.
+     * @param whereClauses
+     *              the filters to be applied.
+     * @param connection
+     *              the database connection.
+     * @throws UnsupportedException
+     *             if an operation is not supported.
+     * @throws ExecutionException
+     *             if a error happens.
+     */
+    protected abstract void update(TableName tableName, Collection<Relation> assignments, Collection<Filter> whereClauses, Connection<T> connection)  throws UnsupportedException, ExecutionException;
+
 
     /**
      * Abstract method which must be implemented by the concrete database metadataEngine to execute a simple insert.
