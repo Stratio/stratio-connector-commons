@@ -155,27 +155,19 @@ public abstract class GenericDeleteTest extends GenericConnectorTest {
 
         assertTrue("The row is correct", sRows.contains("0"));
 
-
     }
-
-
-
-
 
     private void insertTestData(ClusterName clusterName) throws ConnectorException {
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
         tableMetadataBuilder.addColumn(COLUMN_PK, ColumnType.VARCHAR).addColumn(COLUMN_1, ColumnType.VARCHAR).withPartitionKey(
                 COLUMN_PK);
 
-
-
-
         connector.getStorageEngine().insert(clusterName, tableMetadataBuilder.build(getConnectorHelper()),
-                createRow("0", "value1"));
+                createRow("0", "value0"));
         connector.getStorageEngine().insert(clusterName, tableMetadataBuilder.build(getConnectorHelper()),
-                createRow("1", "value2"));
+                createRow("1", "value1"));
         connector.getStorageEngine().insert(clusterName, tableMetadataBuilder.build(getConnectorHelper()),
-                createRow("2", "value3"));
+                createRow("2", "value2"));
         connector.getStorageEngine().insert(clusterName, tableMetadataBuilder.build(getConnectorHelper()),
                 createRow("3", "value3"));
 
@@ -224,11 +216,11 @@ public abstract class GenericDeleteTest extends GenericConnectorTest {
         return row;
     }
 
-    //mirar que hace esto bien
+
     private LogicalWorkflow createLogicalWorkFlow(String catalog, String table) {
         return new LogicalWorkFlowCreator(catalog, table, getClusterName()).addColumnName(COLUMN_PK, COLUMN_1)
                 .getLogicalWorkflow();
     }
 
-//buscar insert rows, EL MÉTODO PARA REFACTORIZAR
+
 }
