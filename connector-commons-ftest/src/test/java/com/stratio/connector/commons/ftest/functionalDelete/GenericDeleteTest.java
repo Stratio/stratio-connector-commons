@@ -97,6 +97,70 @@ public abstract class GenericDeleteTest extends GenericConnectorTest {
     }
 
 
+    @Test
+    public void deleteByPKLETStringTest() throws ConnectorException {
+
+        ClusterName clusterName = getClusterName();
+        insertTestData(clusterName);
+
+
+        connector.getStorageEngine().delete(clusterName, new TableName(CATALOG, TABLE), createDeleteFilter(
+                Operations.DELETE_PK_LET, Operator.LET));
+
+
+        QueryResult queryResult = connector.getQueryEngine().execute(createLogicalWorkFlow(CATALOG, TABLE));
+        assertEquals("One record has been deleted", 2, queryResult.getResultSet().size());
+        Set<String> sRows = recoveredIds(queryResult);
+
+        assertTrue("The row is correct", sRows.contains("2"));
+        assertTrue("The row is correct", sRows.contains("3"));
+
+    }
+
+    @Test
+    public void deleteByPKGTStringTest() throws ConnectorException {
+
+        ClusterName clusterName = getClusterName();
+        insertTestData(clusterName);
+
+
+        connector.getStorageEngine().delete(clusterName, new TableName(CATALOG, TABLE), createDeleteFilter(
+                Operations.DELETE_PK_GT, Operator.GT));
+
+
+        QueryResult queryResult = connector.getQueryEngine().execute(createLogicalWorkFlow(CATALOG, TABLE));
+        assertEquals("One record has been deleted", 2, queryResult.getResultSet().size());
+        Set<String> sRows = recoveredIds(queryResult);
+
+        assertTrue("The row is correct", sRows.contains("0"));
+        assertTrue("The row is correct", sRows.contains("1"));
+
+    }
+
+    @Test
+    public void deleteByPKGETStringTest() throws ConnectorException {
+
+        ClusterName clusterName = getClusterName();
+        insertTestData(clusterName);
+
+
+        connector.getStorageEngine().delete(clusterName, new TableName(CATALOG, TABLE), createDeleteFilter(
+                Operations.DELETE_PK_GET, Operator.GET));
+
+
+        QueryResult queryResult = connector.getQueryEngine().execute(createLogicalWorkFlow(CATALOG, TABLE));
+        assertEquals("One record has been deleted", 1, queryResult.getResultSet().size());
+        Set<String> sRows = recoveredIds(queryResult);
+
+        assertTrue("The row is correct", sRows.contains("0"));
+
+
+    }
+
+
+
+
+
     private void insertTestData(ClusterName clusterName) throws ConnectorException {
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
         tableMetadataBuilder.addColumn(COLUMN_PK, ColumnType.VARCHAR).addColumn(COLUMN_1, ColumnType.VARCHAR).withPartitionKey(
