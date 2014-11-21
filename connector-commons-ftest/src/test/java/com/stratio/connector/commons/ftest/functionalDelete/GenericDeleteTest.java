@@ -18,10 +18,22 @@
 
 package com.stratio.connector.commons.ftest.functionalDelete;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
+
+import org.junit.Assert;
+import org.junit.Test;
+
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
 import com.stratio.connector.commons.ftest.schema.TableMetadataBuilder;
 import com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator;
-import com.stratio.crossdata.common.data.*;
+import com.stratio.crossdata.common.data.Cell;
+import com.stratio.crossdata.common.data.ClusterName;
+import com.stratio.crossdata.common.data.ColumnName;
+import com.stratio.crossdata.common.data.Row;
+import com.stratio.crossdata.common.data.TableName;
 import com.stratio.crossdata.common.exceptions.ConnectorException;
 import com.stratio.crossdata.common.logicalplan.Filter;
 import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
@@ -32,15 +44,6 @@ import com.stratio.crossdata.common.statements.structures.ColumnSelector;
 import com.stratio.crossdata.common.statements.structures.Operator;
 import com.stratio.crossdata.common.statements.structures.Relation;
 import com.stratio.crossdata.common.statements.structures.StringSelector;
-import org.junit.Assert;
-import org.junit.Test;
-
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-
-import static org.junit.Assert.assertEquals;
 
 public abstract class GenericDeleteTest extends GenericConnectorTest {
 
@@ -53,51 +56,63 @@ public abstract class GenericDeleteTest extends GenericConnectorTest {
 
         ClusterName clusterName = getClusterName();
 
+         insertTestData(clusterName);
 
-        Row row = new Row();
-        Row row1 = new Row();
-        Row row2 = new Row();
-        Map<String, Cell> cells = new HashMap<>();
-        cells.put(COLUMN_PK, new Cell("id1"));
-        cells.put(COLUMN_1, new Cell("value1"));
-        row.setCells(cells);
-        Map<String, Cell> cells1 = new HashMap<>();
-        cells1.put(COLUMN_PK, new Cell("id2"));
-        cells1.put(COLUMN_1, new Cell("value2"));
-        row1.setCells(cells1);
-        Map<String, Cell> cells2 = new HashMap<>();
-        cells2.put(COLUMN_PK, new Cell("id3"));
-        cells2.put(COLUMN_1, new Cell("value3"));
-        row2.setCells(cells2);
 
+
+        connector.getStorageEngine().delete(clusterName, new TableName(CATALOG, TABLE), createDeleteFilter(
+                Operations.DELETE_PK_EQ));
+
+        QueryResult queryResult = connector.getQueryEngine().execute(createLogicalWorkFlow(CATALOG, TABLE));
+        Assert.assertEquals("One record has been deleted",2, queryResult.getResultSet().size());
+
+
+    }
+
+    private void insertTestData(ClusterName clusterName) throws ConnectorException {
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
         tableMetadataBuilder.addColumn(COLUMN_PK, ColumnType.VARCHAR).addColumn(COLUMN_1, ColumnType.VARCHAR).withPartitionKey(COLUMN_PK);
 
-        connector.getStorageEngine().insert(clusterName, tableMetadataBuilder.build(getConnectorHelper()), row);
-        connector.getStorageEngine().insert(clusterName, tableMetadataBuilder.build(getConnectorHelper()), row1);
-        connector.getStorageEngine().insert(clusterName, tableMetadataBuilder.build(getConnectorHelper()), row2);
+
+
+
+        connector.getStorageEngine().insert(clusterName, tableMetadataBuilder.build(getConnectorHelper()), createRow("id1", "value1"));
+        connector.getStorageEngine().insert(clusterName, tableMetadataBuilder.build(getConnectorHelper()),
+                createRow("id2", "value2"));
+        connector.getStorageEngine().insert(clusterName, tableMetadataBuilder.build(getConnectorHelper()),
+                createRow("id3", "value3"));
 
         QueryResult queryResult = connector.getQueryEngine().execute(createLogicalWorkFlow(CATALOG, TABLE));
-        Assert.assertEquals(3, queryResult.getResultSet().size());
-        Assert.assertEquals(2, queryResult.getResultSet().getRows().get(0).size());
+        getConnectorHelper().refresh(CATALOG);
+        Assert.assertEquals("There are three records in table",3, queryResult.getResultSet().size());
 
 
-        Collection<Filter> filters = new HashSet<>(1);
-        Operations operations = Operations.DELETE_PK_EQ;
-        ColumnName name = new ColumnName(CATALOG, TABLE, COLUMN_PK);
-
-        Relation relation = new Relation(new ColumnSelector(name), Operator.EQ, new StringSelector("id1"));
-        Filter filter = new Filter(operations, relation);
-        filters.add(filter);
-        connector.getStorageEngine().delete(clusterName, new TableName(CATALOG, TABLE), filters);
-
-        Assert.assertEquals(2, queryResult.getResultSet().size());
-        Assert.assertEquals(2, queryResult.getResultSet().getRows().get(0).size());
-
-        queryResult = connector.getQueryEngine().execute(createLogicalWorkFlow(CATALOG, TABLE));
-        assertEquals("Table [" + CATALOG + "." + TABLE + "] deleted", 0, queryResult.getResultSet().size());
     }
-//mirar que hace esto bien
+
+
+    private Collection<Filter> createDeleteFilter(Operations deletePkEq) {
+        Collection<Filter> filters = new LinkedList<>();
+        Operations operations = deletePkEq;
+        ColumnName name = new ColumnName(CATALOG, TABLE, COLUMN_PK);
+        ColumnSelector primaryKey =  new ColumnSelector(name);
+        Operator operator = Operator.EQ;
+        StringSelector rightTerm = new StringSelector("id1");
+
+        Relation relation = new Relation(primaryKey, operator, rightTerm);
+        filters.add(new Filter(operations, relation));
+        return filters;
+    }
+
+    private Row createRow(String valuePK, String valueColumn1) {
+        Map<String, Cell> cells = new HashMap<>();
+        Row row = new Row();
+        cells.put(COLUMN_PK, new Cell(valuePK));
+        cells.put(COLUMN_1, new Cell(valueColumn1));
+        row.setCells(cells);
+        return row;
+    }
+
+    //mirar que hace esto bien
     private LogicalWorkflow createLogicalWorkFlow(String catalog, String table) {
         return new LogicalWorkFlowCreator(catalog, table, getClusterName()).addColumnName(COLUMN_PK, COLUMN_1)
                 .getLogicalWorkflow();
