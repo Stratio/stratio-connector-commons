@@ -27,6 +27,7 @@ import com.stratio.crossdata.common.statements.structures.ColumnSelector;
 import com.stratio.crossdata.common.statements.structures.FloatingPointSelector;
 import com.stratio.crossdata.common.statements.structures.IntegerSelector;
 import com.stratio.crossdata.common.statements.structures.Selector;
+import com.stratio.crossdata.common.statements.structures.SelectorType;
 import com.stratio.crossdata.common.statements.structures.StringSelector;
 
 /**
@@ -72,8 +73,27 @@ public final class SelectorHelper {
      *             if an error happens.
      */
     public static Object getValue(Selector selector) throws ExecutionException {
+        return getRestrictedValue(selector, null);
+
+    }
+    
+    /**
+     * Return the selector value only if the type matches with the specified value.
+     *
+     * @param selector the selector.
+     * @param type the type of the expected selector
+     * @return the corresponding value or null if the selector type does not match.
+     * @throws ExecutionException if an error happens.
+     */
+    public static Object getRestrictedValue(Selector selector, SelectorType type) throws ExecutionException {
         Object field = null;
+
+        if(type!= null && selector.getType() != type) {
+        	throw new ExecutionException("The selector type expected is: "+type+" but received: "+selector.getType());
+        }
+        
         switch (selector.getType()) {
+        
         case COLUMN:
             field = ((ColumnSelector) selector).getName().getName();
             break;
@@ -96,6 +116,7 @@ public final class SelectorHelper {
         return field;
 
     }
+    
 
     /**
      * Return the selector value class.

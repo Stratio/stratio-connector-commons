@@ -27,6 +27,7 @@ import java.util.Collections;
 import org.junit.Test;
 
 import com.stratio.crossdata.common.data.ColumnName;
+import com.stratio.crossdata.common.data.TableName;
 import com.stratio.crossdata.common.exceptions.ExecutionException;
 import com.stratio.crossdata.common.statements.structures.AsteriskSelector;
 import com.stratio.crossdata.common.statements.structures.BooleanSelector;
@@ -37,6 +38,7 @@ import com.stratio.crossdata.common.statements.structures.IntegerSelector;
 import com.stratio.crossdata.common.statements.structures.Relation;
 import com.stratio.crossdata.common.statements.structures.RelationSelector;
 import com.stratio.crossdata.common.statements.structures.Selector;
+import com.stratio.crossdata.common.statements.structures.SelectorType;
 import com.stratio.crossdata.common.statements.structures.StringSelector;
 
 /**
@@ -228,21 +230,21 @@ public class SelectorHelperTest {
 
         try {
             SelectorHelper.getValue(Boolean.class, new IntegerSelector(10));
-            fail("It must not are here!");
+            fail("It must not be here!");
         } catch (ExecutionException e) {
             // Is not boolean
         }
 
         try {
             SelectorHelper.getValue(Boolean.class, new StringSelector("true"));
-            fail("It must not are here!");
+            fail("It must not be here!");
         } catch (ExecutionException e) {
             // Is not boolean
         }
 
         try {
             SelectorHelper.getValue(Boolean.class, new FloatingPointSelector(new Double(10)));
-            fail("It must not are here!");
+            fail("It must not be here!");
         } catch (ExecutionException e) {
             // Is not boolean
         }
@@ -252,5 +254,17 @@ public class SelectorHelperTest {
                 .getCanonicalName());
         assertEquals("The value  is correct", new Boolean(true), returnValue);
 
+    }
+    
+    @Test(expected = ExecutionException.class)
+    public void getIncompatibleValueTest() throws Exception {
+    	SelectorHelper.getRestrictedValue(new ColumnSelector(new ColumnName(new TableName("catalog", "table"), "column")), SelectorType.BOOLEAN);
+
+    }
+    
+    @Test
+    public void getRestrictedValueTest() throws Exception {
+    	String value = (String) SelectorHelper.getRestrictedValue(new ColumnSelector(new ColumnName(new TableName("catalog", "table"), "column")), SelectorType.COLUMN);
+    	assertEquals("column", value);
     }
 }

@@ -83,7 +83,7 @@ public class LogicalWorkFlowCreator {
             for (ColumnName columnName : project.getColumnList()) {
                 ColumnName columnNameTemp = new ColumnName(catalog, table, columnName.getName());
                 selectColumn.put(columnNameTemp, columnName.getName());
-                typeMap.put(columnName.getQualifiedName(), ColumnType.VARCHAR);
+                typeMap.put(columnName.getAlias(), ColumnType.VARCHAR);
                 typeMapColumnName.put(columnNameTemp, ColumnType.VARCHAR);
             }
 
