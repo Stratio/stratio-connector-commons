@@ -25,7 +25,6 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
@@ -75,7 +74,6 @@ public abstract class GenericDeleteTest extends GenericConnectorTest {
 
     }
 
-    @Ignore
     @Test
     public void deleteByPKLTStringTest() throws ConnectorException {
 
@@ -94,7 +92,6 @@ public abstract class GenericDeleteTest extends GenericConnectorTest {
 
     }
 
-    @Ignore
     @Test
     public void deleteByPKLETStringTest() throws ConnectorException {
 
@@ -113,7 +110,6 @@ public abstract class GenericDeleteTest extends GenericConnectorTest {
 
     }
 
-    @Ignore
     @Test
     public void deleteByPKGTStringTest() throws ConnectorException {
 
@@ -132,7 +128,6 @@ public abstract class GenericDeleteTest extends GenericConnectorTest {
 
     }
 
-    @Ignore
     @Test
     public void deleteByPKGETStringTest() throws ConnectorException {
 
@@ -152,6 +147,7 @@ public abstract class GenericDeleteTest extends GenericConnectorTest {
 
     private void insertTestData(ClusterName clusterName) throws ConnectorException {
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
+
         tableMetadataBuilder.addColumn(COLUMN_PK, ColumnType.VARCHAR).addColumn(COLUMN_1, ColumnType.VARCHAR)
                         .withPartitionKey(COLUMN_PK);
 
@@ -161,6 +157,7 @@ public abstract class GenericDeleteTest extends GenericConnectorTest {
                         createRow("1", "value2"));
         connector.getStorageEngine().insert(clusterName, tableMetadataBuilder.build(getConnectorHelper()),
                         createRow("2", "value3"));
+
         connector.getStorageEngine().insert(clusterName, tableMetadataBuilder.build(getConnectorHelper()),
                         createRow("3", "value3"));
 
