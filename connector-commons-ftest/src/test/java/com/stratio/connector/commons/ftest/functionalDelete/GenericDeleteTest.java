@@ -75,7 +75,7 @@ public abstract class GenericDeleteTest extends GenericConnectorTest {
 
     }
 
-    @Ignore
+
     @Test
     public void deleteByPKLTStringTest() throws ConnectorException {
 
@@ -94,7 +94,6 @@ public abstract class GenericDeleteTest extends GenericConnectorTest {
 
     }
 
-    @Ignore
     @Test
     public void deleteByPKLETStringTest() throws ConnectorException {
 
@@ -113,7 +112,6 @@ public abstract class GenericDeleteTest extends GenericConnectorTest {
 
     }
 
-    @Ignore
     @Test
     public void deleteByPKGTStringTest() throws ConnectorException {
 
@@ -132,7 +130,6 @@ public abstract class GenericDeleteTest extends GenericConnectorTest {
 
     }
 
-    @Ignore
     @Test
     public void deleteByPKGETStringTest() throws ConnectorException {
 
