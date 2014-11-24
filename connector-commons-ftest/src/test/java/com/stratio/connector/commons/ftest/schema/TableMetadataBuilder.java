@@ -126,7 +126,9 @@ public class TableMetadataBuilder {
     public TableMetadataBuilder withPartitionKey(String... fields) {
         for (String field : fields) {
             partitionKey.add(new ColumnName(tableName, field));
+            System.out.println("campo:" +field);
         }
+
         return this;
     }
 
