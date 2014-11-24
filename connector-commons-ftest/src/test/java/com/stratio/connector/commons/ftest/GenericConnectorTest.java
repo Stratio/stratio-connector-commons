@@ -65,7 +65,9 @@ public abstract class GenericConnectorTest<T extends IConnector> {
         connector.init(getConfiguration());
         connector.connect(getICredentials(), getConnectorClusterConfig());
 
+        dropTable(CATALOG, TABLE);
         deleteCatalog(CATALOG);
+        
 
         System.out.println(CATALOG + "/" + TABLE);
     }
@@ -83,7 +85,7 @@ public abstract class GenericConnectorTest<T extends IConnector> {
     /**
      * @param table
      */
-    private void dropTable(String catalog, String table) {
+    protected void dropTable(String catalog, String table) {
         try {
             if (deleteBeteweenTest) {
                 connector.getMetadataEngine().dropTable(getClusterName(), new TableName(catalog, table));
