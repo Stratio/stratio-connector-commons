@@ -147,23 +147,23 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
 
         assertEquals("the table name is correct", QualifiedNames.getTableQualifiedName(CATALOG, TABLE),
 
-                        metadata[0].getName().getTableName());
+                        metadata[0].getName().getTableName().toString());
         assertEquals("the table name is correct", QualifiedNames.getTableQualifiedName(CATALOG, TABLE),
-                        metadata[1].getName().getTableName());
+                        metadata[1].getName().getTableName().toString());
         assertEquals("the table name is correct", QualifiedNames.getTableQualifiedName(CATALOG, TABLE),
-                        metadata[2].getName().getTableName());
+                        metadata[2].getName().getTableName().toString());
 
         assertEquals("The first column type is correct", ColumnType.TEXT, metadata[0].getColumnType() );
         assertEquals("The second column type is correct", ColumnType.INT, metadata[1].getColumnType());
         assertEquals("The third column type is correct", ColumnType.BOOLEAN, metadata[2].getColumnType());
 
         assertEquals("The first column name is correct",
-                        QualifiedNames.getColumnQualifiedName(CATALOG, TABLE, COLUMN_1), metadata[0].getName());
+                        QualifiedNames.getColumnQualifiedName(CATALOG, TABLE, COLUMN_1), metadata[0].getName().getQualifiedName());
         assertEquals("The first column name is correct",
                         QualifiedNames.getColumnQualifiedName(CATALOG, TABLE, COLUMN_2),
-                metadata[1].getName());
+                metadata[1].getName().getQualifiedName());
         assertEquals("The first column name is correct",
-                        QualifiedNames.getColumnQualifiedName(CATALOG, TABLE, COLUMN_3), metadata[2].getName());
+                        QualifiedNames.getColumnQualifiedName(CATALOG, TABLE, COLUMN_3), metadata[2].getName().getQualifiedName());
 
         assertEquals("The first column alias is correct", ALIAS_COLUMN_1, metadata[0].getName().getAlias());
         assertEquals("The first column alias is correct", ALIAS_COLUMN_2, metadata[1].getName().getAlias());

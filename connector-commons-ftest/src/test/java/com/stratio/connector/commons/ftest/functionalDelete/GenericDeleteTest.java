@@ -42,10 +42,10 @@ import com.stratio.crossdata.common.metadata.ColumnType;
 import com.stratio.crossdata.common.metadata.Operations;
 import com.stratio.crossdata.common.result.QueryResult;
 import com.stratio.crossdata.common.statements.structures.ColumnSelector;
-import com.stratio.crossdata.common.statements.structures.IntegerSelector;
 import com.stratio.crossdata.common.statements.structures.Operator;
 import com.stratio.crossdata.common.statements.structures.Relation;
 import com.stratio.crossdata.common.statements.structures.Selector;
+import com.stratio.crossdata.common.statements.structures.StringSelector;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -184,7 +184,7 @@ public abstract class GenericDeleteTest extends GenericConnectorTest {
         ColumnName name = new ColumnName(CATALOG, TABLE, COLUMN_PK);
         ColumnSelector primaryKey = new ColumnSelector(name);
 
-        Selector rightTerm = new IntegerSelector(1);
+        Selector rightTerm = new StringSelector("1");
 
         Relation relation = new Relation(primaryKey, operator, rightTerm);
         filters.add(new Filter(operations, relation));

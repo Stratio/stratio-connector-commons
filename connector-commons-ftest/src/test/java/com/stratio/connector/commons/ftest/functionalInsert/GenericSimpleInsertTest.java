@@ -88,7 +88,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
         insertRow(clusterName, VALUE_4, ColumnType.VARCHAR, VALUE_1, true);
 
 
-        verifyInsert(clusterName, OTHER_VALUE_4);
+        verifyInsert(clusterName, VALUE_4);
 
     }
 
