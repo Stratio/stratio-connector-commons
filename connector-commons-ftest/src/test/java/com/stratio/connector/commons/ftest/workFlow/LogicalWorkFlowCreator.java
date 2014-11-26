@@ -18,6 +18,7 @@
 
 package com.stratio.connector.commons.ftest.workFlow;
 
+import com.stratio.connector.commons.util.SelectorHelper;
 import com.stratio.crossdata.common.data.ClusterName;
 import com.stratio.crossdata.common.data.ColumnName;
 import com.stratio.crossdata.common.data.TableName;
@@ -49,6 +50,7 @@ public class LogicalWorkFlowCreator {
     List<Filter> filters = new ArrayList<>();
     private Limit limit;
     private Window window;
+    private GroupBy groupBy;
 
     public LogicalWorkFlowCreator(String catalog, String table, ClusterName clusterName) {
         this.catalog = catalog;
@@ -76,6 +78,12 @@ public class LogicalWorkFlowCreator {
             lastStep.setNextStep(window);
             lastStep = window;
         }
+        
+        if (groupBy != null){
+            lastStep.setNextStep(groupBy);
+            lastStep = groupBy;
+        }
+        
         if (select == null) {
             Map<ColumnName, String> selectColumn = new LinkedHashMap<>();
             Map<String, ColumnType> typeMap = new LinkedHashMap();
@@ -298,6 +306,15 @@ public class LogicalWorkFlowCreator {
 
     public LogicalWorkFlowCreator addLimit(int limit) {
         this.limit = new Limit(Operations.SELECT_LIMIT, limit);
+        return this;
+    }
+    
+    public LogicalWorkFlowCreator addGroupBy(String... fields) {
+        List<Selector> ids = new ArrayList<Selector>();
+        for(String field: fields){
+            ids.add(new ColumnSelector(new ColumnName(catalog, table, field)));
+        }
+        this.groupBy = new GroupBy(Operations.SELECT_GROUP_BY, ids);
         return this;
     }
 
