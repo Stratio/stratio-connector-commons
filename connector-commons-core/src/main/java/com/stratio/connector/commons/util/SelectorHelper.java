@@ -76,24 +76,28 @@ public final class SelectorHelper {
         return getRestrictedValue(selector, null);
 
     }
-    
+
     /**
      * Return the selector value only if the type matches with the specified value.
      *
-     * @param selector the selector.
-     * @param type the type of the expected selector
+     * @param selector
+     *            the selector.
+     * @param type
+     *            the type of the expected selector
      * @return the corresponding value or null if the selector type does not match.
-     * @throws ExecutionException if an error happens.
+     * @throws ExecutionException
+     *             if an error happens.
      */
     public static Object getRestrictedValue(Selector selector, SelectorType type) throws ExecutionException {
         Object field = null;
 
-        if(type!= null && selector.getType() != type) {
-        	throw new ExecutionException("The selector type expected is: "+type+" but received: "+selector.getType());
+        if (type != null && selector.getType() != type) {
+            throw new ExecutionException("The selector type expected is: " + type + " but received: "
+                            + selector.getType());
         }
-        
+
         switch (selector.getType()) {
-        
+
         case COLUMN:
             field = ((ColumnSelector) selector).getName().getName();
             break;
@@ -109,6 +113,7 @@ public final class SelectorHelper {
         case FLOATING_POINT:
             field = ((FloatingPointSelector) selector).getValue();
             break;
+
         default:
             throw new ExecutionException("Selector " + selector.getType() + " not supported get value operation.");
         }
@@ -116,7 +121,6 @@ public final class SelectorHelper {
         return field;
 
     }
-    
 
     /**
      * Return the selector value class.
