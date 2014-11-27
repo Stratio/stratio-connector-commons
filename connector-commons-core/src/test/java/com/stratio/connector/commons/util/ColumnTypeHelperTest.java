@@ -121,4 +121,19 @@ public class ColumnTypeHelperTest {
                         ColumnTypeHelper.getCastingValue(ColumnType.INT, new Short("1")).getClass().getCanonicalName());
     }
 
+    @Test
+    public void testGetCastingReturnNull() throws Exception {
+        assertEquals("The return is null", null,
+                ColumnTypeHelper.getCastingValue(ColumnType.INT, null));
+        assertEquals("The return is null", null,
+                ColumnTypeHelper.getCastingValue(ColumnType.FLOAT, null));
+        assertEquals("The return is null", null,
+                ColumnTypeHelper.getCastingValue(ColumnType.DOUBLE, null));
+        assertEquals("The return is null", null,
+                ColumnTypeHelper.getCastingValue(ColumnType.BIGINT, null));
+
+    }
+
+
+
 }

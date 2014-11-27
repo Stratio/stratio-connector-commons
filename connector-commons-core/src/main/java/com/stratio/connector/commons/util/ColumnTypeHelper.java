@@ -52,28 +52,30 @@ public final class ColumnTypeHelper {
      *             if the casting is not possible.
      */
     public static Object getCastingValue(ColumnType columnType, Object value) throws ExecutionException {
-        Object returnValue;
-        switch (columnType) {
+        Object returnValue = null;
+        if(value!=null) {
+            switch (columnType) {
 
-        case BIGINT:
-            ensureNumber(value);
-            returnValue = ((Number) value).longValue();
-            break;
-        case DOUBLE:
-            ensureNumber(value);
-            returnValue = ((Number) value).doubleValue();
-            break;
-        case FLOAT:
-            ensureNumber(value);
-            returnValue = ((Number) value).floatValue();
-            break;
-        case INT:
-            ensureNumber(value);
-            returnValue = ((Number) value).intValue();
-            break;
-        default:
-            returnValue = value;
+            case BIGINT:
+                ensureNumber(value);
+                returnValue = ((Number) value).longValue();
+                break;
+            case DOUBLE:
+                ensureNumber(value);
+                returnValue = ((Number) value).doubleValue();
+                break;
+            case FLOAT:
+                ensureNumber(value);
+                returnValue = ((Number) value).floatValue();
+                break;
+            case INT:
+                ensureNumber(value);
+                returnValue = ((Number) value).intValue();
+                break;
+            default:
+                returnValue = value;
 
+            }
         }
 
         return returnValue;

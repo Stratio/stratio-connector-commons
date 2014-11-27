@@ -62,6 +62,13 @@ public abstract class GenericMetadataAlterTableFT extends GenericConnectorTest{
         }
         if(iConnectorHelper.isTableMandatory()){
             connector.getMetadataEngine().createTable(clusterName, tableMetadataBuilder.build(getConnectorHelper()));
+        }else{
+
+            Row row = new Row();
+            Map<String, Cell> cells = new HashMap<>();
+            cells.put(COLUMN_1, new Cell("value1"));
+            row.setCells(cells);
+            connector.getStorageEngine().insert(clusterName, tableMetadataBuilder.build(getConnectorHelper()), row);
         }
         
         //ADD the column: COLUMN_2 with alterTable
