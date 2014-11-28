@@ -22,7 +22,7 @@
     <parent>
         <groupId>com.stratio.connector</groupId>
         <artifactId>stratio-connector-commons</artifactId>
-        <version>0.2.0-RC1</version>
+        <version>${version.connector.commons}</version>
     </parent>
     <artifactId>connector-commons-core</artifactId>
     <packaging>jar</packaging>
@@ -32,7 +32,7 @@
         <dependency>
             <artifactId>crossdata-common</artifactId>
             <groupId>com.stratio.crossdata</groupId>
-            <version>0.1.1-RC2</version>
+            <version>${version.crossdata}</version>
         </dependency>
 
         <dependency>
