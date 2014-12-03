@@ -23,6 +23,7 @@ import static com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreato
 import static com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator.COLUMN_3;
 import static com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator.COLUMN_AGE;
 import static com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator.COLUMN_MONEY;
+import static com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator.COLUMN_KEY;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -34,6 +35,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
@@ -53,6 +55,7 @@ import com.stratio.crossdata.common.result.QueryResult;
  * Created by jmgomez on 17/07/14.
  */
 public abstract class GenericNotIndexedQueryIntegerFilterTest extends GenericConnectorTest {
+
 
     LogicalWorkFlowCreator logicalWorkFlowCreator;
 
@@ -103,7 +106,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterTest extends GenericCon
     public void selectPKEqualsFilter() throws ConnectorException {
 
         ClusterName clusterNodeName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterBetween ***********************************");
+        System.out.println("*********************************** INIT FUNCTIONAL TEST selectPKEqualsFilter ***********************************");
 
         insertRow(1, 1, 10, clusterNodeName, true);
         insertRow(2, 1, 9, clusterNodeName, true);
@@ -121,26 +124,24 @@ public abstract class GenericNotIndexedQueryIntegerFilterTest extends GenericCon
 
         logicalWorkFlowCreator.addSelect(conectorList);
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns()
-                        .addEqualFilter(COLUMN_AGE, 1, false, true).getLogicalWorkflow();
+                        .addEqualFilter(COLUMN_KEY, 1, false, true).getLogicalWorkflow();
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
 
         Set<Object> proveSet = createCellsResult(queryResult);
 
-        assertEquals("The record number is correct", 2, queryResult.getResultSet().size());
+        assertEquals("The record number must be only one", 1, queryResult.getResultSet().size());
 
-        assertTrue("Return correct record", proveSet.contains("money={9}"));
-        assertTrue("Return correct record", proveSet.contains("age={1}"));
-        assertTrue("Return correct record", proveSet.contains("column3={Row=1;Column3}"));
-        assertTrue("Return correct record", proveSet.contains("column1={Row=1;Column1}"));
-        assertTrue("Return correct record", proveSet.contains("column3={Row=2;Column3}"));
-        assertTrue("Return correct record", proveSet.contains("column3={Row=2;Column3}"));
-        assertTrue("Return correct record", proveSet.contains("column2={Row=2;Column2}"));
-        assertTrue("Return correct record", proveSet.contains("column1={Row=2;Column1}"));
-        assertTrue("Return correct record", proveSet.contains("money={10}"));
+        assertTrue("The result must contains money={10}", proveSet.contains("money={10}"));
+        assertTrue("The result must contains age={1}", proveSet.contains("age={1}"));
+        assertTrue("The result must contains column3={Row=1;Column3}", proveSet.contains("column3={Row=1;Column3}"));
+        assertTrue("The result must contains column1={Row=1;Column1}", proveSet.contains("column1={Row=1;Column1}"));
+        assertTrue("The result must contains column2={Row=2;Column2}", proveSet.contains("column2={Row=1;Column2}"));
+
+
 
     }
 
-    @Test
+    @Test @Ignore
     public void selectNotIndexedFilterBetween() throws ConnectorException {
         ClusterName clusterNodeName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterBetween ***********************************");
@@ -198,7 +199,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterTest extends GenericCon
         refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns()
-                        .addGreaterEqualFilter(COLUMN_AGE, new Integer("10"), false, true).getLogicalWorkflow();
+                        .addGreaterEqualFilter(COLUMN_AGE, new Integer("10"), false, false).getLogicalWorkflow();
 
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
         ResultSet aux = queryResult.getResultSet();
@@ -432,6 +433,9 @@ public abstract class GenericNotIndexedQueryIntegerFilterTest extends GenericCon
 
         Row row = new Row();
         Map<String, Cell> cells = new HashMap<>();
+        if (withPk) {
+            cells.put(COLUMN_KEY,new Cell(ikey));
+        }
         cells.put(COLUMN_1, new Cell("Row=" + ikey + ";Column1"));
         cells.put(COLUMN_2, new Cell("Row=" + ikey + ";Column2"));
         cells.put(COLUMN_3, new Cell("Row=" + ikey + ";Column3"));
@@ -443,7 +447,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterTest extends GenericCon
                         .addColumn(COLUMN_3, ColumnType.VARCHAR).addColumn(COLUMN_AGE, ColumnType.INT)
                         .addColumn(COLUMN_MONEY, ColumnType.INT);
         if (withPk) {
-            tableMetadataBuilder.withPartitionKey(COLUMN_1);
+            tableMetadataBuilder.withPartitionKey(COLUMN_KEY);
         }
 
         TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper());

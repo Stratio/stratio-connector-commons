@@ -53,6 +53,7 @@ import com.stratio.crossdata.common.statements.structures.window.WindowType;
  */
 public class LogicalWorkFlowCreator {
 
+    public static final String COLUMN_KEY = "id";
     public static final String COLUMN_1 = "column1";
     public static final String COLUMN_2 = "column2";
     public static final String COLUMN_3 = "column3";

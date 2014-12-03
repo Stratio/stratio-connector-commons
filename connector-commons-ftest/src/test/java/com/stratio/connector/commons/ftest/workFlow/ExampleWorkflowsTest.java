@@ -21,15 +21,23 @@ package com.stratio.connector.commons.ftest.workFlow;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
 import com.stratio.connector.commons.ftest.schema.TableMetadataBuilder;
+import com.stratio.crossdata.common.data.ColumnName;
+import com.stratio.crossdata.common.data.IndexName;
 import com.stratio.crossdata.common.data.Row;
 import com.stratio.crossdata.common.exceptions.ConnectorException;
 import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
+import com.stratio.crossdata.common.metadata.ColumnMetadata;
 import com.stratio.crossdata.common.metadata.ColumnType;
+import com.stratio.crossdata.common.metadata.IndexMetadata;
+import com.stratio.crossdata.common.metadata.IndexType;
 import com.stratio.crossdata.common.metadata.TableMetadata;
 import com.stratio.crossdata.common.result.QueryResult;
 
@@ -64,8 +72,18 @@ public abstract class ExampleWorkflowsTest extends GenericConnectorTest {
                 connector.getStorageEngine().insert(getClusterName(), targetTable, exampleWorkflows.getRows(i));
                 refresh(CATALOG);
             }
-            System.out.println("Insert Finish");
+
             insertData = true;
+            if (getConnectorHelper().isIndexMandatory()) {
+                Map<ColumnName, ColumnMetadata> columns = new LinkedHashMap<>();
+                ColumnName columnName = new ColumnName(CATALOG, TABLE, ExampleWorkflows.COLUMN_NAME);
+                columns.put(columnName,new ColumnMetadata(columnName,null, ColumnType.VARCHAR));
+                IndexMetadata indexMetadata = new IndexMetadata(new IndexName(CATALOG,TABLE,
+                        "IndexTest" + this.getClass().getName() + "SelectIndexedField"),
+                        columns, IndexType.DEFAULT, null);
+
+                connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata);
+            }
 
         }
     }
@@ -99,6 +117,7 @@ public abstract class ExampleWorkflowsTest extends GenericConnectorTest {
         System.out.println("*********************************** INIT FUNCTIONAL TEST basicSelectAsterisk ***********************************");
 
         LogicalWorkflow logicalWorkflow = exampleWorkflows.getSelectIndexedField();
+
 
         QueryResult qr = connector.getQueryEngine().execute(logicalWorkflow);
         assertEquals("The items number in the resultset is correct", 1623, qr.getResultSet().size());
