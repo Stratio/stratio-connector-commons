@@ -198,7 +198,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterTest extends GenericCon
         refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns()
-                        .addGreaterEqualFilter(COLUMN_AGE, new Integer("10"), false, true).getLogicalWorkflow();
+                        .addGreaterEqualFilter(COLUMN_AGE, new Integer("10"), false, false).getLogicalWorkflow();
 
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
         ResultSet aux = queryResult.getResultSet();
