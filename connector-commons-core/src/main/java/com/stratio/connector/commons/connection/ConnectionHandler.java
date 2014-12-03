@@ -30,8 +30,7 @@ import com.stratio.crossdata.common.connector.IConfiguration;
 import com.stratio.crossdata.common.security.ICredentials;
 
 /**
- * This class is the responsible to handle the connections.
- * Created by jmgomez on 28/08/14.
+ * This class is the responsible to handle the connections. Created by jmgomez on 28/08/14.
  */
 public abstract class ConnectionHandler {
 
@@ -52,7 +51,8 @@ public abstract class ConnectionHandler {
     /**
      * Constructor.
      *
-     * @param configuration the general settings.
+     * @param configuration
+     *            the general settings.
      */
     public ConnectionHandler(IConfiguration configuration) {
         this.configuration = configuration;
@@ -62,18 +62,21 @@ public abstract class ConnectionHandler {
     /**
      * This method create a connection.
      *
-     * @param credentials the cluster configuration.
-     * @param config      the connection options.
-     * @throws HandlerConnectionException if the connection already exists.
+     * @param credentials
+     *            the cluster configuration.
+     * @param config
+     *            the connection options.
+     * @throws HandlerConnectionException
+     *             if the connection already exists.
      */
     public void createConnection(ICredentials credentials, ConnectorClusterConfig config)
-            throws HandlerConnectionException {
+                    throws HandlerConnectionException {
         Connection connection = createNativeConnection(credentials, config);
 
         String connectionName = config.getName().getName();
         if (!connections.containsKey(connectionName)) {
             connections.put(connectionName, connection);
-            logger.info("Create a connection [" + connectionName + "]");
+            logger.info("Connected to [" + connectionName + "]");
 
         } else {
             throw new HandlerConnectionException("The connection [" + connectionName + "] already exists");
@@ -84,7 +87,8 @@ public abstract class ConnectionHandler {
     /**
      * Close the connection.
      *
-     * @param clusterName the connection name to be closed.
+     * @param clusterName
+     *            the connection name to be closed.
      */
     public void closeConnection(String clusterName) {
         if (connections.containsKey(clusterName)) {
@@ -97,7 +101,8 @@ public abstract class ConnectionHandler {
     /**
      * Return if a connection is connected.
      *
-     * @param clusterName the connection name.
+     * @param clusterName
+     *            the connection name.
      * @return true if the connection is connected. False in other case.
      */
     public boolean isConnected(String clusterName) {
@@ -111,19 +116,23 @@ public abstract class ConnectionHandler {
     /**
      * Create a connection for the concrete database.
      *
-     * @param credentials the credentials.
-     * @param config      the config.
+     * @param credentials
+     *            the credentials.
+     * @param config
+     *            the config.
      * @return a connection.
      */
     protected abstract Connection createNativeConnection(ICredentials credentials, ConnectorClusterConfig config)
-            throws CreateNativeConnectionException;
+                    throws CreateNativeConnectionException;
 
     /**
      * This method return a connection.
      *
-     * @param name the connection name.
+     * @param name
+     *            the connection name.
      * @return the connection.
-     * @throws HandlerConnectionException if the connection does not exist.
+     * @throws HandlerConnectionException
+     *             if the connection does not exist.
      */
     public Connection getConnection(String name) throws HandlerConnectionException {
         Connection connection = null;
@@ -138,7 +147,8 @@ public abstract class ConnectionHandler {
     /**
      * This method start a work for a connections.
      *
-     * @param targetCluster the connections cluster name.
+     * @param targetCluster
+     *            the connections cluster name.
      */
     public void startWork(String targetCluster) {
         Connection conn = null;
@@ -147,7 +157,7 @@ public abstract class ConnectionHandler {
             conn.setWorkInProgress(true);
 
         } catch (HandlerConnectionException e) {
-            String msg = "fail get the Connection. " + e.getMessage();
+            String msg = "Error getting the Connection. " + e.getMessage();
             logger.error(msg);
 
         }
@@ -156,7 +166,8 @@ public abstract class ConnectionHandler {
     /**
      * This method finalize a work for a connections.
      *
-     * @param targetCluster the connections cluster name.
+     * @param targetCluster
+     *            the connections cluster name.
      */
     public void endWork(String targetCluster) {
         Connection conn = null;
@@ -164,7 +175,7 @@ public abstract class ConnectionHandler {
             conn = getConnection(targetCluster);
             conn.setWorkInProgress(false);
         } catch (HandlerConnectionException e) {
-            String msg = "fail getting the Connection. " + e.getMessage();
+            String msg = "Error getting the Connection. " + e.getMessage();
             logger.error(msg);
         }
     }
