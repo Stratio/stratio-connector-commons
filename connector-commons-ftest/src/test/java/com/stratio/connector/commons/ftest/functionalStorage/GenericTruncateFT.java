@@ -38,7 +38,6 @@ import com.stratio.crossdata.common.result.QueryResult;
 
 /**
  * @author lfernandez
- *
  */
 public abstract class GenericTruncateFT extends GenericConnectorTest<IConnector> {
 
@@ -77,6 +76,6 @@ public abstract class GenericTruncateFT extends GenericConnectorTest<IConnector>
     private LogicalWorkflow createLogicalWorkFlow(String catalog, String table) {
 
         return new LogicalWorkFlowCreator(catalog, table, getClusterName()).addColumnName(COLUMN_1, COLUMN_2)
-                        .getLogicalWorkflow();
+                .getLogicalWorkflow();
     }
 }

@@ -28,7 +28,7 @@ public class FilterHelper {
     /**
      * Constructor.
      */
-    private FilterHelper(){
+    private FilterHelper() {
     }
 
     /**

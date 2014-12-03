@@ -51,7 +51,7 @@ public class ManifestUtilTest {
     public void testGetConectorName() throws Exception {
 
         assertEquals("The connectorName is correct", "elasticsearch", ManifestUtil.getConectorName("ExampleConnector"
-                        + ".xml"));
+                + ".xml"));
     }
 
     /**

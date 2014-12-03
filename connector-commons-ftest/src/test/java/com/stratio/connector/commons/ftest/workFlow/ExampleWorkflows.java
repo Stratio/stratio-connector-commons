@@ -118,7 +118,7 @@ public class ExampleWorkflows {
 
     public Project getProject(ColumnName... columnNames) {
         TableName table = new TableName(columnNames[0].getTableName().getCatalogName().getName(), columnNames[0]
-                        .getTableName().getName());
+                .getTableName().getName());
         return new Project(Operations.PROJECT, table, clusterName, Arrays.asList(columnNames));
     }
 
@@ -158,8 +158,6 @@ public class ExampleWorkflows {
 
     /**
      * Get a basic select. SELECT * FROM example.users;
-     *
-     *
      */
     public LogicalWorkflow getBasicSelectAsterisk() {
         ColumnName id = new ColumnName(catalog, table, COLUMN_ID);
@@ -169,7 +167,7 @@ public class ExampleWorkflows {
         String[] outputNames = { COLUMN_ID, COLUMN_NAME, COLUMN_AGE, COLUMN_BOOL };
         LogicalStep project = getProject(id, name, age, bool);
         LogicalStep select = getSelect(outputNames, new ColumnType[] { ColumnType.INT, ColumnType.TEXT, ColumnType.INT,
-                        ColumnType.BOOLEAN }, id, name, age, bool);
+                ColumnType.BOOLEAN }, id, name, age, bool);
         project.setNextStep(select);
         LogicalWorkflow lw = new LogicalWorkflow(Arrays.asList(project));
         return lw;
@@ -183,7 +181,7 @@ public class ExampleWorkflows {
         ColumnType[] types = { ColumnType.VARCHAR, ColumnType.INT };
         LogicalStep project = getProject(id, name, age);
         LogicalStep filter = getFilter(Operations.FILTER_INDEXED_EQ, name, Operator.EQ,
-                        new StringSelector(names[0].toLowerCase()));
+                new StringSelector(names[0].toLowerCase()));
         project.setNextStep(filter);
         LogicalStep select = getSelect(outputNames, types, name, age);
         filter.setNextStep(select);
@@ -220,7 +218,7 @@ public class ExampleWorkflows {
         ColumnType[] types = { ColumnType.INT, ColumnType.VARCHAR, ColumnType.INT };
         LogicalStep project = getProject(id, name, age);
         LogicalStep filterName = getFilter(Operations.FILTER_INDEXED_EQ, name, Operator.EQ,
-                        new StringSelector(names[1].toLowerCase()));
+                new StringSelector(names[1].toLowerCase()));
         project.setNextStep(filterName);
         LogicalStep filterAge = getFilter(Operations.FILTER_NON_INDEXED_EQ, age, Operator.EQ, new IntegerSelector(40));
         filterName.setNextStep(filterAge);

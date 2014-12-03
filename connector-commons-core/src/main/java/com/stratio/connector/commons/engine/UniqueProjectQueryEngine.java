@@ -30,17 +30,15 @@ import com.stratio.crossdata.common.result.QueryResult;
 /**
  * This abstract class is a Template for CommonsQueryEngine. This template only supports a project in the workflow.
  *
+ * @param <T> the native client
  * @author darroyo
- * @param <T>
- *            the native client
  */
 public abstract class UniqueProjectQueryEngine<T> extends CommonsQueryEngine {
 
     /**
      * Constructor.
      *
-     * @param connectionHandler
-     *            the connector handler.
+     * @param connectionHandler the connector handler.
      */
     public UniqueProjectQueryEngine(ConnectionHandler connectionHandler) {
         super(connectionHandler);
@@ -49,24 +47,21 @@ public abstract class UniqueProjectQueryEngine<T> extends CommonsQueryEngine {
     /**
      * This method execute a query with only a project.
      *
-     * @param workflow
-     *            the workflow to be executed.
+     * @param workflow the workflow to be executed.
      * @return the query result.
-     * @throws UnsupportedException
-     *             if an operation is not supported.
-     * @throws ExecutionException
-     *             if a error happens.
+     * @throws UnsupportedException if an operation is not supported.
+     * @throws ExecutionException   if a error happens.
      */
     @Override
     protected final QueryResult executeWorkFlow(LogicalWorkflow workflow) throws UnsupportedException,
-                    ExecutionException {
+            ExecutionException {
 
         checkIsSupported(workflow);
         ClusterName clusterName = ((Project) workflow.getInitialSteps().get(0)).getClusterName();
         QueryResult queryResult = null;
         try {
             queryResult = execute((Project) workflow.getInitialSteps().get(0),
-                            connectionHandler.getConnection(clusterName.getName()));
+                    connectionHandler.getConnection(clusterName.getName()));
         } catch (HandlerConnectionException e) {
             String msg = "Error find Connection in " + clusterName.getName() + ". " + e.getMessage();
             logger.error(msg);
@@ -79,25 +74,19 @@ public abstract class UniqueProjectQueryEngine<T> extends CommonsQueryEngine {
      * Abstract method which must be implemented by the concrete database metadataEngine to execute a workflow with only
      * a project.
      *
-     * @param workflow
-     *            the workflow.
-     * @param connection
-     *            the connection to the database.
-     * @throws UnsupportedException
-     *             if an operation is not supported.
-     * @throws ExecutionException
-     *             if a error happens.
+     * @param workflow   the workflow.
+     * @param connection the connection to the database.
+     * @throws UnsupportedException if an operation is not supported.
+     * @throws ExecutionException   if a error happens.
      */
     protected abstract QueryResult execute(Project workflow, Connection<T> connection) throws UnsupportedException,
-                    ExecutionException;
+            ExecutionException;
 
     /**
      * Check if the workflow is supported.
      *
-     * @param workflow
-     *            the workflow
-     * @throws UnsupportedException
-     *             if the workflow is not supported.
+     * @param workflow the workflow
+     * @throws UnsupportedException if the workflow is not supported.
      */
     private void checkIsSupported(LogicalWorkflow workflow) throws UnsupportedException {
         if (workflow.getInitialSteps().size() != 1) {

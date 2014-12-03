@@ -32,7 +32,7 @@
         <dependency>
             <groupId>com.stratio.connector</groupId>
             <artifactId>connector-commons-core</artifactId>
-            <version>0.2.0-RC2</version>
+            <version>0.2.0-RC3</version>
         </dependency>
 
         <dependency>

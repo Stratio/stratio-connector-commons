@@ -11,15 +11,15 @@
     the ~ specific language governing permissions and limitations ~ under the 
     License. -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <properties>
         <version.crossdata>0.1.1-RC2</version.crossdata>
     </properties>
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.stratio.connector</groupId>
     <artifactId>stratio-connector-commons</artifactId>
-    <version>0.2.0-RC2</version>
+    <version>0.2.0-RC3</version>
     <url>http://www.stratio.com</url>
     <name>Connector commons</name>
     <description>Connector commons</description>
@@ -132,25 +132,26 @@
             </plugin>
 
 
-	<plugin>
-		<groupId>org.jacoco</groupId>
-		<artifactId>jacoco-maven-plugin</artifactId>
-		<version>0.7.1.201405082137</version>
-		<executions>
-			<execution>
-				<id>pre-test</id>
-				<goals>
-					<goal>prepare-agent</goal>
-				</goals>
-				<configuration>
-					<destFile>${project.build.directory}/jacoco.exec</destFile>
-					<propertyName>jacoco-argline</propertyName>
-				</configuration>
-			</execution>
-		</executions>
-	</plugin> </plugins>
- 
-        	
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.7.1.201405082137</version>
+                <executions>
+                    <execution>
+                        <id>pre-test</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                        <configuration>
+                            <destFile>${project.build.directory}/jacoco.exec</destFile>
+                            <propertyName>jacoco-argline</propertyName>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+
+
     </build>
 
 

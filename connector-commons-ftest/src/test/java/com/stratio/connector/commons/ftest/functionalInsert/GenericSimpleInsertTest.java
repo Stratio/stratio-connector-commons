@@ -61,7 +61,8 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
     @Test
     public void testSimpleInsertWithPK() throws ConnectorException {
         ClusterName clusterName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST testSimpleInsert  ***********************************");
+        System.out.println(
+                "*********************************** INIT FUNCTIONAL TEST testSimpleInsert  ***********************************");
 
         insertRow(clusterName, VALUE_4, ColumnType.VARCHAR, VALUE_1, true);
 
@@ -71,7 +72,8 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
     @Test
     public void testSimpleInsertWithoutPK() throws ConnectorException {
         ClusterName clusterName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST testSimpleInsert  ***********************************");
+        System.out.println(
+                "*********************************** INIT FUNCTIONAL TEST testSimpleInsert  ***********************************");
 
         insertRow(clusterName, VALUE_4, ColumnType.VARCHAR, VALUE_1, false);
 
@@ -82,7 +84,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
     public void testInsertSamePK() throws ConnectorException {
         ClusterName clusterName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST testInsertSamePK "
-                        + clusterName.getName() + " ***********************************");
+                + clusterName.getName() + " ***********************************");
 
         insertRow(clusterName, OTHER_VALUE_4, ColumnType.VARCHAR, VALUE_1, true);
         insertRow(clusterName, VALUE_4, ColumnType.VARCHAR, VALUE_1, true);
@@ -95,7 +97,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
     public void testInsertDuplicateCompositePK() throws ConnectorException {
         ClusterName clusterName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST testDuplicateCompositePK "
-                        + clusterName.getName() + " ***********************************");
+                + clusterName.getName() + " ***********************************");
 
         insertRowCompositePK(clusterName, COLUMN_1, COLUMN_2);
         try {
@@ -113,7 +115,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
     public void testInsertCompositePK() throws ConnectorException {
         ClusterName clusterName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST testCompositePK "
-                        + clusterName.getName() + " ***********************************");
+                + clusterName.getName() + " ***********************************");
 
         insertRowCompositePK(clusterName, COLUMN_1, COLUMN_2);
         insertRowCompositePK(clusterName, COLUMN_1, COLUMN_3);
@@ -128,7 +130,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
     public void testInsertString() throws ConnectorException {
         ClusterName clusterName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST testInsertSamePK "
-                        + clusterName.getName() + " ***********************************");
+                + clusterName.getName() + " ***********************************");
 
         Object value4 = "String";
         insertRow(clusterName, value4, ColumnType.VARCHAR, VALUE_1, true);
@@ -137,7 +139,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
         assertEquals("It has only one result", 1, resultIterator.size());
         for (Row recoveredRow : resultIterator) {
             assertEquals("The type is correct ", String.class.getCanonicalName(), recoveredRow.getCell(COLUMN_4)
-                            .getValue().getClass().getCanonicalName());
+                    .getValue().getClass().getCanonicalName());
             assertEquals("The value is correct ", value4, recoveredRow.getCell(COLUMN_4).getValue());
         }
 
@@ -146,7 +148,8 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
     @Test
     public void testInsertInteger() throws ConnectorException {
         ClusterName clusterName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST testInsertInteger ***********************************");
+        System.out.println(
+                "*********************************** INIT FUNCTIONAL TEST testInsertInteger ***********************************");
         Object value4 = new Integer(1);
         insertRow(clusterName, value4, ColumnType.INT, VALUE_1, true);
 
@@ -154,7 +157,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
         assertEquals("It has only one result", 1, resultIterator.size());
         for (Row recoveredRow : resultIterator) {
             assertEquals("The type is correct ", Integer.class.getCanonicalName(), recoveredRow.getCell(COLUMN_4)
-                            .getValue().getClass().getCanonicalName());
+                    .getValue().getClass().getCanonicalName());
             assertEquals("The value is correct ", value4, recoveredRow.getCell(COLUMN_4).getValue());
         }
 
@@ -164,7 +167,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
     public void testInsertLong() throws ConnectorException {
         ClusterName clusterName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST testInsertSamePK "
-                        + clusterName.getName() + " ***********************************");
+                + clusterName.getName() + " ***********************************");
         Object value4 = 1L;
         insertRow(clusterName, value4, ColumnType.BIGINT, VALUE_1, true);
 
@@ -172,7 +175,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
         assertEquals("It should have only one result", 1, resultIterator.size());
         for (Row recoveredRow : resultIterator) {
             assertEquals("The type is not correct ", Long.class.getCanonicalName(), recoveredRow.getCell(COLUMN_4)
-                            .getValue().getClass().getCanonicalName());
+                    .getValue().getClass().getCanonicalName());
             assertEquals("The value is not correct ", value4, recoveredRow.getCell(COLUMN_4).getValue());
         }
 
@@ -182,7 +185,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
     public void testInsertBoolean() throws ConnectorException {
         ClusterName clusterName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST testInsertSamePK "
-                        + clusterName.getName() + " ***********************************");
+                + clusterName.getName() + " ***********************************");
         Object value4 = new Boolean(true);
         insertRow(clusterName, value4, ColumnType.BOOLEAN, VALUE_1, true);
 
@@ -190,7 +193,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
         assertEquals("It has only one result", 1, resultIterator.size());
         for (Row recoveredRow : resultIterator) {
             assertEquals("The type is correct ", Boolean.class.getCanonicalName(), recoveredRow.getCell(COLUMN_4)
-                            .getValue().getClass().getCanonicalName());
+                    .getValue().getClass().getCanonicalName());
             assertEquals("The value is correct ", value4, recoveredRow.getCell(COLUMN_4).getValue());
         }
 
@@ -200,7 +203,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
     public void testInsertDate() throws ConnectorException {
         ClusterName clusterName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST testInsertSamePK "
-                        + clusterName.getName() + " ***********************************");
+                + clusterName.getName() + " ***********************************");
         Object value4 = new Date();
         insertRow(clusterName, value4, ColumnType.NATIVE, VALUE_1, true);
 
@@ -208,7 +211,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
         assertEquals("It has only one result", 1, resultIterator.size());
         for (Row recoveredRow : resultIterator) {
             assertEquals("The type is correct ", Date.class.getCanonicalName(), recoveredRow.getCell(COLUMN_4)
-                            .getValue().getClass().getCanonicalName());
+                    .getValue().getClass().getCanonicalName());
             assertEquals("The value is correct ", value4, recoveredRow.getCell(COLUMN_4).getValue());
         }
 
@@ -218,7 +221,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
     public void testInsertDouble() throws ConnectorException {
         ClusterName clusterName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST testInsertSamePK "
-                        + clusterName.getName() + " ***********************************");
+                + clusterName.getName() + " ***********************************");
         Object value4 = new Double(25.32);
         insertRow(clusterName, value4, ColumnType.DOUBLE, VALUE_1, true);
 
@@ -226,7 +229,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
         assertEquals("It has only one result", 1, resultIterator.size());
         for (Row recoveredRow : resultIterator) {
             assertEquals("The type is correct ", Double.class.getCanonicalName(), recoveredRow.getCell(COLUMN_4)
-                            .getValue().getClass().getCanonicalName());
+                    .getValue().getClass().getCanonicalName());
             assertEquals("The value is correct ", value4, recoveredRow.getCell(COLUMN_4).getValue());
         }
 
@@ -256,7 +259,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
     }
 
     protected void insertRow(ClusterName cluesterName, Object value_4, ColumnType colType_4, String PK_VALUE,
-                    boolean withPK) throws ConnectorException {
+            boolean withPK) throws ConnectorException {
         Row row = new Row();
         Map<String, Cell> cells = new HashMap<>();
 
@@ -269,7 +272,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
         tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.INT)
-                        .addColumn(COLUMN_3, ColumnType.BOOLEAN).addColumn(COLUMN_4, colType_4);
+                .addColumn(COLUMN_3, ColumnType.BOOLEAN).addColumn(COLUMN_4, colType_4);
         if (withPK) {
             tableMetadataBuilder.withPartitionKey(COLUMN_1);
         }
@@ -283,7 +286,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
     }
 
     private void insertRowCompositePK(ClusterName cluesterName, String partitionKey, String clusterKey)
-                    throws ConnectorException {
+            throws ConnectorException {
 
         Row row = new Row();
         Map<String, Cell> cells = new HashMap<>();
@@ -297,7 +300,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
         tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.VARCHAR)
-                        .addColumn(COLUMN_3, ColumnType.VARCHAR).addColumn(COLUMN_4, ColumnType.VARCHAR);
+                .addColumn(COLUMN_3, ColumnType.VARCHAR).addColumn(COLUMN_4, ColumnType.VARCHAR);
 
         tableMetadataBuilder.withPartitionKey(COLUMN_1);
         tableMetadataBuilder.withClusterKey(clusterKey);
@@ -305,9 +308,9 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
         TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper());
         if (getConnectorHelper().isCatalogMandatory()) {
             connector.getMetadataEngine()
-                            .createCatalog(getClusterName(),
-                                            new CatalogMetadata(new CatalogName(CATALOG), Collections.EMPTY_MAP,
-                                                            Collections.EMPTY_MAP));
+                    .createCatalog(getClusterName(),
+                            new CatalogMetadata(new CatalogName(CATALOG), Collections.EMPTY_MAP,
+                                    Collections.EMPTY_MAP));
         }
         connector.getStorageEngine().insert(cluesterName, targetTable, row);
         refresh(CATALOG);
@@ -316,7 +319,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
     private LogicalWorkflow createLogicalWorkFlow() {
 
         return new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName()).addColumnName(COLUMN_1, COLUMN_2, COLUMN_3,
-                        COLUMN_4).getLogicalWorkflow();
+                COLUMN_4).getLogicalWorkflow();
 
     }
 
@@ -328,7 +331,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
         linkList.add(lwfC.createConnectorField(COLUMN_3, COLUMN_3, ColumnType.VARCHAR));
         linkList.add(lwfC.createConnectorField(COLUMN_4, COLUMN_4, colType));
         return new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName())
-                        .addColumnName(COLUMN_1, COLUMN_2, COLUMN_3, COLUMN_4).addSelect(linkList).getLogicalWorkflow();
+                .addColumnName(COLUMN_1, COLUMN_2, COLUMN_3, COLUMN_4).addSelect(linkList).getLogicalWorkflow();
 
     }
 

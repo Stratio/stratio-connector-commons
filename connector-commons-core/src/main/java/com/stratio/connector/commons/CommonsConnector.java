@@ -51,16 +51,19 @@ public abstract class CommonsConnector implements IConnector {
     /**
      * Create a logical connection.
      *
-     * @param credentials the credentials.
-     * @param config      the connection configuration.
-     * @throws ConnectionException if the connection fail.
+     * @param credentials
+     *            the credentials.
+     * @param config
+     *            the connection configuration.
+     * @throws ConnectionException
+     *             if the connection fail.
      */
     @Override
     public final void connect(ICredentials credentials, ConnectorClusterConfig config) throws ConnectionException {
         try {
             connectionHandler.createConnection(credentials, config);
         } catch (HandlerConnectionException e) {
-            String msg = "fail creating the Connection. " + e.getMessage();
+            String msg = "Error creating the Connection with cluster " + config.getName() + " :" + e.getMessage();
             logger.error(msg);
             throw new ConnectionException(msg, e);
         }
@@ -69,7 +72,8 @@ public abstract class CommonsConnector implements IConnector {
     /**
      * It close the logical connection.
      *
-     * @param clusterName the connection identifier.
+     * @param clusterName
+     *            the connection identifier.
      */
     @Override
     public final void close(ClusterName clusterName) {
@@ -80,7 +84,8 @@ public abstract class CommonsConnector implements IConnector {
     /**
      * This method shutdown the connector.
      *
-     * @throws ExecutionException if an error happens.
+     * @throws ExecutionException
+     *             if an error happens.
      */
     @Override
     public final void shutdown() throws ExecutionException {
@@ -95,7 +100,8 @@ public abstract class CommonsConnector implements IConnector {
     /**
      * The connection status.
      *
-     * @param name the cluster Name.
+     * @param name
+     *            the cluster Name.
      * @return true if connection is open. False in other case.
      */
     @Override

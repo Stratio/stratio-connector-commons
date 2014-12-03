@@ -18,11 +18,8 @@
 package com.stratio.connector.commons.ftest.functionalTestQuery;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
@@ -54,42 +51,42 @@ public abstract class GenericGroupByFT extends GenericConnectorTest {
         insertRow(4, "text", 10, 30);
         insertRow(5, "text", 20, 42);
         insertRow(6, "text", 20, 48);
-        
-        
-        LogicalWorkflow logicalWorkflow = new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName()).addColumnName(COLUMN_ID).addColumnName(COLUMN_TEXT).addColumnName(COLUMN_AGE).addColumnName(COLUMN_MONEY)
-                        .addGroupBy(COLUMN_AGE).getLogicalWorkflow();
-        
+
+        LogicalWorkflow logicalWorkflow = new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName())
+                .addColumnName(COLUMN_ID).addColumnName(COLUMN_TEXT).addColumnName(COLUMN_AGE)
+                .addColumnName(COLUMN_MONEY)
+                .addGroupBy(COLUMN_AGE).getLogicalWorkflow();
+
         QueryResult queryResult = connector.getQueryEngine().execute(logicalWorkflow);
-        
+
         assertEquals(4, queryResult.getResultSet().size());
 
     }
-    
 
-     protected void insertRow(int pk, String text, int age, int money) throws ConnectorException {
-         
-            Row row = new Row();
-            Map<String, Cell> cells = new HashMap<>();
+    protected void insertRow(int pk, String text, int age, int money) throws ConnectorException {
 
-            cells.put(COLUMN_ID, new Cell(pk));
-            cells.put(COLUMN_TEXT, new Cell(text));
-            cells.put(COLUMN_AGE, new Cell(age));
-            cells.put(COLUMN_MONEY, new Cell(money));
+        Row row = new Row();
+        Map<String, Cell> cells = new HashMap<>();
 
-            row.setCells(cells);
+        cells.put(COLUMN_ID, new Cell(pk));
+        cells.put(COLUMN_TEXT, new Cell(text));
+        cells.put(COLUMN_AGE, new Cell(age));
+        cells.put(COLUMN_MONEY, new Cell(money));
 
-            TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
-            tableMetadataBuilder.addColumn(COLUMN_ID, ColumnType.INT).addColumn(COLUMN_TEXT, ColumnType.VARCHAR)
-                            .addColumn(COLUMN_AGE, ColumnType.INT).addColumn(COLUMN_MONEY, ColumnType.INT);
-         
-            TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper());
+        row.setCells(cells);
 
-            if (getConnectorHelper().isTableMandatory()) {
-                connector.getMetadataEngine().createTable(getClusterName(), targetTable);
-            }
-            connector.getStorageEngine().insert(getClusterName(), targetTable, row);
-            
-            refresh(CATALOG);
-       }
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
+        tableMetadataBuilder.addColumn(COLUMN_ID, ColumnType.INT).addColumn(COLUMN_TEXT, ColumnType.VARCHAR)
+                .addColumn(COLUMN_AGE, ColumnType.INT).addColumn(COLUMN_MONEY, ColumnType.INT);
+
+        TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper());
+
+        if (getConnectorHelper().isTableMandatory()) {
+            connector.getMetadataEngine().createTable(getClusterName(), targetTable);
+        }
+        connector.getStorageEngine().insert(getClusterName(), targetTable, row);
+
+        refresh(CATALOG);
+    }
 
 }

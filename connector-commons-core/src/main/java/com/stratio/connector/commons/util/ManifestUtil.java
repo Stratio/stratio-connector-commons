@@ -56,11 +56,9 @@ public final class ManifestUtil {
     /**
      * Recovered the datastoreName form Manifest.
      *
-     * @param pathManifest
-     *            the manifest path.
+     * @param pathManifest the manifest path.
      * @return the datastoreName.
-     * @throws InitializationException
-     *             if an error happens while XML is reading.
+     * @throws InitializationException if an error happens while XML is reading.
      */
     public static String[] getDatastoreName(String pathManifest) throws InitializationException {
 
@@ -76,7 +74,7 @@ public final class ManifestUtil {
             }
         } catch (SAXException | XPathExpressionException | IOException | ParserConfigurationException e) {
             String msg = "Impossible to read DataStoreName in Manifest with the connector configuration."
-                            + e.getCause();
+                    + e.getCause();
             LOGGER.error(msg);
             throw new InitializationException(msg, e);
         }
@@ -87,11 +85,9 @@ public final class ManifestUtil {
     /**
      * Recovered the ConecrtorName form Manifest.
      *
-     * @param pathManifest
-     *            the manifest path.
+     * @param pathManifest the manifest path.
      * @return the ConectionName.
-     * @throws InitializationException
-     *             if an error happens while XML is reading.
+     * @throws InitializationException if an error happens while XML is reading.
      */
     public static String getConectorName(String pathManifest) throws InitializationException {
 
@@ -104,7 +100,7 @@ public final class ManifestUtil {
 
         } catch (SAXException | XPathExpressionException | IOException | ParserConfigurationException e) {
             String msg = "Impossible to read DataStoreName in Manifest with the connector configuration."
-                            + e.getCause();
+                    + e.getCause();
             LOGGER.error(msg);
             throw new InitializationException(msg, e);
         }
@@ -115,13 +111,10 @@ public final class ManifestUtil {
     /**
      * Get the node value.
      *
-     * @param document
-     *            the document.
-     * @param node
-     *            the node.
+     * @param document the document.
+     * @param node     the node.
      * @return the node value.
-     * @throws XPathExpressionException
-     *             if an exception happens.
+     * @throws XPathExpressionException if an exception happens.
      */
     private static Object getResult(Document document, String node) throws XPathExpressionException {
         // create an XPath object
@@ -136,18 +129,14 @@ public final class ManifestUtil {
     /**
      * Create the documento.
      *
-     * @param pathManifest
-     *            the manifest Path.
+     * @param pathManifest the manifest Path.
      * @return the document.
-     * @throws SAXException
-     *             if an exception happens.
-     * @throws IOException
-     *             if an exception happens.
-     * @throws ParserConfigurationException
-     *             if an exception happens.
+     * @throws SAXException                 if an exception happens.
+     * @throws IOException                  if an exception happens.
+     * @throws ParserConfigurationException if an exception happens.
      */
     private static Document getDocument(String pathManifest) throws SAXException, IOException,
-                    ParserConfigurationException {
+            ParserConfigurationException {
         InputStream inputStream = ManifestUtil.class.getClassLoader().getResourceAsStream(pathManifest);
         return DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(inputStream);
     }

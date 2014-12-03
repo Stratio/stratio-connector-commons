@@ -18,15 +18,16 @@
 
 package com.stratio.connector.commons.connection.exceptions;
 
+
 /**
- * This class represents a exception in the handling of a connection.
- * Created by jmgomez on 9/09/14.
+ * This class represents a exception in the handling of a connection. Created by jmgomez on 9/09/14.
  */
 public class HandlerConnectionException extends Exception {
     /**
      * Constructor.
      *
-     * @param msg the message.
+     * @param msg
+     *            the message.
      */
     public HandlerConnectionException(String msg) {
         super(msg);
@@ -35,8 +36,10 @@ public class HandlerConnectionException extends Exception {
     /**
      * Constructor.
      *
-     * @param msg       the message.
-     * @param exception the original exception.
+     * @param msg
+     *            the message.
+     * @param exception
+     *            the original exception.
      */
     public HandlerConnectionException(String msg, Throwable exception) {
 

@@ -32,7 +32,6 @@ import com.stratio.crossdata.common.data.TableName;
 import com.stratio.crossdata.common.exceptions.ConnectionException;
 import com.stratio.crossdata.common.exceptions.ConnectorException;
 import com.stratio.crossdata.common.exceptions.ExecutionException;
-import com.stratio.crossdata.common.exceptions.InitializationException;
 import com.stratio.crossdata.common.exceptions.UnsupportedException;
 import com.stratio.crossdata.common.security.ICredentials;
 
@@ -67,7 +66,6 @@ public abstract class GenericConnectorTest<T extends IConnector> {
 
         dropTable(CATALOG, TABLE);
         deleteCatalog(CATALOG);
-        
 
         System.out.println(CATALOG + "/" + TABLE);
     }

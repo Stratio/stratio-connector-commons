@@ -64,7 +64,8 @@ public abstract class GenericMetadataIndexTest extends GenericConnectorTest {
     public void createDefaultIndexTest() throws ConnectorException {
 
         // TODO create the catalog and the table if needed
-        System.out.println("*********************************** INIT FUNCTIONAL TEST createDefaultIndexTest ***********************************");
+        System.out.println(
+                "*********************************** INIT FUNCTIONAL TEST createDefaultIndexTest ***********************************");
         TableName tableName = new TableName(CATALOG, TABLE);
 
         // Creating the indexMetadata with the previous columns
@@ -73,7 +74,7 @@ public abstract class GenericMetadataIndexTest extends GenericConnectorTest {
         ColumnName colName = new ColumnName(tableName, "columnName_1");
         columns.put(colName, new ColumnMetadata(colName, parameters, ColumnType.TEXT));
         IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, INDEX_NAME), columns,
-                        IndexType.DEFAULT, Collections.EMPTY_MAP);
+                IndexType.DEFAULT, Collections.EMPTY_MAP);
 
         // Creating other indexMetadata with columnName insteadOf indexName
         Map<ColumnName, ColumnMetadata> columns2 = new HashMap<>();
@@ -81,7 +82,7 @@ public abstract class GenericMetadataIndexTest extends GenericConnectorTest {
         ColumnName colName2 = new ColumnName(tableName, COLUMN_INDEX_NAME);
         columns2.put(colName2, new ColumnMetadata(colName2, parameters2, ColumnType.TEXT));
         IndexMetadata indexMetadata2 = new IndexMetadata(new IndexName(tableName, COLUMN_INDEX_NAME), columns2,
-                        IndexType.DEFAULT, Collections.EMPTY_MAP);
+                IndexType.DEFAULT, Collections.EMPTY_MAP);
 
         // Creating index
         connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata);
@@ -104,7 +105,8 @@ public abstract class GenericMetadataIndexTest extends GenericConnectorTest {
         // TODO create the catalog and the table if needed
         // TODO the connectors must check the columnType (Varchar, fulltext?)
 
-        System.out.println("*********************************** INIT FUNCTIONAL TEST createTextIndexTest ***********************************");
+        System.out.println(
+                "*********************************** INIT FUNCTIONAL TEST createTextIndexTest ***********************************");
         TableName tableName = new TableName(CATALOG, TABLE);
 
         // Creating the indexMetadata with 1 column
@@ -113,18 +115,18 @@ public abstract class GenericMetadataIndexTest extends GenericConnectorTest {
         ColumnName colName = new ColumnName(tableName, "columnName_1");
         columns.put(colName, new ColumnMetadata(colName, parameters, ColumnType.TEXT));
         IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, INDEX_NAME), columns,
-                        IndexType.FULL_TEXT, Collections.EMPTY_MAP);
+                IndexType.FULL_TEXT, Collections.EMPTY_MAP);
 
         // Creating other indexMetadata with 2 columns
         Map<ColumnName, ColumnMetadata> columns2 = new HashMap<>();
         Object[] parameters2 = null;
 
         columns2.put(new ColumnName(tableName, "columnName_2"), new ColumnMetadata(new ColumnName(tableName,
-                        "columnName_2"), parameters2, ColumnType.VARCHAR));
+                "columnName_2"), parameters2, ColumnType.VARCHAR));
         columns2.put(new ColumnName(tableName, "columnName_3"), new ColumnMetadata(new ColumnName(tableName,
-                        "columnName_3"), parameters2, ColumnType.TEXT));
+                "columnName_3"), parameters2, ColumnType.TEXT));
         IndexMetadata indexMetadata2 = new IndexMetadata(new IndexName(tableName, INDEX_NAME_2), columns2,
-                        IndexType.FULL_TEXT, Collections.EMPTY_MAP);
+                IndexType.FULL_TEXT, Collections.EMPTY_MAP);
 
         // Creating index
         connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata);
@@ -138,7 +140,7 @@ public abstract class GenericMetadataIndexTest extends GenericConnectorTest {
         }
 
         assertFalse("The index text must be applied only onver a single column",
-                        iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME_2));
+                iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME_2));
 
     }
 
@@ -157,18 +159,19 @@ public abstract class GenericMetadataIndexTest extends GenericConnectorTest {
 
         // TODO create the catalog and the table if needed
 
-        System.out.println("*********************************** INIT FUNCTIONAL TEST createCompoundIndexTest ***********************************");
+        System.out.println(
+                "*********************************** INIT FUNCTIONAL TEST createCompoundIndexTest ***********************************");
         TableName tableName = new TableName(CATALOG, TABLE);
 
         // Creating other indexMetadata with 2 columns
         Map<ColumnName, ColumnMetadata> columns = new HashMap<>();
         Object[] parameters2 = null;
         columns.put(new ColumnName(tableName, "columnName_2"), new ColumnMetadata(new ColumnName(tableName,
-                        "columnName_2"), parameters2, ColumnType.VARCHAR));
+                "columnName_2"), parameters2, ColumnType.VARCHAR));
         columns.put(new ColumnName(tableName, "columnName_2"), new ColumnMetadata(new ColumnName(tableName,
-                        "columnName_3"), parameters2, ColumnType.TEXT));
+                "columnName_3"), parameters2, ColumnType.TEXT));
         IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, INDEX_NAME), columns,
-                        IndexType.DEFAULT, Collections.EMPTY_MAP);
+                IndexType.DEFAULT, Collections.EMPTY_MAP);
 
         // Creating the index
         connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata);
@@ -187,16 +190,17 @@ public abstract class GenericMetadataIndexTest extends GenericConnectorTest {
 
         // TODO create the catalog and the table if needed
 
-        System.out.println("*********************************** INIT FUNCTIONAL TEST createCompoundIndexTest ***********************************");
+        System.out.println(
+                "*********************************** INIT FUNCTIONAL TEST createCompoundIndexTest ***********************************");
         TableName tableName = new TableName(CATALOG, TABLE);
 
         // Creating a indexMetadata with 1 columns
         Map<ColumnName, ColumnMetadata> columns = new HashMap<>();
         Object[] parameters2 = null;
         columns.put(new ColumnName(tableName, "columnName_2"), new ColumnMetadata(new ColumnName(tableName,
-                        "columnName_2"), parameters2, ColumnType.VARCHAR));
+                "columnName_2"), parameters2, ColumnType.VARCHAR));
         columns.put(new ColumnName(tableName, "columnName_3"), new ColumnMetadata(new ColumnName(tableName,
-                        "columnName_3"), parameters2, ColumnType.TEXT));
+                "columnName_3"), parameters2, ColumnType.TEXT));
 
         // Options
         Map<Selector, Selector> options = new HashMap<Selector, Selector>();
@@ -216,7 +220,7 @@ public abstract class GenericMetadataIndexTest extends GenericConnectorTest {
         options.put(optSelector3, optValue3);
 
         IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, INDEX_NAME), columns,
-                        IndexType.CUSTOM, options);
+                IndexType.CUSTOM, options);
 
         // Creating the index
         connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata);
@@ -228,18 +232,19 @@ public abstract class GenericMetadataIndexTest extends GenericConnectorTest {
     public void createDuplicatedIndexTest() throws ConnectorException { // TODO create the catalog
         // and the table if needed
 
-        System.out.println("*********************************** INIT FUNCTIONAL TEST createDuplicatedIndexTest ***********************************");
+        System.out.println(
+                "*********************************** INIT FUNCTIONAL TEST createDuplicatedIndexTest ***********************************");
         TableName tableName = new TableName(CATALOG, TABLE);
 
         // Creating other indexMetadata with 2 columns
         Map<ColumnName, ColumnMetadata> columns = new HashMap<>();
         Object[] parameters2 = null;
         columns.put(new ColumnName(tableName, "columnName_2"), new ColumnMetadata(new ColumnName(tableName,
-                        "columnName_2"), parameters2, ColumnType.VARCHAR));
+                "columnName_2"), parameters2, ColumnType.VARCHAR));
         columns.put(new ColumnName(tableName, "columnName_3"), new ColumnMetadata(new ColumnName(tableName,
-                        "columnName_3"), parameters2, ColumnType.TEXT));
+                "columnName_3"), parameters2, ColumnType.TEXT));
         IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, INDEX_NAME), columns,
-                        IndexType.DEFAULT, Collections.EMPTY_MAP);
+                IndexType.DEFAULT, Collections.EMPTY_MAP);
 
         // Creating the index
         connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata);
@@ -261,16 +266,17 @@ public abstract class GenericMetadataIndexTest extends GenericConnectorTest {
 
     @Test
     public void dropIndexTest() throws ConnectorException {
-        System.out.println("*********************************** INIT FUNCTIONAL TEST dropIndexTest ***********************************");
+        System.out.println(
+                "*********************************** INIT FUNCTIONAL TEST dropIndexTest ***********************************");
         TableName tableName = new TableName(CATALOG, TABLE);
 
         // Creating the indexMetadata with 1 column
         Map<ColumnName, ColumnMetadata> columns = new HashMap<>();
         Object[] parameters = null;
         columns.put(new ColumnName(tableName, "columnName_1"), new ColumnMetadata(new ColumnName(tableName,
-                        "columnName_1"), parameters, ColumnType.TEXT));
+                "columnName_1"), parameters, ColumnType.TEXT));
         IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, INDEX_NAME), columns,
-                        IndexType.DEFAULT, Collections.EMPTY_MAP);
+                IndexType.DEFAULT, Collections.EMPTY_MAP);
 
         // Creating the index
         connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata);
@@ -280,9 +286,9 @@ public abstract class GenericMetadataIndexTest extends GenericConnectorTest {
         Map<ColumnName, ColumnMetadata> columns2 = new HashMap<>();
         Object[] parameters2 = null;
         columns2.put(new ColumnName(tableName, "columnName_2"), new ColumnMetadata(new ColumnName(tableName,
-                        "columnName_2"), parameters2, ColumnType.VARCHAR));
+                "columnName_2"), parameters2, ColumnType.VARCHAR));
         IndexMetadata indexMetadata2 = new IndexMetadata(new IndexName(tableName, INDEX_NAME_2), columns2,
-                        IndexType.FULL_TEXT, Collections.EMPTY_MAP);
+                IndexType.FULL_TEXT, Collections.EMPTY_MAP);
 
         // Creating the index
         connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata2);
