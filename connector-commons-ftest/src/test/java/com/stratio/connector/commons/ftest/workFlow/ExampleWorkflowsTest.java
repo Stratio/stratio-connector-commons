@@ -64,7 +64,8 @@ public abstract class ExampleWorkflowsTest extends GenericConnectorTest {
             tableMetadataBuilder.addColumn(ExampleWorkflows.COLUMN_ID, ColumnType.INT)
                             .addColumn(ExampleWorkflows.COLUMN_NAME, ColumnType.VARCHAR)
                             .addColumn(ExampleWorkflows.COLUMN_AGE, ColumnType.INT)
-                            .addColumn(ExampleWorkflows.COLUMN_BOOL, ColumnType.BOOLEAN);
+                            .addColumn(ExampleWorkflows.COLUMN_BOOL, ColumnType.BOOLEAN)
+                            .withPartitionKey(ExampleWorkflows.COLUMN_ID);
 
             TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper());
 
@@ -77,10 +78,9 @@ public abstract class ExampleWorkflowsTest extends GenericConnectorTest {
             if (getConnectorHelper().isIndexMandatory()) {
                 Map<ColumnName, ColumnMetadata> columns = new LinkedHashMap<>();
                 ColumnName columnName = new ColumnName(CATALOG, TABLE, ExampleWorkflows.COLUMN_NAME);
-                columns.put(columnName,new ColumnMetadata(columnName,null, ColumnType.VARCHAR));
-                IndexMetadata indexMetadata = new IndexMetadata(new IndexName(CATALOG,TABLE,
-                        "IndexTest" + this.getClass().getName() + "SelectIndexedField"),
-                        columns, IndexType.DEFAULT, null);
+                columns.put(columnName, new ColumnMetadata(columnName, null, ColumnType.VARCHAR));
+                IndexMetadata indexMetadata = new IndexMetadata(new IndexName(CATALOG, TABLE, "IndexTest"
+                                + this.getClass().getName() + "SelectIndexedField"), columns, IndexType.DEFAULT, null);
 
                 connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata);
             }
@@ -117,7 +117,6 @@ public abstract class ExampleWorkflowsTest extends GenericConnectorTest {
         System.out.println("*********************************** INIT FUNCTIONAL TEST basicSelectAsterisk ***********************************");
 
         LogicalWorkflow logicalWorkflow = exampleWorkflows.getSelectIndexedField();
-
 
         QueryResult qr = connector.getQueryEngine().execute(logicalWorkflow);
         assertEquals("The items number in the resultset is correct", 1623, qr.getResultSet().size());

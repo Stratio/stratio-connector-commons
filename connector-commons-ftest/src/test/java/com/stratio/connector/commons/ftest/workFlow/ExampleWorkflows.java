@@ -116,13 +116,11 @@ public class ExampleWorkflows {
         return rows;
     }
 
-
     public Project getProject(ColumnName... columnNames) {
         TableName table = new TableName(columnNames[0].getTableName().getCatalogName().getName(), columnNames[0]
                         .getTableName().getName());
         return new Project(Operations.PROJECT, table, clusterName, Arrays.asList(columnNames));
     }
-
 
     public Select getSelect(String[] alias, ColumnType[] types, ColumnName... columnNames) {
         Map<ColumnName, String> columnMap = new LinkedHashMap<>();
@@ -133,20 +131,18 @@ public class ExampleWorkflows {
             ColumnName columnName = new ColumnName(catalog, table, column.getName());
             columnMap.put(columnName, alias[aliasIndex]);
             columntype.put(column.getQualifiedName(), types[aliasIndex]);
-            typeMapFromColumnName.put(columnName,types[aliasIndex]);
+            typeMapFromColumnName.put(columnName, types[aliasIndex]);
             aliasIndex++;
         }
 
         return new Select(Operations.SELECT_OPERATOR, columnMap, columntype, typeMapFromColumnName);
     }
 
-
     public Filter getFilter(Operations filterOp, ColumnName column, Operator op, Selector right) {
         Selector left = new ColumnSelector(column);
         Relation r = new Relation(left, op, right);
         return new Filter(filterOp, r);
     }
-
 
     public LogicalWorkflow getBasicSelect() {
         ColumnName name = new ColumnName(catalog, table, COLUMN_NAME);
@@ -215,7 +211,6 @@ public class ExampleWorkflows {
         LogicalWorkflow lw = new LogicalWorkflow(Arrays.asList(project));
         return lw;
     }
-
 
     public LogicalWorkflow getSelectMixedWhere() {
         ColumnName id = new ColumnName(catalog, table, COLUMN_ID);
