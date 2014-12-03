@@ -166,6 +166,8 @@ public final class SelectorHelper {
                 value = convertDouble(field);
             } else if (isString(type)) {
                 value = field.toString();
+            } else if (isBoolean(type)) {
+                value = convertBoolean(field);
             }
             returnValue = type.cast(value);
 
@@ -174,6 +176,17 @@ public final class SelectorHelper {
             LOGGER.error(msg);
             throw new ExecutionException(msg, e);
         }
+        return returnValue;
+    }
+
+    private static Object convertBoolean(Object field) throws ExecutionException {
+        Boolean returnValue;
+        if (isBoolean(field.getClass())) {
+            returnValue = (Boolean) field;
+        } else if (isString(field.getClass())) {
+            returnValue = Boolean.valueOf((String) field);
+        } else
+            throw new ExecutionException("The field cannot be parsed");
         return returnValue;
     }
 
@@ -234,6 +247,11 @@ public final class SelectorHelper {
 
     private static boolean isString(Class field) {
         return String.class.getCanonicalName().equals(field.getCanonicalName());
+
+    }
+
+    private static boolean isBoolean(Class field) {
+        return Boolean.class.getCanonicalName().equals(field.getCanonicalName());
 
     }
 

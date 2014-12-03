@@ -18,19 +18,35 @@
 
 package com.stratio.connector.commons.ftest.workFlow;
 
-import com.stratio.connector.commons.util.SelectorHelper;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
 import com.stratio.crossdata.common.data.ClusterName;
 import com.stratio.crossdata.common.data.ColumnName;
 import com.stratio.crossdata.common.data.TableName;
 import com.stratio.crossdata.common.exceptions.UnsupportedException;
-import com.stratio.crossdata.common.logicalplan.*;
+import com.stratio.crossdata.common.logicalplan.Filter;
+import com.stratio.crossdata.common.logicalplan.GroupBy;
+import com.stratio.crossdata.common.logicalplan.Limit;
+import com.stratio.crossdata.common.logicalplan.LogicalStep;
+import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
+import com.stratio.crossdata.common.logicalplan.Project;
+import com.stratio.crossdata.common.logicalplan.Select;
+import com.stratio.crossdata.common.logicalplan.Window;
 import com.stratio.crossdata.common.metadata.ColumnType;
 import com.stratio.crossdata.common.metadata.Operations;
-import com.stratio.crossdata.common.statements.structures.*;
+import com.stratio.crossdata.common.statements.structures.BooleanSelector;
+import com.stratio.crossdata.common.statements.structures.ColumnSelector;
+import com.stratio.crossdata.common.statements.structures.IntegerSelector;
+import com.stratio.crossdata.common.statements.structures.Operator;
+import com.stratio.crossdata.common.statements.structures.Relation;
+import com.stratio.crossdata.common.statements.structures.Selector;
+import com.stratio.crossdata.common.statements.structures.StringSelector;
 import com.stratio.crossdata.common.statements.structures.window.TimeUnit;
 import com.stratio.crossdata.common.statements.structures.window.WindowType;
-
-import java.util.*;
 
 /**
  * Created by jmgomez on 16/09/14.
@@ -78,12 +94,12 @@ public class LogicalWorkFlowCreator {
             lastStep.setNextStep(window);
             lastStep = window;
         }
-        
-        if (groupBy != null){
+
+        if (groupBy != null) {
             lastStep.setNextStep(groupBy);
             lastStep = groupBy;
         }
-        
+
         if (select == null) {
             Map<ColumnName, String> selectColumn = new LinkedHashMap<>();
             Map<String, ColumnType> typeMap = new LinkedHashMap();
@@ -95,8 +111,8 @@ public class LogicalWorkFlowCreator {
                 typeMapColumnName.put(columnNameTemp, ColumnType.VARCHAR);
             }
 
-            select = new Select(Operations.PROJECT, selectColumn, typeMap, typeMapColumnName); // The select is
-                                                                                               // mandatory
+            select = new Select(Operations.SELECT_OPERATOR, selectColumn, typeMap, typeMapColumnName); // The select is
+            // mandatory
             // . If it
             // doesn't
             // exist we
@@ -104,10 +120,13 @@ public class LogicalWorkFlowCreator {
 
         }
         lastStep.setNextStep(select);
+        select.setPrevious(lastStep);
 
         logiclaSteps.add(project);
 
-        return new LogicalWorkflow(logiclaSteps);
+        LogicalWorkflow logWorkflow = new LogicalWorkflow(logiclaSteps);
+        logWorkflow.setLastStep(select);
+        return logWorkflow;
 
     }
 
@@ -248,9 +267,7 @@ public class LogicalWorkFlowCreator {
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)),
                         Operator.MATCH, returnSelector(textToFind));
 
-
         filters.add(new Filter(Operations.FILTER_INDEXED_MATCH, relation));
-
 
         return this;
     }
@@ -308,10 +325,10 @@ public class LogicalWorkFlowCreator {
         this.limit = new Limit(Operations.SELECT_LIMIT, limit);
         return this;
     }
-    
+
     public LogicalWorkFlowCreator addGroupBy(String... fields) {
         List<Selector> ids = new ArrayList<Selector>();
-        for(String field: fields){
+        for (String field : fields) {
             ids.add(new ColumnSelector(new ColumnName(catalog, table, field)));
         }
         this.groupBy = new GroupBy(Operations.SELECT_GROUP_BY, ids);
