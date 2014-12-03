@@ -116,13 +116,11 @@ public class ExampleWorkflows {
         return rows;
     }
 
-
     public Project getProject(ColumnName... columnNames) {
         TableName table = new TableName(columnNames[0].getTableName().getCatalogName().getName(), columnNames[0]
-                        .getTableName().getName());
+                .getTableName().getName());
         return new Project(Operations.PROJECT, table, clusterName, Arrays.asList(columnNames));
     }
-
 
     public Select getSelect(String[] alias, ColumnType[] types, ColumnName... columnNames) {
         Map<ColumnName, String> columnMap = new LinkedHashMap<>();
@@ -133,20 +131,18 @@ public class ExampleWorkflows {
             ColumnName columnName = new ColumnName(catalog, table, column.getName());
             columnMap.put(columnName, alias[aliasIndex]);
             columntype.put(column.getQualifiedName(), types[aliasIndex]);
-            typeMapFromColumnName.put(columnName,types[aliasIndex]);
+            typeMapFromColumnName.put(columnName, types[aliasIndex]);
             aliasIndex++;
         }
 
         return new Select(Operations.SELECT_OPERATOR, columnMap, columntype, typeMapFromColumnName);
     }
 
-
     public Filter getFilter(Operations filterOp, ColumnName column, Operator op, Selector right) {
         Selector left = new ColumnSelector(column);
         Relation r = new Relation(left, op, right);
         return new Filter(filterOp, r);
     }
-
 
     public LogicalWorkflow getBasicSelect() {
         ColumnName name = new ColumnName(catalog, table, COLUMN_NAME);
@@ -162,8 +158,6 @@ public class ExampleWorkflows {
 
     /**
      * Get a basic select. SELECT * FROM example.users;
-     *
-     *
      */
     public LogicalWorkflow getBasicSelectAsterisk() {
         ColumnName id = new ColumnName(catalog, table, COLUMN_ID);
@@ -173,7 +167,7 @@ public class ExampleWorkflows {
         String[] outputNames = { COLUMN_ID, COLUMN_NAME, COLUMN_AGE, COLUMN_BOOL };
         LogicalStep project = getProject(id, name, age, bool);
         LogicalStep select = getSelect(outputNames, new ColumnType[] { ColumnType.INT, ColumnType.TEXT, ColumnType.INT,
-                        ColumnType.BOOLEAN }, id, name, age, bool);
+                ColumnType.BOOLEAN }, id, name, age, bool);
         project.setNextStep(select);
         LogicalWorkflow lw = new LogicalWorkflow(Arrays.asList(project));
         return lw;
@@ -187,7 +181,7 @@ public class ExampleWorkflows {
         ColumnType[] types = { ColumnType.VARCHAR, ColumnType.INT };
         LogicalStep project = getProject(id, name, age);
         LogicalStep filter = getFilter(Operations.FILTER_INDEXED_EQ, name, Operator.EQ,
-                        new StringSelector(names[0].toLowerCase()));
+                new StringSelector(names[0].toLowerCase()));
         project.setNextStep(filter);
         LogicalStep select = getSelect(outputNames, types, name, age);
         filter.setNextStep(select);
@@ -216,7 +210,6 @@ public class ExampleWorkflows {
         return lw;
     }
 
-
     public LogicalWorkflow getSelectMixedWhere() {
         ColumnName id = new ColumnName(catalog, table, COLUMN_ID);
         ColumnName name = new ColumnName(catalog, table, COLUMN_NAME);
@@ -225,7 +218,7 @@ public class ExampleWorkflows {
         ColumnType[] types = { ColumnType.INT, ColumnType.VARCHAR, ColumnType.INT };
         LogicalStep project = getProject(id, name, age);
         LogicalStep filterName = getFilter(Operations.FILTER_INDEXED_EQ, name, Operator.EQ,
-                        new StringSelector(names[1].toLowerCase()));
+                new StringSelector(names[1].toLowerCase()));
         project.setNextStep(filterName);
         LogicalStep filterAge = getFilter(Operations.FILTER_NON_INDEXED_EQ, age, Operator.EQ, new IntegerSelector(40));
         filterName.setNextStep(filterAge);

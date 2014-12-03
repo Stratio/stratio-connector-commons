@@ -95,12 +95,12 @@ public class LogicalWorkFlowCreator {
             lastStep.setNextStep(window);
             lastStep = window;
         }
-        
-        if (groupBy != null){
+
+        if (groupBy != null) {
             lastStep.setNextStep(groupBy);
             lastStep = groupBy;
         }
-        
+
         if (select == null) {
             Map<ColumnName, String> selectColumn = new LinkedHashMap<>();
             Map<String, ColumnType> typeMap = new LinkedHashMap();
@@ -113,7 +113,7 @@ public class LogicalWorkFlowCreator {
             }
 
             select = new Select(Operations.PROJECT, selectColumn, typeMap, typeMapColumnName); // The select is
-                                                                                               // mandatory
+            // mandatory
             // . If it
             // doesn't
             // exist we
@@ -191,7 +191,7 @@ public class LogicalWorkFlowCreator {
     public LogicalWorkFlowCreator addGreaterEqualFilter(String columnName, Object term, Boolean indexed, boolean pk) {
 
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)), Operator.GET,
-                        returnSelector(term));
+                returnSelector(term));
 
         if (pk) {
             filters.add(new Filter(Operations.FILTER_PK_GET, relation));
@@ -209,7 +209,7 @@ public class LogicalWorkFlowCreator {
     public LogicalWorkFlowCreator addGreaterFilter(String columnName, Object term, Boolean indexed) {
 
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)), Operator.GT,
-                        returnSelector(term));
+                returnSelector(term));
         if (indexed) {
             filters.add(new Filter(Operations.FILTER_INDEXED_GT, relation));
         } else {
@@ -223,7 +223,7 @@ public class LogicalWorkFlowCreator {
     public LogicalWorkFlowCreator addLowerEqualFilter(String columnName, Object term, Boolean indexed) {
 
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)), Operator.LET,
-                        returnSelector(term));
+                returnSelector(term));
         if (indexed) {
             filters.add(new Filter(Operations.FILTER_INDEXED_LET, relation));
         } else {
@@ -236,7 +236,7 @@ public class LogicalWorkFlowCreator {
 
     public LogicalWorkFlowCreator addNLowerFilter(String columnName, Object term, Boolean indexed) {
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)), Operator.LT,
-                        returnSelector(term));
+                returnSelector(term));
         if (indexed) {
             filters.add(new Filter(Operations.FILTER_INDEXED_LT, relation));
         } else {
@@ -248,7 +248,7 @@ public class LogicalWorkFlowCreator {
 
     public LogicalWorkFlowCreator addDistinctFilter(String columnName, Object term, Boolean indexed, Boolean PK) {
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)),
-                        Operator.DISTINCT, returnSelector(term));
+                Operator.DISTINCT, returnSelector(term));
         if (PK) {
             filters.add(new Filter(Operations.FILTER_PK_DISTINCT, relation));
         } else if (indexed) {
@@ -263,11 +263,9 @@ public class LogicalWorkFlowCreator {
     public LogicalWorkFlowCreator addMatchFilter(String columnName, String textToFind) {
 
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)),
-                        Operator.MATCH, returnSelector(textToFind));
-
+                Operator.MATCH, returnSelector(textToFind));
 
         filters.add(new Filter(Operations.FILTER_INDEXED_MATCH, relation));
-
 
         return this;
     }
@@ -275,7 +273,7 @@ public class LogicalWorkFlowCreator {
     public LogicalWorkFlowCreator addLikeFilter(String columnName, String textToFind) {
 
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)), Operator.LIKE,
-                        returnSelector(textToFind));
+                returnSelector(textToFind));
 
         filters.add(new Filter(Operations.FILTER_INDEXED_MATCH, relation));
 
@@ -325,10 +323,10 @@ public class LogicalWorkFlowCreator {
         this.limit = new Limit(Operations.SELECT_LIMIT, limit);
         return this;
     }
-    
+
     public LogicalWorkFlowCreator addGroupBy(String... fields) {
         List<Selector> ids = new ArrayList<Selector>();
-        for(String field: fields){
+        for (String field : fields) {
             ids.add(new ColumnSelector(new ColumnName(catalog, table, field)));
         }
         this.groupBy = new GroupBy(Operations.SELECT_GROUP_BY, ids);

@@ -53,27 +53,24 @@ import com.stratio.crossdata.common.statements.structures.StringSelector;
 
 public abstract class GenericAggregationUpdateFT extends GenericConnectorTest<IConnector> {
 
+    public static final String VALUE_1 = "value1";
+    public static final String VALUE_1_UPDATED = "othervalue";
     protected static final String COLUMN_1 = "COLUMN_1".toLowerCase();
     protected static final String COLUMN_2 = "COLUMN_2".toLowerCase();
-
-    public static final String VALUE_1 = "value1";
     protected static final long VALUE_2 = 2;
-
-    public static final String VALUE_1_UPDATED = "othervalue";
     protected static final long TWO = 2;
     protected static final long FIVE = 5;
 
     /**
      * Test a basic increase field as "FIELD = FIELD + 2"
      *
-     * @throws ConnectorException
-     *             the connector exception
+     * @throws ConnectorException the connector exception
      */
     @Test
     public void updateAddFunctionFT() throws ConnectorException {
         ClusterName clusterName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST updateAddFields "
-                        + clusterName.getName() + " ***********************************");
+                + clusterName.getName() + " ***********************************");
         insertRow(clusterName);
         verifyInsert(clusterName, 1);
 
@@ -85,14 +82,13 @@ public abstract class GenericAggregationUpdateFT extends GenericConnectorTest<IC
     /**
      * Test a basic decrement field as "FIELD = FIELD - 5"
      *
-     * @throws ConnectorException
-     *             the connector exception
+     * @throws ConnectorException the connector exception
      */
     @Test
     public void updateSubstractFunctionFT() throws ConnectorException {
         ClusterName clusterName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST updateAddFields "
-                        + clusterName.getName() + " ***********************************");
+                + clusterName.getName() + " ***********************************");
         insertRow(clusterName);
         verifyInsert(clusterName, 1);
 
@@ -104,14 +100,13 @@ public abstract class GenericAggregationUpdateFT extends GenericConnectorTest<IC
     /**
      * Test a basic decrement field as "FIELD = FIELD * 5"
      *
-     * @throws ConnectorException
-     *             the connector exception
+     * @throws ConnectorException the connector exception
      */
     @Test
     public void updateMultiplicationFunctionFT() throws ConnectorException {
         ClusterName clusterName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST updateAddFields "
-                        + clusterName.getName() + " ***********************************");
+                + clusterName.getName() + " ***********************************");
         insertRow(clusterName);
         verifyInsert(clusterName, 1);
 
@@ -121,7 +116,7 @@ public abstract class GenericAggregationUpdateFT extends GenericConnectorTest<IC
     }
 
     protected void verifyUpdate(ClusterName clusterName, int insertedRows, Long valueExpected)
-                    throws ConnectorException {
+            throws ConnectorException {
         ResultSet resultIterator = createResultSet(clusterName);
 
         for (Row recoveredRow : resultIterator) {
@@ -133,7 +128,7 @@ public abstract class GenericAggregationUpdateFT extends GenericConnectorTest<IC
     }
 
     private void updateRow(ClusterName clusterName, Operator operator, long value) throws UnsupportedException,
-                    ConnectorException {
+            ConnectorException {
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
         tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.BIGINT);
@@ -209,7 +204,7 @@ public abstract class GenericAggregationUpdateFT extends GenericConnectorTest<IC
 
     private LogicalWorkflow createLogicalWorkFlow() {
         return new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName()).addColumnName(COLUMN_1, COLUMN_2)
-                        .getLogicalWorkflow();
+                .getLogicalWorkflow();
 
     }
 

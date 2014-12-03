@@ -56,7 +56,7 @@ public abstract class GenericOrderByTest extends GenericConnectorTest {
 
         ClusterName clusterName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST sortDescTest "
-                        + clusterName.getName() + " ***********************************");
+                + clusterName.getName() + " ***********************************");
 
         insertRow(1, "text", 10, 20, clusterName);// row,text,money,age
         insertRow(2, "text", 9, 17, clusterName);
@@ -89,7 +89,7 @@ public abstract class GenericOrderByTest extends GenericConnectorTest {
 
         ClusterName clusterName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST sortDescTest "
-                        + clusterName.getName() + " ***********************************");
+                + clusterName.getName() + " ***********************************");
 
         insertRow(1, "text", 10, 20, clusterName);// row,text,money,age
         insertRow(2, "text", 9, 17, clusterName);
@@ -130,7 +130,6 @@ public abstract class GenericOrderByTest extends GenericConnectorTest {
 
         List<ColumnName> columns = new ArrayList<>();
 
-
         throw new RuntimeException("Not yet generic supported.");
     }
 
@@ -150,7 +149,6 @@ public abstract class GenericOrderByTest extends GenericConnectorTest {
         case SORT_AGE:
 
             throw new RuntimeException("Not yet generic supported.\n");
-
 
         }
         return new LogicalWorkflow(stepList);
@@ -172,8 +170,6 @@ public abstract class GenericOrderByTest extends GenericConnectorTest {
         stepList.add(project);
         LogicalStep gropuBy;
 
-
-
         throw new RuntimeException("Not yet generic supported.");
 
     }
@@ -188,9 +184,9 @@ public abstract class GenericOrderByTest extends GenericConnectorTest {
         cells.put(COLUMN_MONEY, new Cell(money));
         row.setCells(cells);
         connector.getStorageEngine().insert(
-                        clusterName,
-                        new TableMetadata(new TableName(CATALOG, TABLE), null, null, null, null,
-                                        Collections.EMPTY_LIST, Collections.EMPTY_LIST), row);
+                clusterName,
+                new TableMetadata(new TableName(CATALOG, TABLE), null, null, null, null,
+                        Collections.EMPTY_LIST, Collections.EMPTY_LIST), row);
 
     }
 

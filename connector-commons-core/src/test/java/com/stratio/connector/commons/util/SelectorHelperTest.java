@@ -255,16 +255,20 @@ public class SelectorHelperTest {
         assertEquals("The value  is correct", new Boolean(true), returnValue);
 
     }
-    
+
     @Test(expected = ExecutionException.class)
     public void getIncompatibleValueTest() throws Exception {
-    	SelectorHelper.getRestrictedValue(new ColumnSelector(new ColumnName(new TableName("catalog", "table"), "column")), SelectorType.BOOLEAN);
+        SelectorHelper
+                .getRestrictedValue(new ColumnSelector(new ColumnName(new TableName("catalog", "table"), "column")),
+                        SelectorType.BOOLEAN);
 
     }
-    
+
     @Test
     public void getRestrictedValueTest() throws Exception {
-    	String value = (String) SelectorHelper.getRestrictedValue(new ColumnSelector(new ColumnName(new TableName("catalog", "table"), "column")), SelectorType.COLUMN);
-    	assertEquals("column", value);
+        String value = (String) SelectorHelper
+                .getRestrictedValue(new ColumnSelector(new ColumnName(new TableName("catalog", "table"), "column")),
+                        SelectorType.COLUMN);
+        assertEquals("column", value);
     }
 }

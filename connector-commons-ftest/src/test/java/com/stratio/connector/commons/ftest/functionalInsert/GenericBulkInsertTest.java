@@ -63,7 +63,8 @@ public abstract class GenericBulkInsertTest extends GenericConnectorTest {
     public void testBulkInsertWithPK() throws ConnectorException, ValidationException, UnsupportedOperationException {
 
         ClusterName clusterName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST testBulkInsertWithPK ***********************************");
+        System.out.println(
+                "*********************************** INIT FUNCTIONAL TEST testBulkInsertWithPK ***********************************");
         insertBulk(clusterName, true);
         verifyInsert(clusterName);
 
@@ -74,7 +75,8 @@ public abstract class GenericBulkInsertTest extends GenericConnectorTest {
             UnsupportedOperationException {
 
         ClusterName clusterName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST testBulkInsertWithoutPK ***********************************");
+        System.out.println(
+                "*********************************** INIT FUNCTIONAL TEST testBulkInsertWithoutPK ***********************************");
         insertBulk(clusterName, false);
         verifyInsert(clusterName);
 
@@ -97,7 +99,7 @@ public abstract class GenericBulkInsertTest extends GenericConnectorTest {
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
         tableMetadataBuilder.addColumn(COLUMN_KEY, ColumnType.VARCHAR).addColumn(COLUMN_1, ColumnType.VARCHAR)
-                        .addColumn(COLUMN_2, ColumnType.VARCHAR).addColumn(COLUMN_3, ColumnType.VARCHAR);
+                .addColumn(COLUMN_2, ColumnType.VARCHAR).addColumn(COLUMN_3, ColumnType.VARCHAR);
         if (withPK) {
             tableMetadataBuilder.withPartitionKey(COLUMN_1);
         }
@@ -112,7 +114,8 @@ public abstract class GenericBulkInsertTest extends GenericConnectorTest {
         QueryResult queryResult = connector.getQueryEngine().execute(createLogicalWorkFlow());
         ResultSet resultIterator = queryResult.getResultSet();
 
-        assertEquals("The records number is correct " + cluesterName.getName(), getRowToInsert(), resultIterator.size());
+        assertEquals("The records number is correct " + cluesterName.getName(), getRowToInsert(),
+                resultIterator.size());
 
         int rowRecovered = 0;
         for (Row recoveredRow : resultIterator) {
@@ -129,7 +132,7 @@ public abstract class GenericBulkInsertTest extends GenericConnectorTest {
     private LogicalWorkflow createLogicalWorkFlow() {
 
         return new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName()).addColumnName(COLUMN_KEY, COLUMN_1,
-                        COLUMN_2, COLUMN_3).getLogicalWorkflow();
+                COLUMN_2, COLUMN_3).getLogicalWorkflow();
 
     }
 

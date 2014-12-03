@@ -59,11 +59,12 @@ public abstract class GenericQueryProjectTest extends GenericConnectorTest {
     public void selectFilterProject() throws ConnectorException {
 
         ClusterName clusterNodeName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST selectFilterProject ***********************************");
+        System.out.println(
+                "*********************************** INIT FUNCTIONAL TEST selectFilterProject ***********************************");
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
         tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.VARCHAR)
-                        .addColumn(COLUMN_3, ColumnType.VARCHAR);
+                .addColumn(COLUMN_3, ColumnType.VARCHAR);
 
         TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper());
 
@@ -103,7 +104,7 @@ public abstract class GenericQueryProjectTest extends GenericConnectorTest {
     private LogicalWorkflow createLogicalWorkFlow() {
 
         return new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName()).addColumnName(COLUMN_1, COLUMN_2)
-                        .getLogicalWorkflow();
+                .getLogicalWorkflow();
     }
 
     private void insertRow(int ikey, ClusterName clusterNodeName, TableMetadata targetTable)

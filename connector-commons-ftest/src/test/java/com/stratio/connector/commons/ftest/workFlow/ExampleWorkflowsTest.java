@@ -62,9 +62,9 @@ public abstract class ExampleWorkflowsTest extends GenericConnectorTest {
 
             TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
             tableMetadataBuilder.addColumn(ExampleWorkflows.COLUMN_ID, ColumnType.INT)
-                            .addColumn(ExampleWorkflows.COLUMN_NAME, ColumnType.VARCHAR)
-                            .addColumn(ExampleWorkflows.COLUMN_AGE, ColumnType.INT)
-                            .addColumn(ExampleWorkflows.COLUMN_BOOL, ColumnType.BOOLEAN);
+                    .addColumn(ExampleWorkflows.COLUMN_NAME, ColumnType.VARCHAR)
+                    .addColumn(ExampleWorkflows.COLUMN_AGE, ColumnType.INT)
+                    .addColumn(ExampleWorkflows.COLUMN_BOOL, ColumnType.BOOLEAN);
 
             TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper());
 
@@ -77,8 +77,8 @@ public abstract class ExampleWorkflowsTest extends GenericConnectorTest {
             if (getConnectorHelper().isIndexMandatory()) {
                 Map<ColumnName, ColumnMetadata> columns = new LinkedHashMap<>();
                 ColumnName columnName = new ColumnName(CATALOG, TABLE, ExampleWorkflows.COLUMN_NAME);
-                columns.put(columnName,new ColumnMetadata(columnName,null, ColumnType.VARCHAR));
-                IndexMetadata indexMetadata = new IndexMetadata(new IndexName(CATALOG,TABLE,
+                columns.put(columnName, new ColumnMetadata(columnName, null, ColumnType.VARCHAR));
+                IndexMetadata indexMetadata = new IndexMetadata(new IndexName(CATALOG, TABLE,
                         "IndexTest" + this.getClass().getName() + "SelectIndexedField"),
                         columns, IndexType.DEFAULT, null);
 
@@ -91,7 +91,8 @@ public abstract class ExampleWorkflowsTest extends GenericConnectorTest {
     @Test
     public void basicSelect() throws ConnectorException {
 
-        System.out.println("*********************************** INIT FUNCTIONAL TEST basicSelect ***********************************");
+        System.out.println(
+                "*********************************** INIT FUNCTIONAL TEST basicSelect ***********************************");
 
         LogicalWorkflow logicalWorkflow = exampleWorkflows.getBasicSelect();
         QueryResult qr = connector.getQueryEngine().execute(logicalWorkflow);
@@ -104,7 +105,8 @@ public abstract class ExampleWorkflowsTest extends GenericConnectorTest {
 
     @Test
     public void basicSelectAsterisk() throws ConnectorException {
-        System.out.println("*********************************** INIT FUNCTIONAL TEST basicSelectAsterisk ***********************************");
+        System.out.println(
+                "*********************************** INIT FUNCTIONAL TEST basicSelectAsterisk ***********************************");
 
         LogicalWorkflow logicalWorkflow = exampleWorkflows.getBasicSelectAsterisk();
         QueryResult qr = connector.getQueryEngine().execute(logicalWorkflow);
@@ -114,10 +116,10 @@ public abstract class ExampleWorkflowsTest extends GenericConnectorTest {
     @Test
     public void selectIndexedField() throws ConnectorException {
 
-        System.out.println("*********************************** INIT FUNCTIONAL TEST basicSelectAsterisk ***********************************");
+        System.out.println(
+                "*********************************** INIT FUNCTIONAL TEST basicSelectAsterisk ***********************************");
 
         LogicalWorkflow logicalWorkflow = exampleWorkflows.getSelectIndexedField();
-
 
         QueryResult qr = connector.getQueryEngine().execute(logicalWorkflow);
         assertEquals("The items number in the resultset is correct", 1623, qr.getResultSet().size());
@@ -130,7 +132,8 @@ public abstract class ExampleWorkflowsTest extends GenericConnectorTest {
 
     @Test
     public void selectNonIndexedField() throws ConnectorException {
-        System.out.println("*********************************** INIT FUNCTIONAL TEST selectNonIndexedField ***********************************");
+        System.out.println(
+                "*********************************** INIT FUNCTIONAL TEST selectNonIndexedField ***********************************");
 
         LogicalWorkflow logicalWorkflow = exampleWorkflows.getSelectNonIndexedField();
 
@@ -148,7 +151,8 @@ public abstract class ExampleWorkflowsTest extends GenericConnectorTest {
 
     @Test
     public void selectMixedWhere() throws ConnectorException {
-        System.out.println("*********************************** INIT FUNCTIONAL TEST selectMixedWhere ***********************************");
+        System.out.println(
+                "*********************************** INIT FUNCTIONAL TEST selectMixedWhere ***********************************");
 
         LogicalWorkflow logicalWorkflow = exampleWorkflows.getSelectMixedWhere();
 

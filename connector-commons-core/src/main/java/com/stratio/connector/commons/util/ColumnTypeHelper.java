@@ -43,17 +43,14 @@ public final class ColumnTypeHelper {
     /**
      * Return a casting value adapt to columntType.
      *
-     * @param columnType
-     *            the columnType.
-     * @param value
-     *            the value.
+     * @param columnType the columnType.
+     * @param value      the value.
      * @return the casting value.
-     * @throws ExecutionException
-     *             if the casting is not possible.
+     * @throws ExecutionException if the casting is not possible.
      */
     public static Object getCastingValue(ColumnType columnType, Object value) throws ExecutionException {
         Object returnValue = null;
-        if(value!=null) {
+        if (value != null) {
             switch (columnType) {
 
             case BIGINT:
@@ -84,8 +81,7 @@ public final class ColumnTypeHelper {
     /**
      * check if a object is a number.
      *
-     * @param value
-     *            the objet.
+     * @param value the objet.
      * @return true if is a number false in other case.
      */
     private static boolean isNumber(Object value) {
@@ -96,10 +92,8 @@ public final class ColumnTypeHelper {
     /**
      * Ensure if a object is a number.
      *
-     * @param value
-     *            the objet.
-     * @throws ExecutionException
-     *             if is not a number.
+     * @param value the objet.
+     * @throws ExecutionException if is not a number.
      */
     private static void ensureNumber(Object value) throws ExecutionException {
 

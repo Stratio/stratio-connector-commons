@@ -48,7 +48,8 @@ public abstract class GenericLimitTest extends GenericConnectorTest {
     public void limitTest() throws Exception {
 
         ClusterName clusterName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST limitTest  ***********************************");
+        System.out.println(
+                "*********************************** INIT FUNCTIONAL TEST limitTest  ***********************************");
 
         for (int i = 0; i < 25463; i++) {
             insertRow(i, "text", clusterName);
@@ -67,7 +68,7 @@ public abstract class GenericLimitTest extends GenericConnectorTest {
     private LogicalWorkflow createLogicalPlan(int limit) {
 
         return new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName())
-                        .addColumnName(COLUMN_TEXT, COLUMN_AGE, COLUMN_MONEY).addLimit(limit).getLogicalWorkflow();
+                .addColumnName(COLUMN_TEXT, COLUMN_AGE, COLUMN_MONEY).addLimit(limit).getLogicalWorkflow();
 
     }
 
@@ -83,7 +84,7 @@ public abstract class GenericLimitTest extends GenericConnectorTest {
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
         tableMetadataBuilder.addColumn(COLUMN_TEXT, ColumnType.VARCHAR).addColumn(COLUMN_AGE, ColumnType.INT)
-                        .addColumn(COLUMN_MONEY, ColumnType.INT);
+                .addColumn(COLUMN_MONEY, ColumnType.INT);
 
         TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper());
 

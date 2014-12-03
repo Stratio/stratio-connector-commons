@@ -116,7 +116,7 @@ public abstract class GenericMetadataDropTest extends GenericConnectorTest {
         columns.add(new ColumnMetadata(new ColumnName(tableName, "columnName_1"), parameters, ColumnType.TEXT));
 
         TableMetadata tableMetadata = new TableMetadata(tableName, options, columnsMap, Collections.EMPTY_MAP,
-                        getClusterName(), Collections.EMPTY_LIST, Collections.EMPTY_LIST);
+                getClusterName(), Collections.EMPTY_LIST, Collections.EMPTY_LIST);
         connector.getMetadataEngine().createTable(getClusterName(), tableMetadata);
     }
 
@@ -163,7 +163,7 @@ public abstract class GenericMetadataDropTest extends GenericConnectorTest {
     private LogicalWorkflow createLogicalWorkFlow(String catalog, String table) {
 
         return new LogicalWorkFlowCreator(catalog, table, getClusterName()).addColumnName(COLUMN_1, COLUMN_2)
-                        .getLogicalWorkflow();
+                .getLogicalWorkflow();
     }
 
     @After

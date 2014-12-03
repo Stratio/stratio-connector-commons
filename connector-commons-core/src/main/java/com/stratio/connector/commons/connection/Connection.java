@@ -18,15 +18,13 @@
 
 package com.stratio.connector.commons.connection;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
  * This interface represents a generic logic connection. Created by jmgomez on 29/08/14.
  *
- * @param <T>
- *            the native client
+ * @param <T> the native client
  */
 public abstract class Connection<T> {
 
@@ -35,8 +33,7 @@ public abstract class Connection<T> {
      */
     private static final String FILENAME_DATE_PATTERN = "yyyy-MM-dd HH:mm";
 
-    private String status;
-    /**
+     /**
      * The last use date.
      */
     private String lastDateInfo;
@@ -73,14 +70,7 @@ public abstract class Connection<T> {
         return lastDateInfo;
     }
 
-    /**
-     * Return the work status.
-     *
-     * @return the work status.
-     */
-    public String getStatus() {
-        return status;
-    }
+
 
     /**
      * Check the connection status.
@@ -94,19 +84,10 @@ public abstract class Connection<T> {
     /**
      * Set the connection status.
      *
-     * @param workInProgress
-     *            the connection work status.
+     * @param workInProgress the connection work status.
      */
     public void setWorkInProgress(Boolean workInProgress) {
-        final DateFormat dateFormat = new SimpleDateFormat(FILENAME_DATE_PATTERN);
-
-        if (workInProgress) {
-            status = "Work in Progress";
-        } else {
-            status = "Work Finished";
-        }
-
-        lastDateInfo = dateFormat.format(new Date());
+        lastDateInfo = new SimpleDateFormat(FILENAME_DATE_PATTERN).format(new Date());
         this.workInProgress = workInProgress;
     }
 }

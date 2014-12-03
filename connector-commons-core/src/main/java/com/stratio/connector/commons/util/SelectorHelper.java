@@ -50,13 +50,10 @@ public final class SelectorHelper {
     /**
      * Return the selector value represents in the type class.
      *
-     * @param type
-     *            the type in witch the value will be return.
-     * @param selector
-     *            the selector.
+     * @param type     the type in witch the value will be return.
+     * @param selector the selector.
      * @return the type value.
-     * @throws ExecutionException
-     *             if an error happens.
+     * @throws ExecutionException if an error happens.
      */
     public static <T> T getValue(Class<T> type, Selector selector) throws ExecutionException {
 
@@ -66,11 +63,9 @@ public final class SelectorHelper {
     /**
      * Return the selector value.
      *
-     * @param selector
-     *            the selector.
+     * @param selector the selector.
      * @return the type value.
-     * @throws ExecutionException
-     *             if an error happens.
+     * @throws ExecutionException if an error happens.
      */
     public static Object getValue(Selector selector) throws ExecutionException {
         return getRestrictedValue(selector, null);
@@ -80,20 +75,17 @@ public final class SelectorHelper {
     /**
      * Return the selector value only if the type matches with the specified value.
      *
-     * @param selector
-     *            the selector.
-     * @param type
-     *            the type of the expected selector
+     * @param selector the selector.
+     * @param type     the type of the expected selector
      * @return the corresponding value or null if the selector type does not match.
-     * @throws ExecutionException
-     *             if an error happens.
+     * @throws ExecutionException if an error happens.
      */
     public static Object getRestrictedValue(Selector selector, SelectorType type) throws ExecutionException {
         Object field = null;
 
         if (type != null && selector.getType() != type) {
             throw new ExecutionException("The selector type expected is: " + type + " but received: "
-                            + selector.getType());
+                    + selector.getType());
         }
 
         switch (selector.getType()) {
@@ -125,11 +117,9 @@ public final class SelectorHelper {
     /**
      * Return the selector value class.
      *
-     * @param selector
-     *            the selector.
+     * @param selector the selector.
      * @return the selector class.
-     * @throws ExecutionException
-     *             if an error happens.
+     * @throws ExecutionException if an error happens.
      */
     public static Class getClass(Selector selector) throws ExecutionException {
         Class returnClass = null;

@@ -32,8 +32,7 @@ public final class ConnectorParser {
     /**
      * This method parse the hosts string.
      *
-     * @param hosts
-     *            the hosts string.
+     * @param hosts the hosts string.
      * @return the hosts in an Array.
      */
     public static String[] hosts(String hosts) {
@@ -44,8 +43,7 @@ public final class ConnectorParser {
     /**
      * This method parse the ips string.
      *
-     * @param ips
-     *            the ips string.
+     * @param ips the ips string.
      * @return the ips in an Array.
      */
     public static String[] ports(String ips) {
