@@ -34,6 +34,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
@@ -103,7 +104,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterTest extends GenericCon
     public void selectPKEqualsFilter() throws ConnectorException {
 
         ClusterName clusterNodeName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterBetween ***********************************");
+        System.out.println("*********************************** INIT FUNCTIONAL TEST selectPKEqualsFilter ***********************************");
 
         insertRow(1, 1, 10, clusterNodeName, true);
         insertRow(2, 1, 9, clusterNodeName, true);
@@ -140,7 +141,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterTest extends GenericCon
 
     }
 
-    @Test
+    @Test @Ignore
     public void selectNotIndexedFilterBetween() throws ConnectorException {
         ClusterName clusterNodeName = getClusterName();
         System.out.println("*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterBetween ***********************************");
