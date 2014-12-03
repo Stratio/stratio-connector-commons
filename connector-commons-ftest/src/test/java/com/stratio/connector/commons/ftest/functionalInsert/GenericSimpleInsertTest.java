@@ -87,7 +87,6 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
         insertRow(clusterName, OTHER_VALUE_4, ColumnType.VARCHAR, VALUE_1, true);
         insertRow(clusterName, VALUE_4, ColumnType.VARCHAR, VALUE_1, true);
 
-
         verifyInsert(clusterName, VALUE_4);
 
     }
@@ -170,11 +169,11 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
         insertRow(clusterName, value4, ColumnType.BIGINT, VALUE_1, true);
 
         ResultSet resultIterator = createResultSetTyped(clusterName, ColumnType.BIGINT);
-        assertEquals("It has only one result", 1, resultIterator.size());
+        assertEquals("It should have only one result", 1, resultIterator.size());
         for (Row recoveredRow : resultIterator) {
-            assertEquals("The type is correct ", Long.class.getCanonicalName(), recoveredRow.getCell(COLUMN_4)
+            assertEquals("The type is not correct ", Long.class.getCanonicalName(), recoveredRow.getCell(COLUMN_4)
                             .getValue().getClass().getCanonicalName());
-            assertEquals("The value is correct ", value4, recoveredRow.getCell(COLUMN_4).getValue());
+            assertEquals("The value is not correct ", value4, recoveredRow.getCell(COLUMN_4).getValue());
         }
 
     }
