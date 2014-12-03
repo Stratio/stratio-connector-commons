@@ -112,7 +112,9 @@ public class LogicalWorkFlowCreator {
                 typeMapColumnName.put(columnNameTemp, ColumnType.VARCHAR);
             }
 
-            select = new Select(Operations.PROJECT, selectColumn, typeMap, typeMapColumnName); // The select is
+
+            select = new Select(Operations.SELECT_OPERATOR, selectColumn, typeMap, typeMapColumnName); // The select is
+
             // mandatory
             // . If it
             // doesn't
@@ -121,10 +123,13 @@ public class LogicalWorkFlowCreator {
 
         }
         lastStep.setNextStep(select);
+        select.setPrevious(lastStep);
 
         logiclaSteps.add(project);
 
-        return new LogicalWorkflow(logiclaSteps);
+        LogicalWorkflow logWorkflow = new LogicalWorkflow(logiclaSteps);
+        logWorkflow.setLastStep(select);
+        return logWorkflow;
 
     }
 
@@ -263,7 +268,9 @@ public class LogicalWorkFlowCreator {
     public LogicalWorkFlowCreator addMatchFilter(String columnName, String textToFind) {
 
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)),
-                Operator.MATCH, returnSelector(textToFind));
+
+                        Operator.MATCH, returnSelector(textToFind));
+
 
         filters.add(new Filter(Operations.FILTER_INDEXED_MATCH, relation));
 
