@@ -452,7 +452,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterTest extends GenericCon
                 .addColumn(COLUMN_3, ColumnType.VARCHAR).addColumn(COLUMN_AGE, ColumnType.INT)
                 .addColumn(COLUMN_MONEY, ColumnType.INT);
         if (withPk) {
-            tableMetadataBuilder.withPartitionKey(COLUMN_KEY);
+            tableMetadataBuilder.addColumn(COLUMN_KEY, ColumnType.INT).withPartitionKey(COLUMN_KEY);
         }
 
         TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper());
