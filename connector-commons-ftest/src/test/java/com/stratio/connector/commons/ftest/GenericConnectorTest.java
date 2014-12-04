@@ -123,10 +123,11 @@ public abstract class GenericConnectorTest<T extends IConnector> {
             if (logger.isDebugEnabled()) {
                 logger.debug("Delete Catalog: " + CATALOG);
 
-                connector.close(getClusterName());
+
             }
 
         }
+        connector.close(getClusterName());
     }
 
 }
