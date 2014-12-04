@@ -61,8 +61,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
     @Test
     public void testSimpleInsertWithPK() throws ConnectorException {
         ClusterName clusterName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST testSimpleInsert  ***********************************");
+
 
         insertRow(clusterName, VALUE_4, ColumnType.VARCHAR, VALUE_1, true);
 
@@ -72,8 +71,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
     @Test
     public void testSimpleInsertWithoutPK() throws ConnectorException {
         ClusterName clusterName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST testSimpleInsert  ***********************************");
+
 
         insertRow(clusterName, VALUE_4, ColumnType.VARCHAR, VALUE_1, false);
 
@@ -83,8 +81,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
     @Test
     public void testInsertSamePK() throws ConnectorException {
         ClusterName clusterName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST testInsertSamePK "
-                + clusterName.getName() + " ***********************************");
+
 
         insertRow(clusterName, OTHER_VALUE_4, ColumnType.VARCHAR, VALUE_1, true);
         insertRow(clusterName, VALUE_4, ColumnType.VARCHAR, VALUE_1, true);
@@ -96,8 +93,6 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
     @Test
     public void testInsertDuplicateCompositePK() throws ConnectorException {
         ClusterName clusterName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST testDuplicateCompositePK "
-                + clusterName.getName() + " ***********************************");
 
         insertRowCompositePK(clusterName, COLUMN_1, COLUMN_2);
         try {
@@ -114,8 +109,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
     @Test
     public void testInsertCompositePK() throws ConnectorException {
         ClusterName clusterName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST testCompositePK "
-                + clusterName.getName() + " ***********************************");
+
 
         insertRowCompositePK(clusterName, COLUMN_1, COLUMN_2);
         insertRowCompositePK(clusterName, COLUMN_1, COLUMN_3);
@@ -129,8 +123,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
     @Test
     public void testInsertString() throws ConnectorException {
         ClusterName clusterName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST testInsertSamePK "
-                + clusterName.getName() + " ***********************************");
+
 
         Object value4 = "String";
         insertRow(clusterName, value4, ColumnType.VARCHAR, VALUE_1, true);
@@ -148,8 +141,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
     @Test
     public void testInsertInteger() throws ConnectorException {
         ClusterName clusterName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST testInsertInteger ***********************************");
+
         Object value4 = new Integer(1);
         insertRow(clusterName, value4, ColumnType.INT, VALUE_1, true);
 
@@ -166,8 +158,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
     @Test
     public void testInsertLong() throws ConnectorException {
         ClusterName clusterName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST testInsertSamePK "
-                + clusterName.getName() + " ***********************************");
+
         Object value4 = 1L;
         insertRow(clusterName, value4, ColumnType.BIGINT, VALUE_1, true);
 
@@ -184,8 +175,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
     @Test
     public void testInsertBoolean() throws ConnectorException {
         ClusterName clusterName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST testInsertSamePK "
-                + clusterName.getName() + " ***********************************");
+
         Object value4 = new Boolean(true);
         insertRow(clusterName, value4, ColumnType.BOOLEAN, VALUE_1, true);
 
@@ -202,8 +192,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
     @Test
     public void testInsertDate() throws ConnectorException {
         ClusterName clusterName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST testInsertSamePK "
-                + clusterName.getName() + " ***********************************");
+
         Object value4 = new Date();
         insertRow(clusterName, value4, ColumnType.NATIVE, VALUE_1, true);
 
@@ -220,8 +209,7 @@ public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
     @Test
     public void testInsertDouble() throws ConnectorException {
         ClusterName clusterName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST testInsertSamePK "
-                + clusterName.getName() + " ***********************************");
+
         Object value4 = new Double(25.32);
         insertRow(clusterName, value4, ColumnType.DOUBLE, VALUE_1, true);
 

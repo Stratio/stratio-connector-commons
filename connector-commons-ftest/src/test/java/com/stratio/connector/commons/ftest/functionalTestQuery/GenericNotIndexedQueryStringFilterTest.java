@@ -70,8 +70,7 @@ public abstract class GenericNotIndexedQueryStringFilterTest extends GenericConn
     public void selectNotIndexedFilterUpperCaseEqual() throws ConnectorException {
 
         ClusterName clusterNodeName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterUpperCaseEqual ***********************************");
+
 
         insertRow(names, clusterNodeName, false);
 
@@ -89,8 +88,7 @@ public abstract class GenericNotIndexedQueryStringFilterTest extends GenericConn
     @Test
     public void selectNotIndexedFilterUpperCaseDistinct() throws ConnectorException {
         ClusterName clusterNodeName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST selectNoPKFilterDistinct ***********************************");
+
 
         insertRow(names, clusterNodeName, false);
 
@@ -108,8 +106,7 @@ public abstract class GenericNotIndexedQueryStringFilterTest extends GenericConn
     public void selectNotIndexedFilterLowerCaseEqual() throws ConnectorException {
 
         ClusterName clusterNodeName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterUpperCaseEqual ***********************************");
+
 
         insertRow(names, clusterNodeName, true);
 
@@ -127,8 +124,7 @@ public abstract class GenericNotIndexedQueryStringFilterTest extends GenericConn
     @Test
     public void selectNotIndexedFilterLowerCaseCaseDistinct() throws ConnectorException {
         ClusterName clusterNodeName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST selectNoPKFilterDistinct ***********************************");
+
 
         insertRow(names, clusterNodeName, true);
 
@@ -145,8 +141,7 @@ public abstract class GenericNotIndexedQueryStringFilterTest extends GenericConn
     @Test
     public void selectNotIndexedFilterMatch() throws ConnectorException {
 
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST selectNoPKFilterDistinct ***********************************");
+
 
         insertRow(danteParadise, getClusterName(), false);
 

@@ -59,8 +59,7 @@ public abstract class GenericQueryProjectTest extends GenericConnectorTest {
     public void selectFilterProject() throws ConnectorException {
 
         ClusterName clusterNodeName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST selectFilterProject ***********************************");
+
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
         tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.VARCHAR)

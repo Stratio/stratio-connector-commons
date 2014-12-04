@@ -76,9 +76,7 @@ public abstract class GenericSimpleUpdateFT extends GenericConnectorTest<IConnec
     @Test
     public void updateGenericsFieldsFT() throws ConnectorException {
         ClusterName clusterName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST testUpdateFields " + clusterName.getName()
-                        + " ***********************************");
+
         insertRow(clusterName);
         verifyInsert(clusterName, 1);
 
@@ -90,9 +88,7 @@ public abstract class GenericSimpleUpdateFT extends GenericConnectorTest<IConnec
     @Test
     public void multiUpdateGenericsFieldsFT() throws ConnectorException {
         ClusterName clusterName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST testMultiUpdateFields " + clusterName
-                        .getName() + " ***********************************");
+
         insertRow(clusterName);
         insertRow(clusterName);
         verifyInsert(clusterName, 2);

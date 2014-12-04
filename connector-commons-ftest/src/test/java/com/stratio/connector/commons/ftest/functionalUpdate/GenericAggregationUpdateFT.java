@@ -69,8 +69,7 @@ public abstract class GenericAggregationUpdateFT extends GenericConnectorTest<IC
     @Test
     public void updateAddFunctionFT() throws ConnectorException {
         ClusterName clusterName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST updateAddFields "
-                + clusterName.getName() + " ***********************************");
+
         insertRow(clusterName);
         verifyInsert(clusterName, 1);
 
@@ -87,8 +86,7 @@ public abstract class GenericAggregationUpdateFT extends GenericConnectorTest<IC
     @Test
     public void updateSubstractFunctionFT() throws ConnectorException {
         ClusterName clusterName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST updateAddFields "
-                + clusterName.getName() + " ***********************************");
+
         insertRow(clusterName);
         verifyInsert(clusterName, 1);
 
@@ -105,8 +103,7 @@ public abstract class GenericAggregationUpdateFT extends GenericConnectorTest<IC
     @Test
     public void updateMultiplicationFunctionFT() throws ConnectorException {
         ClusterName clusterName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST updateAddFields "
-                + clusterName.getName() + " ***********************************");
+
         insertRow(clusterName);
         verifyInsert(clusterName, 1);
 

@@ -48,8 +48,7 @@ public abstract class GenericLimitTest extends GenericConnectorTest {
     public void limitTest() throws Exception {
 
         ClusterName clusterName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST limitTest  ***********************************");
+
 
         for (int i = 0; i < 25463; i++) {
             insertRow(i, "text", clusterName);

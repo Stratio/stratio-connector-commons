@@ -91,7 +91,7 @@ public abstract class ExampleWorkflowsTest extends GenericConnectorTest {
     @Test
     public void basicSelect() throws ConnectorException {
 
-        System.out.println("*********************************** INIT FUNCTIONAL TEST basicSelect ***********************************");
+
 
         LogicalWorkflow logicalWorkflow = exampleWorkflows.getBasicSelect();
         QueryResult qr = connector.getQueryEngine().execute(logicalWorkflow);
@@ -104,7 +104,7 @@ public abstract class ExampleWorkflowsTest extends GenericConnectorTest {
 
     @Test
     public void basicSelectAsterisk() throws ConnectorException {
-        System.out.println("*********************************** INIT FUNCTIONAL TEST basicSelectAsterisk ***********************************");
+
 
         LogicalWorkflow logicalWorkflow = exampleWorkflows.getBasicSelectAsterisk();
         QueryResult qr = connector.getQueryEngine().execute(logicalWorkflow);
@@ -114,7 +114,7 @@ public abstract class ExampleWorkflowsTest extends GenericConnectorTest {
     @Test
     public void selectIndexedField() throws ConnectorException {
 
-        System.out.println("*********************************** INIT FUNCTIONAL TEST basicSelectAsterisk ***********************************");
+
 
         LogicalWorkflow logicalWorkflow = exampleWorkflows.getSelectIndexedField();
 
@@ -129,7 +129,7 @@ public abstract class ExampleWorkflowsTest extends GenericConnectorTest {
 
     @Test
     public void selectNonIndexedField() throws ConnectorException {
-        System.out.println("*********************************** INIT FUNCTIONAL TEST selectNonIndexedField ***********************************");
+
 
         LogicalWorkflow logicalWorkflow = exampleWorkflows.getSelectNonIndexedField();
 
@@ -147,7 +147,7 @@ public abstract class ExampleWorkflowsTest extends GenericConnectorTest {
 
     @Test
     public void selectMixedWhere() throws ConnectorException {
-        System.out.println("*********************************** INIT FUNCTIONAL TEST selectMixedWhere ***********************************");
+
 
         LogicalWorkflow logicalWorkflow = exampleWorkflows.getSelectMixedWhere();
 

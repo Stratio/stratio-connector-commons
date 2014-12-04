@@ -62,9 +62,6 @@ public abstract class GenericSimpleUpdateWithFiltersFT extends GenericConnectorT
     @Test
     public void multiUpdateGenericsFieldsWithFilterFT() throws ConnectorException {
         ClusterName clusterName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST updateWithFilters " + clusterName.getName()
-                        + " ***********************************");
 
         insertRow(clusterName, "row1", 20);
         insertRow(clusterName, "row2", 21);

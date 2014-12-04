@@ -69,8 +69,7 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
     public void selectAllFromTable() throws ConnectorException {
 
         ClusterName clusterNodeName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST selectAllFromTable ***********************************");
+
 
         for (int i = 0; i < getRowsToSearch(); i++) {
             insertRow(i, clusterNodeName);
@@ -114,8 +113,7 @@ public abstract class GenericQueryTest extends GenericConnectorTest {
     public void validateMetadataTest() throws ConnectorException {
 
         ClusterName clusterNodeName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST selectAllFromTable ***********************************");
+
         insertTypedRow();
 
         refresh(CATALOG);

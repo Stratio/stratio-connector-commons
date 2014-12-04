@@ -64,8 +64,7 @@ public abstract class GenericMetadataIndexTest extends GenericConnectorTest {
     public void createDefaultIndexTest() throws ConnectorException {
 
         // TODO create the catalog and the table if needed
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST createDefaultIndexTest ***********************************");
+
         TableName tableName = new TableName(CATALOG, TABLE);
 
         // Creating the indexMetadata with the previous columns
@@ -105,8 +104,7 @@ public abstract class GenericMetadataIndexTest extends GenericConnectorTest {
         // TODO create the catalog and the table if needed
         // TODO the connectors must check the columnType (Varchar, fulltext?)
 
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST createTextIndexTest ***********************************");
+
         TableName tableName = new TableName(CATALOG, TABLE);
 
         // Creating the indexMetadata with 1 column
@@ -159,8 +157,7 @@ public abstract class GenericMetadataIndexTest extends GenericConnectorTest {
 
         // TODO create the catalog and the table if needed
 
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST createCompoundIndexTest ***********************************");
+
         TableName tableName = new TableName(CATALOG, TABLE);
 
         // Creating other indexMetadata with 2 columns
@@ -190,8 +187,7 @@ public abstract class GenericMetadataIndexTest extends GenericConnectorTest {
 
         // TODO create the catalog and the table if needed
 
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST createCompoundIndexTest ***********************************");
+
         TableName tableName = new TableName(CATALOG, TABLE);
 
         // Creating a indexMetadata with 1 columns
@@ -232,8 +228,7 @@ public abstract class GenericMetadataIndexTest extends GenericConnectorTest {
     public void createDuplicatedIndexTest() throws ConnectorException { // TODO create the catalog
         // and the table if needed
 
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST createDuplicatedIndexTest ***********************************");
+
         TableName tableName = new TableName(CATALOG, TABLE);
 
         // Creating other indexMetadata with 2 columns
@@ -266,8 +261,7 @@ public abstract class GenericMetadataIndexTest extends GenericConnectorTest {
 
     @Test
     public void dropIndexTest() throws ConnectorException {
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST dropIndexTest ***********************************");
+
         TableName tableName = new TableName(CATALOG, TABLE);
 
         // Creating the indexMetadata with 1 column

@@ -55,8 +55,7 @@ public abstract class GenericOrderByTest extends GenericConnectorTest {
     public void sortDescTest() throws ConnectorException {
 
         ClusterName clusterName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST sortDescTest "
-                + clusterName.getName() + " ***********************************");
+
 
         insertRow(1, "text", 10, 20, clusterName);// row,text,money,age
         insertRow(2, "text", 9, 17, clusterName);

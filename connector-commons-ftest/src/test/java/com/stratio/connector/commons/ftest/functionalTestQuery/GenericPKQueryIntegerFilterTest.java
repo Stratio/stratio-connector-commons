@@ -67,8 +67,7 @@ public abstract class GenericPKQueryIntegerFilterTest extends GenericConnectorTe
     public void selectPKFilterEqual() throws ConnectorException {
 
         ClusterName clusterNodeName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterEqual ***********************************");
+
 
         insertRow(1, 10, 5, clusterNodeName, false);
         insertRow(2, 9, 1, clusterNodeName, false);
@@ -93,8 +92,7 @@ public abstract class GenericPKQueryIntegerFilterTest extends GenericConnectorTe
     public void selectPKDoubleFilterEqual() throws ConnectorException {
 
         ClusterName clusterNodeName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterEqual ***********************************");
+
 
         insertRow(1, 10, 5, clusterNodeName, false);
         insertRow(2, 9, 1, clusterNodeName, false);
@@ -118,8 +116,7 @@ public abstract class GenericPKQueryIntegerFilterTest extends GenericConnectorTe
     public void selectPKDoubleFilterDistinct() throws ConnectorException {
 
         ClusterName clusterNodeName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterEqual ***********************************");
+
 
         insertRow(1, 10, 5, clusterNodeName, true);
         insertRow(2, 9, 1, clusterNodeName, true);
@@ -146,8 +143,7 @@ public abstract class GenericPKQueryIntegerFilterTest extends GenericConnectorTe
     public void selectPKGreatEqualFilterEqual() throws ConnectorException {
 
         ClusterName clusterNodeName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterEqual ***********************************");
+
 
         insertRow(1, 10, 5, clusterNodeName, false);
         insertRow(2, 9, 1, clusterNodeName, false);

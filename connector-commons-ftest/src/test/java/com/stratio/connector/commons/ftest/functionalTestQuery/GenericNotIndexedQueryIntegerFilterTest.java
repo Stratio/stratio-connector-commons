@@ -68,8 +68,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterTest extends GenericCon
     public void selectNotIndexedFilterEqual() throws ConnectorException {
 
         ClusterName clusterNodeName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterEqual ***********************************");
+
 
         insertRow(1, 10, 5, clusterNodeName, false);
         insertRow(2, 9, 1, clusterNodeName, false);
@@ -106,8 +105,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterTest extends GenericCon
     public void selectPKEqualsFilter() throws ConnectorException {
 
         ClusterName clusterNodeName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST selectPKEqualsFilter ***********************************");
+
 
         insertRow(1, 1, 10, clusterNodeName, true);
         insertRow(2, 1, 9, clusterNodeName, true);
@@ -143,8 +141,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterTest extends GenericCon
     @Test @Ignore
     public void selectNotIndexedFilterBetween() throws ConnectorException {
         ClusterName clusterNodeName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterBetween ***********************************");
+
 
         insertRow(1, 1, 10, clusterNodeName, false);
         insertRow(2, 1, 9, clusterNodeName, false);
@@ -185,8 +182,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterTest extends GenericCon
     @Test
     public void selectNoNotIndexedFilterGreaterEqual() throws ConnectorException {
         ClusterName clusterNodeName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST selectNoNotIndexedFilterGreaterEqual ***********************************");
+
 
         insertRow(1, 10, 15, clusterNodeName, false);
         insertRow(2, 9, 10, clusterNodeName, false);
@@ -243,8 +239,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterTest extends GenericCon
     public void selectNotIndexedFilterGreater() throws ConnectorException {
 
         ClusterName clusterNodeName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterGreater ***********************************");
+
 
         insertRow(1, 10, 1, clusterNodeName, false);
         insertRow(2, 9, 1, clusterNodeName, false);
@@ -287,8 +282,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterTest extends GenericCon
     @Test
     public void selectNotIndexedFilterLower() throws ConnectorException {
         ClusterName clusterNodeName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterLower ***********************************");
+
 
         insertRow(1, 10, 1, clusterNodeName, false);
         insertRow(2, 9, 1, clusterNodeName, false);
@@ -332,8 +326,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterTest extends GenericCon
     @Test
     public void selectNotIndexedFilterLowerEqual() throws ConnectorException {
         ClusterName clusterNodeName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST selectNotIndexedFilterLowerEqual ***********************************");
+
 
         insertRow(1, 10, 1, clusterNodeName, false);
         insertRow(2, 9, 1, clusterNodeName, false);
@@ -387,8 +380,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterTest extends GenericCon
     @Test
     public void selectNotIndexedFilterDistinct() throws ConnectorException {
         ClusterName clusterNodeName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST selectNoPKFilterDistinct ***********************************");
+
 
         insertRow(1, 10, 1, clusterNodeName, false);
         insertRow(2, 9, 1, clusterNodeName, false);

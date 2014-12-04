@@ -53,8 +53,7 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
     @Test
     public void createCatalogTest() throws ConnectorException {
         ClusterName clusterName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST createCatalogTest "
-                + clusterName.getName() + " ***********************************");
+
 
         try {
             connector.getMetadataEngine().dropCatalog(getClusterName(), new CatalogName(NEW_CATALOG));
@@ -116,8 +115,7 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
     @Test
     public void createCatalogExceptionCreateTwoCatalogTest() throws ConnectorException {
         ClusterName clusterName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST createCatalogTest "
-                + clusterName.getName() + " ***********************************");
+
 
         try {
             connector.getMetadataEngine().dropCatalog(getClusterName(), new CatalogName(NEW_CATALOG));
@@ -146,8 +144,7 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
     @Test
     public void createTableWithoutTableTest() throws ConnectorException {
         ClusterName clusterName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST createTableTest ***********************************");
+
 
         TableName tableName = new TableName(CATALOG, TABLE);
         Map<Selector, Selector> options = Collections.EMPTY_MAP;
@@ -184,8 +181,7 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
     @Test
     public void createTableTest() throws ConnectorException {
         ClusterName clusterName = getClusterName();
-        System.out.println(
-                "*********************************** INIT FUNCTIONAL TEST createTableTest ***********************************");
+
 
         TableName tableName = new TableName(CATALOG, TABLE);
         Map<Selector, Selector> options = Collections.EMPTY_MAP;
