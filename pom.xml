@@ -14,12 +14,12 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <properties>
-        <version.crossdata>0.1.1-RC2</version.crossdata>
+        <version.crossdata>0.1.1</version.crossdata>
     </properties>
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.stratio.connector</groupId>
     <artifactId>stratio-connector-commons</artifactId>
-    <version>0.2.0-RC3</version>
+    <version>0.2.0</version>
     <url>http://www.stratio.com</url>
     <name>Connector commons</name>
     <description>Connector commons</description>
