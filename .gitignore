@@ -1,3 +1,4 @@
+*.asc
 .clover
 *.class
 .idea
