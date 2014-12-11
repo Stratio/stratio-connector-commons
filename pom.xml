@@ -38,6 +38,24 @@
                 <module>connector-commons-ftest</module>
             </modules>
         </profile>
+        <profile>
+            <id>local</id>
+            <distributionManagement>
+                <repository>
+                    <id>stratioRelease</id>
+                    <name>terraframe-releases</name>
+                    <url>http://sodio.stratio.com/nexus/content/repositories/releases/</url>
+                    <layout>default</layout>
+                </repository>
+                <snapshotRepository>
+                    <id>stratioSnapshot</id>
+                    <name>stratioSnapshot</name>
+                    <url>http://sodio.stratio.com/nexus/content/repositories/snapshots/</url>
+                    <layout>default</layout>
+                </snapshotRepository>
+            </distributionManagement>
+        </profile>
+
     </profiles>
 
     <licenses>
@@ -67,18 +85,22 @@
         </developer>
     </developers>
 
+
+
+
     <distributionManagement>
-
         <repository>
-            <id>sonatype-nexus-staging</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+            <id>stratioRelease</id>
+            <name>terraframe-releases</name>
+            <url>http://sodio.stratio.com/nexus/content/repositories/releases/</url>
+            <layout>default</layout>
         </repository>
-
         <snapshotRepository>
-            <id>sonatype-nexus-snapshots</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <id>stratioSnapshot</id>
+            <name>stratioSnapshot</name>
+            <url>http://sodio.stratio.com/nexus/content/repositories/snapshots/</url>
+            <layout>default</layout>
         </snapshotRepository>
-
     </distributionManagement>
     <build>
         <plugins>
