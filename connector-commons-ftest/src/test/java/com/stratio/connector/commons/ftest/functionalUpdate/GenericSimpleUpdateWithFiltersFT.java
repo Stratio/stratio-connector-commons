@@ -60,7 +60,7 @@ public abstract class GenericSimpleUpdateWithFiltersFT extends GenericConnectorT
     protected static final String COLUMN_2 = "COLUMN_2".toLowerCase();
 
     @Test
-    public void multiUpdateGenericsFieldsWithFilterFT() throws ConnectorException {
+    public void multiUpdateGenericsFieldsWithFilterIndexGetTest() throws ConnectorException {
         ClusterName clusterName = getClusterName();
 
         insertRow(clusterName, "row1", 20);
@@ -71,10 +71,29 @@ public abstract class GenericSimpleUpdateWithFiltersFT extends GenericConnectorT
         verifyInsert(clusterName, 4);
 
         Collection<Filter> filterCollection = new ArrayList<Filter>();
-        filterCollection.add(new Filter(Operations.FILTER_INDEXED_GT, getBasicRelation(COLUMN_2, Operator.GET, 20l)));
+        filterCollection.add(new Filter(Operations.UPDATE_INDEXED_GET, getBasicRelation(COLUMN_2, Operator.GET, 20l)));
 
         updateRow(clusterName, filterCollection);
         verifyUpdate(clusterName, 3);
+
+    }
+
+    @Test
+    public void multiUpdateGenericsFieldsWithFilterEqualPkTest() throws ConnectorException {
+        ClusterName clusterName = getClusterName();
+
+        insertRow(clusterName, "row1", 20);
+        insertRow(clusterName, "row2", 21);
+        insertRow(clusterName, "row3", 19);
+        insertRow(clusterName, "row4", 20);
+
+        verifyInsert(clusterName, 4);
+
+        Collection<Filter> filterCollection = new ArrayList<Filter>();
+        filterCollection.add(new Filter(Operations.UPDATE_PK_EQ, getBasicRelation(COLUMN_1, Operator.EQ, "row1")));
+
+        updateRow(clusterName, filterCollection);
+        verifyUpdate(clusterName, 1);
 
     }
 
@@ -91,8 +110,8 @@ public abstract class GenericSimpleUpdateWithFiltersFT extends GenericConnectorT
         assertEquals("The records number is correct " + clusterName.getName(), expectedMatchedRows, matchedRows);
     }
 
-    private void updateRow(ClusterName clusterName, Collection<Filter> filterCollection)
-            throws UnsupportedException, ConnectorException {
+    private void updateRow(ClusterName clusterName, Collection<Filter> filterCollection) throws UnsupportedException,
+                    ConnectorException {
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
         tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.BIGINT);
@@ -145,7 +164,8 @@ public abstract class GenericSimpleUpdateWithFiltersFT extends GenericConnectorT
         row.setCells(cells);
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
-        tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.BIGINT);
+        tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.BIGINT)
+                        .withPartitionKey(COLUMN_1);
 
         TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper());
 
@@ -158,7 +178,7 @@ public abstract class GenericSimpleUpdateWithFiltersFT extends GenericConnectorT
 
     private LogicalWorkflow createLogicalWorkFlow() {
         return new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName()).addColumnName(COLUMN_1, COLUMN_2)
-                .getLogicalWorkflow();
+                        .getLogicalWorkflow();
 
     }
 }
