@@ -20,6 +20,7 @@ package com.stratio.connector.commons.connection;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * This interface represents a generic logic connection. Created by jmgomez on 29/08/14.
@@ -27,6 +28,18 @@ import java.util.Date;
  * @param <T> the native client
  */
 public abstract class Connection<T> {
+
+
+    private Map<String,Object> session;
+
+    public  <T> T getSessionObject(Class<T> type, String name){
+        return (T)session.get(name);
+    }
+
+    public void  addObjectToSession(String name, Object value){
+
+        session.put(name,value);
+    }
 
     /**
      * The dateFormat.

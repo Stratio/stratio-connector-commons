@@ -76,8 +76,7 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
     @Test
     public void createCatalogWithOptionsTest() throws ConnectorException {
         ClusterName clusterName = getClusterName();
-        System.out.println("*********************************** INIT FUNCTIONAL TEST createCatalogTest "
-                + clusterName.getName() + " ***********************************");
+
 
         try {
             connector.getMetadataEngine().dropCatalog(getClusterName(), new CatalogName(NEW_CATALOG));

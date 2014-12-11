@@ -115,7 +115,7 @@ public abstract class GenericBulkInsertTest extends GenericConnectorTest {
 
         int rowRecovered = 0;
         for (Row recoveredRow : resultIterator) {
-            System.out.println("Row number: [" + ++rowRecovered + "]");
+
             Object key = recoveredRow.getCell(COLUMN_KEY).getValue();
 
             assertEquals("The value_1 is wrong  ", VALUE_1 + key, recoveredRow.getCell(COLUMN_1).getValue());

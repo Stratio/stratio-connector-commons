@@ -67,7 +67,7 @@ public abstract class GenericConnectorTest<T extends IConnector> {
         dropTable(CATALOG, TABLE);
         deleteCatalog(CATALOG);
 
-        System.out.println(CATALOG + "/" + TABLE);
+
     }
 
     protected void deleteCatalog(String catalog) throws UnsupportedException, ExecutionException {

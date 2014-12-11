@@ -98,24 +98,7 @@ public abstract class GenericSimpleUpdateFT extends GenericConnectorTest<IConnec
 
     }
 
-    //TODO it is necessary to see how to specify it. For example where field NEQ null
-    //    /**
-    //     * Checks that the field updated is not created in a row which does not contain that field.
-    //     *
-    //     * @throws ConnectorException the connector exception
-    //     */
-    //    @Test
-    //    public void updateRowsWithoutFieldsFT() throws ConnectorException {
-    //        ClusterName clusterName = getClusterName();
-    //        System.out.println("*********************************** INIT FUNCTIONAL TEST testMultiUpdateFields "+ clusterName.getName() + " ***********************************");
-    //        insertRowsWithDifferentFields(clusterName);
-    //        verifyInsertRowsWithDifferentFields(clusterName);
-    //
-    //
-    //        updateRow(clusterName);
-    //        verifyUpdateRowsWithDifferentFields(clusterName);
-    //
-    //    }
+
 
     protected void verifyUpdate(ClusterName clusterName, int insertedRows) throws ConnectorException {
         ResultSet resultIterator = createResultSet(clusterName);
