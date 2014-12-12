@@ -20,6 +20,7 @@ package com.stratio.connector.commons.connection;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -37,6 +38,9 @@ public abstract class Connection<T> {
     }
 
     public void  addObjectToSession(String name, Object value){
+        if (session==null){
+            session= new HashMap<>();
+        }
 
         session.put(name,value);
     }
