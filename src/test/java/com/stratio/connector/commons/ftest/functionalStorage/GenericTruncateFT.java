@@ -24,8 +24,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
-import com.stratio.connector.commons.ftest.schema.TableMetadataBuilder;
-import com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator;
+import com.stratio.connector.commons.test.util.LogicalWorkFlowCreator;
+import com.stratio.connector.commons.test.util.TableMetadataBuilder;
 import com.stratio.crossdata.common.connector.IConnector;
 import com.stratio.crossdata.common.data.Cell;
 import com.stratio.crossdata.common.data.ClusterName;

@@ -28,8 +28,8 @@ import java.util.Set;
 import org.junit.Test;
 
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
-import com.stratio.connector.commons.ftest.schema.TableMetadataBuilder;
-import com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator;
+import com.stratio.connector.commons.test.util.LogicalWorkFlowCreator;
+import com.stratio.connector.commons.test.util.TableMetadataBuilder;
 import com.stratio.crossdata.common.data.Cell;
 import com.stratio.crossdata.common.data.ClusterName;
 import com.stratio.crossdata.common.data.ResultSet;
@@ -44,7 +44,7 @@ import com.stratio.crossdata.common.result.QueryResult;
 /**
  *
  */
-public abstract class GenericBulkInsertTest extends GenericConnectorTest {
+public abstract class GenericBulkInsertFT extends GenericConnectorTest {
 
     public static final String COLUMN_1 = "name1";
     public static final String COLUMN_2 = "name2";

@@ -16,7 +16,7 @@
  *  under the License.
  */
 
-package com.stratio.connector.commons.ftest.workFlow;
+package com.stratio.connector.commons.test.util;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

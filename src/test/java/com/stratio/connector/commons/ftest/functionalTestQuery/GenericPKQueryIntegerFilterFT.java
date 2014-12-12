@@ -18,11 +18,12 @@
 
 package com.stratio.connector.commons.ftest.functionalTestQuery;
 
-import static com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator.COLUMN_1;
-import static com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator.COLUMN_2;
-import static com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator.COLUMN_3;
-import static com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator.COLUMN_AGE;
-import static com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator.COLUMN_MONEY;
+import static com.stratio.connector.commons.test.util.LogicalWorkFlowCreator.COLUMN_1;
+import static com.stratio.connector.commons.test.util.LogicalWorkFlowCreator.COLUMN_2;
+import static com.stratio.connector.commons.test.util.LogicalWorkFlowCreator.COLUMN_3;
+import static com.stratio.connector.commons.test.util.LogicalWorkFlowCreator.COLUMN_AGE;
+import static com.stratio.connector.commons.test.util.LogicalWorkFlowCreator.COLUMN_MONEY;
+
 import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
@@ -36,8 +37,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
-import com.stratio.connector.commons.ftest.schema.TableMetadataBuilder;
-import com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator;
+import com.stratio.connector.commons.test.util.LogicalWorkFlowCreator;
+import com.stratio.connector.commons.test.util.TableMetadataBuilder;
 import com.stratio.crossdata.common.data.Cell;
 import com.stratio.crossdata.common.data.ClusterName;
 import com.stratio.crossdata.common.data.Row;
@@ -50,7 +51,7 @@ import com.stratio.crossdata.common.result.QueryResult;
 /**
  * Created by jmgomez on 17/07/14.
  */
-public abstract class GenericPKQueryIntegerFilterTest extends GenericConnectorTest {
+public abstract class GenericPKQueryIntegerFilterFT extends GenericConnectorTest {
 
     public static final String ALIAS_COLUMN_1 = "alias_" + COLUMN_1;
     private static final String COLUMN_PK = "column_pk";

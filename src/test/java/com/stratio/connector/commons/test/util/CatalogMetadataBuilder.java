@@ -15,7 +15,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package com.stratio.connector.commons.ftest.schema;
+package com.stratio.connector.commons.test.util;
 
 import java.util.HashMap;
 import java.util.Map;

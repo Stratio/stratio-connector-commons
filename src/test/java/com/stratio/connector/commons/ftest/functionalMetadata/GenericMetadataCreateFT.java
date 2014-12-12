@@ -45,7 +45,7 @@ import com.stratio.crossdata.common.statements.structures.IntegerSelector;
 import com.stratio.crossdata.common.statements.structures.Selector;
 import com.stratio.crossdata.common.statements.structures.StringSelector;
 
-public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
+public abstract class GenericMetadataCreateFT extends GenericConnectorTest {
 
     private static final String NEW_CATALOG = "new_catalog";
     private static final String INDEX = "index1";
@@ -54,7 +54,6 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
     public void createCatalogTest() throws ConnectorException {
         ClusterName clusterName = getClusterName();
 
-
         try {
             connector.getMetadataEngine().dropCatalog(getClusterName(), new CatalogName(NEW_CATALOG));
             fail("When I try to delete a catalog that not exists any type of exception must be throws. It may be a runtime exception.");
@@ -62,7 +61,7 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
         }
 
         connector.getMetadataEngine().createCatalog(getClusterName(),
-                new CatalogMetadata(new CatalogName(NEW_CATALOG), null, null));
+                        new CatalogMetadata(new CatalogName(NEW_CATALOG), null, null));
 
         try {
             connector.getMetadataEngine().dropCatalog(getClusterName(), new CatalogName(NEW_CATALOG));
@@ -77,7 +76,6 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
     public void createCatalogWithOptionsTest() throws ConnectorException {
         ClusterName clusterName = getClusterName();
 
-
         try {
             connector.getMetadataEngine().dropCatalog(getClusterName(), new CatalogName(NEW_CATALOG));
             fail("When I try to delete a catalog that not exists any type of exception must be throws. It may be a runtime exception.");
@@ -89,7 +87,7 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
         options.put(new StringSelector("option2"), new IntegerSelector(new Integer(3)));
         options.put(new StringSelector("option3"), new BooleanSelector(false));
         connector.getMetadataEngine().createCatalog(getClusterName(),
-                new CatalogMetadata(new CatalogName(NEW_CATALOG), options, Collections.EMPTY_MAP));
+                        new CatalogMetadata(new CatalogName(NEW_CATALOG), options, Collections.EMPTY_MAP));
 
         Map<String, Object> recoveredSettings = getConnectorHelper().recoveredCatalogSettings(NEW_CATALOG);
 
@@ -115,7 +113,6 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
     public void createCatalogExceptionCreateTwoCatalogTest() throws ConnectorException {
         ClusterName clusterName = getClusterName();
 
-
         try {
             connector.getMetadataEngine().dropCatalog(getClusterName(), new CatalogName(NEW_CATALOG));
             fail("When I try to delete a catalog that not exists any type of exception must be throws. It may be a runtime exception.");
@@ -123,14 +120,14 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
         }
 
         connector.getMetadataEngine()
-                .createCatalog(getClusterName(),
-                        new CatalogMetadata(new CatalogName(NEW_CATALOG), Collections.EMPTY_MAP,
-                                Collections.EMPTY_MAP));
+                        .createCatalog(getClusterName(),
+                                        new CatalogMetadata(new CatalogName(NEW_CATALOG), Collections.EMPTY_MAP,
+                                                        Collections.EMPTY_MAP));
         try {
             connector.getMetadataEngine().createCatalog(
-                    getClusterName(),
-                    new CatalogMetadata(new CatalogName(NEW_CATALOG), Collections.EMPTY_MAP,
-                            Collections.EMPTY_MAP));
+                            getClusterName(),
+                            new CatalogMetadata(new CatalogName(NEW_CATALOG), Collections.EMPTY_MAP,
+                                            Collections.EMPTY_MAP));
             fail("I try to create a second catalog with the same identification. Any type of exception must be throws. It may be a runtime excepcion");
         } catch (Throwable t) {
 
@@ -144,7 +141,6 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
     public void createTableWithoutTableTest() throws ConnectorException {
         ClusterName clusterName = getClusterName();
 
-
         TableName tableName = new TableName(CATALOG, TABLE);
         Map<Selector, Selector> options = Collections.EMPTY_MAP;
 
@@ -156,9 +152,9 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
 
         if (getConnectorHelper().isCatalogMandatory()) {
             connector.getMetadataEngine()
-                    .createCatalog(getClusterName(),
-                            new CatalogMetadata(new CatalogName(CATALOG), Collections.EMPTY_MAP,
-                                    Collections.EMPTY_MAP));
+                            .createCatalog(getClusterName(),
+                                            new CatalogMetadata(new CatalogName(CATALOG), Collections.EMPTY_MAP,
+                                                            Collections.EMPTY_MAP));
         }
         try {
             connector.getMetadataEngine().dropTable(getClusterName(), tableName);
@@ -167,7 +163,7 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
         }
 
         connector.getMetadataEngine().createTable(getClusterName(),
-                new TableMetadata(tableName, options, columns, indexex, clusterRef, partitionKey, clusterKey));
+                        new TableMetadata(tableName, options, columns, indexex, clusterRef, partitionKey, clusterKey));
         try {
             connector.getMetadataEngine().dropTable(getClusterName(), tableName);
         } catch (Throwable t) {
@@ -180,7 +176,6 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
     @Test
     public void createTableTest() throws ConnectorException {
         ClusterName clusterName = getClusterName();
-
 
         TableName tableName = new TableName(CATALOG, TABLE);
         Map<Selector, Selector> options = Collections.EMPTY_MAP;
@@ -201,9 +196,9 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
 
         if (getConnectorHelper().isCatalogMandatory()) {
             connector.getMetadataEngine()
-                    .createCatalog(getClusterName(),
-                            new CatalogMetadata(new CatalogName(CATALOG), Collections.EMPTY_MAP,
-                                    Collections.EMPTY_MAP));
+                            .createCatalog(getClusterName(),
+                                            new CatalogMetadata(new CatalogName(CATALOG), Collections.EMPTY_MAP,
+                                                            Collections.EMPTY_MAP));
         }
         try {
             connector.getMetadataEngine().dropTable(getClusterName(), tableName);
@@ -212,7 +207,7 @@ public abstract class GenericMetadataCreateTest extends GenericConnectorTest {
         }
 
         connector.getMetadataEngine().createTable(getClusterName(),
-                new TableMetadata(tableName, options, columns, indexex, clusterRef, partitionKey, clusterKey));
+                        new TableMetadata(tableName, options, columns, indexex, clusterRef, partitionKey, clusterKey));
         try {
             connector.getMetadataEngine().dropTable(getClusterName(), tableName);
         } catch (Throwable t) {

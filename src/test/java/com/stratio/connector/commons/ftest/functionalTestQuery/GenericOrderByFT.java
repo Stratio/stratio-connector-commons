@@ -43,7 +43,7 @@ import com.stratio.crossdata.common.logicalplan.Project;
 import com.stratio.crossdata.common.metadata.TableMetadata;
 import com.stratio.crossdata.common.result.QueryResult;
 
-public abstract class GenericOrderByTest extends GenericConnectorTest {
+public abstract class GenericOrderByFT extends GenericConnectorTest {
 
     public static final String COLUMN_TEXT = "text";
     public static final String COLUMN_AGE = "age";
@@ -55,7 +55,6 @@ public abstract class GenericOrderByTest extends GenericConnectorTest {
     public void sortDescTest() throws ConnectorException {
 
         ClusterName clusterName = getClusterName();
-
 
         insertRow(1, "text", 10, 20, clusterName);// row,text,money,age
         insertRow(2, "text", 9, 17, clusterName);
@@ -87,7 +86,6 @@ public abstract class GenericOrderByTest extends GenericConnectorTest {
     public void sortTestMultifield() throws ConnectorException {
 
         ClusterName clusterName = getClusterName();
-
 
         insertRow(1, "text", 10, 20, clusterName);// row,text,money,age
         insertRow(2, "text", 9, 17, clusterName);
@@ -173,7 +171,7 @@ public abstract class GenericOrderByTest extends GenericConnectorTest {
     }
 
     private void insertRow(int ikey, String texto, int money, int age, ClusterName clusterName)
-            throws UnsupportedOperationException, ConnectorException {
+                    throws UnsupportedOperationException, ConnectorException {
 
         Row row = new Row();
         Map<String, Cell> cells = new HashMap<>();
@@ -182,9 +180,9 @@ public abstract class GenericOrderByTest extends GenericConnectorTest {
         cells.put(COLUMN_MONEY, new Cell(money));
         row.setCells(cells);
         connector.getStorageEngine().insert(
-                clusterName,
-                new TableMetadata(new TableName(CATALOG, TABLE), null, null, null, null,
-                        Collections.EMPTY_LIST, Collections.EMPTY_LIST), row);
+                        clusterName,
+                        new TableMetadata(new TableName(CATALOG, TABLE), null, null, null, null,
+                                        Collections.EMPTY_LIST, Collections.EMPTY_LIST), row);
 
     }
 

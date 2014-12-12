@@ -28,9 +28,9 @@ import java.util.Map;
 import org.junit.Test;
 
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
-import com.stratio.connector.commons.ftest.schema.TableMetadataBuilder;
-import com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator;
-import com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator.ConnectorField;
+import com.stratio.connector.commons.test.util.LogicalWorkFlowCreator;
+import com.stratio.connector.commons.test.util.TableMetadataBuilder;
+import com.stratio.connector.commons.test.util.LogicalWorkFlowCreator.ConnectorField;
 import com.stratio.crossdata.common.data.CatalogName;
 import com.stratio.crossdata.common.data.Cell;
 import com.stratio.crossdata.common.data.ClusterName;
@@ -45,7 +45,7 @@ import com.stratio.crossdata.common.result.QueryResult;
 
 /**
  */
-public abstract class GenericSimpleInsertTest extends GenericConnectorTest {
+public abstract class GenericSimpleInsertFT extends GenericConnectorTest {
 
     public static final String COLUMN_4 = "COLUMN_4".toLowerCase();
     public static final String VALUE_1 = "value1";

@@ -30,8 +30,8 @@ import java.util.Set;
 import org.junit.Test;
 
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
-import com.stratio.connector.commons.ftest.schema.TableMetadataBuilder;
-import com.stratio.connector.commons.ftest.workFlow.LogicalWorkFlowCreator;
+import com.stratio.connector.commons.test.util.LogicalWorkFlowCreator;
+import com.stratio.connector.commons.test.util.TableMetadataBuilder;
 import com.stratio.crossdata.common.data.Cell;
 import com.stratio.crossdata.common.data.ClusterName;
 import com.stratio.crossdata.common.data.Row;
@@ -44,7 +44,7 @@ import com.stratio.crossdata.common.result.QueryResult;
 /**
  *
  */
-public abstract class GenericQueryProjectTest extends GenericConnectorTest {
+public abstract class GenericQueryProjectFT extends GenericConnectorTest {
 
     public static final String COLUMN_1 = "bin1";
     public static final String COLUMN_2 = "bin2";
@@ -60,10 +60,9 @@ public abstract class GenericQueryProjectTest extends GenericConnectorTest {
 
         ClusterName clusterNodeName = getClusterName();
 
-
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
         tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.VARCHAR)
-                .addColumn(COLUMN_3, ColumnType.VARCHAR);
+                        .addColumn(COLUMN_3, ColumnType.VARCHAR);
 
         TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper());
 
@@ -103,11 +102,11 @@ public abstract class GenericQueryProjectTest extends GenericConnectorTest {
     private LogicalWorkflow createLogicalWorkFlow() {
 
         return new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName()).addColumnName(COLUMN_1, COLUMN_2)
-                .getLogicalWorkflow();
+                        .getLogicalWorkflow();
     }
 
     private void insertRow(int ikey, ClusterName clusterNodeName, TableMetadata targetTable)
-            throws UnsupportedOperationException, ConnectorException {
+                    throws UnsupportedOperationException, ConnectorException {
 
         Row row = new Row();
         Map<String, Cell> cells = new HashMap<>();

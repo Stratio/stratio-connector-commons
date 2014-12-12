@@ -28,7 +28,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
-import com.stratio.connector.commons.ftest.schema.TableMetadataBuilder;
+import com.stratio.connector.commons.test.util.TableMetadataBuilder;
 import com.stratio.crossdata.common.data.ColumnName;
 import com.stratio.crossdata.common.data.IndexName;
 import com.stratio.crossdata.common.data.Row;
@@ -44,7 +44,7 @@ import com.stratio.crossdata.common.result.QueryResult;
 /**
  * Created by jjlopez on 16/09/14.
  */
-public abstract class ExampleWorkflowsTest extends GenericConnectorTest {
+public abstract class ExampleWorkflowsFT extends GenericConnectorTest {
 
     private static boolean insertData = false;
     private ExampleWorkflows exampleWorkflows;
