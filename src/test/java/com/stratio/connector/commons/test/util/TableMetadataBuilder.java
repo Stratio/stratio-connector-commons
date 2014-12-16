@@ -96,7 +96,8 @@ public class TableMetadataBuilder {
      *
      * @param indType
      * @param indexName
-     * @param fields    the columns which define the index
+     * @param fields
+     *            the columns which define the index
      * @return
      */
     public TableMetadataBuilder addIndex(IndexType indType, String indexName, String... fields) {
@@ -144,19 +145,24 @@ public class TableMetadataBuilder {
     }
 
     public TableMetadata build(IConnectorHelper connectorHelper) {
-        TableMetadata tableMetadata = new TableMetadata(tableName, options, columns, indexes, clusterName, partitionKey,
-                clusterKey);
+        TableMetadata tableMetadata = new TableMetadata(tableName, options, columns, indexes, clusterName,
+                        partitionKey, clusterKey);
         if (connectorHelper.isPKMandatory()) {
             if (tableMetadata.getPrimaryKey().isEmpty()) {
                 ColumnName columnName = columns.keySet().toArray(new ColumnName[0])[0];
                 List<ColumnName> keyList = new ArrayList<>();
                 keyList.add(columnName);
                 tableMetadata = new TableMetadata(tableName, options, columns, indexes, clusterName, partitionKey,
-                        keyList);
+                                keyList);
             }
         }
 
         return tableMetadata;
+
+    }
+
+    public TableMetadata build() {
+        return new TableMetadata(tableName, options, columns, indexes, clusterName, partitionKey, clusterKey);
 
     }
 
