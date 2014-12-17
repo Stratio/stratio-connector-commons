@@ -18,6 +18,8 @@ import com.stratio.crossdata.common.logicalplan.Select;
 import com.stratio.crossdata.common.metadata.Operations;
 import com.stratio.crossdata.common.statements.structures.Operator;
 import com.stratio.crossdata.common.statements.structures.Relation;
+import com.stratio.crossdata.common.logicalplan.Window;
+import com.stratio.crossdata.common.statements.structures.window.WindowType;
 
 /** 
 * ProjectParsed Tester. 
@@ -64,6 +66,7 @@ public void testCreateProjecParsedProject() throws Exception {
       ProjectParsed projectParsed = new ProjectParsed(project);
       assertFalse("The filter list must be empty", projectParsed.getFilter().hasNext());
       assertNull("The limit must be null", projectParsed.getLimit());
+      assertNull("The window must be null", projectParsed.getWindow());
       assertFalse("The filter match list be empty", projectParsed.getMatchList().hasNext());
       assertEquals("The select must be the select created before",select, projectParsed.getSelect());
       assertEquals("The project must be the project pass in constructor",project,projectParsed.getProject());
@@ -89,6 +92,7 @@ public void testCreateProjecParsedProject() throws Exception {
 
       assertNull("The limit must be null", projectParsed.getLimit());
       assertFalse("The filter match list be empty", projectParsed.getMatchList().hasNext());
+      assertNull("The window must be null", projectParsed.getWindow());
       assertNull("The select must be null", projectParsed.getSelect());
       assertEquals("The project must be the project pass in constructor",project,projectParsed.getProject());
 
@@ -114,6 +118,7 @@ public void testCreateProjecParsedProject() throws Exception {
               .next());
       assertFalse("The filter match must only one element", matchIterator.hasNext());
       assertNull("The limit must be null", projectParsed.getLimit());
+      assertNull("The window must be null", projectParsed.getWindow());
 
       assertNull("The select must be null", projectParsed.getSelect());
       assertEquals("The project must be the project pass in constructor",project,projectParsed.getProject());
@@ -132,6 +137,24 @@ public void testCreateProjecParsedProject() throws Exception {
       assertEquals("The limit must be the limit created before", limit,projectParsed.getLimit());
       assertFalse("The filter match list be empty", projectParsed.getMatchList().hasNext());
       assertNull("The select must be null", projectParsed.getSelect());
+      assertNull("The window must be null", projectParsed.getWindow());
+      assertEquals("The project must be the project pass in constructor",project,projectParsed.getProject());
+
+   }
+
+
+   @Test
+   public void testCreateProjecParsedProjectWindow() throws Exception {
+      Project project = new Project(Operations.PROJECT,TABLE_NAME,CLUSTER_NAME);
+      Window window = new Window(Operations.SELECT_WINDOW,WindowType.NUM_ROWS);
+
+      project.setNextStep(window);
+
+      ProjectParsed projectParsed = new ProjectParsed(project);
+      assertFalse("The filter list must be empty", projectParsed.getFilter().hasNext());
+      assertNull("The limit must be null", projectParsed.getLimit());
+      assertNull("The select must be null", projectParsed.getSelect());
+      assertEquals("The window must be the window created before", window, projectParsed.getWindow());
       assertEquals("The project must be the project pass in constructor",project,projectParsed.getProject());
 
    }

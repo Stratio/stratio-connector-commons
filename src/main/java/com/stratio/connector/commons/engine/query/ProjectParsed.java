@@ -137,6 +137,17 @@ public class ProjectParsed {
      *
      * @return the limit.
      */
+    public Window getWindow() {
+        return window;
+    }
+
+
+
+    /**
+     * Return the limit.
+     *
+     * @return the limit.
+     */
     public Limit getLimit() {
         return limit;
     }
