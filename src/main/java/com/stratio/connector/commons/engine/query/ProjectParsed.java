@@ -34,25 +34,12 @@ import com.stratio.crossdata.common.logicalplan.Window;
 import com.stratio.crossdata.common.statements.structures.Operator;
 
 /**
- * This class is a representation of a ElasticSearch query.
+ * This class is a representation of a query.
  * <p/>
  * <p/>
  * Created by jmgomez on 15/09/14.
  */
 public class ProjectParsed {
-
-    /**
-     * Constructor.
-     * @param project the project.
-     * @throws UnsupportedException if a logical step is not supported.
-     */
-    public ProjectParsed(Project project) throws UnsupportedException {
-        this.project = project;
-        LogicalStep lStep =project;
-        while((lStep = lStep.getNextStep())!=null) {
-            addLogicalStep(lStep);
-        }
-    }
 
     /**
      * The project.
@@ -85,8 +72,21 @@ public class ProjectParsed {
      */
     private Window window;
 
-
-
+    /**
+     * Constructor.
+     * 
+     * @param project
+     *            the project.
+     * @throws UnsupportedException
+     *             if a logical step is not supported.
+     */
+    public ProjectParsed(Project project) throws UnsupportedException {
+        this.project = project;
+        LogicalStep lStep = project;
+        while ((lStep = lStep.getNextStep()) != null) {
+            addLogicalStep(lStep);
+        }
+    }
 
     /**
      * Get the project.
@@ -98,8 +98,6 @@ public class ProjectParsed {
         return project;
     }
 
-
-
     /**
      * Get the filter.
      *
@@ -108,8 +106,6 @@ public class ProjectParsed {
     public Iterator<Filter> getFilter() {
         return filterList.iterator();
     }
-
-
 
     /**
      * Return The matchList.
@@ -120,8 +116,6 @@ public class ProjectParsed {
         return matchList.iterator();
     }
 
-
-
     /**
      * return the select.
      *
@@ -131,7 +125,6 @@ public class ProjectParsed {
         return select;
     }
 
-
     /**
      * Return the limit.
      *
@@ -140,8 +133,6 @@ public class ProjectParsed {
     public Window getWindow() {
         return window;
     }
-
-
 
     /**
      * Return the limit.
@@ -154,48 +145,52 @@ public class ProjectParsed {
 
     /**
      * This method add the correct logical step.
-     * @param lStep logical step.
-     * @throws UnsupportedException if the logical step is not supported.
+     * 
+     * @param lStep
+     *            logical step.
+     * @throws UnsupportedException
+     *             if the logical step is not supported.
      */
     private void addLogicalStep(LogicalStep lStep) throws UnsupportedException {
-        if (lStep instanceof Project){
-            project =(Project)lStep;
-        }else if (lStep instanceof Filter) {
+        if (lStep instanceof Project) {
+            project = (Project) lStep;
+        } else if (lStep instanceof Filter) {
 
             decideTypeFilterToAdd((Filter) lStep);
 
-        }else if (lStep instanceof Select) {
-            select=(Select)lStep;
+        } else if (lStep instanceof Select) {
+            select = (Select) lStep;
 
         } else if (lStep instanceof Limit) {
-            limit = (Limit)lStep;
+            limit = (Limit) lStep;
 
-        }else if (lStep instanceof GroupBy) {
-            groupBy= (GroupBy) lStep;
+        } else if (lStep instanceof GroupBy) {
+            groupBy = (GroupBy) lStep;
 
-        }else if (lStep instanceof Window){
-            window=(Window) lStep;
+        } else if (lStep instanceof Window) {
+            window = (Window) lStep;
 
-        }else {
-            throw new UnsupportedException(
-                    "LogicalStep [" + lStep.getClass().getCanonicalName() + " not supported");
+        } else {
+            throw new UnsupportedException("LogicalStep [" + lStep.getClass().getCanonicalName() + " not supported");
         }
     }
 
     /**
      * Add filter in the correct list.
-     * @param filter the filter.
+     * 
+     * @param filter
+     *            the filter.
      */
     private void decideTypeFilterToAdd(Filter filter) {
         Filter step = filter;
 
         if (Operator.MATCH == step.getRelation().getOperator()) {
-            if (matchList.isEmpty()){
+            if (matchList.isEmpty()) {
                 matchList = new ArrayList<>();
             }
             matchList.add(filter);
         } else {
-            if (filterList.isEmpty()){
+            if (filterList.isEmpty()) {
                 filterList = new ArrayList<>();
             }
             filterList.add(filter);
