@@ -128,49 +128,13 @@ public abstract class GenericMetadataCreateFT extends GenericConnectorTest {
                             getClusterName(),
                             new CatalogMetadata(new CatalogName(NEW_CATALOG), Collections.EMPTY_MAP,
                                             Collections.EMPTY_MAP));
-            fail("I try to create a second catalog with the same identification. Any type of exception must be throws. It may be a runtime excepcion");
+            fail("I try to create a second catalog with the same identification. Any type of exception must be thrown. It may be a runtime excepcion");
         } catch (Throwable t) {
 
         }
 
         connector.getMetadataEngine().dropCatalog(getClusterName(), new CatalogName(NEW_CATALOG));
 
-    }
-
-    @Test
-    public void createTableWithoutTableTest() throws ConnectorException {
-        ClusterName clusterName = getClusterName();
-
-        TableName tableName = new TableName(CATALOG, TABLE);
-        Map<Selector, Selector> options = Collections.EMPTY_MAP;
-
-        Map<ColumnName, ColumnMetadata> columns = Collections.EMPTY_MAP;
-        Map indexex = columns = Collections.EMPTY_MAP;
-        ClusterName clusterRef = getClusterName();
-        List<ColumnName> partitionKey = Collections.EMPTY_LIST;
-        List<ColumnName> clusterKey = Collections.EMPTY_LIST;
-
-        if (getConnectorHelper().isCatalogMandatory()) {
-            connector.getMetadataEngine()
-                            .createCatalog(getClusterName(),
-                                            new CatalogMetadata(new CatalogName(CATALOG), Collections.EMPTY_MAP,
-                                                            Collections.EMPTY_MAP));
-        }
-        try {
-            connector.getMetadataEngine().dropTable(getClusterName(), tableName);
-            fail("When I try to delete a table that not exists any type of exception must be throws. It may be a runtime exception.");
-        } catch (Throwable t) {
-        }
-
-        connector.getMetadataEngine().createTable(getClusterName(),
-                        new TableMetadata(tableName, options, columns, indexex, clusterRef, partitionKey, clusterKey));
-        try {
-            connector.getMetadataEngine().dropTable(getClusterName(), tableName);
-        } catch (Throwable t) {
-            fail("Now I drop a catalog that exist. The operation must be correct.");
-        }
-
-        connector.getMetadataEngine().dropCatalog(getClusterName(), new CatalogName(CATALOG));
     }
 
     @Test
@@ -217,6 +181,42 @@ public abstract class GenericMetadataCreateFT extends GenericConnectorTest {
             connector.getMetadataEngine().dropCatalog(getClusterName(), new CatalogName(CATALOG));
         }
 
+    }
+
+    @Test
+    public void createTableWithoutTableTest() throws ConnectorException {
+        ClusterName clusterName = getClusterName();
+
+        TableName tableName = new TableName(CATALOG, TABLE);
+        Map<Selector, Selector> options = Collections.EMPTY_MAP;
+
+        Map<ColumnName, ColumnMetadata> columns = Collections.EMPTY_MAP;
+        Map indexex = columns = Collections.EMPTY_MAP;
+        ClusterName clusterRef = getClusterName();
+        List<ColumnName> partitionKey = Collections.EMPTY_LIST;
+        List<ColumnName> clusterKey = Collections.EMPTY_LIST;
+
+        if (getConnectorHelper().isCatalogMandatory()) {
+            connector.getMetadataEngine()
+                            .createCatalog(getClusterName(),
+                                            new CatalogMetadata(new CatalogName(CATALOG), Collections.EMPTY_MAP,
+                                                            Collections.EMPTY_MAP));
+        }
+        try {
+            connector.getMetadataEngine().dropTable(getClusterName(), tableName);
+            fail("When I try to delete a table that not exists any type of exception must be thrown. It may be a runtime exception.");
+        } catch (Throwable t) {
+        }
+
+        connector.getMetadataEngine().createTable(getClusterName(),
+                        new TableMetadata(tableName, options, columns, indexex, clusterRef, partitionKey, clusterKey));
+        try {
+            connector.getMetadataEngine().dropTable(getClusterName(), tableName);
+        } catch (Throwable t) {
+            fail("Now I drop a catalog that exist. The operation must be correct.");
+        }
+
+        connector.getMetadataEngine().dropCatalog(getClusterName(), new CatalogName(CATALOG));
     }
 
 }
