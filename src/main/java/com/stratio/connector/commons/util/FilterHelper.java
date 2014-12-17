@@ -23,7 +23,7 @@ import com.stratio.crossdata.common.logicalplan.Filter;
 /**
  * Created by jmgomez on 18/11/14.
  */
-public class FilterHelper {
+public final class FilterHelper {
 
     /**
      * Constructor.

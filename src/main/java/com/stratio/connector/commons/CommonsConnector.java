@@ -41,7 +41,7 @@ public abstract class CommonsConnector implements IConnector {
     /**
      * The Log.
      */
-    final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * The connectionHandler.

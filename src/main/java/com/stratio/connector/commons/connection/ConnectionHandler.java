@@ -37,7 +37,7 @@ public abstract class ConnectionHandler {
     /**
      * The Log.
      */
-    final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     /**
      * The general settings.
      */

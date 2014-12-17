@@ -142,6 +142,13 @@ public class ProjectParsed {
         return window;
     }
 
+    /**
+     * Return the GroupBy.
+     * @return the groupBy.
+     */
+    public GroupBy getGroupBy() {
+        return groupBy; }
+
 
 
     /**

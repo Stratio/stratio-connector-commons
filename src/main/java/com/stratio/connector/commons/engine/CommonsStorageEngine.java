@@ -46,7 +46,7 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
     /**
      * The Log.
      */
-    final transient Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final transient Logger logger = LoggerFactory.getLogger(this.getClass());
     /**
      * The connection handler.
      */
@@ -78,7 +78,7 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
             insert(targetTable, row, connectionHandler.getConnection(targetCluster.getName()));
 
         } catch (HandlerConnectionException e) {
-            String msg = "Error find Connection in " + targetCluster.getName() + ". " + e.getMessage();
+            String msg = "Error find Connection in insert" + targetCluster.getName() + ". " + e.getMessage();
             logger.error(msg);
             throw new ExecutionException(msg, e);
         } finally {
@@ -103,7 +103,7 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
             insert(targetTable, rows, connectionHandler.getConnection(targetCluster.getName()));
 
         } catch (HandlerConnectionException e) {
-            String msg = "Error find Connection in " + targetCluster.getName() + ". " + e.getMessage();
+            String msg = "Error find Connection in bulk insert" + targetCluster.getName() + ". " + e.getMessage();
             logger.error(msg);
             throw new ExecutionException(msg, e);
         } finally {

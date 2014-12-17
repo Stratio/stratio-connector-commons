@@ -37,10 +37,7 @@ import com.stratio.crossdata.common.result.QueryResult;
  */
 public abstract class CommonsQueryEngine implements IQueryEngine {
 
-    /**
-     * The Log.
-     */
-    final transient Logger logger = LoggerFactory.getLogger(this.getClass());
+
     /**
      * The connection handler.
      */

@@ -44,15 +44,15 @@ import com.stratio.crossdata.common.metadata.TableMetadata;
  */
 public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
 
-    final static String GENERIC_CONNECTOR_UNAVAILABLE = "Error retrieving the connection in %s.%s";
+    private static final String GENERIC_CONNECTOR_UNAVAILABLE = "Error retrieving the connection in %s.%s";
     /**
      * The Log.
      */
-    final transient Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final transient Logger logger = LoggerFactory.getLogger(this.getClass());
     /**
      * The connection handler.
      */
-    transient ConnectionHandler connectionHandler;
+    private transient ConnectionHandler connectionHandler;
 
     /**
      * Constructor.

@@ -12,6 +12,7 @@ import org.junit.Test;
 import com.stratio.crossdata.common.data.ClusterName;
 import com.stratio.crossdata.common.data.TableName;
 import com.stratio.crossdata.common.logicalplan.Filter;
+import com.stratio.crossdata.common.logicalplan.GroupBy;
 import com.stratio.crossdata.common.logicalplan.Limit;
 import com.stratio.crossdata.common.logicalplan.Project;
 import com.stratio.crossdata.common.logicalplan.Select;
@@ -51,6 +52,7 @@ public void testCreateProjecParsedProject() throws Exception {
    assertNull("The limit must be null", projectParsed.getLimit());
    assertTrue("The filter match must be empty", projectParsed.getFilter().isEmpty());
    assertNull("The select must be null", projectParsed.getSelect());
+   assertNull("The groupBy must be null", projectParsed.getGroupBy());
    assertEquals("The project must be the project pass in constructor", project, projectParsed.getProject());
 
 }
@@ -69,6 +71,7 @@ public void testCreateProjecParsedProject() throws Exception {
       assertNull("The window must be null", projectParsed.getWindow());
       assertTrue("The filter match list be empty", projectParsed.getMatchList().isEmpty());
       assertEquals("The select must be the select created before",select, projectParsed.getSelect());
+      assertNull("The groupBy must be null", projectParsed.getGroupBy());
       assertEquals("The project must be the project pass in constructor",project,projectParsed.getProject());
 
    }
@@ -94,6 +97,7 @@ public void testCreateProjecParsedProject() throws Exception {
       assertTrue("The filter match list be empty", projectParsed.getMatchList().isEmpty());
       assertNull("The window must be null", projectParsed.getWindow());
       assertNull("The select must be null", projectParsed.getSelect());
+      assertNull("The groupBy must be null", projectParsed.getGroupBy());
       assertEquals("The project must be the project pass in constructor",project,projectParsed.getProject());
 
    }
@@ -121,6 +125,7 @@ public void testCreateProjecParsedProject() throws Exception {
       assertNull("The window must be null", projectParsed.getWindow());
 
       assertNull("The select must be null", projectParsed.getSelect());
+      assertNull("The groupBy must be null", projectParsed.getGroupBy());
       assertEquals("The project must be the project pass in constructor",project,projectParsed.getProject());
 
    }
@@ -139,6 +144,7 @@ public void testCreateProjecParsedProject() throws Exception {
       assertTrue("The filter match list be empty", projectParsed.getMatchList().isEmpty());
       assertNull("The select must be null", projectParsed.getSelect());
       assertNull("The window must be null", projectParsed.getWindow());
+      assertNull("The groupBy must be null", projectParsed.getGroupBy());
       assertEquals("The project must be the project pass in constructor",project,projectParsed.getProject());
 
    }
@@ -156,6 +162,24 @@ public void testCreateProjecParsedProject() throws Exception {
       assertNull("The limit must be null", projectParsed.getLimit());
       assertNull("The select must be null", projectParsed.getSelect());
       assertEquals("The window must be the window created before", window, projectParsed.getWindow());
+      assertNull("The groupBy must be null", projectParsed.getGroupBy());
+      assertEquals("The project must be the project pass in constructor",project,projectParsed.getProject());
+
+   }
+
+   @Test
+   public void testCreateProjecParsedProjecGroupBy() throws Exception {
+      Project project = new Project(Operations.PROJECT,TABLE_NAME,CLUSTER_NAME);
+      GroupBy groupBy = new GroupBy(Operations.SELECT_GROUP_BY,null);
+
+      project.setNextStep(groupBy);
+
+      ProjectParsed projectParsed = new ProjectParsed(project,mock(ProjectValidator.class));
+      assertTrue("The filter list must be empty", projectParsed.getFilter().isEmpty());
+      assertNull("The limit must be null", projectParsed.getLimit());
+      assertNull("The select must be null", projectParsed.getSelect());
+      assertNull("The window must be the groupBy created before", projectParsed.getWindow());
+      assertEquals("The groupBy must be null", groupBy, projectParsed.getGroupBy());
       assertEquals("The project must be the project pass in constructor",project,projectParsed.getProject());
 
    }

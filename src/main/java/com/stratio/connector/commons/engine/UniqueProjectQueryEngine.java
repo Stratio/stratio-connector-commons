@@ -17,6 +17,9 @@
  */
 package com.stratio.connector.commons.engine;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.stratio.connector.commons.connection.Connection;
 import com.stratio.connector.commons.connection.ConnectionHandler;
 import com.stratio.connector.commons.connection.exceptions.HandlerConnectionException;
@@ -34,6 +37,13 @@ import com.stratio.crossdata.common.result.QueryResult;
  * @author darroyo
  */
 public abstract class UniqueProjectQueryEngine<T> extends CommonsQueryEngine {
+
+
+    /**
+     * The Log.
+     */
+    private final transient Logger logger = LoggerFactory.getLogger(this.getClass());
+
 
     /**
      * Constructor.
