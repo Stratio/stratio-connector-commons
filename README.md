@@ -1,27 +1,27 @@
 # About #
 
-Stratio Connector Commons  is a helper library for stratio connector.
+Stratio Connector Commons provides the classes shared by Stratio connectors.
 
 # Main features #
 
-Easy to deal with API
+User friendly API
 ---------------------
 
-Abstract classes providing common works. It manages the existing connections and its jobs. For instance, when a query is executed, a new job is started. This way, if the user closes the connector through close(), the connector wait to finish his pending jobs. Furthermore, this module offer a more simple API to develop connectors. 
+This API consists on a set of abstract classes that provides common work related to Stratio connectors. It manages the existing connections and relevant  jobs. For instance, when a query is executed, a new job is started. Thus, if the user closes the connector using close(), the connector waits until the pending jobs are done to finish. Furthermore, this module offers a simpler API to develop connectors. 
 
-CommonsConnector: implements IConnector crossdata interface. 
+CommonsConnector: implements IConnector Crossdata interface. 
 CommonsMetadataEngine: implements IMetadataEngine interface.
 CommonsStorageEngine: implements IMetadataEngine interface.
 CommonsQueryEngine: implements IMetadataEngine interface.
 SingleProjectQueryEngine: extends CommonsQueryEngine. It should be used when the connector does not support joins, so there would be only one project.
 
 
-In order to use this modules, it is necessary to create an implementation of the following classes which are included in this project:
+In order to use these modules, it is necessary to create an implementation of the following classes included in this project:
 
 Connection
 ConnectionHandler
 
-ConnectionHandler: Este es el manejador de las conexiones del connector. Se pueden recuperar, desconectar y almacenar las conexiones. La conexión a manejar debe cumplir la interfaz Connection
+ConnectionHandler: This handler is in charge of the connector connections. It allows to recover, disconnect and store connections. The connection to handle should fulfill the Connection interface.
 
 Usage examples can be found in connectors using this features: 
 
@@ -32,36 +32,35 @@ Usage examples can be found in connectors using this features:
 [Deep-Spark](https://github.com/Stratio/stratio-connector-deep
 [Aerospike](https://github.com/Stratio/stratio-connector-aerospike
 
-Functional test
+Functional tests
 ---------------
 
-A set of functional test with most of the Crossdata features. To run these generic test is needed: 
+This API includes a set of functional tests that accomplish the main body of Crossdata features. To run these generic tests is needed to: 
 
-- Extend the functional test. It is possible either override or ignore the test which features are not implemented. 
+- Extend the functional test. It is possible both override or ignore the test which features are not implemented. 
 
-- Implements a ConnectorHelper. Here, the cluster configuration and the database specific properties are defined. Therefore, you could use different implementations to probe the test with the wished configuration.
+- Implement a ConnectorHelper. Here, the cluster configuration and the database specific properties are defined. Therefore, you could use different implementations to probe the tests with the desired configuration.
 
-The list of functional test implemented is detailed [here](_doc/FunctionalTests.md).
+The list of functional tests implemented is detailed [here](_doc/FunctionalTests.md).
 
 Utilities
 ---------
 
 Helper classes for simplifying testing:
 
-LogicalWorkflowCreator: to create LogicalWorkflow
-CatalogMetadataBuilder: to create CatalogMetadata
-TableMetadataBuilder: to create TableMetadata
-IndexMetadataBuilder: to create IndexMetadata
+LogicalWorkflowCreator: use to create LogicalWorkflow
+CatalogMetadataBuilder: used to create CatalogMetadata
+TableMetadataBuilder: used to create TableMetadata
+IndexMetadataBuilder: used to create IndexMetadata
 
 
-Commons processing when working with Crossdata structures are included:
+Common processing for dealing with Crossdata structures are included:
 
-ManifestUtil: Parses the Connector manifest to extract either the connector or the datastore name. It should be used to allow configure different connector names. 
-SelectorHelper: Allows cast Crossdata Selectors to retrieve the proper value.
-ProjectParsed: Parses and validates the Crossdata logical steps reading the workflow from a Project. 
-ColumnTypeHelper: Allows cast an object based on the columntType.
-ConnectorParser: Parses hosts and ports with different formats.
-Se encarga de realizar transformaciones de un string que representa host o puertos a un String[]
+ManifestUtil: Parses the Connector manifest to extract not only the connector but the datastore name. It should be used to allow different connector names in the configuration. 
+SelectorHelper: Allows the casting of Crossdata Selectors in order to retrieve the proper value.
+ProjectParsed: Parses and validates the Crossdata logical steps from reading the Project's workflow. 
+ColumnTypeHelper: Allows the casting of an object based on the columntType.
+ConnectorParser: Parses hosts and ports with different formats. Also handles transformations of a string that represents a host or ports that represent a String[]
 
 # License #
 
