@@ -21,7 +21,6 @@ package com.stratio.connector.commons.engine.query;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 
 import com.stratio.crossdata.common.exceptions.UnsupportedException;
 import com.stratio.crossdata.common.logicalplan.Filter;
@@ -44,14 +43,16 @@ public class ProjectParsed {
     /**
      * Constructor.
      * @param project the project.
+     * @param projectValidator the validator for the projecto.
      * @throws UnsupportedException if a logical step is not supported.
      */
-    public ProjectParsed(Project project) throws UnsupportedException {
+    public ProjectParsed(Project project, ProjectValidator projectValidator) throws UnsupportedException {
         this.project = project;
         LogicalStep lStep =project;
         while((lStep = lStep.getNextStep())!=null) {
             addLogicalStep(lStep);
         }
+        projectValidator.validate(this);
     }
 
     /**
@@ -105,8 +106,8 @@ public class ProjectParsed {
      *
      * @return the filter.
      */
-    public Iterator<Filter> getFilter() {
-        return filterList.iterator();
+    public Collection<Filter> getFilter() {
+        return new ArrayList(filterList);
     }
 
 
@@ -116,8 +117,8 @@ public class ProjectParsed {
      *
      * @return the matchList
      */
-    public Iterator<Filter> getMatchList() {
-        return matchList.iterator();
+    public Collection<Filter> getMatchList() {
+        return new ArrayList(matchList);
     }
 
 
