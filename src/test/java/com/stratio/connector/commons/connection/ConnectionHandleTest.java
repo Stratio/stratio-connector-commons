@@ -36,6 +36,8 @@ import com.stratio.connector.commons.connection.exceptions.HandlerConnectionExce
 import com.stratio.crossdata.common.connector.ConnectorClusterConfig;
 import com.stratio.crossdata.common.connector.IConfiguration;
 import com.stratio.crossdata.common.data.ClusterName;
+import com.stratio.crossdata.common.exceptions.ConnectionException;
+import com.stratio.crossdata.common.exceptions.ExecutionException;
 import com.stratio.crossdata.common.security.ICredentials;
 
 /**
@@ -72,7 +74,7 @@ public class ConnectionHandleTest {
      * Method: createConnection(ICredentials credentials, ConnectorClusterConfig config)
      */
     @Test
-    public void testCreateConnection() throws HandlerConnectionException {
+    public void testCreateConnection() throws ExecutionException, ConnectionException {
 
         connectionNotExist();
 
@@ -83,7 +85,8 @@ public class ConnectionHandleTest {
     }
 
     @Test
-    public void testCreateConnectionAlredyCrete() throws HandlerConnectionException {
+    public void testCreateConnectionAlredyCrete() throws ExecutionException,ConnectionException {
+
 
         connectionNotExist();
 
@@ -91,20 +94,20 @@ public class ConnectionHandleTest {
         try {
             stubConnectionHandle.createConnection(credentials, conenectoClusterConfig);
             fail("should not get here");
-        } catch (HandlerConnectionException e) {
+        } catch (ConnectionException e) {
             assertEquals("The message is correct", "The connection [" + CLUSTER_NAME + "] already exists",
                     e.getMessage());
         }
 
     }
 
-    private void connectionNotExist() throws HandlerConnectionException {
+    private void connectionNotExist() throws ExecutionException {
         try {
             stubConnectionHandle.getConnection(CLUSTER_NAME);
             fail("should not get here");
 
-        } catch (HandlerConnectionException e) {
-            assertEquals("The mesahe is coorect", e.getMessage(),
+        } catch (ExecutionException e) {
+            assertEquals("The message is correct", e.getMessage(),
                     "The connection [" + CLUSTER_NAME + "] does not exist");
 
         }
@@ -128,7 +131,7 @@ public class ConnectionHandleTest {
      * Method: isConnected(String clusterName)
      */
     @Test
-    public void testIsConnected() throws HandlerConnectionException {
+    public void testIsConnected() throws ConnectionException {
         assertFalse("Connection is not connect", stubConnectionHandle.isConnected(CLUSTER_NAME));
 
         stubConnectionHandle.createConnection(credentials, conenectoClusterConfig);

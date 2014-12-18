@@ -18,9 +18,6 @@
 
 package com.stratio.connector.commons.engine;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.stratio.connector.commons.connection.ConnectionHandler;
 import com.stratio.crossdata.common.connector.IQueryEngine;
 import com.stratio.crossdata.common.data.ClusterName;
@@ -64,10 +61,10 @@ public abstract class CommonsQueryEngine implements IQueryEngine {
     @Override
     public final QueryResult execute(LogicalWorkflow workflow) throws UnsupportedException, ExecutionException {
         QueryResult result = null;
-        ClusterName clusterName = null;
+
         try {
             for (LogicalStep project : workflow.getInitialSteps()) {
-                clusterName = ((Project) project).getClusterName();
+                ClusterName clusterName = ((Project) project).getClusterName();
                 connectionHandler.startWork(clusterName.getName());
             }
             result = executeWorkFlow(workflow);

@@ -25,7 +25,6 @@
     <name>Connector commons</name>
     <description>The crossdata connector commons</description>
 
-
     <dependencies>
 
         <dependency>

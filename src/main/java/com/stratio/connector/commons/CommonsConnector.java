@@ -18,14 +18,10 @@
 
 package com.stratio.connector.commons;
 
-import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.stratio.connector.commons.connection.Connection;
 import com.stratio.connector.commons.connection.ConnectionHandler;
-import com.stratio.connector.commons.connection.exceptions.HandlerConnectionException;
 import com.stratio.crossdata.common.connector.ConnectorClusterConfig;
 import com.stratio.crossdata.common.connector.IConnector;
 import com.stratio.crossdata.common.data.ClusterName;
@@ -60,13 +56,10 @@ public abstract class CommonsConnector implements IConnector {
      */
     @Override
     public final void connect(ICredentials credentials, ConnectorClusterConfig config) throws ConnectionException {
-        try {
+
             connectionHandler.createConnection(credentials, config);
-        } catch (HandlerConnectionException e) {
-            String msg = "Error creating the Connection with cluster " + config.getName() + " :" + e.getMessage();
-            logger.error(msg);
-            throw new ConnectionException(msg, e);
-        }
+
+
     }
 
     /**
@@ -82,19 +75,15 @@ public abstract class CommonsConnector implements IConnector {
     }
 
     /**
-     * This method shutdown the connector.
+     * This method closeAllConnections the connector.
      *
      * @throws ExecutionException
      *             if an error happens.
      */
     @Override
     public final void shutdown() throws ExecutionException {
+         connectionHandler.closeAllConnections();
 
-        Map<String, Connection> connections = connectionHandler.getConnections();
-        for (String connectionName : connections.keySet()) {
-            connectionHandler.endWork(connectionName);
-            connectionHandler.closeConnection(connectionName);
-        }
     }
 
     /**

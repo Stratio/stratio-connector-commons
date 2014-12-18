@@ -30,13 +30,27 @@ import java.util.Map;
  */
 public abstract class Connection<T> {
 
-
+    /**
+     * The session.
+     */
     private Map<String,Object> session;
 
+    /**
+     * Recovered a object from the session.
+     * @param type the object type.
+     * @param name the object name.
+     * @param <T> the object type.
+     * @return the object.
+     */
     public  <T> T getSessionObject(Class<T> type, String name){
         return (T)session.get(name);
     }
 
+    /**
+     * Add a object into the session.
+     * @param name the object name.
+     * @param value the objecet value.
+     */
     public void  addObjectToSession(String name, Object value){
         if (session==null){
             session= new HashMap<>();

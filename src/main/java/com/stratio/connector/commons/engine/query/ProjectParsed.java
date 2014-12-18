@@ -22,7 +22,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
-import com.stratio.crossdata.common.exceptions.UnsupportedException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.stratio.crossdata.common.exceptions.ExecutionException;
 import com.stratio.crossdata.common.logicalplan.Filter;
 import com.stratio.crossdata.common.logicalplan.GroupBy;
 import com.stratio.crossdata.common.logicalplan.Limit;
@@ -40,13 +43,19 @@ import com.stratio.crossdata.common.statements.structures.Operator;
  */
 public class ProjectParsed {
 
+
+    /**
+     * The Log.
+     */
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     /**
      * Constructor.
      * @param project the project.
      * @param projectValidator the validator for the projecto.
-     * @throws UnsupportedException if a logical step is not supported.
+     * @throws ExecutionException if a logical step is not supported.
      */
-    public ProjectParsed(Project project, ProjectValidator projectValidator) throws UnsupportedException {
+    public ProjectParsed(Project project, ProjectValidator projectValidator) throws ExecutionException {
         this.project = project;
         LogicalStep lStep =project;
         while((lStep = lStep.getNextStep())!=null) {
@@ -163,9 +172,9 @@ public class ProjectParsed {
     /**
      * This method add the correct logical step.
      * @param lStep logical step.
-     * @throws UnsupportedException if the logical step is not supported.
+     * @throws ExecutionException if the logical step is not supported.
      */
-    private void addLogicalStep(LogicalStep lStep) throws UnsupportedException {
+    private void addLogicalStep(LogicalStep lStep) throws ExecutionException {
         if (lStep instanceof Project){
             project =(Project)lStep;
         }else if (lStep instanceof Filter) {
@@ -185,8 +194,10 @@ public class ProjectParsed {
             window=(Window) lStep;
 
         }else {
-            throw new UnsupportedException(
-                    "LogicalStep [" + lStep.getClass().getCanonicalName() + " not supported");
+
+            String message = "LogicalStep [" + lStep.getClass().getCanonicalName() + " not supported";
+            logger.error(message);
+            throw new ExecutionException(message);
         }
     }
 
