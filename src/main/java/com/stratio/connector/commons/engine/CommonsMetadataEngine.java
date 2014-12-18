@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
 
 import com.stratio.connector.commons.connection.Connection;
 import com.stratio.connector.commons.connection.ConnectionHandler;
-import com.stratio.connector.commons.connection.exceptions.HandlerConnectionException;
 import com.stratio.crossdata.common.connector.IMetadataEngine;
 import com.stratio.crossdata.common.data.AlterOptions;
 import com.stratio.crossdata.common.data.CatalogName;
@@ -44,7 +43,7 @@ import com.stratio.crossdata.common.metadata.TableMetadata;
  */
 public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
 
-    private static final String GENERIC_CONNECTOR_UNAVAILABLE = "Error retrieving the connection in %s.%s";
+    private static final String GENERIC_CONNECTOR_UNAVAILABLE = "Error retrieving the connection for %s in %s.%s";
     /**
      * The Log.
      */
@@ -75,17 +74,9 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
     @Override
     public final void createCatalog(ClusterName targetCluster, CatalogMetadata catalogMetadata)
             throws UnsupportedException, ExecutionException {
-
+        connectionHandler.startWork(targetCluster.getName());
         try {
-
-            connectionHandler.startWork(targetCluster.getName());
-            Connection connection = connectionHandler.getConnection(targetCluster.getName());
-            createCatalog(catalogMetadata, connection);
-
-        } catch (HandlerConnectionException e) {
-            String msg = String.format(GENERIC_CONNECTOR_UNAVAILABLE, targetCluster.getName(), e.getMessage());
-            logger.error(msg);
-            throw new ExecutionException(msg, e);
+            createCatalog(catalogMetadata, connectionHandler.getConnection(targetCluster.getName()));
         } finally {
             connectionHandler.endWork(targetCluster.getName());
         }
@@ -105,14 +96,9 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
     @Override
     public final void createTable(ClusterName targetCluster, TableMetadata tableMetadata) throws UnsupportedException,
             ExecutionException {
+        connectionHandler.startWork(targetCluster.getName());
         try {
-            connectionHandler.startWork(targetCluster.getName());
-            createTable(tableMetadata, connectionHandler.getConnection(targetCluster.getName()));
-
-        } catch (HandlerConnectionException e) {
-            String msg = String.format(GENERIC_CONNECTOR_UNAVAILABLE, targetCluster.getName(), e.getMessage());
-            logger.error(msg);
-            throw new ExecutionException(msg, e);
+             createTable(tableMetadata, connectionHandler.getConnection(targetCluster.getName()));
         } finally {
             connectionHandler.endWork(targetCluster.getName());
         }
@@ -129,14 +115,10 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
     @Override
     public final void dropCatalog(ClusterName targetCluster, CatalogName name) throws UnsupportedException,
             ExecutionException {
-        try {
-            connectionHandler.startWork(targetCluster.getName());
-            dropCatalog(name, connectionHandler.getConnection(targetCluster.getName()));
+        connectionHandler.startWork(targetCluster.getName());
 
-        } catch (HandlerConnectionException e) {
-            String msg = String.format(GENERIC_CONNECTOR_UNAVAILABLE, targetCluster.getName(), e.getMessage());
-            logger.error(msg);
-            throw new ExecutionException(msg, e);
+        try {
+            dropCatalog(name, connectionHandler.getConnection(targetCluster.getName()));
         } finally {
             connectionHandler.endWork(targetCluster.getName());
         }
@@ -154,14 +136,9 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
     @Override
     public final void dropTable(ClusterName targetCluster, TableName name) throws UnsupportedException,
             ExecutionException {
-        try {
             connectionHandler.startWork(targetCluster.getName());
+        try {
             dropTable(name, connectionHandler.getConnection(targetCluster.getName()));
-
-        } catch (HandlerConnectionException e) {
-            String msg = String.format(GENERIC_CONNECTOR_UNAVAILABLE, targetCluster.getName(), e.getMessage());
-            logger.error(msg);
-            throw new ExecutionException(msg, e);
         } finally {
             connectionHandler.endWork(targetCluster.getName());
         }
@@ -178,14 +155,11 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
     @Override
     public final void createIndex(ClusterName targetCluster, IndexMetadata indexMetadata) throws UnsupportedException,
             ExecutionException {
+        connectionHandler.startWork(targetCluster.getName());
         try {
-            connectionHandler.startWork(targetCluster.getName());
+
             createIndex(indexMetadata, connectionHandler.getConnection(targetCluster.getName()));
 
-        } catch (HandlerConnectionException e) {
-            String msg = String.format(GENERIC_CONNECTOR_UNAVAILABLE, targetCluster.getName(), e.getMessage());
-            logger.error(msg);
-            throw new ExecutionException(msg, e);
         } finally {
             connectionHandler.endWork(targetCluster.getName());
         }
@@ -205,10 +179,6 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
         try {
             connectionHandler.startWork(targetCluster.getName());
             dropIndex(indexMetadata, connectionHandler.getConnection(targetCluster.getName()));
-        } catch (HandlerConnectionException e) {
-            String msg = String.format(GENERIC_CONNECTOR_UNAVAILABLE, targetCluster.getName(), e.getMessage());
-            logger.error(msg);
-            throw new ExecutionException(msg, e);
         } finally {
             connectionHandler.endWork(targetCluster.getName());
         }
@@ -228,10 +198,6 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
         try {
             connectionHandler.startWork(targetCluster.getName());
             alterTable(name, alterOptions, connectionHandler.getConnection(targetCluster.getName()));
-        } catch (HandlerConnectionException e) {
-            String msg = String.format(GENERIC_CONNECTOR_UNAVAILABLE, targetCluster.getName(), e.getMessage());
-            logger.error(msg);
-            throw new ExecutionException(msg, e);
         } finally {
             connectionHandler.endWork(targetCluster.getName());
         }
@@ -312,5 +278,7 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
      */
     protected abstract void dropIndex(IndexMetadata indexMetadata, Connection<T> connection)
             throws UnsupportedException, ExecutionException;
+
+
 
 }

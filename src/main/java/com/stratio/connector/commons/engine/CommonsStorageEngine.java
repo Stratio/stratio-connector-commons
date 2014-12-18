@@ -25,7 +25,6 @@ import org.slf4j.LoggerFactory;
 
 import com.stratio.connector.commons.connection.Connection;
 import com.stratio.connector.commons.connection.ConnectionHandler;
-import com.stratio.connector.commons.connection.exceptions.HandlerConnectionException;
 import com.stratio.crossdata.common.connector.IStorageEngine;
 import com.stratio.crossdata.common.data.ClusterName;
 import com.stratio.crossdata.common.data.Row;
@@ -73,14 +72,9 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
     @Override
     public final void insert(ClusterName targetCluster, TableMetadata targetTable, Row row)
             throws UnsupportedException, ExecutionException {
+        connectionHandler.startWork(targetCluster.getName());
         try {
-            connectionHandler.startWork(targetCluster.getName());
             insert(targetTable, row, connectionHandler.getConnection(targetCluster.getName()));
-
-        } catch (HandlerConnectionException e) {
-            String msg = "Error find Connection in insert" + targetCluster.getName() + ". " + e.getMessage();
-            logger.error(msg);
-            throw new ExecutionException(msg, e);
         } finally {
             connectionHandler.endWork(targetCluster.getName());
         }
@@ -98,14 +92,10 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
     @Override
     public final void insert(ClusterName targetCluster, TableMetadata targetTable, Collection<Row> rows)
             throws UnsupportedException, ExecutionException {
+        connectionHandler.startWork(targetCluster.getName());
         try {
-            connectionHandler.startWork(targetCluster.getName());
-            insert(targetTable, rows, connectionHandler.getConnection(targetCluster.getName()));
 
-        } catch (HandlerConnectionException e) {
-            String msg = "Error find Connection in bulk insert" + targetCluster.getName() + ". " + e.getMessage();
-            logger.error(msg);
-            throw new ExecutionException(msg, e);
+            insert(targetTable, rows, connectionHandler.getConnection(targetCluster.getName()));
         } finally {
             connectionHandler.endWork(targetCluster.getName());
         }
@@ -124,14 +114,9 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
     @Override
     public void update(ClusterName targetCluster, TableName tableName, Collection<Relation> assignments,
             Collection<Filter> whereClauses) throws UnsupportedException, ExecutionException {
+        connectionHandler.startWork(targetCluster.getName());
         try {
-            connectionHandler.startWork(targetCluster.getName());
             update(tableName, assignments, whereClauses, connectionHandler.getConnection(targetCluster.getName()));
-
-        } catch (HandlerConnectionException e) {
-            String msg = "Error find Connection in " + targetCluster.getName() + ". " + e.getMessage();
-            logger.error(msg);
-            throw new ExecutionException(msg, e);
         } finally {
             connectionHandler.endWork(targetCluster.getName());
         }
@@ -149,14 +134,10 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
     @Override
     public void delete(ClusterName targetCluster, TableName tableName, Collection<Filter> whereClauses)
             throws UnsupportedException, ExecutionException {
+        connectionHandler.startWork(targetCluster.getName());
         try {
-            connectionHandler.startWork(targetCluster.getName());
-            delete(tableName, whereClauses, connectionHandler.getConnection(targetCluster.getName()));
 
-        } catch (HandlerConnectionException e) {
-            String msg = "Error find Connection in " + targetCluster.getName() + ". " + e.getMessage();
-            logger.error(msg);
-            throw new ExecutionException(msg, e);
+            delete(tableName, whereClauses, connectionHandler.getConnection(targetCluster.getName()));
         } finally {
             connectionHandler.endWork(targetCluster.getName());
         }
@@ -173,14 +154,12 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
     @Override
     public void truncate(ClusterName targetCluster, TableName tableName)
             throws UnsupportedException, ExecutionException {
-        try {
             connectionHandler.startWork(targetCluster.getName());
+        try {
+
             truncate(tableName, connectionHandler.getConnection(targetCluster.getName()));
 
-        } catch (HandlerConnectionException e) {
-            String msg = "Error find Connection in " + targetCluster.getName() + ". " + e.getMessage();
-            logger.error(msg);
-            throw new ExecutionException(msg, e);
+
         } finally {
             connectionHandler.endWork(targetCluster.getName());
         }

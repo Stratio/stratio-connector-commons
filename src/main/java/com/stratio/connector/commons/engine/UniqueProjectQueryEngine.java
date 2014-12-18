@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
 
 import com.stratio.connector.commons.connection.Connection;
 import com.stratio.connector.commons.connection.ConnectionHandler;
-import com.stratio.connector.commons.connection.exceptions.HandlerConnectionException;
 import com.stratio.crossdata.common.data.ClusterName;
 import com.stratio.crossdata.common.exceptions.ExecutionException;
 import com.stratio.crossdata.common.exceptions.UnsupportedException;
@@ -68,16 +67,10 @@ public abstract class UniqueProjectQueryEngine<T> extends CommonsQueryEngine {
 
         checkIsSupported(workflow);
         ClusterName clusterName = ((Project) workflow.getInitialSteps().get(0)).getClusterName();
-        QueryResult queryResult = null;
-        try {
-            queryResult = execute((Project) workflow.getInitialSteps().get(0),
-                    connectionHandler.getConnection(clusterName.getName()));
-        } catch (HandlerConnectionException e) {
-            String msg = "Error find Connection in " + clusterName.getName() + ". " + e.getMessage();
-            logger.error(msg);
-            throw new ExecutionException(msg, e);
-        }
-        return queryResult;
+
+
+        return  execute((Project) workflow.getInitialSteps().get(0),
+                connectionHandler.getConnection(clusterName.getName()));
     }
 
     /**

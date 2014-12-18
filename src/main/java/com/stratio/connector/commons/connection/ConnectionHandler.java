@@ -17,16 +17,17 @@
  */
 package com.stratio.connector.commons.connection;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.stratio.connector.commons.connection.exceptions.CreateNativeConnectionException;
-import com.stratio.connector.commons.connection.exceptions.HandlerConnectionException;
 import com.stratio.crossdata.common.connector.ConnectorClusterConfig;
 import com.stratio.crossdata.common.connector.IConfiguration;
+import com.stratio.crossdata.common.exceptions.ConnectionException;
+import com.stratio.crossdata.common.exceptions.ExecutionException;
 import com.stratio.crossdata.common.security.ICredentials;
 
 /**
@@ -46,13 +47,12 @@ public abstract class ConnectionHandler {
     /**
      * The connections.
      */
-    private Map<String, Connection> connections = new HashMap<>();
+    private Map<String, Connection> connections = Collections.synchronizedMap(new HashMap<String, Connection>());
 
     /**
      * Constructor.
      *
-     * @param configuration
-     *            the general settings.
+     * @param configuration the general settings.
      */
     public ConnectionHandler(IConfiguration configuration) {
         this.configuration = configuration;
@@ -62,24 +62,26 @@ public abstract class ConnectionHandler {
     /**
      * This method create a connection.
      *
-     * @param credentials
-     *            the cluster configuration.
-     * @param config
-     *            the connection options.
-     * @throws HandlerConnectionException
-     *             if the connection already exists.
+     * @param credentials the cluster configuration.
+     * @param config      the connection options.
+     * @throws ConnectionException if the connection already exists.
      */
     public void createConnection(ICredentials credentials, ConnectorClusterConfig config)
-                    throws HandlerConnectionException {
+            throws ConnectionException {
         Connection connection = createNativeConnection(credentials, config);
 
         String connectionName = config.getName().getName();
-        if (!connections.containsKey(connectionName)) {
-            connections.put(connectionName, connection);
-            logger.info("Connected to [" + connectionName + "]");
 
-        } else {
-            throw new HandlerConnectionException("The connection [" + connectionName + "] already exists");
+        synchronized (connections) {
+            if (!connections.containsKey(connectionName)) {
+                connections.put(connectionName, connection);
+                logger.info("Connected to [" + connectionName + "]");
+
+            } else {
+                String msg = "The connection [" + connectionName + "] already exists";
+                logger.error(msg);
+                throw new ConnectionException(msg);
+            }
         }
 
     }
@@ -87,28 +89,30 @@ public abstract class ConnectionHandler {
     /**
      * Close the connection.
      *
-     * @param clusterName
-     *            the connection name to be closed.
+     * @param clusterName the connection name to be closed.
      */
     public void closeConnection(String clusterName) {
-        if (connections.containsKey(clusterName)) {
-            connections.get(clusterName).close();
-            connections.remove(clusterName);
-            logger.info("Disconnected from [" + clusterName + "]");
+        synchronized (connections) {
+            if (connections.containsKey(clusterName)) {
+                connections.get(clusterName).close();
+                connections.remove(clusterName);
+            }
         }
+        logger.info("Disconnected from [" + clusterName + "]");
     }
 
     /**
      * Return if a connection is connected.
      *
-     * @param clusterName
-     *            the connection name.
+     * @param clusterName the connection name.
      * @return true if the connection is connected. False in other case.
      */
     public boolean isConnected(String clusterName) {
         boolean isConnected = false;
-        if (connections.containsKey(clusterName)) {
-            isConnected = connections.get(clusterName).isConnect();
+        synchronized (connections) {
+            if (connections.containsKey(clusterName)) {
+                isConnected = connections.get(clusterName).isConnect();
+            }
         }
         return isConnected;
     }
@@ -116,30 +120,33 @@ public abstract class ConnectionHandler {
     /**
      * Create a connection for the concrete database.
      *
-     * @param credentials
-     *            the credentials.
-     * @param config
-     *            the config.
+     * @param credentials the credentials.
+     * @param config      the config.
      * @return a connection.
+     *
+     * @throws ConnectionException if a connection exception happens.
      */
     protected abstract Connection createNativeConnection(ICredentials credentials, ConnectorClusterConfig config)
-                    throws CreateNativeConnectionException;
+            throws ConnectionException;
 
     /**
      * This method return a connection.
      *
-     * @param name
-     *            the connection name.
+     * @param name the connection name.
      * @return the connection.
-     * @throws HandlerConnectionException
-     *             if the connection does not exist.
+     * @throws ExecutionException if the connection does not exist.
      */
-    public Connection getConnection(String name) throws HandlerConnectionException {
+    public Connection getConnection(String name) throws ExecutionException {
         Connection connection = null;
-        if (connections.containsKey(name)) {
-            connection = connections.get(name);
-        } else {
-            throw new HandlerConnectionException("The connection [" + name + "] does not exist");
+        synchronized (connections) {
+            if (connections.containsKey(name)) {
+                connection = connections.get(name);
+            } else {
+
+                String msg = "The connection [" + name + "] does not exist";
+                logger.error(msg);
+                throw new ExecutionException(msg);
+            }
         }
         return connection;
     }
@@ -147,46 +154,35 @@ public abstract class ConnectionHandler {
     /**
      * This method start a work for a connections.
      *
-     * @param targetCluster
-     *            the connections cluster name.
+     * @param targetCluster the connections cluster name.
+     * @throws ExecutionException if the work can not start.
      */
-    public void startWork(String targetCluster) {
-        Connection conn = null;
-        try {
-            conn = getConnection(targetCluster);
-            conn.setWorkInProgress(true);
-
-        } catch (HandlerConnectionException e) {
-            String msg = "Error getting the Connection. " + e.getMessage();
-            logger.error(msg);
-
-        }
+    public void startWork(String targetCluster) throws ExecutionException {
+        getConnection(targetCluster).setWorkInProgress(true);
     }
 
     /**
      * This method finalize a work for a connections.
      *
-     * @param targetCluster
-     *            the connections cluster name.
+     * @param targetCluster the connections cluster name.
+     * @throws ExecutionException if the work can not finish.
      */
-    public void endWork(String targetCluster) {
-        Connection conn = null;
-        try {
-            conn = getConnection(targetCluster);
-            conn.setWorkInProgress(false);
-        } catch (HandlerConnectionException e) {
-            String msg = "Error getting the Connection. " + e.getMessage();
-            logger.error(msg);
-        }
+    public void endWork(String targetCluster) throws ExecutionException {
+        getConnection(targetCluster).setWorkInProgress(false);
+
     }
 
     /**
-     * This method return the connections.
      *
-     * @return the connection.
+     * @throws ExecutionException
      */
-    public Map<String, Connection> getConnections() {
-        return connections;
+    public void closeAllConnections() throws ExecutionException {
+        synchronized (connections) {
+            for (Connection connection : connections.values ()) {
+                connection.close();
+                connections.remove(connection);
+            }
+        }
     }
 
 }

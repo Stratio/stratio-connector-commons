@@ -18,7 +18,7 @@
 
 package com.stratio.connector.commons.engine.query;
 
-import com.stratio.crossdata.common.exceptions.UnsupportedException;
+import com.stratio.crossdata.common.exceptions.ExecutionException;
 
 /**
  * Created by jmgomez on 17/12/14.
@@ -27,6 +27,8 @@ public interface ProjectValidator {
     /**
      * This method validate the projectParsed.
      * @param projectParsed the projectParsed.
+     *
+     *  @throws  ExecutionException if the project is not validated.
      */
-    void validate(ProjectParsed projectParsed) throws UnsupportedException;
+    void validate(ProjectParsed projectParsed) throws ExecutionException;
 }
