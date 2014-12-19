@@ -9,11 +9,11 @@ User friendly API
 
 This API consists on a set of abstract classes that provides common work related to Stratio connectors. It manages the existing connections and relevant  jobs. For instance, when a query is executed, a new job is started. Thus, if the user closes the connector using close(), the connector waits until the pending jobs are done to finish. Furthermore, this module offers a simpler API to develop connectors. 
 
--CommonsConnector: implements IConnector Crossdata interface. 
--CommonsMetadataEngine: implements IMetadataEngine interface.
--CommonsStorageEngine: implements IMetadataEngine interface.
--CommonsQueryEngine: implements IMetadataEngine interface.
--SingleProjectQueryEngine: extends CommonsQueryEngine. It should be used when the connector does not support joins, so there would be only one project.
+ * CommonsConnector: implements IConnector Crossdata interface. 
+ * CommonsMetadataEngine: implements IMetadataEngine interface.
+ * CommonsStorageEngine: implements IMetadataEngine interface.
+ * CommonsQueryEngine: implements IMetadataEngine interface.
+ * SingleProjectQueryEngine: extends CommonsQueryEngine. It should be used when the connector does not support joins, so there would be only one project.
 
 
 In order to use these modules, it is necessary to create an implementation of the following classes included in this project:
@@ -25,12 +25,12 @@ In order to use these modules, it is necessary to create an implementation of th
 
 Usage examples can be found in connectors using this features: 
 
-[MongoDB](https://github.com/Stratio/stratio-connector-mongodb
-[Streaming](https://github.com/Stratio/stratio-connector-streaming
-[HDFS](https://github.com/Stratio/stratio-connector-hdfs
-[Elasticsearch](https://github.com/Stratio/stratio-connector-elasticsearch
-[Deep-Spark](https://github.com/Stratio/stratio-connector-deep
-[Aerospike](https://github.com/Stratio/stratio-connector-aerospike
+[MongoDB](https://github.com/Stratio/stratio-connector-mongodb)
+[Streaming](https://github.com/Stratio/stratio-connector-streaming)
+[HDFS](https://github.com/Stratio/stratio-connector-hdfs)
+[Elasticsearch](https://github.com/Stratio/stratio-connector-elasticsearch)
+[Deep-Spark](https://github.com/Stratio/stratio-connector-deep)
+[Aerospike](https://github.com/Stratio/stratio-connector-aerospike)
 
 Functional tests
 ---------------
