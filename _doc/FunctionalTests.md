@@ -1,4 +1,4 @@
-MongoStorageEngine
+StorageEngine
 ------------------
 
 | Group   	 | Operation    	 | State     |  	Class.Method         		| Comments  |
@@ -36,7 +36,7 @@ MongoStorageEngine
 | UPDATE_RELATION|  SUBSTRACT_RELATION	 |   DONE    | GenericAggregationUpdateFT               |           |
 | UPDATE_RELATION|MULTIPLICATION_RELATION|   DONE    | GenericAggregationUpdateFT               |           |
 
-MongoMetadataEngine
+MetadataEngine
 ------------------
 
 | Group   	 | Operation    	 | State     |  	Class.Method         		| Comments  |
@@ -57,7 +57,7 @@ MongoMetadataEngine
 | DROP		 |  DROP_INDEX		 |   DONE    | GenericMetadataIndexFT     	       	|           |
 
 
-MongoQueryEngine
+QueryEngine
 ----------------
 
 | Group   	 | Operation    	 | State     |  	Class.Method         		| Comments  |
