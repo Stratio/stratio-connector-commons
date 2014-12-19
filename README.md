@@ -9,19 +9,19 @@ User friendly API
 
 This API consists on a set of abstract classes that provides common work related to Stratio connectors. It manages the existing connections and relevant  jobs. For instance, when a query is executed, a new job is started. Thus, if the user closes the connector using close(), the connector waits until the pending jobs are done to finish. Furthermore, this module offers a simpler API to develop connectors. 
 
-CommonsConnector: implements IConnector Crossdata interface. 
-CommonsMetadataEngine: implements IMetadataEngine interface.
-CommonsStorageEngine: implements IMetadataEngine interface.
-CommonsQueryEngine: implements IMetadataEngine interface.
-SingleProjectQueryEngine: extends CommonsQueryEngine. It should be used when the connector does not support joins, so there would be only one project.
+-CommonsConnector: implements IConnector Crossdata interface. 
+-CommonsMetadataEngine: implements IMetadataEngine interface.
+-CommonsStorageEngine: implements IMetadataEngine interface.
+-CommonsQueryEngine: implements IMetadataEngine interface.
+-SingleProjectQueryEngine: extends CommonsQueryEngine. It should be used when the connector does not support joins, so there would be only one project.
 
 
 In order to use these modules, it is necessary to create an implementation of the following classes included in this project:
 
-Connection
-ConnectionHandler
+-Connection
+-ConnectionHandler
 
-ConnectionHandler: This handler is in charge of the connector connections. It allows to recover, disconnect and store connections. The connection to handle should fulfill the Connection interface.
+-ConnectionHandler: This handler is in charge of the connector connections. It allows to recover, disconnect and store connections. The connection to handle should fulfill the Connection interface.
 
 Usage examples can be found in connectors using this features: 
 
@@ -37,9 +37,9 @@ Functional tests
 
 This API includes a set of functional tests that accomplish the main body of Crossdata features. To run these generic tests is needed to: 
 
-- Extend the functional test. It is possible both override or ignore the test which features are not implemented. 
+-Extend the functional test. It is possible both override or ignore the test which features are not implemented. 
 
-- Implement a ConnectorHelper. Here, the cluster configuration and the database specific properties are defined. Therefore, you could use different implementations to probe the tests with the desired configuration.
+-Implement a ConnectorHelper. Here, the cluster configuration and the database specific properties are defined. Therefore, you could use different implementations to probe the tests with the desired configuration.
 
 The list of functional tests implemented is detailed [here](_doc/FunctionalTests.md).
 
@@ -60,7 +60,7 @@ ManifestUtil: Parses the Connector manifest to extract not only the connector bu
 SelectorHelper: Allows the casting of Crossdata Selectors in order to retrieve the proper value.
 ProjectParsed: Parses and validates the Crossdata logical steps from reading the Project's workflow. 
 ColumnTypeHelper: Allows the casting of an object based on the columntType.
-ConnectorParser: Parses hosts and ports with different formats. Also handles transformations of a string that represents a host or ports that represent a String[]
+ConnectorParser: Parses the raw information related to hosts and ports coming from Crossdata to the format required by the connector.
 
 # License #
 
