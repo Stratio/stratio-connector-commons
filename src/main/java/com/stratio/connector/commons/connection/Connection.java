@@ -26,37 +26,45 @@ import java.util.Map;
 /**
  * This interface represents a generic logic connection. Created by jmgomez on 29/08/14.
  *
- * @param <T> the native client
+ * @param <T>
+ *            the native client
  */
 public abstract class Connection<T> {
 
     /**
      * The session.
      */
-    private Map<String,Object> session;
+    private Map<String, Object> session;
 
     /**
      * Recovered a object from the session.
-     * @param type the object type.
-     * @param name the object name.
-     * @param <T> the object type.
+     * 
+     * @param type
+     *            the object type.
+     * @param name
+     *            the object name.
+     * @param <T>
+     *            the object type.
      * @return the object.
      */
-    public  <T> T getSessionObject(Class<T> type, String name){
-        return (T)session.get(name);
+    public <T> T getSessionObject(Class<T> type, String name) {
+        return (T) session.get(name);
     }
 
     /**
      * Add a object into the session.
-     * @param name the object name.
-     * @param value the objecet value.
+     * 
+     * @param name
+     *            the object name.
+     * @param value
+     *            the objecet value.
      */
-    public void  addObjectToSession(String name, Object value){
-        if (session==null){
-            session= new HashMap<>();
+    public void addObjectToSession(String name, Object value) {
+        if (session == null) {
+            session = new HashMap<>();
         }
 
-        session.put(name,value);
+        session.put(name, value);
     }
 
     /**
@@ -64,7 +72,7 @@ public abstract class Connection<T> {
      */
     private static final String FILENAME_DATE_PATTERN = "yyyy-MM-dd HH:mm";
 
-     /**
+    /**
      * The last use date.
      */
     private String lastDateInfo;
@@ -83,7 +91,7 @@ public abstract class Connection<T> {
      *
      * @return true if the connection is connected. False in other case.
      */
-    public abstract boolean isConnect();
+    public abstract boolean isConnected();
 
     /**
      * Return a database native connection.
@@ -101,8 +109,6 @@ public abstract class Connection<T> {
         return lastDateInfo;
     }
 
-
-
     /**
      * Check the connection status.
      *
@@ -115,7 +121,8 @@ public abstract class Connection<T> {
     /**
      * Set the connection status.
      *
-     * @param workInProgress the connection work status.
+     * @param workInProgress
+     *            the connection work status.
      */
     public void setWorkInProgress(Boolean workInProgress) {
         lastDateInfo = new SimpleDateFormat(FILENAME_DATE_PATTERN).format(new Date());

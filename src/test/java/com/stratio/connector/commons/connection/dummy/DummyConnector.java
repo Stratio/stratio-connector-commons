@@ -25,15 +25,18 @@ import com.stratio.connector.commons.connection.Connection;
  */
 public class DummyConnector extends Connection {
 
-    @Override public void close() {
+    @Override
+    public void close() {
 
     }
 
-    @Override public boolean isConnect() {
+    @Override
+    public boolean isConnected() {
         return false;
     }
 
-    @Override public Object getNativeConnection() {
+    @Override
+    public Object getNativeConnection() {
         return null;
     }
 }

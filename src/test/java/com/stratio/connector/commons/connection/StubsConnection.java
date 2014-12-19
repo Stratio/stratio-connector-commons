@@ -31,7 +31,7 @@ public class StubsConnection extends Connection {
     }
 
     @Override
-    public boolean isConnect() {
+    public boolean isConnected() {
         return connect;
     }
 
