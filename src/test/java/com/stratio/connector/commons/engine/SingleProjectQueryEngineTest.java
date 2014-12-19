@@ -42,10 +42,12 @@ import com.stratio.crossdata.common.result.QueryResult;
  *
  * @author <Authors name>
  * @version 1.0
- * @since <pre>oct 24, 2014</pre>
+ * @since <pre>
+ * oct 24, 2014
+ * </pre>
  */
 @RunWith(PowerMockRunner.class)
-public class UniqueProjectQueryEngineTest {
+public class SingleProjectQueryEngineTest {
 
     UniqueProjectQueryEngineStub uniqueProjectQueryEngineStub;
     private String queryIdSend;
@@ -56,7 +58,8 @@ public class UniqueProjectQueryEngineTest {
     private boolean executeExecute;
     private Project projectSend;
     private Connection connectionSend = null;
-    @Mock private ConnectionHandler connectionHandler;
+    @Mock
+    private ConnectionHandler connectionHandler;
 
     @Before
     public void before() throws Exception {
@@ -119,19 +122,21 @@ public class UniqueProjectQueryEngineTest {
 
     }
 
-    class UniqueProjectQueryEngineStub extends UniqueProjectQueryEngine {
+    class UniqueProjectQueryEngineStub extends SingleProjectQueryEngine {
 
         /**
          * Constructor.
          *
-         * @param connectionHandler the connector handler.
+         * @param connectionHandler
+         *            the connector handler.
          */
         public UniqueProjectQueryEngineStub(ConnectionHandler connectionHandler) {
             super(connectionHandler);
         }
 
-        @Override public void asyncExecute(String queryId, LogicalWorkflow workflow, IResultHandler resultHandler)
-                throws ConnectorException {
+        @Override
+        public void asyncExecute(String queryId, LogicalWorkflow workflow, IResultHandler resultHandler)
+                        throws ConnectorException {
             queryIdSend = queryId;
             workflowSend = workflow;
             resultHandlerSend = resultHandler;
@@ -139,13 +144,15 @@ public class UniqueProjectQueryEngineTest {
 
         }
 
-        @Override public void stop(String queryId) throws ConnectorException {
+        @Override
+        public void stop(String queryId) throws ConnectorException {
             queryIdSend = queryId;
             executeStop = true;
         }
 
-        @Override protected QueryResult execute(Project workflow, Connection connection)
-                throws UnsupportedException, ExecutionException {
+        @Override
+        protected QueryResult execute(Project workflow, Connection connection) throws UnsupportedException,
+                        ExecutionException {
 
             projectSend = workflow;
             connectionSend = connection;
@@ -155,4 +162,4 @@ public class UniqueProjectQueryEngineTest {
         }
     }
 
-} 
+}

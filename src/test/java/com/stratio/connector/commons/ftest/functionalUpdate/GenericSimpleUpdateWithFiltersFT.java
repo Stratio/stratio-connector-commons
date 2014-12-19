@@ -71,7 +71,8 @@ public abstract class GenericSimpleUpdateWithFiltersFT extends GenericConnectorT
         verifyInsert(clusterName, 4);
 
         Collection<Filter> filterCollection = new ArrayList<Filter>();
-        filterCollection.add(new Filter(Operations.UPDATE_INDEXED_GET, getBasicRelation(COLUMN_2, Operator.GET, 20l)));
+        filterCollection.add(new Filter(Operations.UPDATE_NON_INDEXED_GET,
+                        getBasicRelation(COLUMN_2, Operator.GET, 20l)));
 
         updateRow(clusterName, filterCollection);
         verifyUpdate(clusterName, 3);
