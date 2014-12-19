@@ -32,7 +32,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import com.stratio.connector.commons.connection.exceptions.HandlerConnectionException;
 import com.stratio.crossdata.common.connector.ConnectorClusterConfig;
 import com.stratio.crossdata.common.connector.IConfiguration;
 import com.stratio.crossdata.common.data.ClusterName;
@@ -45,7 +44,9 @@ import com.stratio.crossdata.common.security.ICredentials;
  *
  * @author <Authors name>
  * @version 1.0
- * @since <pre>sep 9, 2014</pre>
+ * @since <pre>
+ * sep 9, 2014
+ * </pre>
  */
 @RunWith(PowerMockRunner.class)
 public class ConnectionHandleTest {
@@ -85,8 +86,7 @@ public class ConnectionHandleTest {
     }
 
     @Test
-    public void testCreateConnectionAlredyCrete() throws ExecutionException,ConnectionException {
-
+    public void testCreateConnectionAlredyCrete() throws ExecutionException, ConnectionException {
 
         connectionNotExist();
 
@@ -96,7 +96,7 @@ public class ConnectionHandleTest {
             fail("should not get here");
         } catch (ConnectionException e) {
             assertEquals("The message is correct", "The connection [" + CLUSTER_NAME + "] already exists",
-                    e.getMessage());
+                            e.getMessage());
         }
 
     }
@@ -107,8 +107,8 @@ public class ConnectionHandleTest {
             fail("should not get here");
 
         } catch (ExecutionException e) {
-            assertEquals("The message is correct", e.getMessage(),
-                    "The connection [" + CLUSTER_NAME + "] does not exist");
+            assertEquals("The message is correct", e.getMessage(), "The connection [" + CLUSTER_NAME
+                            + "] does not exist");
 
         }
     }
@@ -117,9 +117,9 @@ public class ConnectionHandleTest {
      * Method: closeConnection(String clusterName)
      */
     @Test
-    public void testCloseConnection() throws Exception, HandlerConnectionException {
+    public void testCloseConnection() throws Exception {
 
-        stubConnectionHandle.closeConnection(CLUSTER_NAME); //Close a not exist connection.
+        stubConnectionHandle.closeConnection(CLUSTER_NAME); // Close a not exist connection.
 
         stubConnectionHandle.createConnection(credentials, conenectoClusterConfig);
         assertNotNull("The connection exists", stubConnectionHandle.getConnection(CLUSTER_NAME));
