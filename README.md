@@ -23,14 +23,12 @@ In order to use these modules, it is necessary to create an implementation of th
 
 Usage examples can be found in connectors using this features: 
 
-[MongoDB](https://github.com/Stratio/stratio-connector-mongodb)
-
-[Streaming](https://github.com/Stratio/stratio-connector-streaming)
-
-[HDFS](https://github.com/Stratio/stratio-connector-hdfs).
-[Elasticsearch](https://github.com/Stratio/stratio-connector-elasticsearch).
-[Deep-Spark](https://github.com/Stratio/stratio-connector-deep).
-[Aerospike](https://github.com/Stratio/stratio-connector-aerospike).
+ * [MongoDB](https://github.com/Stratio/stratio-connector-mongodb)
+ * [Streaming](https://github.com/Stratio/stratio-connector-streaming)
+ * [HDFS](https://github.com/Stratio/stratio-connector-hdfs)
+ * [Elasticsearch](https://github.com/Stratio/stratio-connector-elasticsearch)
+ * [Deep-Spark](https://github.com/Stratio/stratio-connector-deep)
+ * [Aerospike](https://github.com/Stratio/stratio-connector-aerospike)
 
 Functional tests
 ---------------
