@@ -93,12 +93,12 @@ public abstract class SingleProjectQueryEngine<T> extends CommonsQueryEngine {
      *
      * @param workflow
      *            the workflow
-     * @throws UnsupportedException
+     * @throws ExecutionException
      *             if the workflow is not supported.
      */
-    private void checkIsSupported(LogicalWorkflow workflow) throws UnsupportedException {
+    private void checkIsSupported(LogicalWorkflow workflow) throws ExecutionException {
         if (workflow.getInitialSteps().size() != 1) {
-            throw new UnsupportedException("The connector can only execute queries with one Project");
+            throw new ExecutionException("The connector can only execute queries with one Project");
         }
     }
 
