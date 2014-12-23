@@ -69,8 +69,7 @@ public abstract class GenericBulkInsertFT extends GenericConnectorTest {
     }
 
     @Test
-    public void testBulkInsertWithoutPK() throws ConnectorException, ValidationException,
-            UnsupportedOperationException {
+    public void testBulkInsertWithoutPK() throws ConnectorException, ValidationException, UnsupportedOperationException {
 
         ClusterName clusterName = getClusterName();
         insertBulk(clusterName, false);
@@ -95,13 +94,13 @@ public abstract class GenericBulkInsertFT extends GenericConnectorTest {
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
         tableMetadataBuilder.addColumn(COLUMN_KEY, ColumnType.VARCHAR).addColumn(COLUMN_1, ColumnType.VARCHAR)
-                .addColumn(COLUMN_2, ColumnType.VARCHAR).addColumn(COLUMN_3, ColumnType.VARCHAR);
+                        .addColumn(COLUMN_2, ColumnType.VARCHAR).addColumn(COLUMN_3, ColumnType.VARCHAR);
         if (withPK) {
             tableMetadataBuilder.withPartitionKey(COLUMN_1);
         }
         TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper());
 
-        connector.getStorageEngine().insert(cluesterName, targetTable, rows);
+        connector.getStorageEngine().insert(cluesterName, targetTable, rows, false);
 
         refresh(CATALOG);
     }
@@ -110,8 +109,7 @@ public abstract class GenericBulkInsertFT extends GenericConnectorTest {
         QueryResult queryResult = connector.getQueryEngine().execute(createLogicalWorkFlow());
         ResultSet resultIterator = queryResult.getResultSet();
 
-        assertEquals("The records number is correct " + cluesterName.getName(), getRowToInsert(),
-                resultIterator.size());
+        assertEquals("The records number is correct " + cluesterName.getName(), getRowToInsert(), resultIterator.size());
 
         int rowRecovered = 0;
         for (Row recoveredRow : resultIterator) {
@@ -128,7 +126,7 @@ public abstract class GenericBulkInsertFT extends GenericConnectorTest {
     private LogicalWorkflow createLogicalWorkFlow() {
 
         return new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName()).addColumnName(COLUMN_KEY, COLUMN_1,
-                COLUMN_2, COLUMN_3).getLogicalWorkflow();
+                        COLUMN_2, COLUMN_3).getLogicalWorkflow();
 
     }
 

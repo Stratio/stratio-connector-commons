@@ -24,7 +24,6 @@ import static com.stratio.connector.commons.test.util.LogicalWorkFlowCreator.COL
 import static com.stratio.connector.commons.test.util.LogicalWorkFlowCreator.COLUMN_AGE;
 import static com.stratio.connector.commons.test.util.LogicalWorkFlowCreator.COLUMN_KEY;
 import static com.stratio.connector.commons.test.util.LogicalWorkFlowCreator.COLUMN_MONEY;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -70,7 +69,6 @@ public abstract class GenericNotIndexedQueryIntegerFilterFT extends GenericConne
 
         ClusterName clusterNodeName = getClusterName();
 
-
         insertRow(1, 10, 5, clusterNodeName, false);
         insertRow(2, 9, 1, clusterNodeName, false);
         insertRow(3, 11, 1, clusterNodeName, false);
@@ -80,7 +78,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterFT extends GenericConne
         refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns()
-                .addEqualFilter(COLUMN_AGE, new Integer(10), false, false).getLogicalWorkflow();
+                        .addEqualFilter(COLUMN_AGE, new Integer(10), false, false).getLogicalWorkflow();
 
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
 
@@ -107,7 +105,6 @@ public abstract class GenericNotIndexedQueryIntegerFilterFT extends GenericConne
 
         ClusterName clusterNodeName = getClusterName();
 
-
         insertRow(1, 1, 10, clusterNodeName, true);
         insertRow(2, 1, 9, clusterNodeName, true);
         insertRow(3, 6, 11, clusterNodeName, true);
@@ -124,7 +121,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterFT extends GenericConne
 
         logicalWorkFlowCreator.addSelect(conectorList);
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns()
-                .addEqualFilter(COLUMN_KEY, 1, false, true).getLogicalWorkflow();
+                        .addEqualFilter(COLUMN_KEY, 1, false, true).getLogicalWorkflow();
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
 
         Set<Object> proveSet = createCellsResult(queryResult);
@@ -139,10 +136,10 @@ public abstract class GenericNotIndexedQueryIntegerFilterFT extends GenericConne
 
     }
 
-    @Test @Ignore
+    @Test
+    @Ignore
     public void selectNotIndexedFilterBetween() throws ConnectorException {
         ClusterName clusterNodeName = getClusterName();
-
 
         insertRow(1, 1, 10, clusterNodeName, false);
         insertRow(2, 1, 9, clusterNodeName, false);
@@ -157,7 +154,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterFT extends GenericConne
 
         // LogicalWorkflow logicalPlan = createLogicalWorkFlow(BETWEEN_FILTER);
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns()
-                .addBetweenFilter(COLUMN_AGE, null, null).getLogicalWorkflow();
+                        .addBetweenFilter(COLUMN_AGE, null, null).getLogicalWorkflow();
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
 
         Set<Object> proveSet = createCellsResult(queryResult);
@@ -184,7 +181,6 @@ public abstract class GenericNotIndexedQueryIntegerFilterFT extends GenericConne
     public void selectNoNotIndexedFilterGreaterEqual() throws ConnectorException {
         ClusterName clusterNodeName = getClusterName();
 
-
         insertRow(1, 10, 15, clusterNodeName, false);
         insertRow(2, 9, 10, clusterNodeName, false);
         insertRow(3, 11, 9, clusterNodeName, false);
@@ -197,7 +193,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterFT extends GenericConne
         refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns()
-                .addGreaterEqualFilter(COLUMN_AGE, new Integer("10"), false, false).getLogicalWorkflow();
+                        .addGreaterEqualFilter(COLUMN_AGE, new Integer("10"), false, false).getLogicalWorkflow();
 
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
         ResultSet aux = queryResult.getResultSet();
@@ -241,7 +237,6 @@ public abstract class GenericNotIndexedQueryIntegerFilterFT extends GenericConne
 
         ClusterName clusterNodeName = getClusterName();
 
-
         insertRow(1, 10, 1, clusterNodeName, false);
         insertRow(2, 9, 1, clusterNodeName, false);
         insertRow(3, 11, 1, clusterNodeName, false);
@@ -254,7 +249,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterFT extends GenericConne
         refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns()
-                .addGreaterFilter(COLUMN_AGE, new Integer("10"), false).getLogicalWorkflow();
+                        .addGreaterFilter(COLUMN_AGE, new Integer("10"), false).getLogicalWorkflow();
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
 
         Set<Object> proveSet = createCellsResult(queryResult);
@@ -284,7 +279,6 @@ public abstract class GenericNotIndexedQueryIntegerFilterFT extends GenericConne
     public void selectNotIndexedFilterLower() throws ConnectorException {
         ClusterName clusterNodeName = getClusterName();
 
-
         insertRow(1, 10, 1, clusterNodeName, false);
         insertRow(2, 9, 1, clusterNodeName, false);
         insertRow(3, 11, 1, clusterNodeName, false);
@@ -297,7 +291,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterFT extends GenericConne
         refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns()
-                .addNLowerFilter(COLUMN_AGE, new Integer("10"), false).getLogicalWorkflow();
+                        .addNLowerFilter(COLUMN_AGE, new Integer("10"), false).getLogicalWorkflow();
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
 
         Set<Object> proveSet = createCellsResult(queryResult);
@@ -328,7 +322,6 @@ public abstract class GenericNotIndexedQueryIntegerFilterFT extends GenericConne
     public void selectNotIndexedFilterLowerEqual() throws ConnectorException {
         ClusterName clusterNodeName = getClusterName();
 
-
         insertRow(1, 10, 1, clusterNodeName, false);
         insertRow(2, 9, 1, clusterNodeName, false);
         insertRow(3, 11, 1, clusterNodeName, false);
@@ -341,7 +334,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterFT extends GenericConne
         refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns()
-                .addLowerEqualFilter(COLUMN_AGE, new Integer("10"), false).getLogicalWorkflow();
+                        .addLowerEqualFilter(COLUMN_AGE, new Integer("10"), false).getLogicalWorkflow();
         QueryResult queryResult = connector.getQueryEngine().execute(logicalPlan);
 
         Set<Object> proveSet = createCellsResult(queryResult);
@@ -382,7 +375,6 @@ public abstract class GenericNotIndexedQueryIntegerFilterFT extends GenericConne
     public void selectNotIndexedFilterDistinct() throws ConnectorException {
         ClusterName clusterNodeName = getClusterName();
 
-
         insertRow(1, 10, 1, clusterNodeName, false);
         insertRow(2, 9, 1, clusterNodeName, false);
         insertRow(3, 11, 5, clusterNodeName, false);
@@ -392,7 +384,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterFT extends GenericConne
         refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns()
-                .addDistinctFilter(COLUMN_AGE, new Integer("10"), false, false).getLogicalWorkflow();
+                        .addDistinctFilter(COLUMN_AGE, new Integer("10"), false, false).getLogicalWorkflow();
         QueryResult queryResult = connector.getQueryEngine().execute(logicalPlan);
 
         Set<Object> proveSet = createCellsResult(queryResult);
@@ -427,7 +419,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterFT extends GenericConne
     }
 
     private void insertRow(int ikey, int age, int money, ClusterName clusterNodeName, boolean withPk)
-            throws UnsupportedOperationException, ConnectorException {
+                    throws UnsupportedOperationException, ConnectorException {
 
         Row row = new Row();
         Map<String, Cell> cells = new HashMap<>();
@@ -442,8 +434,8 @@ public abstract class GenericNotIndexedQueryIntegerFilterFT extends GenericConne
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
         tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.VARCHAR)
-                .addColumn(COLUMN_3, ColumnType.VARCHAR).addColumn(COLUMN_AGE, ColumnType.INT)
-                .addColumn(COLUMN_MONEY, ColumnType.INT);
+                        .addColumn(COLUMN_3, ColumnType.VARCHAR).addColumn(COLUMN_AGE, ColumnType.INT)
+                        .addColumn(COLUMN_MONEY, ColumnType.INT);
         if (withPk) {
             tableMetadataBuilder.addColumn(COLUMN_KEY, ColumnType.INT).withPartitionKey(COLUMN_KEY);
         }
@@ -451,7 +443,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterFT extends GenericConne
         TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper());
 
         row.setCells(cells);
-        connector.getStorageEngine().insert(clusterNodeName, targetTable, row);
+        connector.getStorageEngine().insert(clusterNodeName, targetTable, row, false);
 
     }
 

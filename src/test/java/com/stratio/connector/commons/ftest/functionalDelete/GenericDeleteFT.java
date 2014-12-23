@@ -152,14 +152,14 @@ public abstract class GenericDeleteFT extends GenericConnectorTest {
                         .withPartitionKey(COLUMN_PK);
 
         connector.getStorageEngine().insert(clusterName, tableMetadataBuilder.build(getConnectorHelper()),
-                        createRow("0", "value1"));
+                        createRow("0", "value1"), false);
         connector.getStorageEngine().insert(clusterName, tableMetadataBuilder.build(getConnectorHelper()),
-                        createRow("1", "value2"));
+                        createRow("1", "value2"), false);
         connector.getStorageEngine().insert(clusterName, tableMetadataBuilder.build(getConnectorHelper()),
-                        createRow("2", "value3"));
+                        createRow("2", "value3"), false);
 
         connector.getStorageEngine().insert(clusterName, tableMetadataBuilder.build(getConnectorHelper()),
-                        createRow("3", "value3"));
+                        createRow("3", "value3"), false);
 
         getConnectorHelper().refresh(CATALOG);
         QueryResult queryResult = connector.getQueryEngine().execute(createLogicalWorkFlow(CATALOG, TABLE));

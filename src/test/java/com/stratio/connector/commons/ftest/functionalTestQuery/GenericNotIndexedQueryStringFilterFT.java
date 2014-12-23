@@ -192,7 +192,7 @@ public abstract class GenericNotIndexedQueryStringFilterFT extends GenericConnec
 
         }
 
-        connector.getStorageEngine().insert(clusterNodeName, targetTable, rows);
+        connector.getStorageEngine().insert(clusterNodeName, targetTable, rows, false);
 
     }
 

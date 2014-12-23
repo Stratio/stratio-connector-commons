@@ -13,18 +13,18 @@
 
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <properties>
-        <version.crossdata>0.1.1</version.crossdata>
-    </properties>
-
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.stratio.connector</groupId>
     <artifactId>stratio-connector-commons</artifactId>
-    <version>0.3.0-SNAPSHOT</version>
+    <version>0.4.0-SNAPSHOT</version>
     <url>http://www.stratio.com</url>
     <name>Connector commons</name>
     <description>The crossdata connector commons</description>
 
+  <properties>
+        <version.crossdata>0.2.0-SNAPSHOT</version.crossdata>
+    </properties>
+    
     <dependencies>
 
         <dependency>

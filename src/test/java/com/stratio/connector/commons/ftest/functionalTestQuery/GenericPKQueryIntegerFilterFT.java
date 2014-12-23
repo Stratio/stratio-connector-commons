@@ -23,7 +23,6 @@ import static com.stratio.connector.commons.test.util.LogicalWorkFlowCreator.COL
 import static com.stratio.connector.commons.test.util.LogicalWorkFlowCreator.COLUMN_3;
 import static com.stratio.connector.commons.test.util.LogicalWorkFlowCreator.COLUMN_AGE;
 import static com.stratio.connector.commons.test.util.LogicalWorkFlowCreator.COLUMN_MONEY;
-
 import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
@@ -69,7 +68,6 @@ public abstract class GenericPKQueryIntegerFilterFT extends GenericConnectorTest
 
         ClusterName clusterNodeName = getClusterName();
 
-
         insertRow(1, 10, 5, clusterNodeName, false);
         insertRow(2, 9, 1, clusterNodeName, false);
         insertRow(3, 11, 1, clusterNodeName, false);
@@ -79,13 +77,13 @@ public abstract class GenericPKQueryIntegerFilterFT extends GenericConnectorTest
         refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns().addColumnName(COLUMN_PK)
-                .addEqualFilter(COLUMN_PK, new Integer(2), false, true).getLogicalWorkflow();
+                        .addEqualFilter(COLUMN_PK, new Integer(2), false, true).getLogicalWorkflow();
 
         QueryResult queryResult = connector.getQueryEngine().execute(logicalPlan);
 
         assertEquals("The record number is correct", 1, queryResult.getResultSet().size());
         assertEquals("The value is correct", new Integer(2),
-                queryResult.getResultSet().getRows().get(0).getCell(COLUMN_PK).getValue());
+                        queryResult.getResultSet().getRows().get(0).getCell(COLUMN_PK).getValue());
 
     }
 
@@ -94,7 +92,6 @@ public abstract class GenericPKQueryIntegerFilterFT extends GenericConnectorTest
 
         ClusterName clusterNodeName = getClusterName();
 
-
         insertRow(1, 10, 5, clusterNodeName, false);
         insertRow(2, 9, 1, clusterNodeName, false);
         insertRow(3, 11, 1, clusterNodeName, false);
@@ -104,8 +101,8 @@ public abstract class GenericPKQueryIntegerFilterFT extends GenericConnectorTest
         refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns().addColumnName(COLUMN_PK)
-                .addEqualFilter(COLUMN_PK, new Integer(2), false, true)
-                .addEqualFilter(COLUMN_PK, new Integer(3), false, true).getLogicalWorkflow();
+                        .addEqualFilter(COLUMN_PK, new Integer(2), false, true)
+                        .addEqualFilter(COLUMN_PK, new Integer(3), false, true).getLogicalWorkflow();
 
         QueryResult queryResult = connector.getQueryEngine().execute(logicalPlan);
 
@@ -117,7 +114,6 @@ public abstract class GenericPKQueryIntegerFilterFT extends GenericConnectorTest
     public void selectPKDoubleFilterDistinct() throws ConnectorException {
 
         ClusterName clusterNodeName = getClusterName();
-
 
         insertRow(1, 10, 5, clusterNodeName, true);
         insertRow(2, 9, 1, clusterNodeName, true);
@@ -131,8 +127,8 @@ public abstract class GenericPKQueryIntegerFilterFT extends GenericConnectorTest
         connectorFields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_1, ALIAS_COLUMN_1, ColumnType.VARCHAR));
         connectorFields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_AGE, ALIAS_COLUMN_AGE, ColumnType.INT));
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns().addColumnName(COLUMN_PK)
-                .addSelect(connectorFields).addDistinctFilter(COLUMN_PK, new Integer(2), false, true)
-                .addDistinctFilter(COLUMN_PK, new Integer(3), false, true).getLogicalWorkflow();
+                        .addSelect(connectorFields).addDistinctFilter(COLUMN_PK, new Integer(2), false, true)
+                        .addDistinctFilter(COLUMN_PK, new Integer(3), false, true).getLogicalWorkflow();
 
         QueryResult queryResult = connector.getQueryEngine().execute(logicalPlan);
 
@@ -145,7 +141,6 @@ public abstract class GenericPKQueryIntegerFilterFT extends GenericConnectorTest
 
         ClusterName clusterNodeName = getClusterName();
 
-
         insertRow(1, 10, 5, clusterNodeName, false);
         insertRow(2, 9, 1, clusterNodeName, false);
         insertRow(3, 11, 1, clusterNodeName, false);
@@ -155,7 +150,7 @@ public abstract class GenericPKQueryIntegerFilterFT extends GenericConnectorTest
         refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns().addColumnName(COLUMN_PK)
-                .addGreaterEqualFilter(COLUMN_PK, new Integer(2), false, false).getLogicalWorkflow();
+                        .addGreaterEqualFilter(COLUMN_PK, new Integer(2), false, false).getLogicalWorkflow();
 
         QueryResult queryResult = connector.getQueryEngine().execute(logicalPlan);
 
@@ -177,7 +172,7 @@ public abstract class GenericPKQueryIntegerFilterFT extends GenericConnectorTest
     }
 
     private void insertRow(int ikey, int age, int money, ClusterName clusterNodeName, boolean withPk)
-            throws UnsupportedOperationException, ConnectorException {
+                    throws UnsupportedOperationException, ConnectorException {
 
         Row row = new Row();
         Map<String, Cell> cells = new HashMap<>();
@@ -190,14 +185,14 @@ public abstract class GenericPKQueryIntegerFilterFT extends GenericConnectorTest
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
         tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.VARCHAR)
-                .addColumn(COLUMN_3, ColumnType.VARCHAR).addColumn(COLUMN_AGE, ColumnType.INT)
-                .addColumn(COLUMN_MONEY, ColumnType.INT).addColumn(COLUMN_PK, ColumnType.INT);
+                        .addColumn(COLUMN_3, ColumnType.VARCHAR).addColumn(COLUMN_AGE, ColumnType.INT)
+                        .addColumn(COLUMN_MONEY, ColumnType.INT).addColumn(COLUMN_PK, ColumnType.INT);
         tableMetadataBuilder.withPartitionKey(COLUMN_PK);
 
         TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper());
 
         row.setCells(cells);
-        connector.getStorageEngine().insert(clusterNodeName, targetTable, row);
+        connector.getStorageEngine().insert(clusterNodeName, targetTable, row, false);
 
     }
 

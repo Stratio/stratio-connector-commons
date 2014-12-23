@@ -70,7 +70,7 @@ public abstract class ExampleWorkflowsFT extends GenericConnectorTest {
             TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper());
 
             for (int i = 0; i < 100; i++) {
-                connector.getStorageEngine().insert(getClusterName(), targetTable, exampleWorkflows.getRows(i));
+                connector.getStorageEngine().insert(getClusterName(), targetTable, exampleWorkflows.getRows(i), false);
                 refresh(CATALOG);
             }
 
@@ -91,8 +91,6 @@ public abstract class ExampleWorkflowsFT extends GenericConnectorTest {
     @Test
     public void basicSelect() throws ConnectorException {
 
-
-
         LogicalWorkflow logicalWorkflow = exampleWorkflows.getBasicSelect();
         QueryResult qr = connector.getQueryEngine().execute(logicalWorkflow);
         assertEquals("The result number is correct", 1000000, qr.getResultSet().size());
@@ -105,7 +103,6 @@ public abstract class ExampleWorkflowsFT extends GenericConnectorTest {
     @Test
     public void basicSelectAsterisk() throws ConnectorException {
 
-
         LogicalWorkflow logicalWorkflow = exampleWorkflows.getBasicSelectAsterisk();
         QueryResult qr = connector.getQueryEngine().execute(logicalWorkflow);
         assertEquals("All record are recovered", 1000000, qr.getResultSet().size());
@@ -113,8 +110,6 @@ public abstract class ExampleWorkflowsFT extends GenericConnectorTest {
 
     @Test
     public void selectIndexedField() throws ConnectorException {
-
-
 
         LogicalWorkflow logicalWorkflow = exampleWorkflows.getSelectIndexedField();
 
@@ -129,7 +124,6 @@ public abstract class ExampleWorkflowsFT extends GenericConnectorTest {
 
     @Test
     public void selectNonIndexedField() throws ConnectorException {
-
 
         LogicalWorkflow logicalWorkflow = exampleWorkflows.getSelectNonIndexedField();
 
@@ -147,7 +141,6 @@ public abstract class ExampleWorkflowsFT extends GenericConnectorTest {
 
     @Test
     public void selectMixedWhere() throws ConnectorException {
-
 
         LogicalWorkflow logicalWorkflow = exampleWorkflows.getSelectMixedWhere();
 

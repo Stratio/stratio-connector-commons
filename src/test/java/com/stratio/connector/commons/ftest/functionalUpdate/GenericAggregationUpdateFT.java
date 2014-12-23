@@ -64,7 +64,8 @@ public abstract class GenericAggregationUpdateFT extends GenericConnectorTest<IC
     /**
      * Test a basic increase field as "FIELD = FIELD + 2"
      *
-     * @throws ConnectorException the connector exception
+     * @throws ConnectorException
+     *             the connector exception
      */
     @Test
     public void updateAddFunctionFT() throws ConnectorException {
@@ -81,7 +82,8 @@ public abstract class GenericAggregationUpdateFT extends GenericConnectorTest<IC
     /**
      * Test a basic decrement field as "FIELD = FIELD - 5"
      *
-     * @throws ConnectorException the connector exception
+     * @throws ConnectorException
+     *             the connector exception
      */
     @Test
     public void updateSubstractFunctionFT() throws ConnectorException {
@@ -98,7 +100,8 @@ public abstract class GenericAggregationUpdateFT extends GenericConnectorTest<IC
     /**
      * Test a basic decrement field as "FIELD = FIELD * 5"
      *
-     * @throws ConnectorException the connector exception
+     * @throws ConnectorException
+     *             the connector exception
      */
     @Test
     public void updateMultiplicationFunctionFT() throws ConnectorException {
@@ -113,7 +116,7 @@ public abstract class GenericAggregationUpdateFT extends GenericConnectorTest<IC
     }
 
     protected void verifyUpdate(ClusterName clusterName, int insertedRows, Long valueExpected)
-            throws ConnectorException {
+                    throws ConnectorException {
         ResultSet resultIterator = createResultSet(clusterName);
 
         for (Row recoveredRow : resultIterator) {
@@ -125,7 +128,7 @@ public abstract class GenericAggregationUpdateFT extends GenericConnectorTest<IC
     }
 
     private void updateRow(ClusterName clusterName, Operator operator, long value) throws UnsupportedException,
-            ConnectorException {
+                    ConnectorException {
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
         tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.BIGINT);
@@ -195,13 +198,13 @@ public abstract class GenericAggregationUpdateFT extends GenericConnectorTest<IC
         if (getConnectorHelper().isTableMandatory()) {
             connector.getMetadataEngine().createTable(getClusterName(), targetTable);
         }
-        connector.getStorageEngine().insert(cluesterName, targetTable, row);
+        connector.getStorageEngine().insert(cluesterName, targetTable, row, false);
         refresh(CATALOG);
     }
 
     private LogicalWorkflow createLogicalWorkFlow() {
         return new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName()).addColumnName(COLUMN_1, COLUMN_2)
-                .getLogicalWorkflow();
+                        .getLogicalWorkflow();
 
     }
 

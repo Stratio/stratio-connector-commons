@@ -98,8 +98,6 @@ public abstract class GenericSimpleUpdateFT extends GenericConnectorTest<IConnec
 
     }
 
-
-
     protected void verifyUpdate(ClusterName clusterName, int insertedRows) throws ConnectorException {
         ResultSet resultIterator = createResultSet(clusterName);
 
@@ -134,7 +132,7 @@ public abstract class GenericSimpleUpdateFT extends GenericConnectorTest<IConnec
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
         tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.BIGINT)
-                .addColumn(COLUMN_3, ColumnType.BOOLEAN);
+                        .addColumn(COLUMN_3, ColumnType.BOOLEAN);
 
         TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper());
 
@@ -211,19 +209,18 @@ public abstract class GenericSimpleUpdateFT extends GenericConnectorTest<IConnec
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
         tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.BIGINT)
-                .addColumn(COLUMN_3, ColumnType.BOOLEAN);
+                        .addColumn(COLUMN_3, ColumnType.BOOLEAN);
 
         TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper());
 
         if (getConnectorHelper().isTableMandatory()) {
             connector.getMetadataEngine().createTable(getClusterName(), targetTable);
         }
-        connector.getStorageEngine().insert(cluesterName, targetTable, row);
+        connector.getStorageEngine().insert(cluesterName, targetTable, row, false);
         refresh(CATALOG);
     }
 
-    private void insertRowsWithDifferentFields(ClusterName clusterName)
-            throws UnsupportedException, ConnectorException {
+    private void insertRowsWithDifferentFields(ClusterName clusterName) throws UnsupportedException, ConnectorException {
         Row row = new Row();
         Map<String, Cell> cells = new HashMap<>();
         cells.put(COLUMN_1, new Cell(VALUE_1));
@@ -238,22 +235,22 @@ public abstract class GenericSimpleUpdateFT extends GenericConnectorTest<IConnec
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
         tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.BIGINT)
-                .addColumn(COLUMN_3, ColumnType.BOOLEAN);
+                        .addColumn(COLUMN_3, ColumnType.BOOLEAN);
 
         TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper());
 
         if (getConnectorHelper().isTableMandatory()) {
             connector.getMetadataEngine().createTable(getClusterName(), targetTable);
         }
-        connector.getStorageEngine().insert(clusterName, targetTable, row);
-        connector.getStorageEngine().insert(clusterName, targetTable, otherRow);
+        connector.getStorageEngine().insert(clusterName, targetTable, row, false);
+        connector.getStorageEngine().insert(clusterName, targetTable, otherRow, false);
         refresh(CATALOG);
 
     }
 
     private LogicalWorkflow createLogicalWorkFlow() {
         return new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName()).addColumnName(COLUMN_1, COLUMN_2, COLUMN_3)
-                .getLogicalWorkflow();
+                        .getLogicalWorkflow();
 
     }
 

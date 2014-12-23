@@ -59,7 +59,7 @@ public abstract class GenericTruncateFT extends GenericConnectorTest<IConnector>
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
 
         tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.INT);
-        connector.getStorageEngine().insert(clusterName, tableMetadataBuilder.build(getConnectorHelper()), row);
+        connector.getStorageEngine().insert(clusterName, tableMetadataBuilder.build(getConnectorHelper()), row, false);
 
         QueryResult queryResult = connector.getQueryEngine().execute(createLogicalWorkFlow(CATALOG, TABLE));
         Assert.assertEquals(1, queryResult.getResultSet().size());
@@ -76,6 +76,6 @@ public abstract class GenericTruncateFT extends GenericConnectorTest<IConnector>
     private LogicalWorkflow createLogicalWorkFlow(String catalog, String table) {
 
         return new LogicalWorkFlowCreator(catalog, table, getClusterName()).addColumnName(COLUMN_1, COLUMN_2)
-                .getLogicalWorkflow();
+                        .getLogicalWorkflow();
     }
 }

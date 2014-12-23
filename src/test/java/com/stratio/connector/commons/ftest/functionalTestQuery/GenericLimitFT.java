@@ -86,7 +86,7 @@ public abstract class GenericLimitFT extends GenericConnectorTest {
 
         TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper());
 
-        connector.getStorageEngine().insert(cLusterName, targetTable, row);
+        connector.getStorageEngine().insert(cLusterName, targetTable, row, false);
 
     }
 

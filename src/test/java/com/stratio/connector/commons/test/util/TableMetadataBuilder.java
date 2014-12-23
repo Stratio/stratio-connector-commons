@@ -17,9 +17,9 @@
  */
 package com.stratio.connector.commons.test.util;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -48,19 +48,19 @@ public class TableMetadataBuilder {
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private TableName tableName;
-    private Map<Selector, Selector> options = Collections.EMPTY_MAP;
-    private Map<ColumnName, ColumnMetadata> columns = Collections.EMPTY_MAP;
-    private Map<IndexName, IndexMetadata> indexes = Collections.EMPTY_MAP;
-    private List<ColumnName> partitionKey = Collections.EMPTY_LIST;
-    private List<ColumnName> clusterKey = Collections.EMPTY_LIST;
+    private Map<Selector, Selector> options;
+    private LinkedHashMap<ColumnName, ColumnMetadata> columns;
+    private Map<IndexName, IndexMetadata> indexes;
+    private LinkedList<ColumnName> partitionKey;
+    private LinkedList<ColumnName> clusterKey;
     private ClusterName clusterName = null;
 
     public TableMetadataBuilder(String catalogName, String tableName) {
         this.tableName = new TableName(catalogName, tableName);
-        columns = new HashMap<ColumnName, ColumnMetadata>();
-        indexes = new HashMap<IndexName, IndexMetadata>();
-        partitionKey = new ArrayList<ColumnName>();
-        clusterKey = new ArrayList<ColumnName>();
+        columns = new LinkedHashMap<ColumnName, ColumnMetadata>();
+        indexes = new LinkedHashMap<IndexName, IndexMetadata>();
+        partitionKey = new LinkedList<ColumnName>();
+        clusterKey = new LinkedList<ColumnName>();
         options = null;
     }
 
@@ -150,7 +150,7 @@ public class TableMetadataBuilder {
         if (connectorHelper.isPKMandatory()) {
             if (tableMetadata.getPrimaryKey().isEmpty()) {
                 ColumnName columnName = columns.keySet().toArray(new ColumnName[0])[0];
-                List<ColumnName> keyList = new ArrayList<>();
+                LinkedList<ColumnName> keyList = new LinkedList<>();
                 keyList.add(columnName);
                 tableMetadata = new TableMetadata(tableName, options, columns, indexes, clusterName, partitionKey,
                                 keyList);

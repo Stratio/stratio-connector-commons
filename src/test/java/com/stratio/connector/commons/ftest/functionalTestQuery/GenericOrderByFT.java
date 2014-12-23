@@ -22,9 +22,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -182,7 +182,7 @@ public abstract class GenericOrderByFT extends GenericConnectorTest {
         connector.getStorageEngine().insert(
                         clusterName,
                         new TableMetadata(new TableName(CATALOG, TABLE), null, null, null, null,
-                                        Collections.EMPTY_LIST, Collections.EMPTY_LIST), row);
+                                        new LinkedList<ColumnName>(), new LinkedList<ColumnName>()), row, false);
 
     }
 

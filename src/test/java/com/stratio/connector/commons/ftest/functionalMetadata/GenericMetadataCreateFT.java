@@ -24,7 +24,8 @@ import static org.junit.Assert.fail;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
 
@@ -144,7 +145,7 @@ public abstract class GenericMetadataCreateFT extends GenericConnectorTest {
         TableName tableName = new TableName(CATALOG, TABLE);
         Map<Selector, Selector> options = Collections.EMPTY_MAP;
 
-        Map<ColumnName, ColumnMetadata> columns = new HashMap<>();
+        LinkedHashMap<ColumnName, ColumnMetadata> columns = new LinkedHashMap<>();
         int i = 1;
         Collection<ColumnType> allSupportedColumnType = getConnectorHelper().getAllSupportedColumnType();
         for (ColumnType columnType : allSupportedColumnType) {
@@ -155,8 +156,8 @@ public abstract class GenericMetadataCreateFT extends GenericConnectorTest {
 
         Map indexex = Collections.EMPTY_MAP;
         ClusterName clusterRef = getClusterName();
-        List<ColumnName> partitionKey = Collections.EMPTY_LIST;
-        List<ColumnName> clusterKey = Collections.EMPTY_LIST;
+        LinkedList<ColumnName> partitionKey = new LinkedList<>();
+        LinkedList<ColumnName> clusterKey = new LinkedList<>();
 
         if (getConnectorHelper().isCatalogMandatory()) {
             connector.getMetadataEngine()
@@ -190,11 +191,11 @@ public abstract class GenericMetadataCreateFT extends GenericConnectorTest {
         TableName tableName = new TableName(CATALOG, TABLE);
         Map<Selector, Selector> options = Collections.EMPTY_MAP;
 
-        Map<ColumnName, ColumnMetadata> columns = Collections.EMPTY_MAP;
-        Map indexex = columns = Collections.EMPTY_MAP;
+        LinkedHashMap<ColumnName, ColumnMetadata> columns = new LinkedHashMap<>();
+        Map indexex = Collections.EMPTY_MAP;
         ClusterName clusterRef = getClusterName();
-        List<ColumnName> partitionKey = Collections.EMPTY_LIST;
-        List<ColumnName> clusterKey = Collections.EMPTY_LIST;
+        LinkedList<ColumnName> partitionKey = new LinkedList<>();
+        LinkedList<ColumnName> clusterKey = new LinkedList<>();
 
         if (getConnectorHelper().isCatalogMandatory()) {
             connector.getMetadataEngine()

@@ -115,7 +115,7 @@ public abstract class GenericQueryProjectFT extends GenericConnectorTest {
         cells.put(COLUMN_3, new Cell("ValueBin3_r" + ikey));
         row.setCells(cells);
 
-        connector.getStorageEngine().insert(clusterNodeName, targetTable, row);
+        connector.getStorageEngine().insert(clusterNodeName, targetTable, row, false);
 
     }
 

@@ -29,8 +29,8 @@ import org.junit.Test;
 
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
 import com.stratio.connector.commons.test.util.LogicalWorkFlowCreator;
-import com.stratio.connector.commons.test.util.TableMetadataBuilder;
 import com.stratio.connector.commons.test.util.LogicalWorkFlowCreator.ConnectorField;
+import com.stratio.connector.commons.test.util.TableMetadataBuilder;
 import com.stratio.crossdata.common.data.CatalogName;
 import com.stratio.crossdata.common.data.Cell;
 import com.stratio.crossdata.common.data.ClusterName;
@@ -62,7 +62,6 @@ public abstract class GenericSimpleInsertFT extends GenericConnectorTest {
     public void testSimpleInsertWithPK() throws ConnectorException {
         ClusterName clusterName = getClusterName();
 
-
         insertRow(clusterName, VALUE_4, ColumnType.VARCHAR, VALUE_1, true);
 
         verifyInsert(clusterName, VALUE_4);
@@ -72,7 +71,6 @@ public abstract class GenericSimpleInsertFT extends GenericConnectorTest {
     public void testSimpleInsertWithoutPK() throws ConnectorException {
         ClusterName clusterName = getClusterName();
 
-
         insertRow(clusterName, VALUE_4, ColumnType.VARCHAR, VALUE_1, false);
 
         verifyInsert(clusterName, VALUE_4);
@@ -81,7 +79,6 @@ public abstract class GenericSimpleInsertFT extends GenericConnectorTest {
     @Test
     public void testInsertSamePK() throws ConnectorException {
         ClusterName clusterName = getClusterName();
-
 
         insertRow(clusterName, OTHER_VALUE_4, ColumnType.VARCHAR, VALUE_1, true);
         insertRow(clusterName, VALUE_4, ColumnType.VARCHAR, VALUE_1, true);
@@ -110,7 +107,6 @@ public abstract class GenericSimpleInsertFT extends GenericConnectorTest {
     public void testInsertCompositePK() throws ConnectorException {
         ClusterName clusterName = getClusterName();
 
-
         insertRowCompositePK(clusterName, COLUMN_1, COLUMN_2);
         insertRowCompositePK(clusterName, COLUMN_1, COLUMN_3);
 
@@ -124,7 +120,6 @@ public abstract class GenericSimpleInsertFT extends GenericConnectorTest {
     public void testInsertString() throws ConnectorException {
         ClusterName clusterName = getClusterName();
 
-
         Object value4 = "String";
         insertRow(clusterName, value4, ColumnType.VARCHAR, VALUE_1, true);
 
@@ -132,7 +127,7 @@ public abstract class GenericSimpleInsertFT extends GenericConnectorTest {
         assertEquals("It has only one result", 1, resultIterator.size());
         for (Row recoveredRow : resultIterator) {
             assertEquals("The type is correct ", String.class.getCanonicalName(), recoveredRow.getCell(COLUMN_4)
-                    .getValue().getClass().getCanonicalName());
+                            .getValue().getClass().getCanonicalName());
             assertEquals("The value is correct ", value4, recoveredRow.getCell(COLUMN_4).getValue());
         }
 
@@ -149,7 +144,7 @@ public abstract class GenericSimpleInsertFT extends GenericConnectorTest {
         assertEquals("It has only one result", 1, resultIterator.size());
         for (Row recoveredRow : resultIterator) {
             assertEquals("The type is correct ", Integer.class.getCanonicalName(), recoveredRow.getCell(COLUMN_4)
-                    .getValue().getClass().getCanonicalName());
+                            .getValue().getClass().getCanonicalName());
             assertEquals("The value is correct ", value4, recoveredRow.getCell(COLUMN_4).getValue());
         }
 
@@ -166,7 +161,7 @@ public abstract class GenericSimpleInsertFT extends GenericConnectorTest {
         assertEquals("It should have only one result", 1, resultIterator.size());
         for (Row recoveredRow : resultIterator) {
             assertEquals("The type is not correct ", Long.class.getCanonicalName(), recoveredRow.getCell(COLUMN_4)
-                    .getValue().getClass().getCanonicalName());
+                            .getValue().getClass().getCanonicalName());
             assertEquals("The value is not correct ", value4, recoveredRow.getCell(COLUMN_4).getValue());
         }
 
@@ -183,7 +178,7 @@ public abstract class GenericSimpleInsertFT extends GenericConnectorTest {
         assertEquals("It has only one result", 1, resultIterator.size());
         for (Row recoveredRow : resultIterator) {
             assertEquals("The type is correct ", Boolean.class.getCanonicalName(), recoveredRow.getCell(COLUMN_4)
-                    .getValue().getClass().getCanonicalName());
+                            .getValue().getClass().getCanonicalName());
             assertEquals("The value is correct ", value4, recoveredRow.getCell(COLUMN_4).getValue());
         }
 
@@ -200,7 +195,7 @@ public abstract class GenericSimpleInsertFT extends GenericConnectorTest {
         assertEquals("It has only one result", 1, resultIterator.size());
         for (Row recoveredRow : resultIterator) {
             assertEquals("The type is correct ", Date.class.getCanonicalName(), recoveredRow.getCell(COLUMN_4)
-                    .getValue().getClass().getCanonicalName());
+                            .getValue().getClass().getCanonicalName());
             assertEquals("The value is correct ", value4, recoveredRow.getCell(COLUMN_4).getValue());
         }
 
@@ -217,7 +212,7 @@ public abstract class GenericSimpleInsertFT extends GenericConnectorTest {
         assertEquals("It has only one result", 1, resultIterator.size());
         for (Row recoveredRow : resultIterator) {
             assertEquals("The type is correct ", Double.class.getCanonicalName(), recoveredRow.getCell(COLUMN_4)
-                    .getValue().getClass().getCanonicalName());
+                            .getValue().getClass().getCanonicalName());
             assertEquals("The value is correct ", value4, recoveredRow.getCell(COLUMN_4).getValue());
         }
 
@@ -247,7 +242,7 @@ public abstract class GenericSimpleInsertFT extends GenericConnectorTest {
     }
 
     protected void insertRow(ClusterName cluesterName, Object value_4, ColumnType colType_4, String PK_VALUE,
-            boolean withPK) throws ConnectorException {
+                    boolean withPK) throws ConnectorException {
         Row row = new Row();
         Map<String, Cell> cells = new HashMap<>();
 
@@ -260,7 +255,7 @@ public abstract class GenericSimpleInsertFT extends GenericConnectorTest {
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
         tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.INT)
-                .addColumn(COLUMN_3, ColumnType.BOOLEAN).addColumn(COLUMN_4, colType_4);
+                        .addColumn(COLUMN_3, ColumnType.BOOLEAN).addColumn(COLUMN_4, colType_4);
         if (withPK) {
             tableMetadataBuilder.withPartitionKey(COLUMN_1);
         }
@@ -269,12 +264,12 @@ public abstract class GenericSimpleInsertFT extends GenericConnectorTest {
         if (getConnectorHelper().isTableMandatory()) {
             connector.getMetadataEngine().createTable(getClusterName(), targetTable);
         }
-        connector.getStorageEngine().insert(cluesterName, targetTable, row);
+        connector.getStorageEngine().insert(cluesterName, targetTable, row, false);
         refresh(CATALOG);
     }
 
     private void insertRowCompositePK(ClusterName cluesterName, String partitionKey, String clusterKey)
-            throws ConnectorException {
+                    throws ConnectorException {
 
         Row row = new Row();
         Map<String, Cell> cells = new HashMap<>();
@@ -288,7 +283,7 @@ public abstract class GenericSimpleInsertFT extends GenericConnectorTest {
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
         tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.VARCHAR)
-                .addColumn(COLUMN_3, ColumnType.VARCHAR).addColumn(COLUMN_4, ColumnType.VARCHAR);
+                        .addColumn(COLUMN_3, ColumnType.VARCHAR).addColumn(COLUMN_4, ColumnType.VARCHAR);
 
         tableMetadataBuilder.withPartitionKey(COLUMN_1);
         tableMetadataBuilder.withClusterKey(clusterKey);
@@ -296,18 +291,18 @@ public abstract class GenericSimpleInsertFT extends GenericConnectorTest {
         TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper());
         if (getConnectorHelper().isCatalogMandatory()) {
             connector.getMetadataEngine()
-                    .createCatalog(getClusterName(),
-                            new CatalogMetadata(new CatalogName(CATALOG), Collections.EMPTY_MAP,
-                                    Collections.EMPTY_MAP));
+                            .createCatalog(getClusterName(),
+                                            new CatalogMetadata(new CatalogName(CATALOG), Collections.EMPTY_MAP,
+                                                            Collections.EMPTY_MAP));
         }
-        connector.getStorageEngine().insert(cluesterName, targetTable, row);
+        connector.getStorageEngine().insert(cluesterName, targetTable, row, false);
         refresh(CATALOG);
     }
 
     private LogicalWorkflow createLogicalWorkFlow() {
 
         return new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName()).addColumnName(COLUMN_1, COLUMN_2, COLUMN_3,
-                COLUMN_4).getLogicalWorkflow();
+                        COLUMN_4).getLogicalWorkflow();
 
     }
 
@@ -319,7 +314,7 @@ public abstract class GenericSimpleInsertFT extends GenericConnectorTest {
         linkList.add(lwfC.createConnectorField(COLUMN_3, COLUMN_3, ColumnType.VARCHAR));
         linkList.add(lwfC.createConnectorField(COLUMN_4, COLUMN_4, colType));
         return new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName())
-                .addColumnName(COLUMN_1, COLUMN_2, COLUMN_3, COLUMN_4).addSelect(linkList).getLogicalWorkflow();
+                        .addColumnName(COLUMN_1, COLUMN_2, COLUMN_3, COLUMN_4).addSelect(linkList).getLogicalWorkflow();
 
     }
 

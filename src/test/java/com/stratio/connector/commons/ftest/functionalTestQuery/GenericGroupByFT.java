@@ -53,9 +53,8 @@ public abstract class GenericGroupByFT extends GenericConnectorTest {
         insertRow(6, "text", 20, 48);
 
         LogicalWorkflow logicalWorkflow = new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName())
-                .addColumnName(COLUMN_ID).addColumnName(COLUMN_TEXT).addColumnName(COLUMN_AGE)
-                .addColumnName(COLUMN_MONEY)
-                .addGroupBy(COLUMN_AGE).getLogicalWorkflow();
+                        .addColumnName(COLUMN_ID).addColumnName(COLUMN_TEXT).addColumnName(COLUMN_AGE)
+                        .addColumnName(COLUMN_MONEY).addGroupBy(COLUMN_AGE).getLogicalWorkflow();
 
         QueryResult queryResult = connector.getQueryEngine().execute(logicalWorkflow);
 
@@ -77,14 +76,14 @@ public abstract class GenericGroupByFT extends GenericConnectorTest {
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
         tableMetadataBuilder.addColumn(COLUMN_ID, ColumnType.INT).addColumn(COLUMN_TEXT, ColumnType.VARCHAR)
-                .addColumn(COLUMN_AGE, ColumnType.INT).addColumn(COLUMN_MONEY, ColumnType.INT);
+                        .addColumn(COLUMN_AGE, ColumnType.INT).addColumn(COLUMN_MONEY, ColumnType.INT);
 
         TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper());
 
         if (getConnectorHelper().isTableMandatory()) {
             connector.getMetadataEngine().createTable(getClusterName(), targetTable);
         }
-        connector.getStorageEngine().insert(getClusterName(), targetTable, row);
+        connector.getStorageEngine().insert(getClusterName(), targetTable, row, false);
 
         refresh(CATALOG);
     }

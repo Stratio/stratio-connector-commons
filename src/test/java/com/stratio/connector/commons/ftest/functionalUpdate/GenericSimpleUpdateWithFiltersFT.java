@@ -173,7 +173,7 @@ public abstract class GenericSimpleUpdateWithFiltersFT extends GenericConnectorT
         if (getConnectorHelper().isTableMandatory()) {
             connector.getMetadataEngine().createTable(getClusterName(), targetTable);
         }
-        connector.getStorageEngine().insert(cluesterName, targetTable, row);
+        connector.getStorageEngine().insert(cluesterName, targetTable, row, false);
         refresh(CATALOG);
     }
 
