@@ -30,6 +30,7 @@ import com.stratio.crossdata.common.logicalplan.Filter;
 import com.stratio.crossdata.common.logicalplan.GroupBy;
 import com.stratio.crossdata.common.logicalplan.Limit;
 import com.stratio.crossdata.common.logicalplan.LogicalStep;
+import com.stratio.crossdata.common.logicalplan.OrderBy;
 import com.stratio.crossdata.common.logicalplan.Project;
 import com.stratio.crossdata.common.logicalplan.Select;
 import com.stratio.crossdata.common.logicalplan.Window;
@@ -56,11 +57,11 @@ public class ProjectParsed {
     /**
      * The filters.
      */
-    private Collection<Filter> filterList = Collections.EMPTY_LIST;
+    private Collection<Filter> filterList = Collections.emptyList();
     /**
      * The matchList.
      */
-    private Collection<Filter> matchList = Collections.EMPTY_LIST;
+    private Collection<Filter> matchList = Collections.emptyList();
 
     /**
      * The select.
@@ -78,6 +79,11 @@ public class ProjectParsed {
      * The window.
      */
     private Window window;
+
+    /**
+     * The orderBy.
+     */
+    private OrderBy orderBy;
 
     /**
      * Constructor.
@@ -186,6 +192,8 @@ public class ProjectParsed {
 
         } else if (lStep instanceof Window) {
             window = (Window) lStep;
+        } else if (lStep instanceof OrderBy) {
+            orderBy = (OrderBy) orderBy;
         } else {
 
             String message = "LogicalStep [" + lStep.getClass().getCanonicalName() + " not supported";
