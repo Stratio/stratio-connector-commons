@@ -74,11 +74,11 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
     @Override
     public final void createCatalog(ClusterName targetCluster, CatalogMetadata catalogMetadata)
             throws UnsupportedException, ExecutionException {
-        connectionHandler.startWork(targetCluster.getName());
+        connectionHandler.startJob(targetCluster.getName());
         try {
             createCatalog(catalogMetadata, connectionHandler.getConnection(targetCluster.getName()));
         } finally {
-            connectionHandler.endWork(targetCluster.getName());
+            connectionHandler.endJob(targetCluster.getName());
         }
 
 
@@ -96,11 +96,11 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
     @Override
     public final void createTable(ClusterName targetCluster, TableMetadata tableMetadata) throws UnsupportedException,
             ExecutionException {
-        connectionHandler.startWork(targetCluster.getName());
+        connectionHandler.startJob(targetCluster.getName());
         try {
              createTable(tableMetadata, connectionHandler.getConnection(targetCluster.getName()));
         } finally {
-            connectionHandler.endWork(targetCluster.getName());
+            connectionHandler.endJob(targetCluster.getName());
         }
     }
 
@@ -115,12 +115,12 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
     @Override
     public final void dropCatalog(ClusterName targetCluster, CatalogName name) throws UnsupportedException,
             ExecutionException {
-        connectionHandler.startWork(targetCluster.getName());
+        connectionHandler.startJob(targetCluster.getName());
 
         try {
             dropCatalog(name, connectionHandler.getConnection(targetCluster.getName()));
         } finally {
-            connectionHandler.endWork(targetCluster.getName());
+            connectionHandler.endJob(targetCluster.getName());
         }
 
     }
@@ -136,11 +136,11 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
     @Override
     public final void dropTable(ClusterName targetCluster, TableName name) throws UnsupportedException,
             ExecutionException {
-            connectionHandler.startWork(targetCluster.getName());
+            connectionHandler.startJob(targetCluster.getName());
         try {
             dropTable(name, connectionHandler.getConnection(targetCluster.getName()));
         } finally {
-            connectionHandler.endWork(targetCluster.getName());
+            connectionHandler.endJob(targetCluster.getName());
         }
     }
 
@@ -155,13 +155,13 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
     @Override
     public final void createIndex(ClusterName targetCluster, IndexMetadata indexMetadata) throws UnsupportedException,
             ExecutionException {
-        connectionHandler.startWork(targetCluster.getName());
+        connectionHandler.startJob(targetCluster.getName());
         try {
 
             createIndex(indexMetadata, connectionHandler.getConnection(targetCluster.getName()));
 
         } finally {
-            connectionHandler.endWork(targetCluster.getName());
+            connectionHandler.endJob(targetCluster.getName());
         }
     }
 
@@ -177,10 +177,10 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
     public final void dropIndex(ClusterName targetCluster, IndexMetadata indexMetadata) throws UnsupportedException,
             ExecutionException {
         try {
-            connectionHandler.startWork(targetCluster.getName());
+            connectionHandler.startJob(targetCluster.getName());
             dropIndex(indexMetadata, connectionHandler.getConnection(targetCluster.getName()));
         } finally {
-            connectionHandler.endWork(targetCluster.getName());
+            connectionHandler.endJob(targetCluster.getName());
         }
     }
 
@@ -196,10 +196,10 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
     public void alterTable(ClusterName targetCluster, TableName name, AlterOptions alterOptions)
             throws UnsupportedException, ExecutionException {
         try {
-            connectionHandler.startWork(targetCluster.getName());
+            connectionHandler.startJob(targetCluster.getName());
             alterTable(name, alterOptions, connectionHandler.getConnection(targetCluster.getName()));
         } finally {
-            connectionHandler.endWork(targetCluster.getName());
+            connectionHandler.endJob(targetCluster.getName());
         }
     }
 

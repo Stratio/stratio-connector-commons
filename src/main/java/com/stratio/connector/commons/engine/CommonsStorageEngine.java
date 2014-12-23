@@ -72,11 +72,11 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
     @Override
     public final void insert(ClusterName targetCluster, TableMetadata targetTable, Row row)
             throws UnsupportedException, ExecutionException {
-        connectionHandler.startWork(targetCluster.getName());
+        connectionHandler.startJob(targetCluster.getName());
         try {
             insert(targetTable, row, connectionHandler.getConnection(targetCluster.getName()));
         } finally {
-            connectionHandler.endWork(targetCluster.getName());
+            connectionHandler.endJob(targetCluster.getName());
         }
     }
 
@@ -92,12 +92,12 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
     @Override
     public final void insert(ClusterName targetCluster, TableMetadata targetTable, Collection<Row> rows)
             throws UnsupportedException, ExecutionException {
-        connectionHandler.startWork(targetCluster.getName());
+        connectionHandler.startJob(targetCluster.getName());
         try {
 
             insert(targetTable, rows, connectionHandler.getConnection(targetCluster.getName()));
         } finally {
-            connectionHandler.endWork(targetCluster.getName());
+            connectionHandler.endJob(targetCluster.getName());
         }
     }
 
@@ -114,11 +114,11 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
     @Override
     public void update(ClusterName targetCluster, TableName tableName, Collection<Relation> assignments,
             Collection<Filter> whereClauses) throws UnsupportedException, ExecutionException {
-        connectionHandler.startWork(targetCluster.getName());
+        connectionHandler.startJob(targetCluster.getName());
         try {
             update(tableName, assignments, whereClauses, connectionHandler.getConnection(targetCluster.getName()));
         } finally {
-            connectionHandler.endWork(targetCluster.getName());
+            connectionHandler.endJob(targetCluster.getName());
         }
     }
 
@@ -134,12 +134,12 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
     @Override
     public void delete(ClusterName targetCluster, TableName tableName, Collection<Filter> whereClauses)
             throws UnsupportedException, ExecutionException {
-        connectionHandler.startWork(targetCluster.getName());
+        connectionHandler.startJob(targetCluster.getName());
         try {
 
             delete(tableName, whereClauses, connectionHandler.getConnection(targetCluster.getName()));
         } finally {
-            connectionHandler.endWork(targetCluster.getName());
+            connectionHandler.endJob(targetCluster.getName());
         }
     }
 
@@ -154,14 +154,14 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
     @Override
     public void truncate(ClusterName targetCluster, TableName tableName)
             throws UnsupportedException, ExecutionException {
-            connectionHandler.startWork(targetCluster.getName());
+            connectionHandler.startJob(targetCluster.getName());
         try {
 
             truncate(tableName, connectionHandler.getConnection(targetCluster.getName()));
 
 
         } finally {
-            connectionHandler.endWork(targetCluster.getName());
+            connectionHandler.endJob(targetCluster.getName());
         }
     }
 
