@@ -77,9 +77,9 @@ public abstract class Connection<T> {
      */
     private String lastDateInfo;
     /**
-     * The work connection state.
+     * The job connection state.
      */
-    private Boolean workInProgress;
+    private Boolean jobInProgress;
 
     /**
      * Close the connection.
@@ -114,8 +114,8 @@ public abstract class Connection<T> {
      *
      * @return true if the connections is in use. False in other case.
      */
-    public Boolean isWorkInProgress() {
-        return workInProgress;
+    public Boolean hasPendingJobs() {
+        return jobInProgress;
     }
 
     /**
@@ -124,8 +124,8 @@ public abstract class Connection<T> {
      * @param workInProgress
      *            the connection work status.
      */
-    public void setWorkInProgress(Boolean workInProgress) {
+    public void setJobInProgress(Boolean workInProgress) {
         lastDateInfo = new SimpleDateFormat(FILENAME_DATE_PATTERN).format(new Date());
-        this.workInProgress = workInProgress;
+        this.jobInProgress = workInProgress;
     }
 }
