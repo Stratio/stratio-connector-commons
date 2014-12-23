@@ -169,8 +169,8 @@ public abstract class ConnectionHandler {
      * @throws ExecutionException
      *             if the work can not start.
      */
-    public void startWork(String targetCluster) throws ExecutionException {
-        getConnection(targetCluster).setWorkInProgress(true);
+    public void startJob(String targetCluster) throws ExecutionException {
+        getConnection(targetCluster).setJobInProgress(true);
     }
 
     /**
@@ -181,8 +181,8 @@ public abstract class ConnectionHandler {
      * @throws ExecutionException
      *             if the work can not finish.
      */
-    public void endWork(String targetCluster) throws ExecutionException {
-        getConnection(targetCluster).setWorkInProgress(false);
+    public void endJob(String targetCluster) throws ExecutionException {
+        getConnection(targetCluster).setJobInProgress(false);
 
     }
 
@@ -192,9 +192,13 @@ public abstract class ConnectionHandler {
      */
     public void closeAllConnections() throws ExecutionException {
         synchronized (connections) {
-            for (Connection connection : connections.values()) {
-                connection.close();
-                connections.remove(connection);
+            while(!connections.isEmpty()) {
+                for (Connection connection : connections.values()) {
+                    if (!connection.hasPendingJobs()) {
+                        connection.close();
+                        connections.remove(connection);
+                    }
+                }
             }
         }
     }
