@@ -160,6 +160,15 @@ public class ProjectParsed {
     }
 
     /**
+     * Return the OrderBy.
+     * 
+     * @return the orderBy.
+     */
+    public OrderBy getOrderBy() {
+        return orderBy;
+    }
+
+    /**
      * Return the limit.
      *
      * @return the limit.
@@ -193,7 +202,7 @@ public class ProjectParsed {
         } else if (lStep instanceof Window) {
             window = (Window) lStep;
         } else if (lStep instanceof OrderBy) {
-            orderBy = (OrderBy) orderBy;
+            orderBy = (OrderBy) lStep;
         } else {
 
             String message = "LogicalStep [" + lStep.getClass().getCanonicalName() + " not supported";
