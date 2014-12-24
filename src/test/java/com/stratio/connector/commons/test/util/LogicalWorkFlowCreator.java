@@ -33,6 +33,7 @@ import com.stratio.crossdata.common.logicalplan.GroupBy;
 import com.stratio.crossdata.common.logicalplan.Limit;
 import com.stratio.crossdata.common.logicalplan.LogicalStep;
 import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
+import com.stratio.crossdata.common.logicalplan.OrderBy;
 import com.stratio.crossdata.common.logicalplan.Project;
 import com.stratio.crossdata.common.logicalplan.Select;
 import com.stratio.crossdata.common.logicalplan.Window;
@@ -42,6 +43,8 @@ import com.stratio.crossdata.common.statements.structures.BooleanSelector;
 import com.stratio.crossdata.common.statements.structures.ColumnSelector;
 import com.stratio.crossdata.common.statements.structures.IntegerSelector;
 import com.stratio.crossdata.common.statements.structures.Operator;
+import com.stratio.crossdata.common.statements.structures.OrderByClause;
+import com.stratio.crossdata.common.statements.structures.OrderDirection;
 import com.stratio.crossdata.common.statements.structures.Relation;
 import com.stratio.crossdata.common.statements.structures.Selector;
 import com.stratio.crossdata.common.statements.structures.StringSelector;
@@ -68,6 +71,7 @@ public class LogicalWorkFlowCreator {
     private Limit limit;
     private Window window;
     private GroupBy groupBy;
+    private OrderBy orderBy;
 
     public LogicalWorkFlowCreator(String catalog, String table, ClusterName clusterName) {
         this.catalog = catalog;
@@ -85,12 +89,7 @@ public class LogicalWorkFlowCreator {
             lastStep.setNextStep(filter);
             lastStep = filter;
         }
-        if (limit != null) {
 
-            lastStep.setNextStep(limit);
-            lastStep = limit;
-
-        }
         if (window != null) {
             lastStep.setNextStep(window);
             lastStep = window;
@@ -99,6 +98,18 @@ public class LogicalWorkFlowCreator {
         if (groupBy != null) {
             lastStep.setNextStep(groupBy);
             lastStep = groupBy;
+        }
+
+        if (orderBy != null) {
+            lastStep.setNextStep(orderBy);
+            lastStep = orderBy;
+        }
+
+        if (limit != null) {
+
+            lastStep.setNextStep(limit);
+            lastStep = limit;
+
         }
 
         if (select == null) {
@@ -111,7 +122,6 @@ public class LogicalWorkFlowCreator {
                 typeMap.put(columnName.getAlias(), ColumnType.VARCHAR);
                 typeMapColumnName.put(columnNameTemp, ColumnType.VARCHAR);
             }
-
 
             select = new Select(Operations.SELECT_OPERATOR, selectColumn, typeMap, typeMapColumnName); // The select is
 
@@ -196,7 +206,7 @@ public class LogicalWorkFlowCreator {
     public LogicalWorkFlowCreator addGreaterEqualFilter(String columnName, Object term, Boolean indexed, boolean pk) {
 
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)), Operator.GET,
-                returnSelector(term));
+                        returnSelector(term));
 
         if (pk) {
             filters.add(new Filter(Operations.FILTER_PK_GET, relation));
@@ -214,7 +224,7 @@ public class LogicalWorkFlowCreator {
     public LogicalWorkFlowCreator addGreaterFilter(String columnName, Object term, Boolean indexed) {
 
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)), Operator.GT,
-                returnSelector(term));
+                        returnSelector(term));
         if (indexed) {
             filters.add(new Filter(Operations.FILTER_INDEXED_GT, relation));
         } else {
@@ -228,7 +238,7 @@ public class LogicalWorkFlowCreator {
     public LogicalWorkFlowCreator addLowerEqualFilter(String columnName, Object term, Boolean indexed) {
 
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)), Operator.LET,
-                returnSelector(term));
+                        returnSelector(term));
         if (indexed) {
             filters.add(new Filter(Operations.FILTER_INDEXED_LET, relation));
         } else {
@@ -241,7 +251,7 @@ public class LogicalWorkFlowCreator {
 
     public LogicalWorkFlowCreator addNLowerFilter(String columnName, Object term, Boolean indexed) {
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)), Operator.LT,
-                returnSelector(term));
+                        returnSelector(term));
         if (indexed) {
             filters.add(new Filter(Operations.FILTER_INDEXED_LT, relation));
         } else {
@@ -253,7 +263,7 @@ public class LogicalWorkFlowCreator {
 
     public LogicalWorkFlowCreator addDistinctFilter(String columnName, Object term, Boolean indexed, Boolean PK) {
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)),
-                Operator.DISTINCT, returnSelector(term));
+                        Operator.DISTINCT, returnSelector(term));
         if (PK) {
             filters.add(new Filter(Operations.FILTER_PK_DISTINCT, relation));
         } else if (indexed) {
@@ -269,8 +279,7 @@ public class LogicalWorkFlowCreator {
 
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)),
 
-                        Operator.MATCH, returnSelector(textToFind));
-
+        Operator.MATCH, returnSelector(textToFind));
 
         filters.add(new Filter(Operations.FILTER_INDEXED_MATCH, relation));
 
@@ -280,7 +289,7 @@ public class LogicalWorkFlowCreator {
     public LogicalWorkFlowCreator addLikeFilter(String columnName, String textToFind) {
 
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)), Operator.LIKE,
-                returnSelector(textToFind));
+                        returnSelector(textToFind));
 
         filters.add(new Filter(Operations.FILTER_INDEXED_MATCH, relation));
 
@@ -337,6 +346,19 @@ public class LogicalWorkFlowCreator {
             ids.add(new ColumnSelector(new ColumnName(catalog, table, field)));
         }
         this.groupBy = new GroupBy(Operations.SELECT_GROUP_BY, ids);
+        return this;
+    }
+
+    public LogicalWorkFlowCreator addOrderByClause(String field, OrderDirection direction) {
+        if (orderBy == null) {
+            orderBy = new OrderBy(Operations.SELECT_ORDER_BY, new LinkedList<OrderByClause>());
+        }
+
+        List<OrderByClause> previousList = orderBy.getIds();
+        previousList.add(new OrderByClause(direction, new ColumnSelector(new ColumnName(catalog, table, field))));
+
+        // clone??
+        orderBy.setIds(previousList);
         return this;
     }
 
