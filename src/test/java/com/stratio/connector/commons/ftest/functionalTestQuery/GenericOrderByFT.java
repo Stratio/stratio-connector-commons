@@ -19,29 +19,26 @@
 package com.stratio.connector.commons.ftest.functionalTestQuery;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
 
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
+import com.stratio.connector.commons.test.util.LogicalWorkFlowCreator;
+import com.stratio.connector.commons.test.util.LogicalWorkFlowCreator.ConnectorField;
+import com.stratio.connector.commons.test.util.TableMetadataBuilder;
 import com.stratio.crossdata.common.data.Cell;
 import com.stratio.crossdata.common.data.ClusterName;
-import com.stratio.crossdata.common.data.ColumnName;
 import com.stratio.crossdata.common.data.Row;
-import com.stratio.crossdata.common.data.TableName;
 import com.stratio.crossdata.common.exceptions.ConnectorException;
-import com.stratio.crossdata.common.logicalplan.LogicalStep;
-import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
-import com.stratio.crossdata.common.logicalplan.Project;
+import com.stratio.crossdata.common.metadata.ColumnType;
 import com.stratio.crossdata.common.metadata.TableMetadata;
 import com.stratio.crossdata.common.result.QueryResult;
+import com.stratio.crossdata.common.statements.structures.OrderDirection;
 
 public abstract class GenericOrderByFT extends GenericConnectorTest {
 
@@ -49,129 +46,143 @@ public abstract class GenericOrderByFT extends GenericConnectorTest {
     public static final String COLUMN_AGE = "age";
     public static final String COLUMN_MONEY = "money";
 
-    public static final int SORT_AGE = 1;
+    public static final String TEXT_VALUE = "text";
+
+    @Test
+    public void sortAscTest() throws ConnectorException {
+
+        prepareDataForTest();
+        // insertRow(1, TEXT_VALUE, 10, 20, tableMetadata, getClusterName());// row,text,money,age
+        // insertRow(2, TEXT_VALUE, 9, 17, tableMetadata, getClusterName());// ej => text:text2, money:9, age:17
+        // insertRow(3, TEXT_VALUE, 11, 26, tableMetadata, getClusterName());
+        // insertRow(4, TEXT_VALUE, 10, 30, tableMetadata, getClusterName());
+        // insertRow(5, TEXT_VALUE, 20, 42, tableMetadata, getClusterName());
+        // insertRow(6, TEXT_VALUE, 10, 10, tableMetadata, getClusterName());
+
+        // Select COLUMN_TEXT
+
+        LogicalWorkFlowCreator logWFCreator = new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName());
+        logWFCreator.addColumnName(COLUMN_TEXT).addColumnName(COLUMN_AGE).addSelect(getSelectClause(logWFCreator));
+        logWFCreator.addOrderByClause(COLUMN_AGE, OrderDirection.ASC);
+
+        // return COLUMN_TEXT order by age ASC
+        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logWFCreator.getLogicalWorkflow());
+
+        assertEquals("The result should have 6 rows", 6, queryResult.getResultSet().size());
+
+        Iterator<Row> rowIterator = queryResult.getResultSet().iterator();
+
+        assertEquals("Columns order is not the expected", "text6", rowIterator.next().getCell(COLUMN_TEXT).getValue());
+        assertEquals("Columns order is not the expected", "text2", rowIterator.next().getCell(COLUMN_TEXT).getValue());
+        assertEquals("Columns order is not the expected", "text1", rowIterator.next().getCell(COLUMN_TEXT).getValue());
+        assertEquals("Columns order is not the expected", "text3", rowIterator.next().getCell(COLUMN_TEXT).getValue());
+        assertEquals("Columns order is not the expected", "text4", rowIterator.next().getCell(COLUMN_TEXT).getValue());
+        assertEquals("Columns order is not the expected", "text5", rowIterator.next().getCell(COLUMN_TEXT).getValue());
+    }
 
     @Test
     public void sortDescTest() throws ConnectorException {
 
-        ClusterName clusterName = getClusterName();
+        prepareDataForTest();
+        // insertRow(1, TEXT_VALUE, 10, 20, tableMetadata, getClusterName());// row,text,money,age
+        // insertRow(2, TEXT_VALUE, 9, 17, tableMetadata, getClusterName());// ej => text:text2, money:9, age:17
+        // insertRow(3, TEXT_VALUE, 11, 26, tableMetadata, getClusterName());
+        // insertRow(4, TEXT_VALUE, 10, 30, tableMetadata, getClusterName());
+        // insertRow(5, TEXT_VALUE, 20, 42, tableMetadata, getClusterName());
+        // insertRow(6, TEXT_VALUE, 10, 10, tableMetadata, getClusterName());
 
-        insertRow(1, "text", 10, 20, clusterName);// row,text,money,age
-        insertRow(2, "text", 9, 17, clusterName);
-        insertRow(3, "text", 11, 26, clusterName);
-        insertRow(4, "text", 10, 30, clusterName);
-        insertRow(5, "text", 20, 42, clusterName);
+        // Select COLUMN_TEXT
 
-        refresh(CATALOG);
-
-        LogicalWorkflow logicalPlan = createLogicalPlanLimit(SORT_AGE);
+        LogicalWorkFlowCreator logWFCreator = new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName());
+        logWFCreator.addColumnName(COLUMN_TEXT).addColumnName(COLUMN_AGE).addSelect(getSelectClause(logWFCreator));
+        logWFCreator.addOrderByClause(COLUMN_AGE, OrderDirection.DESC);
 
         // return COLUMN_TEXT order by age DESC
+        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logWFCreator.getLogicalWorkflow());
 
-        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
-
-        assertEquals(5, queryResult.getResultSet().size());
+        assertEquals("The result should have 6 rows", 6, queryResult.getResultSet().size());
 
         Iterator<Row> rowIterator = queryResult.getResultSet().iterator();
 
-        assertEquals("text5", rowIterator.next().getCell(COLUMN_TEXT).getValue());
-        assertEquals("text4", rowIterator.next().getCell(COLUMN_TEXT).getValue());
-        assertEquals("text3", rowIterator.next().getCell(COLUMN_TEXT).getValue());
-        assertEquals("text1", rowIterator.next().getCell(COLUMN_TEXT).getValue());
-        assertEquals("text2", rowIterator.next().getCell(COLUMN_TEXT).getValue());
+        assertEquals("Columns order is not the expected", "text5", rowIterator.next().getCell(COLUMN_TEXT).getValue());
+        assertEquals("Columns order is not the expected", "text4", rowIterator.next().getCell(COLUMN_TEXT).getValue());
+        assertEquals("Columns order is not the expected", "text3", rowIterator.next().getCell(COLUMN_TEXT).getValue());
+        assertEquals("Columns order is not the expected", "text1", rowIterator.next().getCell(COLUMN_TEXT).getValue());
+        assertEquals("Columns order is not the expected", "text2", rowIterator.next().getCell(COLUMN_TEXT).getValue());
+        assertEquals("Columns order is not the expected", "text6", rowIterator.next().getCell(COLUMN_TEXT).getValue());
 
     }
 
     @Test
     public void sortTestMultifield() throws ConnectorException {
 
-        ClusterName clusterName = getClusterName();
+        prepareDataForTest();
+        // insertRow(1, TEXT_VALUE, 10, 20, tableMetadata, getClusterName());// row,text,money,age
+        // insertRow(2, TEXT_VALUE, 9, 17, tableMetadata, getClusterName());// ej => text:text2, money:9, age:17
+        // insertRow(3, TEXT_VALUE, 11, 26, tableMetadata, getClusterName());
+        // insertRow(4, TEXT_VALUE, 10, 30, tableMetadata, getClusterName());
+        // insertRow(5, TEXT_VALUE, 20, 42, tableMetadata, getClusterName());
+        // insertRow(6, TEXT_VALUE, 10, 10, tableMetadata, getClusterName());
 
-        insertRow(1, "text", 10, 20, clusterName);// row,text,money,age
-        insertRow(2, "text", 9, 17, clusterName);
-        insertRow(3, "text", 11, 26, clusterName);
-        insertRow(4, "text", 10, 30, clusterName);
-        insertRow(5, "text", 20, 42, clusterName);
-        insertRow(6, "text", 10, 10, clusterName);
-
-        refresh(CATALOG);
-
-        LogicalWorkflow logicalPlan = createLogicalPlanMultifield();
+        // Select COLUMN_TEXT
+        LogicalWorkFlowCreator logWFCreator = new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName());
+        logWFCreator.addColumnName(COLUMN_TEXT).addColumnName(COLUMN_AGE).addSelect(getSelectClause(logWFCreator));
+        logWFCreator.addOrderByClause(COLUMN_MONEY, OrderDirection.ASC).addOrderByClause(COLUMN_AGE,
+                        OrderDirection.DESC);
 
         // return COLUMN_TEXT order by money asc, age asc
+        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logWFCreator.getLogicalWorkflow());
 
-        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
-
-        assertEquals(6, queryResult.getResultSet().size());
+        assertEquals("The result should have 6 rows", 6, queryResult.getResultSet().size());
 
         Iterator<Row> rowIterator = queryResult.getResultSet().iterator();
 
-        assertEquals("text2", rowIterator.next().getCell(COLUMN_TEXT).getValue());
-        assertEquals("text6", rowIterator.next().getCell(COLUMN_TEXT).getValue());
-        assertEquals("text1", rowIterator.next().getCell(COLUMN_TEXT).getValue());
-        assertEquals("text4", rowIterator.next().getCell(COLUMN_TEXT).getValue());
-        assertEquals("text3", rowIterator.next().getCell(COLUMN_TEXT).getValue());
-        assertEquals("text5", rowIterator.next().getCell(COLUMN_TEXT).getValue());
+        assertEquals("Columns order is not the expected", "text2", rowIterator.next().getCell(COLUMN_TEXT).getValue());
+        assertEquals("Columns order is not the expected", "text4", rowIterator.next().getCell(COLUMN_TEXT).getValue());
+        assertEquals("Columns order is not the expected", "text1", rowIterator.next().getCell(COLUMN_TEXT).getValue());
+        assertEquals("Columns order is not the expected", "text6", rowIterator.next().getCell(COLUMN_TEXT).getValue());
+        assertEquals("Columns order is not the expected", "text3", rowIterator.next().getCell(COLUMN_TEXT).getValue());
+        assertEquals("Columns order is not the expected", "text5", rowIterator.next().getCell(COLUMN_TEXT).getValue());
 
     }
 
-    private void fail() {
-        assertTrue(false);
-
+    private LinkedList<ConnectorField> getSelectClause(LogicalWorkFlowCreator logWFCreator) {
+        ConnectorField field = logWFCreator.createConnectorField(COLUMN_TEXT, COLUMN_TEXT, ColumnType.VARCHAR);
+        LinkedList<ConnectorField> selectClause = new LinkedList<ConnectorField>();
+        selectClause.add(field);
+        return selectClause;
     }
 
-    private LogicalWorkflow createLogicalPlanLimit(int sortAge) {
+    protected void prepareDataForTest() throws ConnectorException {
 
-        List<LogicalStep> stepList = new ArrayList<>();
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
+        tableMetadataBuilder.addColumn(COLUMN_TEXT, ColumnType.VARCHAR).addColumn(COLUMN_AGE, ColumnType.INT)
+                        .addColumn(COLUMN_MONEY, ColumnType.INT).withPartitionKey(COLUMN_TEXT);
+        TableMetadata tableMetadata = tableMetadataBuilder.build();
 
-        List<ColumnName> columns = new ArrayList<>();
-
-        throw new RuntimeException("Not yet generic supported.");
-    }
-
-    private LogicalWorkflow createLogicalPlan(int sortAge) {
-
-        List<LogicalStep> stepList = new ArrayList<>();
-
-        List<ColumnName> columns = new ArrayList<>();
-
-        columns.add(new ColumnName(CATALOG, TABLE, COLUMN_TEXT));
-        columns.add(new ColumnName(CATALOG, TABLE, COLUMN_AGE));
-        TableName tableName = new TableName(CATALOG, TABLE);
-        Project project = new Project(null, tableName, getClusterName(), columns);
-        stepList.add(project);
-
-        switch (sortAge) {
-        case SORT_AGE:
-
-            throw new RuntimeException("Not yet generic supported.\n");
-
+        if (this.getConnectorHelper().isCatalogMandatory()) {
+            // TODO createCatalog
         }
-        return new LogicalWorkflow(stepList);
+        if (this.getConnectorHelper().isTableMandatory()) {
+            getConnectorHelper().getConnector().getMetadataEngine()
+                            .createTable(getClusterName(), tableMetadataBuilder.build());
+        }
+        if (this.getConnectorHelper().isIndexMandatory()) {
+            // TODO createIndexes
+        }
+        insertRow(1, TEXT_VALUE, 10, 20, tableMetadata, getClusterName());// row,text,money,age
+        insertRow(2, TEXT_VALUE, 9, 17, tableMetadata, getClusterName());// ej => text:text2, money:9, age:17
+        insertRow(3, TEXT_VALUE, 11, 26, tableMetadata, getClusterName());
+        insertRow(4, TEXT_VALUE, 10, 30, tableMetadata, getClusterName());
+        insertRow(5, TEXT_VALUE, 20, 42, tableMetadata, getClusterName());
+        insertRow(6, TEXT_VALUE, 10, 10, tableMetadata, getClusterName());
+
+        refresh(CATALOG);
 
     }
 
-    private LogicalWorkflow createLogicalPlanMultifield() {
-
-        List<LogicalStep> stepList = new ArrayList<>();
-
-        List<ColumnName> columns = new ArrayList<>();
-
-        columns.add(new ColumnName(CATALOG, TABLE, COLUMN_TEXT));
-        columns.add(new ColumnName(CATALOG, TABLE, COLUMN_AGE));
-
-        TableName tableName = new TableName(CATALOG, TABLE);
-        Project project = new Project(null, tableName, getClusterName(), columns);
-
-        stepList.add(project);
-        LogicalStep gropuBy;
-
-        throw new RuntimeException("Not yet generic supported.");
-
-    }
-
-    private void insertRow(int ikey, String texto, int money, int age, ClusterName clusterName)
-                    throws UnsupportedOperationException, ConnectorException {
+    private void insertRow(int ikey, String texto, int money, int age, TableMetadata tableMetadata,
+                    ClusterName clusterName) throws ConnectorException {
 
         Row row = new Row();
         Map<String, Cell> cells = new HashMap<>();
@@ -179,10 +190,7 @@ public abstract class GenericOrderByFT extends GenericConnectorTest {
         cells.put(COLUMN_AGE, new Cell(age));
         cells.put(COLUMN_MONEY, new Cell(money));
         row.setCells(cells);
-        connector.getStorageEngine().insert(
-                        clusterName,
-                        new TableMetadata(new TableName(CATALOG, TABLE), null, null, null, null,
-                                        new LinkedList<ColumnName>(), new LinkedList<ColumnName>()), row, false);
+        connector.getStorageEngine().insert(clusterName, tableMetadata, row, false);
 
     }
 

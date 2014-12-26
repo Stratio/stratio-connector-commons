@@ -85,5 +85,7 @@ QueryEngine
 |  SELECT_FILTER | PK_NEQ_DOUBLE(Int)    |   DONE    | GenericPKQueryIntegerFilterFT    	|           |
 |  SELECT_FILTER | PK_GET(Int)    	 |   DONE    | GenericPKQueryIntegerFilterFT    	|           |
 |  SELECT_FILTER | INDEXED		 |IN PROGRESS| GenericNotIndexedQueryStringFilterFT     |           |
-|  SELECT_ORDERBY| BASIC_ORDER_BY	 |	     | GenericOrderByFT			        |           |
+|  SELECT_ORDERBY| ASC_ORDER_BY		 |   DONE    | GenericOrderByFT			        |           |
+|  SELECT_ORDERBY| DESC_ORDER_BY	 |   DONE    | GenericOrderByFT			        |           |
+|  SELECT_ORDERBY| MULTIFIELD_ORDER_BY	 |   DONE    | GenericOrderByFT			        |           |
 

@@ -67,7 +67,6 @@ public abstract class GenericConnectorTest<T extends IConnector> {
         dropTable(CATALOG, TABLE);
         deleteCatalog(CATALOG);
 
-
     }
 
     protected void deleteCatalog(String catalog) throws UnsupportedException, ExecutionException {
@@ -116,13 +115,13 @@ public abstract class GenericConnectorTest<T extends IConnector> {
 
     @After
     public void tearDown() throws ConnectionException, UnsupportedException, ExecutionException {
+        // TODO the catalog and the table are not removed from the db when deleting between test.
 
         if (deleteBeteweenTest) {
             deleteCatalog(CATALOG);
             dropTable(CATALOG, TABLE);
             if (logger.isDebugEnabled()) {
                 logger.debug("Delete Catalog: " + CATALOG);
-
 
             }
 
