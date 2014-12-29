@@ -113,14 +113,14 @@ public class LogicalWorkFlowCreator {
         }
 
         if (select == null) {
-            Map<ColumnName, String> selectColumn = new LinkedHashMap<>();
+            Map<Selector, String> selectColumn = new LinkedHashMap<>();
             Map<String, ColumnType> typeMap = new LinkedHashMap();
-            Map<ColumnName, ColumnType> typeMapColumnName = new LinkedHashMap<>();
+            Map<Selector, ColumnType> typeMapColumnName = new LinkedHashMap<>();
             for (ColumnName columnName : project.getColumnList()) {
-                ColumnName columnNameTemp = new ColumnName(catalog, table, columnName.getName());
-                selectColumn.put(columnNameTemp, columnName.getName());
+                ColumnSelector columnSelector = new ColumnSelector(new ColumnName(catalog, table, columnName.getName()));
+                selectColumn.put(columnSelector, columnName.getName());
                 typeMap.put(columnName.getAlias(), ColumnType.VARCHAR);
-                typeMapColumnName.put(columnNameTemp, ColumnType.VARCHAR);
+                typeMapColumnName.put(columnSelector, ColumnType.VARCHAR);
             }
 
             select = new Select(Operations.SELECT_OPERATOR, selectColumn, typeMap, typeMapColumnName); // The select is
@@ -297,14 +297,14 @@ public class LogicalWorkFlowCreator {
     }
 
     public LogicalWorkFlowCreator addSelect(LinkedList<ConnectorField> fields) {
-        Map<ColumnName, String> mapping = new LinkedHashMap<>();
+        Map<Selector, String> mapping = new LinkedHashMap<>();
         Map<String, ColumnType> types = new LinkedHashMap<>();
-        Map<ColumnName, ColumnType> typeMapFormColumnName = new LinkedHashMap<>();
+        Map<Selector, ColumnType> typeMapFormColumnName = new LinkedHashMap<>();
         for (ConnectorField connectorField : fields) {
-            ColumnName columName = new ColumnName(catalog, table, connectorField.name);
-            mapping.put(columName, connectorField.alias);
+            ColumnSelector columnSelector = new ColumnSelector(new ColumnName(catalog, table, connectorField.name));
+            mapping.put(columnSelector, connectorField.alias);
             types.put(connectorField.alias, connectorField.columnType);
-            typeMapFormColumnName.put(columName, connectorField.columnType);
+            typeMapFormColumnName.put(columnSelector, connectorField.columnType);
         }
 
         select = new Select(Operations.PROJECT, mapping, types, typeMapFormColumnName);

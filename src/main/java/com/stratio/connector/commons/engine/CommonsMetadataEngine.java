@@ -18,6 +18,7 @@
 
 package com.stratio.connector.commons.engine;
 
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -30,6 +31,7 @@ import com.stratio.crossdata.common.data.AlterOptions;
 import com.stratio.crossdata.common.data.CatalogName;
 import com.stratio.crossdata.common.data.ClusterName;
 import com.stratio.crossdata.common.data.TableName;
+import com.stratio.crossdata.common.exceptions.ConnectorException;
 import com.stratio.crossdata.common.exceptions.ExecutionException;
 import com.stratio.crossdata.common.exceptions.UnsupportedException;
 import com.stratio.crossdata.common.metadata.CatalogMetadata;
@@ -82,7 +84,7 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
      */
     @Override
     public final void createCatalog(ClusterName targetCluster, CatalogMetadata catalogMetadata)
-            throws ExecutionException, UnsupportedException {
+                    throws ExecutionException, UnsupportedException {
 
         connectionHandler.startJob(targetCluster.getName());
 
@@ -109,8 +111,7 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
     @Override
     public final void createTable(ClusterName targetCluster, TableMetadata tableMetadata) throws UnsupportedException,
 
-                    ExecutionException {
-
+    ExecutionException {
 
         connectionHandler.startJob(targetCluster.getName());
 
@@ -136,9 +137,8 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
     @Override
     public final void dropCatalog(ClusterName targetCluster, CatalogName name) throws UnsupportedException,
 
-            ExecutionException {
+    ExecutionException {
         connectionHandler.startJob(targetCluster.getName());
-
 
         try {
             dropCatalog(name, connectionHandler.getConnection(targetCluster.getName()));
@@ -163,9 +163,9 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
     @Override
     public final void dropTable(ClusterName targetCluster, TableName name) throws UnsupportedException,
 
-                    ExecutionException {
+    ExecutionException {
 
-            connectionHandler.startJob(targetCluster.getName());
+        connectionHandler.startJob(targetCluster.getName());
 
         try {
             dropTable(name, connectionHandler.getConnection(targetCluster.getName()));
@@ -189,8 +189,7 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
     @Override
     public final void createIndex(ClusterName targetCluster, IndexMetadata indexMetadata) throws UnsupportedException,
 
-                    ExecutionException {
-
+    ExecutionException {
 
         connectionHandler.startJob(targetCluster.getName());
 
@@ -275,6 +274,45 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
             connectionHandler.endJob(targetCluster.getName());
         }
     }
+
+    @Override
+    public List<CatalogMetadata> provideMetadata(ClusterName targetCluster) throws ConnectorException {
+        try {
+            connectionHandler.startJob(targetCluster.getName());
+            return provideMetadata(connectionHandler.getConnection(targetCluster.getName()));
+        } finally {
+            connectionHandler.endJob(targetCluster.getName());
+        }
+    }
+
+    @Override
+    public CatalogMetadata provideCatalogMetadata(ClusterName targetCluster, CatalogName catalogName)
+                    throws ConnectorException {
+        try {
+            connectionHandler.startJob(targetCluster.getName());
+            return provideCatalogMetadata(catalogName, connectionHandler.getConnection(targetCluster.getName()));
+        } finally {
+            connectionHandler.endJob(targetCluster.getName());
+        }
+    }
+
+    @Override
+    public TableMetadata provideTableMetadata(ClusterName targetCluster, TableName tableName) throws ConnectorException {
+        try {
+            connectionHandler.startJob(targetCluster.getName());
+            return provideTableMetadata(tableName, connectionHandler.getConnection(targetCluster.getName()));
+        } finally {
+            connectionHandler.endJob(targetCluster.getName());
+        }
+    }
+
+    protected abstract List<CatalogMetadata> provideMetadata(Connection connection) throws ConnectorException;
+
+    protected abstract CatalogMetadata provideCatalogMetadata(CatalogName catalogName, Connection connection)
+                    throws ConnectorException;
+
+    protected abstract TableMetadata provideTableMetadata(TableName tableName, Connection connection)
+                    throws ConnectorException;
 
     /**
      * Alter options in an existing table.

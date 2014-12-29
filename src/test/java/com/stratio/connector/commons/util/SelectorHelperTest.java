@@ -22,7 +22,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 
-import java.util.Collections;
+import java.util.LinkedList;
 
 import org.junit.Test;
 
@@ -115,7 +115,7 @@ public class SelectorHelperTest {
     @Test
     public void testGetClassException() {
 
-        Selector[] exceptionSelector = { new AsteriskSelector(), new FunctionSelector("", Collections.EMPTY_LIST),
+        Selector[] exceptionSelector = { new AsteriskSelector(), new FunctionSelector("", new LinkedList<Selector>()),
                         new RelationSelector(mock(Relation.class)) };
 
         for (int i = 0; i < exceptionSelector.length; i++) {
@@ -252,15 +252,13 @@ public class SelectorHelperTest {
         SelectorHelper.getRestrictedValue(new ColumnSelector(
                         new ColumnName(new TableName("catalog", "table"), "column")), SelectorType.BOOLEAN);
 
-
     }
 
     @Test
     public void getRestrictedValueTest() throws Exception {
 
-        String value = (String) SelectorHelper
-                .getRestrictedValue(new ColumnSelector(new ColumnName(new TableName("catalog", "table"), "column")),
-                        SelectorType.COLUMN);
+        String value = (String) SelectorHelper.getRestrictedValue(new ColumnSelector(new ColumnName(new TableName(
+                        "catalog", "table"), "column")), SelectorType.COLUMN);
 
         assertEquals("column", value);
     }

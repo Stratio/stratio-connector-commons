@@ -123,19 +123,19 @@ public class ExampleWorkflows {
     }
 
     public Select getSelect(String[] alias, ColumnType[] types, ColumnName... columnNames) {
-        Map<ColumnName, String> columnMap = new LinkedHashMap<>();
+        Map<Selector, String> columnMap = new LinkedHashMap<>();
         Map<String, ColumnType> columntype = new LinkedHashMap<>();
         int aliasIndex = 0;
-        Map<ColumnName, ColumnType> typeMapFromColumnName = new LinkedHashMap();
+        Map<Selector, ColumnType> typeMapFromColumnName = new LinkedHashMap<>();
         for (ColumnName column : columnNames) {
-            ColumnName columnName = new ColumnName(catalog, table, column.getName());
-            columnMap.put(columnName, alias[aliasIndex]);
+            ColumnSelector columnSelector = new ColumnSelector(new ColumnName(catalog, table, column.getName()));
+            columnMap.put(columnSelector, alias[aliasIndex]);
             columntype.put(column.getQualifiedName(), types[aliasIndex]);
-            typeMapFromColumnName.put(columnName, types[aliasIndex]);
+            typeMapFromColumnName.put(columnSelector, types[aliasIndex]);
             aliasIndex++;
         }
-
         return new Select(Operations.SELECT_OPERATOR, columnMap, columntype, typeMapFromColumnName);
+
     }
 
     public Filter getFilter(Operations filterOp, ColumnName column, Operator op, Selector right) {
