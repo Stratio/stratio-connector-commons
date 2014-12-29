@@ -20,12 +20,14 @@ package com.stratio.connector.commons.ftest.functionalTestQuery;
 import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 import org.junit.Test;
 
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
 import com.stratio.connector.commons.test.util.LogicalWorkFlowCreator;
+import com.stratio.connector.commons.test.util.LogicalWorkFlowCreator.ConnectorField;
 import com.stratio.connector.commons.test.util.TableMetadataBuilder;
 import com.stratio.crossdata.common.data.Cell;
 import com.stratio.crossdata.common.data.Row;
@@ -52,9 +54,14 @@ public abstract class GenericGroupByFT extends GenericConnectorTest {
         insertRow(5, "text", 20, 42);
         insertRow(6, "text", 20, 48);
 
-        LogicalWorkflow logicalWorkflow = new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName())
+        LogicalWorkFlowCreator logicalWorkflowCreator = new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName())
                         .addColumnName(COLUMN_ID).addColumnName(COLUMN_TEXT).addColumnName(COLUMN_AGE)
-                        .addColumnName(COLUMN_MONEY).addGroupBy(COLUMN_AGE).getLogicalWorkflow();
+                        .addColumnName(COLUMN_MONEY).addGroupBy(COLUMN_AGE);
+        ConnectorField cField = logicalWorkflowCreator.createConnectorField(COLUMN_TEXT, COLUMN_TEXT, ColumnType.TEXT);
+        LinkedList<ConnectorField> selectFields = new LinkedList<>();
+        selectFields.add(cField);
+        logicalWorkflowCreator.addSelect(selectFields);
+        LogicalWorkflow logicalWorkflow = logicalWorkflowCreator.getLogicalWorkflow();
 
         QueryResult queryResult = connector.getQueryEngine().execute(logicalWorkflow);
 
