@@ -306,12 +306,12 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
         }
     }
 
-    protected abstract List<CatalogMetadata> provideMetadata(Connection connection) throws ConnectorException;
+    protected abstract List<CatalogMetadata> provideMetadata(Connection<T> connection) throws ConnectorException;
 
-    protected abstract CatalogMetadata provideCatalogMetadata(CatalogName catalogName, Connection connection)
+    protected abstract CatalogMetadata provideCatalogMetadata(CatalogName catalogName, Connection<T> connection)
                     throws ConnectorException;
 
-    protected abstract TableMetadata provideTableMetadata(TableName tableName, Connection connection)
+    protected abstract TableMetadata provideTableMetadata(TableName tableName, Connection<T> connection)
                     throws ConnectorException;
 
     /**
@@ -328,8 +328,8 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
      * @throws ExecutionException
      *             if any error happen during the execution.
      */
-    protected abstract void alterCatalog(CatalogName catalogName, Map<Selector, Selector> options, Connection connection)
-                    throws UnsupportedException, ExecutionException;
+    protected abstract void alterCatalog(CatalogName catalogName, Map<Selector, Selector> options,
+                    Connection<T> connection) throws UnsupportedException, ExecutionException;
 
     /**
      * Abstract method which must be implemented by the concrete database metadataEngine to add, delete, or modify
