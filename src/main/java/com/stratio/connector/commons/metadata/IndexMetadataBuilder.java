@@ -41,9 +41,7 @@ import com.stratio.crossdata.common.statements.structures.StringSelector;
  * @author darroyo
  */
 public class IndexMetadataBuilder {
-    static final String INDEX_NAME = "index1";
-    static final String INDEX_NAME_2 = "index2";
-    static final String COLUMN_INDEX_NAME = "columnName_2";
+
     /**
      * The Log.
      */
