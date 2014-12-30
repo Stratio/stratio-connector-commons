@@ -15,7 +15,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package com.stratio.connector.commons.test.util;
+package com.stratio.connector.commons.metadata;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -26,7 +26,6 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.stratio.connector.commons.ftest.helper.IConnectorHelper;
 import com.stratio.crossdata.common.data.ClusterName;
 import com.stratio.crossdata.common.data.ColumnName;
 import com.stratio.crossdata.common.data.IndexName;
@@ -53,9 +52,20 @@ public class TableMetadataBuilder {
     private Map<IndexName, IndexMetadata> indexes;
     private LinkedList<ColumnName> partitionKey;
     private LinkedList<ColumnName> clusterKey;
-    private ClusterName clusterName = null;
+    private ClusterName clusterName;
 
+    @Deprecated
     public TableMetadataBuilder(String catalogName, String tableName) {
+        this.tableName = new TableName(catalogName, tableName);
+        columns = new LinkedHashMap<ColumnName, ColumnMetadata>();
+        indexes = new LinkedHashMap<IndexName, IndexMetadata>();
+        partitionKey = new LinkedList<ColumnName>();
+        clusterKey = new LinkedList<ColumnName>();
+        options = null;
+    }
+
+    public TableMetadataBuilder(String catalogName, String tableName, String clusName) {
+        this.clusterName = new ClusterName(clusName);
         this.tableName = new TableName(catalogName, tableName);
         columns = new LinkedHashMap<ColumnName, ColumnMetadata>();
         indexes = new LinkedHashMap<IndexName, IndexMetadata>();
@@ -118,6 +128,16 @@ public class TableMetadataBuilder {
         return this;
     }
 
+    /**
+     * Must be called after including columns options in indexMetadata will be null TODO same as options?.
+     * ColumnMetadata is recovered from the tableMetadata
+     *
+     */
+    public TableMetadataBuilder addIndex(IndexMetadata indexMetadata) {
+        indexes.put(indexMetadata.getName(), indexMetadata);
+        return this;
+    }
+
     // TODO implement the generic
     /*
      * public TableMetadataBuilder withIndexes(){ }
@@ -139,31 +159,23 @@ public class TableMetadataBuilder {
         return this;
     }
 
+    @Deprecated
     public TableMetadataBuilder withClusterNameRef(ClusterName clusterName) {
         this.clusterName = clusterName;
         return this;
     }
 
-    public TableMetadata build(IConnectorHelper connectorHelper) {
-        TableMetadata tableMetadata = new TableMetadata(tableName, options, columns, indexes, clusterName,
-                        partitionKey, clusterKey);
-        if (connectorHelper.isPKMandatory()) {
-            if (tableMetadata.getPrimaryKey().isEmpty()) {
-                ColumnName columnName = columns.keySet().toArray(new ColumnName[0])[0];
-                LinkedList<ColumnName> keyList = new LinkedList<>();
-                keyList.add(columnName);
-                tableMetadata = new TableMetadata(tableName, options, columns, indexes, clusterName, partitionKey,
-                                keyList);
-            }
-        }
-
-        return tableMetadata;
-
+    public TableMetadata build() {
+        return build(false);
     }
 
-    public TableMetadata build() {
+    public TableMetadata build(boolean isPKRequired) {
+        if (isPKRequired) {
+            if (partitionKey.isEmpty()) {
+                this.withPartitionKey(columns.keySet().iterator().next().getName());
+            }
+        }
         return new TableMetadata(tableName, options, columns, indexes, clusterName, partitionKey, clusterKey);
-
     }
 
 }

@@ -26,9 +26,9 @@ import java.util.Map;
 import org.junit.Test;
 
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
+import com.stratio.connector.commons.metadata.TableMetadataBuilder;
 import com.stratio.connector.commons.test.util.LogicalWorkFlowCreator;
 import com.stratio.connector.commons.test.util.LogicalWorkFlowCreator.ConnectorField;
-import com.stratio.connector.commons.test.util.TableMetadataBuilder;
 import com.stratio.crossdata.common.data.Cell;
 import com.stratio.crossdata.common.data.Row;
 import com.stratio.crossdata.common.exceptions.ConnectorException;
@@ -85,7 +85,7 @@ public abstract class GenericGroupByFT extends GenericConnectorTest {
         tableMetadataBuilder.addColumn(COLUMN_ID, ColumnType.INT).addColumn(COLUMN_TEXT, ColumnType.VARCHAR)
                         .addColumn(COLUMN_AGE, ColumnType.INT).addColumn(COLUMN_MONEY, ColumnType.INT);
 
-        TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper());
+        TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper().isPKMandatory());
 
         if (getConnectorHelper().isTableMandatory()) {
             connector.getMetadataEngine().createTable(getClusterName(), targetTable);

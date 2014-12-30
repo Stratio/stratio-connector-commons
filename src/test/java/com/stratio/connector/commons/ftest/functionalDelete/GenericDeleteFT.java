@@ -31,8 +31,8 @@ import java.util.Set;
 import org.junit.Test;
 
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
+import com.stratio.connector.commons.metadata.TableMetadataBuilder;
 import com.stratio.connector.commons.test.util.LogicalWorkFlowCreator;
-import com.stratio.connector.commons.test.util.TableMetadataBuilder;
 import com.stratio.crossdata.common.data.Cell;
 import com.stratio.crossdata.common.data.ClusterName;
 import com.stratio.crossdata.common.data.ColumnName;
@@ -151,15 +151,19 @@ public abstract class GenericDeleteFT extends GenericConnectorTest {
         tableMetadataBuilder.addColumn(COLUMN_PK, ColumnType.VARCHAR).addColumn(COLUMN_1, ColumnType.VARCHAR)
                         .withPartitionKey(COLUMN_PK);
 
-        connector.getStorageEngine().insert(clusterName, tableMetadataBuilder.build(getConnectorHelper()),
-                        createRow("0", "value1"), false);
-        connector.getStorageEngine().insert(clusterName, tableMetadataBuilder.build(getConnectorHelper()),
-                        createRow("1", "value2"), false);
-        connector.getStorageEngine().insert(clusterName, tableMetadataBuilder.build(getConnectorHelper()),
-                        createRow("2", "value3"), false);
+        connector.getStorageEngine().insert(clusterName,
+                        tableMetadataBuilder.build(getConnectorHelper().isPKMandatory()), createRow("0", "value1"),
+                        false);
+        connector.getStorageEngine().insert(clusterName,
+                        tableMetadataBuilder.build(getConnectorHelper().isPKMandatory()), createRow("1", "value2"),
+                        false);
+        connector.getStorageEngine().insert(clusterName,
+                        tableMetadataBuilder.build(getConnectorHelper().isPKMandatory()), createRow("2", "value3"),
+                        false);
 
-        connector.getStorageEngine().insert(clusterName, tableMetadataBuilder.build(getConnectorHelper()),
-                        createRow("3", "value3"), false);
+        connector.getStorageEngine().insert(clusterName,
+                        tableMetadataBuilder.build(getConnectorHelper().isPKMandatory()), createRow("3", "value3"),
+                        false);
 
         getConnectorHelper().refresh(CATALOG);
         QueryResult queryResult = connector.getQueryEngine().execute(createLogicalWorkFlow(CATALOG, TABLE));

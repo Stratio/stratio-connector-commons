@@ -25,9 +25,9 @@ import java.util.Map;
 import org.junit.Test;
 
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
-import com.stratio.connector.commons.test.util.CatalogMetadataBuilder;
+import com.stratio.connector.commons.metadata.CatalogMetadataBuilder;
+import com.stratio.connector.commons.metadata.TableMetadataBuilder;
 import com.stratio.connector.commons.test.util.LogicalWorkFlowCreator;
-import com.stratio.connector.commons.test.util.TableMetadataBuilder;
 import com.stratio.crossdata.common.data.AlterOperation;
 import com.stratio.crossdata.common.data.AlterOptions;
 import com.stratio.crossdata.common.data.Cell;
@@ -57,20 +57,21 @@ public abstract class GenericMetadataAlterTableFT extends GenericConnectorTest {
         tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR);
 
         CatalogMetadataBuilder catalogMetadataBuilder = new CatalogMetadataBuilder(CATALOG);
-        catalogMetadataBuilder.withTables(tableMetadataBuilder.build(getConnectorHelper()));
+        catalogMetadataBuilder.withTables(tableMetadataBuilder.build(getConnectorHelper().isPKMandatory()));
         if (iConnectorHelper.isCatalogMandatory()) {
             connector.getMetadataEngine().createCatalog(clusterName, catalogMetadataBuilder.build());
         }
         if (iConnectorHelper.isTableMandatory()) {
-            connector.getMetadataEngine().createTable(clusterName, tableMetadataBuilder.build(getConnectorHelper()));
+            connector.getMetadataEngine().createTable(clusterName,
+                            tableMetadataBuilder.build(getConnectorHelper().isPKMandatory()));
         } else {
 
             Row row = new Row();
             Map<String, Cell> cells = new HashMap<>();
             cells.put(COLUMN_1, new Cell("value1"));
             row.setCells(cells);
-            connector.getStorageEngine().insert(clusterName, tableMetadataBuilder.build(getConnectorHelper()), row,
-                            false);
+            connector.getStorageEngine().insert(clusterName,
+                            tableMetadataBuilder.build(getConnectorHelper().isPKMandatory()), row, false);
             insertElement++;
             refresh(CATALOG);
         }
@@ -92,7 +93,8 @@ public abstract class GenericMetadataAlterTableFT extends GenericConnectorTest {
         row.setCells(cells);
 
         tableMetadataBuilder.addColumn(COLUMN_2, ColumnType.INT);
-        connector.getStorageEngine().insert(clusterName, tableMetadataBuilder.build(getConnectorHelper()), row, false);
+        connector.getStorageEngine().insert(clusterName,
+                        tableMetadataBuilder.build(getConnectorHelper().isPKMandatory()), row, false);
         insertElement++;
 
         refresh(CATALOG);
@@ -119,12 +121,13 @@ public abstract class GenericMetadataAlterTableFT extends GenericConnectorTest {
         tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.INT);
 
         CatalogMetadataBuilder catalogMetadataBuilder = new CatalogMetadataBuilder(CATALOG);
-        catalogMetadataBuilder.withTables(tableMetadataBuilder.build(getConnectorHelper()));
+        catalogMetadataBuilder.withTables(tableMetadataBuilder.build(getConnectorHelper().isPKMandatory()));
         if (iConnectorHelper.isCatalogMandatory()) {
             connector.getMetadataEngine().createCatalog(clusterName, catalogMetadataBuilder.build());
         }
         if (iConnectorHelper.isTableMandatory()) {
-            connector.getMetadataEngine().createTable(clusterName, tableMetadataBuilder.build(getConnectorHelper()));
+            connector.getMetadataEngine().createTable(clusterName,
+                            tableMetadataBuilder.build(getConnectorHelper().isPKMandatory()));
         }
 
         // Insert a row
@@ -134,7 +137,8 @@ public abstract class GenericMetadataAlterTableFT extends GenericConnectorTest {
         cells.put(COLUMN_2, new Cell(25));
         row.setCells(cells);
 
-        connector.getStorageEngine().insert(clusterName, tableMetadataBuilder.build(getConnectorHelper()), row, false);
+        connector.getStorageEngine().insert(clusterName,
+                        tableMetadataBuilder.build(getConnectorHelper().isPKMandatory()), row, false);
 
         // Verify both fields are returned
         QueryResult queryResult = connector.getQueryEngine().execute(

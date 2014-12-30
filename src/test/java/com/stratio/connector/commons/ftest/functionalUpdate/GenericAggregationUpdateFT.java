@@ -27,8 +27,8 @@ import java.util.Map;
 import org.junit.Test;
 
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
+import com.stratio.connector.commons.metadata.TableMetadataBuilder;
 import com.stratio.connector.commons.test.util.LogicalWorkFlowCreator;
-import com.stratio.connector.commons.test.util.TableMetadataBuilder;
 import com.stratio.crossdata.common.connector.IConnector;
 import com.stratio.crossdata.common.data.Cell;
 import com.stratio.crossdata.common.data.ClusterName;
@@ -133,7 +133,7 @@ public abstract class GenericAggregationUpdateFT extends GenericConnectorTest<IC
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
         tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.BIGINT);
 
-        TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper());
+        TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper().isPKMandatory());
 
         if (getConnectorHelper().isTableMandatory()) {
             connector.getMetadataEngine().createTable(clusterName, targetTable);
@@ -193,7 +193,7 @@ public abstract class GenericAggregationUpdateFT extends GenericConnectorTest<IC
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
         tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.BIGINT);
 
-        TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper());
+        TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper().isPKMandatory());
 
         if (getConnectorHelper().isTableMandatory()) {
             connector.getMetadataEngine().createTable(getClusterName(), targetTable);

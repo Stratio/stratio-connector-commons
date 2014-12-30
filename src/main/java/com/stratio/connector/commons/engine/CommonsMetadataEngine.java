@@ -279,7 +279,7 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
     public List<CatalogMetadata> provideMetadata(ClusterName targetCluster) throws ConnectorException {
         try {
             connectionHandler.startJob(targetCluster.getName());
-            return provideMetadata(connectionHandler.getConnection(targetCluster.getName()));
+            return provideMetadata(targetCluster, connectionHandler.getConnection(targetCluster.getName()));
         } finally {
             connectionHandler.endJob(targetCluster.getName());
         }
@@ -290,7 +290,8 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
                     throws ConnectorException {
         try {
             connectionHandler.startJob(targetCluster.getName());
-            return provideCatalogMetadata(catalogName, connectionHandler.getConnection(targetCluster.getName()));
+            return provideCatalogMetadata(catalogName, targetCluster,
+                            connectionHandler.getConnection(targetCluster.getName()));
         } finally {
             connectionHandler.endJob(targetCluster.getName());
         }
@@ -300,19 +301,21 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
     public TableMetadata provideTableMetadata(ClusterName targetCluster, TableName tableName) throws ConnectorException {
         try {
             connectionHandler.startJob(targetCluster.getName());
-            return provideTableMetadata(tableName, connectionHandler.getConnection(targetCluster.getName()));
+            return provideTableMetadata(tableName, targetCluster,
+                            connectionHandler.getConnection(targetCluster.getName()));
         } finally {
             connectionHandler.endJob(targetCluster.getName());
         }
     }
 
-    protected abstract List<CatalogMetadata> provideMetadata(Connection<T> connection) throws ConnectorException;
-
-    protected abstract CatalogMetadata provideCatalogMetadata(CatalogName catalogName, Connection<T> connection)
+    protected abstract List<CatalogMetadata> provideMetadata(ClusterName targetCluster, Connection<T> connection)
                     throws ConnectorException;
 
-    protected abstract TableMetadata provideTableMetadata(TableName tableName, Connection<T> connection)
-                    throws ConnectorException;
+    protected abstract CatalogMetadata provideCatalogMetadata(CatalogName catalogName, ClusterName targetCluster,
+                    Connection<T> connection) throws ConnectorException;
+
+    protected abstract TableMetadata provideTableMetadata(TableName tableName, ClusterName targetCluster,
+                    Connection<T> connection) throws ConnectorException;
 
     /**
      * Alter options in an existing table.

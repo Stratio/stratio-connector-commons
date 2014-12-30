@@ -32,8 +32,8 @@ import java.util.Set;
 import org.junit.Test;
 
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
+import com.stratio.connector.commons.metadata.TableMetadataBuilder;
 import com.stratio.connector.commons.test.util.LogicalWorkFlowCreator;
-import com.stratio.connector.commons.test.util.TableMetadataBuilder;
 import com.stratio.crossdata.common.data.Cell;
 import com.stratio.crossdata.common.data.ClusterName;
 import com.stratio.crossdata.common.data.ColumnName;
@@ -145,7 +145,7 @@ public abstract class GenericQueryFT extends GenericConnectorTest {
         tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.INT)
                         .addColumn(COLUMN_3, ColumnType.BOOLEAN);
 
-        TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper());
+        TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper().isPKMandatory());
 
         row.setCells(cells);
         connector.getStorageEngine().insert(getClusterName(), targetTable, row, false);
@@ -227,7 +227,7 @@ public abstract class GenericQueryFT extends GenericConnectorTest {
         tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.VARCHAR)
                         .addColumn(COLUMN_3, ColumnType.VARCHAR);
 
-        TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper());
+        TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper().isPKMandatory());
 
         connector.getStorageEngine().insert(clusterNodeName, targetTable, row, false);
 

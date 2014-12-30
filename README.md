@@ -51,7 +51,6 @@ Helper classes for simplifying testing:
  * TableMetadataBuilder: used to create TableMetadata
  * IndexMetadataBuilder: used to create IndexMetadata
 
-
 Common processing for dealing with Crossdata structures are included:
 
  * ManifestUtil: Parses the Connector manifest to extract not only the connector but the datastore name. It should be used to allow different connector names in the configuration. 

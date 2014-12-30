@@ -15,7 +15,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package com.stratio.connector.commons.test.util;
+package com.stratio.connector.commons.metadata;
 
 import java.util.Collections;
 import java.util.HashMap;

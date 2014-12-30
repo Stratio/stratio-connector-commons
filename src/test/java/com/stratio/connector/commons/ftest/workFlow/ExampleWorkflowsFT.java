@@ -28,7 +28,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
-import com.stratio.connector.commons.test.util.TableMetadataBuilder;
+import com.stratio.connector.commons.metadata.TableMetadataBuilder;
 import com.stratio.crossdata.common.data.ColumnName;
 import com.stratio.crossdata.common.data.IndexName;
 import com.stratio.crossdata.common.data.Row;
@@ -67,7 +67,7 @@ public abstract class ExampleWorkflowsFT extends GenericConnectorTest {
                             .addColumn(ExampleWorkflows.COLUMN_BOOL, ColumnType.BOOLEAN)
                             .withPartitionKey(ExampleWorkflows.COLUMN_ID);
 
-            TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper());
+            TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper().isPKMandatory());
 
             for (int i = 0; i < 100; i++) {
                 connector.getStorageEngine().insert(getClusterName(), targetTable, exampleWorkflows.getRows(i), false);

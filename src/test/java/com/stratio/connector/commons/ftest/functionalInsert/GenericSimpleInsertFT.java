@@ -28,9 +28,9 @@ import java.util.Map;
 import org.junit.Test;
 
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
+import com.stratio.connector.commons.metadata.TableMetadataBuilder;
 import com.stratio.connector.commons.test.util.LogicalWorkFlowCreator;
 import com.stratio.connector.commons.test.util.LogicalWorkFlowCreator.ConnectorField;
-import com.stratio.connector.commons.test.util.TableMetadataBuilder;
 import com.stratio.crossdata.common.data.CatalogName;
 import com.stratio.crossdata.common.data.Cell;
 import com.stratio.crossdata.common.data.ClusterName;
@@ -256,7 +256,7 @@ public abstract class GenericSimpleInsertFT extends GenericConnectorTest {
         if (withPK) {
             tableMetadataBuilder.withPartitionKey(COLUMN_1);
         }
-        TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper());
+        TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper().isPKMandatory());
 
         if (getConnectorHelper().isTableMandatory()) {
             connector.getMetadataEngine().createTable(getClusterName(), targetTable);
@@ -285,7 +285,7 @@ public abstract class GenericSimpleInsertFT extends GenericConnectorTest {
         tableMetadataBuilder.withPartitionKey(COLUMN_1);
         tableMetadataBuilder.withClusterKey(clusterKey);
 
-        TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper());
+        TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper().isPKMandatory());
         if (getConnectorHelper().isCatalogMandatory()) {
             connector.getMetadataEngine()
                             .createCatalog(getClusterName(),

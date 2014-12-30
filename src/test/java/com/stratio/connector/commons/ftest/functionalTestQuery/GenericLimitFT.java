@@ -26,8 +26,8 @@ import java.util.Map;
 import org.junit.Test;
 
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
+import com.stratio.connector.commons.metadata.TableMetadataBuilder;
 import com.stratio.connector.commons.test.util.LogicalWorkFlowCreator;
-import com.stratio.connector.commons.test.util.TableMetadataBuilder;
 import com.stratio.crossdata.common.data.Cell;
 import com.stratio.crossdata.common.data.ClusterName;
 import com.stratio.crossdata.common.data.Row;
@@ -84,7 +84,7 @@ public abstract class GenericLimitFT extends GenericConnectorTest {
         tableMetadataBuilder.addColumn(COLUMN_TEXT, ColumnType.VARCHAR).addColumn(COLUMN_AGE, ColumnType.INT)
                         .addColumn(COLUMN_MONEY, ColumnType.INT);
 
-        TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper());
+        TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper().isPKMandatory());
 
         connector.getStorageEngine().insert(cLusterName, targetTable, row, false);
 

@@ -33,8 +33,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
+import com.stratio.connector.commons.metadata.TableMetadataBuilder;
 import com.stratio.connector.commons.test.util.LogicalWorkFlowCreator;
-import com.stratio.connector.commons.test.util.TableMetadataBuilder;
 import com.stratio.crossdata.common.data.Cell;
 import com.stratio.crossdata.common.data.ClusterName;
 import com.stratio.crossdata.common.data.ColumnName;
@@ -161,7 +161,7 @@ public abstract class GenericNotIndexedQueryStringFilterFT extends GenericConnec
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
         tableMetadataBuilder.addColumn("id", ColumnType.INT).addColumn(COLUMN_TEXT, ColumnType.VARCHAR);
         tableMetadataBuilder.addIndex(IndexType.FULL_TEXT, "indexText", COLUMN_TEXT);
-        TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper());
+        TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper().isPKMandatory());
         TableName tableName = new TableName(CATALOG, TABLE);
 
         // Creating indexMetadata
