@@ -46,8 +46,7 @@ public interface IConnectorHelper {
 
     Collection<ColumnType> getAllSupportedColumnType();
 
-    boolean containsIndex(String catalogName, String collectionName,
-            String indexName);
+    boolean containsIndex(String catalogName, String collectionName, String indexName);
 
     int countIndexes(String catalogName, String collectionName);
 

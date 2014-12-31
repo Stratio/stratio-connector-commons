@@ -62,7 +62,10 @@ public abstract class GenericConnectorTest<T extends IConnector> {
         iConnectorHelper = getConnectorHelper();
         connector = getConnector();
         connector.init(getConfiguration());
-        connector.connect(getICredentials(), getConnectorClusterConfig());
+        ConnectorClusterConfig connectorClusterConfig = getConnectorClusterConfig();
+        connector.connect(getICredentials(),
+                        new ConnectorClusterConfig(getClusterName(), connectorClusterConfig.getConnectorOptions(),
+                                        connectorClusterConfig.getClusterOptions()));
 
         dropTable(CATALOG, TABLE);
         deleteCatalog(CATALOG);
