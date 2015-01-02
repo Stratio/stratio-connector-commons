@@ -23,11 +23,12 @@ StorageEngine
 | INSERT   	 |  PK(Float)	         |IN PROGRESS| 			           		|           |
 | INSERT   	 |  PK(Map)	         |IN PROGRESS| 			          		|           |
 | INSERT   	 |  PK(Array)	         |IN PROGRESS| 			           		|           |
-| INSERT   	 |  IF_NOT_EXIST         |           | 			           		|           |
 | INSERT   	 |  PK(Map)	         |IN PROGRESS| 			           		|           |
 | INSERT   	 |  PK(Array)	         |IN PROGRESS| 			           		|           |
+| INSERT   	 |  IF_NOT_EXIST         |   DONE    | GenericSimpleInsertIfNotExistFT		|           |
 | INSERT_BULK 	 |  PK	   	         |   DONE    | 			           		|           |
 | INSERT_BULK  	 |  WITHOUT_PK	         |   DONE    | GenericBulkInsertFT           		|           |
+| INSERT_BULK  	 |  IF_NOT_EXIST 	 |   DONE    | GenericBulkInsertIfNotExistFT            |           |
 | UPDATE   	 |  SINGLE_ROW		 |   DONE    | GenericSimpleUpdateFT.updateGenericsFieldsFT|        |
 | UPDATE   	 |  MULTI_ROW		 |   DONE    | GenericSimpleUpdateFT.multiUpdateGenericsFieldsFT|   |
 | UPDATE_FILTER  |  NON_INDEX_GET 	 |   DONE    | GenericSimpleUpdateWithFiltersFT		|           |

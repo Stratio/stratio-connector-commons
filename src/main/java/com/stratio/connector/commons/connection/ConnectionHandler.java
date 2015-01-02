@@ -192,7 +192,7 @@ public abstract class ConnectionHandler {
      */
     public void closeAllConnections() throws ExecutionException {
         synchronized (connections) {
-            while(!connections.isEmpty()) {
+            while (!connections.isEmpty()) {
                 for (Connection connection : connections.values()) {
                     if (!connection.hasPendingJobs()) {
                         connection.close();
