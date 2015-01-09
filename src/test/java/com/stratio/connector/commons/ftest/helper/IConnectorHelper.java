@@ -57,4 +57,12 @@ public interface IConnectorHelper {
     boolean isIndexMandatory();
 
     boolean isPKMandatory();
+
+    
+	/**
+	 * Checks if the insert operation is necessary in order to create the table.
+	 *
+	 * @return true, if insert data is necessary to create the table
+	 */
+	boolean isInsertMandatory();
 }
