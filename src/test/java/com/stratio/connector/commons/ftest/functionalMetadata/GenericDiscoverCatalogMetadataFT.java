@@ -20,6 +20,7 @@ import com.stratio.connector.commons.ftest.GenericConnectorTest;
 import com.stratio.connector.commons.metadata.IndexMetadataBuilder;
 import com.stratio.connector.commons.metadata.TableMetadataBuilder;
 import com.stratio.crossdata.common.data.CatalogName;
+import com.stratio.crossdata.common.data.ClusterName;
 import com.stratio.crossdata.common.data.ColumnName;
 import com.stratio.crossdata.common.data.IndexName;
 import com.stratio.crossdata.common.exceptions.ConnectorException;
@@ -47,6 +48,11 @@ public abstract class GenericDiscoverCatalogMetadataFT extends GenericConnectorT
      * The Log.
      */
     final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    @Override
+    protected ClusterName getClusterName() {
+        return new ClusterName("discoverClusterName");
+    }
 
     /**
      * Tests: provideTableMetadata

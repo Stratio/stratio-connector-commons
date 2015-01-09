@@ -8,7 +8,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -20,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
 import com.stratio.connector.commons.metadata.IndexMetadataBuilder;
 import com.stratio.connector.commons.metadata.TableMetadataBuilder;
+import com.stratio.crossdata.common.data.ClusterName;
 import com.stratio.crossdata.common.data.ColumnName;
 import com.stratio.crossdata.common.data.IndexName;
 import com.stratio.crossdata.common.exceptions.ConnectorException;
@@ -48,6 +48,11 @@ public abstract class GenericDiscoverMetadataFT extends GenericConnectorTest {
      */
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    @Override
+    protected ClusterName getClusterName() {
+        return new ClusterName("discoverClusterName");
+    }
+
     /**
      * Tests: provideTableMetadata
      * 
@@ -60,10 +65,16 @@ public abstract class GenericDiscoverMetadataFT extends GenericConnectorTest {
 
         prepareEnvironment(tableMetadata);
         prepareEnvironment(tableMetadataSecondary);
-        List<CatalogMetadata> catalogProvided = getConnector().getMetadataEngine().provideMetadata(getClusterName());
-        assertEquals(1, catalogProvided.size());
-        catalogMetadataProvided = catalogProvided.get(0);
-        assertEquals(CATALOG, catalogMetadataProvided.getName().getName());
+        Iterator<CatalogMetadata> iteratorMetadata = getConnector().getMetadataEngine()
+                        .provideMetadata(getClusterName()).iterator();
+        boolean catalogFound = false;
+        while (iteratorMetadata.hasNext() && !catalogFound) {
+            catalogMetadataProvided = iteratorMetadata.next();
+            catalogFound = catalogMetadataProvided.getName().getName().equals(CATALOG);
+        }
+        ;
+
+        assertTrue("The catalog " + CATALOG + " must be recovered", catalogFound);
 
     }
 
