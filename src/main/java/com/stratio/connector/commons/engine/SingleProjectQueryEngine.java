@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import com.stratio.connector.commons.connection.Connection;
 import com.stratio.connector.commons.connection.ConnectionHandler;
 import com.stratio.crossdata.common.data.ClusterName;
+import com.stratio.crossdata.common.exceptions.ConnectorException;
 import com.stratio.crossdata.common.exceptions.ExecutionException;
 import com.stratio.crossdata.common.exceptions.UnsupportedException;
 import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
@@ -56,14 +57,11 @@ public abstract class SingleProjectQueryEngine<T> extends CommonsQueryEngine {
      * @param workflow
      *            the workflow to be executed.
      * @return the query result.
-     * @throws UnsupportedException
-     *             if an operation is not supported.
-     * @throws ExecutionException
-     *             if a error happens.
+     * @throws ConnectorException
+     *             if an error happens.
      */
     @Override
-    protected final QueryResult executeWorkFlow(LogicalWorkflow workflow) throws UnsupportedException,
-                    ExecutionException {
+    protected final QueryResult executeWorkFlow(LogicalWorkflow workflow) throws ConnectorException {
 
         checkIsSupported(workflow);
         ClusterName clusterName = ((Project) workflow.getInitialSteps().get(0)).getClusterName();
@@ -85,8 +83,7 @@ public abstract class SingleProjectQueryEngine<T> extends CommonsQueryEngine {
      * @throws ExecutionException
      *             if a error happens.
      */
-    protected abstract QueryResult execute(Project workflow, Connection<T> connection) throws UnsupportedException,
-                    ExecutionException;
+    protected abstract QueryResult execute(Project workflow, Connection<T> connection) throws ConnectorException;
 
     /**
      * Check if the workflow is supported.

@@ -21,19 +21,16 @@ package com.stratio.connector.commons.engine;
 import com.stratio.connector.commons.connection.ConnectionHandler;
 import com.stratio.crossdata.common.connector.IQueryEngine;
 import com.stratio.crossdata.common.data.ClusterName;
-import com.stratio.crossdata.common.exceptions.ExecutionException;
-import com.stratio.crossdata.common.exceptions.UnsupportedException;
+import com.stratio.crossdata.common.exceptions.ConnectorException;
 import com.stratio.crossdata.common.logicalplan.LogicalStep;
 import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
 import com.stratio.crossdata.common.logicalplan.Project;
 import com.stratio.crossdata.common.result.QueryResult;
 
 /**
- * This abstract class is a Template for CommonsQueryEngine.
- * Created by dgomez on 22/09/14.
+ * This abstract class is a Template for CommonsQueryEngine. Created by dgomez on 22/09/14.
  */
 public abstract class CommonsQueryEngine implements IQueryEngine {
-
 
     /**
      * The connection handler.
@@ -43,7 +40,8 @@ public abstract class CommonsQueryEngine implements IQueryEngine {
     /**
      * Constructor.
      *
-     * @param connectionHandler the connector handler.
+     * @param connectionHandler
+     *            the connector handler.
      */
 
     protected CommonsQueryEngine(ConnectionHandler connectionHandler) {
@@ -53,13 +51,14 @@ public abstract class CommonsQueryEngine implements IQueryEngine {
     /**
      * This method execute a query.
      *
-     * @param workflow the workflow to be executed.
+     * @param workflow
+     *            the workflow to be executed.
      * @return the query result.
-     * @throws UnsupportedException if an operation is not supported.
-     * @throws ExecutionException   if a error happens.
+     * @throws ConnectorException
+     *             if a error happens.
      */
     @Override
-    public final QueryResult execute(LogicalWorkflow workflow) throws UnsupportedException, ExecutionException {
+    public final QueryResult execute(LogicalWorkflow workflow) throws ConnectorException {
         QueryResult result = null;
 
         try {
@@ -80,11 +79,10 @@ public abstract class CommonsQueryEngine implements IQueryEngine {
     /**
      * Abstract method which must be implemented by the concrete database metadataEngine to execute a workflow.
      *
-     * @param workflow the workflow.
-     * @throws UnsupportedException if an operation is not supported.
-     * @throws ExecutionException   if a error happens.
+     * @param workflow
+     *            the workflow.
+     * @throws ConnectorException
+     *             if an error happens.
      */
-    protected abstract QueryResult executeWorkFlow(LogicalWorkflow workflow) throws
-            UnsupportedException,
-            ExecutionException;
+    protected abstract QueryResult executeWorkFlow(LogicalWorkflow workflow) throws ConnectorException;
 }

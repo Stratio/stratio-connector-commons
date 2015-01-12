@@ -25,6 +25,7 @@ import java.util.Collections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.stratio.crossdata.common.exceptions.ConnectorException;
 import com.stratio.crossdata.common.exceptions.ExecutionException;
 import com.stratio.crossdata.common.logicalplan.Filter;
 import com.stratio.crossdata.common.logicalplan.GroupBy;
@@ -92,10 +93,10 @@ public class ProjectParsed {
      *            the project.
      * @param projectValidator
      *            the validator for the projecto.
-     * @throws ExecutionException
-     *             if a logical step is not supported.
+     * @throws ConnectorException
+     *             if the logical step is not supported.
      */
-    public ProjectParsed(Project project, ProjectValidator projectValidator) throws ExecutionException {
+    public ProjectParsed(Project project, ProjectValidator projectValidator) throws ConnectorException {
         this.project = project;
         LogicalStep lStep = project;
         while ((lStep = lStep.getNextStep()) != null) {
