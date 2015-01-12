@@ -60,7 +60,7 @@ public abstract class GenericQueryProjectFT extends GenericConnectorTest {
 
         ClusterName clusterNodeName = getClusterName();
 
-        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE, clusterNodeName.getName());
         tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.VARCHAR)
                         .addColumn(COLUMN_3, ColumnType.VARCHAR);
 
@@ -89,7 +89,7 @@ public abstract class GenericQueryProjectFT extends GenericConnectorTest {
             }
         }
 
-        assertEquals("The record number is correct", getRowsToSearch(), (Integer) queryResult.getResultSet().size());
+        assertEquals("The record number is not correct", getRowsToSearch(), (Integer) queryResult.getResultSet().size());
         for (int i = 0; i < getRowsToSearch(); i++) {
 
             assertTrue("Return correct record", probeSet.contains("bin1ValueBin1_r" + i));
