@@ -20,6 +20,7 @@ package com.stratio.connector.commons.connection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -193,14 +194,14 @@ public abstract class ConnectionHandler {
     public void closeAllConnections() throws ExecutionException {
         synchronized (connections) {
             while (!connections.isEmpty()) {
-                for (Connection connection : connections.values()) {
+                for (Entry<String, Connection> mapConnections : connections.entrySet()) {
+                    Connection connection = mapConnections.getValue();
                     if (!connection.hasPendingJobs()) {
                         connection.close();
-                        connections.remove(connection);
+                        connections.remove(mapConnections.getKey());
                     }
                 }
             }
         }
     }
-
 }
