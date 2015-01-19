@@ -18,8 +18,8 @@
 
 package com.stratio.connector.commons.ftest.functionalTestQuery;
 
-import static com.stratio.connector.commons.ftest.helper.TextConstant.danteParadise;
-import static com.stratio.connector.commons.ftest.helper.TextConstant.names;
+import static com.stratio.connector.commons.util.TextConstant.danteParadise;
+import static com.stratio.connector.commons.util.TextConstant.names;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 

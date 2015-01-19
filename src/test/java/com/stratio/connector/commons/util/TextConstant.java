@@ -16,12 +16,17 @@
  *  under the License.
  */
 
-package com.stratio.connector.commons.ftest.helper;
+package com.stratio.connector.commons.util;
+
+import java.util.Random;
 
 /**
  * Created by jmgomez on 18/09/14.
  */
-public interface TextConstant {
+public class TextConstant {
+	
+	 private static Random random = new Random(System.currentTimeMillis());
+	 
 
     public static String[] names = {
             "MARY", "PATRICIA", "LINDA", "BARBARA", "ELIZABETH", "JENNIFER", "MARIA", "SUSAN", "MARGARET", "DOROTHY",
@@ -187,4 +192,230 @@ public interface TextConstant {
             "Thou no more admire Thy soaring, (if I rightly deem,) than lapse Of torrent downwards from a mountain's height.",
             "There would in thee for wonder be more cause, If, free of hind'rance, thou hadst fix'd thyself Below, like fire unmoving on the earth.\"",
             "So said, she turn'd toward the heav'n her face. " };
+    
+    
+    public static String[] countries ={"Afghanistan",
+    		"Albania",
+    		"Algeria",
+    		"Andorra",
+    		"Angola",
+    		"Antigua & Deps",
+    		"Argentina",
+    		"Armenia",
+    		"Australia",
+    		"Austria",
+    		"Azerbaijan",
+    		"Bahamas",
+    		"Bahrain",
+    		"Bangladesh",
+    		"Barbados",
+    		"Belarus",
+    		"Belgium",
+    		"Belize",
+    		"Benin",
+    		"Bhutan",
+    		"Bolivia",
+    		"Bosnia Herzegovina",
+    		"Botswana",
+    		"Brazil",
+    		"Brunei",
+    		"Bulgaria",
+    		"Burkina",
+    		"Burundi",
+    		"Cambodia",
+    		"Cameroon",
+    		"Canada",
+    		"Cape Verde",
+    		"Central African Rep",
+    		"Chad",
+    		"Chile",
+    		"China",
+    		"Colombia",
+    		"Comoros",
+    		"Congo",
+    		"Congo {Democratic Rep}",
+    		"Costa Rica",
+    		"Croatia",
+    		"Cuba",
+    		"Cyprus",
+    		"Czech Republic",
+    		"Denmark",
+    		"Djibouti",
+    		"Dominica",
+    		"Dominican Republic",
+    		"East Timor",
+    		"Ecuador",
+    		"Egypt",
+    		"El Salvador",
+    		"Equatorial Guinea",
+    		"Eritrea",
+    		"Estonia",
+    		"Ethiopia",
+    		"Fiji",
+    		"Finland",
+    		"France",
+    		"Gabon",
+    		"Gambia",
+    		"Georgia",
+    		"Germany",
+    		"Ghana",
+    		"Greece",
+    		"Grenada",
+    		"Guatemala",
+    		"Guinea",
+    		"Guinea-Bissau",
+    		"Guyana",
+    		"Haiti",
+    		"Honduras",
+    		"Hungary",
+    		"Iceland",
+    		"India",
+    		"Indonesia",
+    		"Iran",
+    		"Iraq",
+    		"Ireland {Republic}",
+    		"Israel",
+    		"Italy",
+    		"Ivory Coast",
+    		"Jamaica",
+    		"Japan",
+    		"Jordan",
+    		"Kazakhstan",
+    		"Kenya",
+    		"Kiribati",
+    		"Korea North",
+    		"Korea South",
+    		"Kosovo",
+    		"Kuwait",
+    		"Kyrgyzstan",
+    		"Laos",
+    		"Latvia",
+    		"Lebanon",
+    		"Lesotho",
+    		"Liberia",
+    		"Libya",
+    		"Liechtenstein",
+    		"Lithuania",
+    		"Luxembourg",
+    		"Macedonia",
+    		"Madagascar",
+    		"Malawi",
+    		"Malaysia",
+    		"Maldives",
+    		"Mali",
+    		"Malta",
+    		"Marshall Islands",
+    		"Mauritania",
+    		"Mauritius",
+    		"Mexico",
+    		"Micronesia",
+    		"Moldova",
+    		"Monaco",
+    		"Mongolia",
+    		"Montenegro",
+    		"Morocco",
+    		"Mozambique",
+    		"Myanmar, {Burma}",
+    		"Namibia",
+    		"Nauru",
+    		"Nepal",
+    		"Netherlands",
+    		"New Zealand",
+    		"Nicaragua",
+    		"Niger",
+    		"Nigeria",
+    		"Norway",
+    		"Oman",
+    		"Pakistan",
+    		"Palau",
+    		"Panama",
+    		"Papua New Guinea",
+    		"Paraguay",
+    		"Peru",
+    		"Philippines",
+    		"Poland",
+    		"Portugal",
+    		"Qatar",
+    		"Romania",
+    		"Russian Federation",
+    		"Rwanda",
+    		"St Kitts & Nevis",
+    		"St Lucia",
+    		"Saint Vincent & the Grenadines",
+    		"Samoa",
+    		"San Marino",
+    		"Sao Tome & Principe",
+    		"Saudi Arabia",
+    		"Senegal",
+    		"Serbia",
+    		"Seychelles",
+    		"Sierra Leone",
+    		"Singapore",
+    		"Slovakia",
+    		"Slovenia",
+    		"Solomon Islands",
+    		"Somalia",
+    		"South Africa",
+    		"South Sudan",
+    		"Spain",
+    		"Sri Lanka",
+    		"Sudan",
+    		"Suriname",
+    		"Swaziland",
+    		"Sweden",
+    		"Switzerland",
+    		"Syria",
+    		"Taiwan",
+    		"Tajikistan",
+    		"Tanzania",
+    		"Thailand",
+    		"Togo",
+    		"Tonga",
+    		"Trinidad & Tobago",
+    		"Tunisia",
+    		"Turkey",
+    		"Turkmenistan",
+    		"Tuvalu",
+    		"Uganda",
+    		"Ukraine",
+    		"United Arab Emirates",
+    		"United Kingdom",
+    		"United States",
+    		"Uruguay",
+    		"Uzbekistan",
+    		"Vanuatu",
+    		"Vatican City",
+    		"Venezuela",
+    		"Vietnam",
+    		"Yemen",
+    		"Zambia",
+    		"Zimbabwe"};
+
+    public static final String[] TEXT = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O",
+        "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f", "g", "h", "i",
+        "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "!", "_", "1",
+        "2", "3", "4", "5", "6", "7", "8", "9", " " };
+    
+    
+ public static String getRandomName(){
+	 return names[random.nextInt()%names.length];
+ }
+ 
+ public static String getRandomCountry(){
+	 return countries[random.nextInt()%countries.length];
+ }
+ 
+ public static String getRandomDanteLine(){
+	 return danteParadise[Math.abs(random.nextInt()%danteParadise.length)];
+ }
+ 
+ public static String getRandomText(Integer size){
+	 StringBuilder sb = new StringBuilder("");
+	
+	 for (int i=0;i<size;i++){
+		 sb.append(TEXT[Math.abs(random.nextInt()%TEXT.length)]); 
+	 }
+	 return sb.toString();
+ }
+
 }

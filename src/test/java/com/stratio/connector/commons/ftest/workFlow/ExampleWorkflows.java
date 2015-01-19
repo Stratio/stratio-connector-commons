@@ -18,7 +18,7 @@
 
 package com.stratio.connector.commons.ftest.workFlow;
 
-import static com.stratio.connector.commons.ftest.helper.TextConstant.names;
+import static com.stratio.connector.commons.util.TextConstant.names;
 
 import java.util.ArrayList;
 import java.util.Arrays;
