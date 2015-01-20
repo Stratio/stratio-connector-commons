@@ -49,6 +49,7 @@ public final class ColumnTypeHelper {
      * @throws ExecutionException if the casting is not possible.
      */
     public static Object getCastingValue(ColumnType columnType, Object value) throws ExecutionException {
+        validateInput(columnType);
         Object returnValue = null;
         if (value != null) {
             switch (columnType) {
@@ -76,6 +77,19 @@ public final class ColumnTypeHelper {
         }
 
         return returnValue;
+    }
+
+    /**
+     * This method validate the Input.
+     * @param columnType the columnType.
+     * @throws ExecutionException if a exception happens.
+     */
+    private static void validateInput(ColumnType columnType) throws ExecutionException {
+        if (columnType==null){
+            String messagge = "The ColumnType can not be null.";
+            LOGGER.error(messagge);
+            throw new ExecutionException(messagge);
+        }
     }
 
     /**
