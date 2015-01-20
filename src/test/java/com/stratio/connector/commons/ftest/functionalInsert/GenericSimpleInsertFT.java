@@ -299,7 +299,7 @@ public abstract class GenericSimpleInsertFT extends GenericConnectorTest {
     private LogicalWorkflow createLogicalWorkFlow() {
 
         return new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName()).addColumnName(COLUMN_1, COLUMN_2, COLUMN_3,
-                        COLUMN_4).getLogicalWorkflow();
+                        COLUMN_4).build();
 
     }
 
@@ -311,7 +311,7 @@ public abstract class GenericSimpleInsertFT extends GenericConnectorTest {
         linkList.add(lwfC.createConnectorField(COLUMN_3, COLUMN_3, ColumnType.VARCHAR));
         linkList.add(lwfC.createConnectorField(COLUMN_4, COLUMN_4, colType));
         return new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName())
-                        .addColumnName(COLUMN_1, COLUMN_2, COLUMN_3, COLUMN_4).addSelect(linkList).getLogicalWorkflow();
+                        .addColumnName(COLUMN_1, COLUMN_2, COLUMN_3, COLUMN_4).addSelect(linkList).build();
 
     }
 

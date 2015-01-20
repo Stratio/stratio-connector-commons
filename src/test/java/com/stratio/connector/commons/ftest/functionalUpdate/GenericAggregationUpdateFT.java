@@ -204,7 +204,7 @@ public abstract class GenericAggregationUpdateFT extends GenericConnectorTest<IC
 
     private LogicalWorkflow createLogicalWorkFlow() {
         return new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName()).addColumnName(COLUMN_1, COLUMN_2)
-                        .getLogicalWorkflow();
+                        .build();
 
     }
 

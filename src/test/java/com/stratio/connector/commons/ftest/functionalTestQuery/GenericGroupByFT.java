@@ -61,7 +61,7 @@ public abstract class GenericGroupByFT extends GenericConnectorTest {
         LinkedList<ConnectorField> selectFields = new LinkedList<>();
         selectFields.add(cField);
         logicalWorkflowCreator.addSelect(selectFields);
-        LogicalWorkflow logicalWorkflow = logicalWorkflowCreator.getLogicalWorkflow();
+        LogicalWorkflow logicalWorkflow = logicalWorkflowCreator.build();
 
         QueryResult queryResult = connector.getQueryEngine().execute(logicalWorkflow);
 

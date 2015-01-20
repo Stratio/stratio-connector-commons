@@ -148,7 +148,7 @@ public abstract class GenericDiscoverMetadataFT extends GenericConnectorTest {
         TableMetadata tableWithIndexProvided = catalogMetadataProvided.getTables().get(tableMetadata.getName());
         TableMetadata tableSimpleProvided = catalogMetadataProvided.getTables().get(tableMetadataSecondary.getName());
 
-        // verify table1
+        // verifyAllRowWasInserted table1
         assertEquals("The table must have 2 columns", 2, tableWithIndexProvided.getColumns().size());
         String columnNameProvided_1 = tableWithIndexProvided.getColumns()
                         .get(new ColumnName(tableMetadata.getName(), COLUMN_1)).getName().getName();
@@ -157,7 +157,7 @@ public abstract class GenericDiscoverMetadataFT extends GenericConnectorTest {
                         .get(new ColumnName(tableMetadata.getName(), COLUMN_2)).getName().getName();
         assertEquals(COLUMN_2, columnNameProvided_2);
 
-        // verify table2
+        // verifyAllRowWasInserted table2
 
         assertEquals("The table must have 1 column", 1, tableSimpleProvided.getColumns().size());
         columnNameProvided_1 = tableSimpleProvided.getColumns()

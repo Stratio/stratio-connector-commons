@@ -79,7 +79,7 @@ public class LogicalWorkFlowCreator {
         this.clusterName = clusterName;
     }
 
-    public LogicalWorkflow getLogicalWorkflow() {
+    public LogicalWorkflow build() {
 
         List<LogicalStep> logiclaSteps = new ArrayList<>();
 

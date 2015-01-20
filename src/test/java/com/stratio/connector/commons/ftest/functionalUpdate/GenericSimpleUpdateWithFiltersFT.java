@@ -179,7 +179,7 @@ public abstract class GenericSimpleUpdateWithFiltersFT extends GenericConnectorT
 
     private LogicalWorkflow createLogicalWorkFlow() {
         return new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName()).addColumnName(COLUMN_1, COLUMN_2)
-                        .getLogicalWorkflow();
+                        .build();
 
     }
 }

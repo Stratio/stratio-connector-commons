@@ -206,7 +206,7 @@ public abstract class GenericDeleteFT extends GenericConnectorTest {
 
     private LogicalWorkflow createLogicalWorkFlow(String catalog, String table) {
         return new LogicalWorkFlowCreator(catalog, table, getClusterName()).addColumnName(COLUMN_PK, COLUMN_1)
-                        .getLogicalWorkflow();
+                        .build();
     }
 
 }

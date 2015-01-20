@@ -47,7 +47,7 @@ public abstract class GenericTruncateFT extends GenericConnectorTest<IConnector>
     @Test
     public void truncateTest() throws ConnectorException {
 
-        // TODO verify if an existing index is not dropped when truncating
+        // TODO verifyAllRowWasInserted if an existing index is not dropped when truncating
         ClusterName clusterName = getClusterName();
 
         Row row = new Row();
@@ -77,6 +77,6 @@ public abstract class GenericTruncateFT extends GenericConnectorTest<IConnector>
     private LogicalWorkflow createLogicalWorkFlow(String catalog, String table) {
 
         return new LogicalWorkFlowCreator(catalog, table, getClusterName()).addColumnName(COLUMN_1, COLUMN_2)
-                        .getLogicalWorkflow();
+                        .build();
     }
 }

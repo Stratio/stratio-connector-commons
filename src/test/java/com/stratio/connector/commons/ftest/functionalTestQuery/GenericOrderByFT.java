@@ -66,7 +66,7 @@ public abstract class GenericOrderByFT extends GenericConnectorTest {
         logWFCreator.addOrderByClause(COLUMN_AGE, OrderDirection.ASC);
 
         // return COLUMN_TEXT order by age ASC
-        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logWFCreator.getLogicalWorkflow());
+        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logWFCreator.build());
 
         assertEquals("The result should have 6 rows", 6, queryResult.getResultSet().size());
 
@@ -98,7 +98,7 @@ public abstract class GenericOrderByFT extends GenericConnectorTest {
         logWFCreator.addOrderByClause(COLUMN_AGE, OrderDirection.DESC);
 
         // return COLUMN_TEXT order by age DESC
-        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logWFCreator.getLogicalWorkflow());
+        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logWFCreator.build());
 
         assertEquals("The result should have 6 rows", 6, queryResult.getResultSet().size());
 
@@ -131,7 +131,7 @@ public abstract class GenericOrderByFT extends GenericConnectorTest {
                         OrderDirection.DESC);
 
         // return COLUMN_TEXT order by money asc, age asc
-        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logWFCreator.getLogicalWorkflow());
+        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logWFCreator.build());
 
         assertEquals("The result should have 6 rows", 6, queryResult.getResultSet().size());
 

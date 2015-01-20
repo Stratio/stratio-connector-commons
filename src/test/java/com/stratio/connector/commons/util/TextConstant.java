@@ -398,24 +398,29 @@ public class TextConstant {
     
     
  public static String getRandomName(){
-	 return names[random.nextInt()%names.length];
+	 return names[Math.abs(random.nextInt(names.length))];
  }
  
  public static String getRandomCountry(){
-	 return countries[random.nextInt()%countries.length];
+	 return countries[Math.abs(random.nextInt(countries.length))];
  }
  
  public static String getRandomDanteLine(){
-	 return danteParadise[Math.abs(random.nextInt()%danteParadise.length)];
+	 return danteParadise[Math.abs(random.nextInt(danteParadise.length))];
  }
  
  public static String getRandomText(Integer size){
 	 StringBuilder sb = new StringBuilder("");
 	
 	 for (int i=0;i<size;i++){
-		 sb.append(TEXT[Math.abs(random.nextInt()%TEXT.length)]); 
+		 sb.append(TEXT[Math.abs(random.nextInt(TEXT.length))]);
 	 }
-	 return sb.toString();
+
+	 String retunValue = sb.toString();
+	 if (retunValue.trim().isEmpty()){
+		 retunValue=getRandomText(size);
+	 }
+	 return retunValue;
  }
 
 }

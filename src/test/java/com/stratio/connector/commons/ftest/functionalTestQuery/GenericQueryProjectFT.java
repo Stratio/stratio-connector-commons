@@ -102,7 +102,7 @@ public abstract class GenericQueryProjectFT extends GenericConnectorTest {
     private LogicalWorkflow createLogicalWorkFlow() {
 
         return new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName()).addColumnName(COLUMN_1, COLUMN_2)
-                        .getLogicalWorkflow();
+                        .build();
     }
 
     private void insertRow(int ikey, ClusterName clusterNodeName, TableMetadata targetTable)

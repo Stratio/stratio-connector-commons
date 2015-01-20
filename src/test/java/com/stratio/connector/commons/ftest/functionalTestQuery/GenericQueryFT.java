@@ -36,7 +36,6 @@ import com.stratio.connector.commons.metadata.TableMetadataBuilder;
 import com.stratio.connector.commons.test.util.LogicalWorkFlowCreator;
 import com.stratio.crossdata.common.data.Cell;
 import com.stratio.crossdata.common.data.ClusterName;
-import com.stratio.crossdata.common.data.ColumnName;
 import com.stratio.crossdata.common.data.QualifiedNames;
 import com.stratio.crossdata.common.data.ResultSet;
 import com.stratio.crossdata.common.data.Row;
@@ -85,7 +84,7 @@ public abstract class GenericQueryFT extends GenericConnectorTest {
         fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_3, ALIAS_COLUMN_3, ColumnType.VARCHAR));
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addColumnName(COLUMN_1, COLUMN_2, COLUMN_3)
-                        .addSelect(fields).getLogicalWorkflow();
+                        .addSelect(fields).build();
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
         Set<Object> proveSet = new HashSet<>();
         ResultSet resultSet = queryResult.getResultSet();
@@ -111,7 +110,6 @@ public abstract class GenericQueryFT extends GenericConnectorTest {
     @Test
     public void validateMetadataTest() throws ConnectorException {
 
-        ClusterName clusterNodeName = getClusterName();
 
         insertTypedRow();
 
@@ -124,7 +122,7 @@ public abstract class GenericQueryFT extends GenericConnectorTest {
         fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_3, ALIAS_COLUMN_3, ColumnType.BOOLEAN));
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addColumnName(COLUMN_1, COLUMN_2, COLUMN_3)
-                        .addSelect(fields).getLogicalWorkflow();
+                        .addSelect(fields).build();
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
 
         ResultSet resultSet = queryResult.getResultSet();
@@ -154,9 +152,7 @@ public abstract class GenericQueryFT extends GenericConnectorTest {
     protected void validateMetadata(List<ColumnMetadata> columnMetadata) {
         assertNotNull("The metadata is not null", columnMetadata);
         ColumnMetadata[] metadata = columnMetadata.toArray(new ColumnMetadata[0]);
-        ColumnName metadata1 = metadata[0].getName();
-        ColumnName metadata2 = metadata[1].getName();
-        ColumnName metadata3 = metadata[2].getName();
+
 
         assertEquals("the table name is correct", QualifiedNames.getTableQualifiedName(CATALOG, TABLE),
 

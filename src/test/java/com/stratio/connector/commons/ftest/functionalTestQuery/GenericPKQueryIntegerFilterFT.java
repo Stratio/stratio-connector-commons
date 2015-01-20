@@ -77,7 +77,7 @@ public abstract class GenericPKQueryIntegerFilterFT extends GenericConnectorTest
         refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns().addColumnName(COLUMN_PK)
-                        .addEqualFilter(COLUMN_PK, new Integer(2), false, true).getLogicalWorkflow();
+                        .addEqualFilter(COLUMN_PK, new Integer(2), false, true).build();
 
         QueryResult queryResult = connector.getQueryEngine().execute(logicalPlan);
 
@@ -102,7 +102,7 @@ public abstract class GenericPKQueryIntegerFilterFT extends GenericConnectorTest
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns().addColumnName(COLUMN_PK)
                         .addEqualFilter(COLUMN_PK, new Integer(2), false, true)
-                        .addEqualFilter(COLUMN_PK, new Integer(3), false, true).getLogicalWorkflow();
+                        .addEqualFilter(COLUMN_PK, new Integer(3), false, true).build();
 
         QueryResult queryResult = connector.getQueryEngine().execute(logicalPlan);
 
@@ -128,7 +128,7 @@ public abstract class GenericPKQueryIntegerFilterFT extends GenericConnectorTest
         connectorFields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_AGE, ALIAS_COLUMN_AGE, ColumnType.INT));
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns().addColumnName(COLUMN_PK)
                         .addSelect(connectorFields).addDistinctFilter(COLUMN_PK, new Integer(2), false, true)
-                        .addDistinctFilter(COLUMN_PK, new Integer(3), false, true).getLogicalWorkflow();
+                        .addDistinctFilter(COLUMN_PK, new Integer(3), false, true).build();
 
         QueryResult queryResult = connector.getQueryEngine().execute(logicalPlan);
 
@@ -150,7 +150,7 @@ public abstract class GenericPKQueryIntegerFilterFT extends GenericConnectorTest
         refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns().addColumnName(COLUMN_PK)
-                        .addGreaterEqualFilter(COLUMN_PK, new Integer(2), false, false).getLogicalWorkflow();
+                        .addGreaterEqualFilter(COLUMN_PK, new Integer(2), false, false).build();
 
         QueryResult queryResult = connector.getQueryEngine().execute(logicalPlan);
 

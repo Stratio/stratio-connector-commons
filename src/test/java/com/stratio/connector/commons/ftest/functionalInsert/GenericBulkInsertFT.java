@@ -126,7 +126,7 @@ public abstract class GenericBulkInsertFT extends GenericConnectorTest {
     private LogicalWorkflow createLogicalWorkFlow() {
 
         return new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName()).addColumnName(COLUMN_KEY, COLUMN_1,
-                        COLUMN_2, COLUMN_3).getLogicalWorkflow();
+                        COLUMN_2, COLUMN_3).build();
 
     }
 

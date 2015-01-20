@@ -171,7 +171,7 @@ public abstract class GenericMetadataDropFT extends GenericConnectorTest {
     private LogicalWorkflow createLogicalWorkFlow(String catalog, String table) {
 
         return new LogicalWorkFlowCreator(catalog, table, getClusterName()).addColumnName(COLUMN_1, COLUMN_2)
-                        .getLogicalWorkflow();
+                        .build();
     }
 
     @After

@@ -102,7 +102,7 @@ public abstract class GenericMetadataAlterTableFT extends GenericConnectorTest {
         // Verify the proper column field is returned
         QueryResult queryResult = connector.getQueryEngine().execute(
                         new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName()).addColumnName(COLUMN_1)
-                                        .addColumnName(COLUMN_2).getLogicalWorkflow());
+                                        .addColumnName(COLUMN_2).build());
         ResultSet resultSet = queryResult.getResultSet();
 
         assertEquals("The number of element recovered must be the same of the number of element inserted",
@@ -143,7 +143,7 @@ public abstract class GenericMetadataAlterTableFT extends GenericConnectorTest {
         // Verify both fields are returned
         QueryResult queryResult = connector.getQueryEngine().execute(
                         new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName()).addColumnName(COLUMN_1)
-                                        .addColumnName(COLUMN_2).getLogicalWorkflow());
+                                        .addColumnName(COLUMN_2).build());
         assertEquals("Table [" + CATALOG + "." + TABLE + "] ", 1, queryResult.getResultSet().size());
 
         Row receivedRow = queryResult.getResultSet().getRows().get(0);
@@ -164,7 +164,7 @@ public abstract class GenericMetadataAlterTableFT extends GenericConnectorTest {
         // Verify if the column has been dropped
         queryResult = connector.getQueryEngine().execute(
                         new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName()).addColumnName(COLUMN_1)
-                                        .addColumnName(COLUMN_2).getLogicalWorkflow());
+                                        .addColumnName(COLUMN_2).build());
         assertEquals("Table [" + CATALOG + "." + TABLE + "] ", 1, queryResult.getResultSet().size());
 
         receivedRow = queryResult.getResultSet().getRows().get(0);
