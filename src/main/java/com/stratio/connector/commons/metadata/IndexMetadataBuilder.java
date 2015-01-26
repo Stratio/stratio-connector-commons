@@ -38,6 +38,8 @@ import com.stratio.crossdata.common.statements.structures.Selector;
 import com.stratio.crossdata.common.statements.structures.StringSelector;
 
 /**
+ * The Class IndexMetadataBuilder.
+ *
  * @author darroyo
  */
 public class IndexMetadataBuilder {
@@ -48,23 +50,49 @@ public class IndexMetadataBuilder {
     final Logger logger = LoggerFactory.getLogger(this.getClass());
     private IndexName indexName;
     private TableName tableName;
-    private Map<Selector, Selector> options = Collections.EMPTY_MAP;
-    private Map<ColumnName, ColumnMetadata> columns = Collections.EMPTY_MAP;
+    private Map<Selector, Selector> options = Collections.emptyMap();
+    private Map<ColumnName, ColumnMetadata> columns = Collections.emptyMap();
     private IndexType indexType;
 
+    /**
+     * Instantiates a new index metadata builder.
+     *
+     * @param catalogName
+     *            the catalog name
+     * @param tableName
+     *            the table name
+     * @param indexName
+     *            the index name
+     * @param type
+     *            the type
+     */
     public IndexMetadataBuilder(String catalogName, String tableName, String indexName, IndexType type) {
         this.tableName = new TableName(catalogName, tableName);
-        this.indexName = new IndexName(this.tableName, indexName);
+        this.indexName = new IndexName(catalogName, tableName, indexName);
         columns = new HashMap<ColumnName, ColumnMetadata>();
         options = null;
         this.indexType = type;
     }
 
+    /**
+     * With options.
+     *
+     * @param opts
+     *            the opts
+     * @return the index metadata builder
+     */
     public IndexMetadataBuilder withOptions(Map<Selector, Selector> opts) {
-        options = new HashMap<Selector, Selector>(opts);
+        options = opts;
         return this;
     }
 
+    /**
+     * With columns.
+     *
+     * @param columnsMetadata
+     *            the columns metadata
+     * @return the index metadata builder
+     */
     public IndexMetadataBuilder withColumns(List<ColumnMetadata> columnsMetadata) {
         for (ColumnMetadata colMetadata : columnsMetadata) {
             columns.put(colMetadata.getName(), colMetadata);
@@ -73,11 +101,13 @@ public class IndexMetadataBuilder {
     }
 
     /**
-     * parameters in columnMetadata will be null
+     * parameters in columnMetadata will be null.
      *
      * @param columnName
+     *            the column name
      * @param colType
-     * @return
+     *            the col type
+     * @return the index metadata builder
      */
     public IndexMetadataBuilder addColumn(String columnName, ColumnType colType) {
         ColumnName colName = new ColumnName(tableName, columnName);
@@ -86,6 +116,15 @@ public class IndexMetadataBuilder {
         return this;
     }
 
+    /**
+     * Adds the option.
+     *
+     * @param option
+     *            the option
+     * @param value
+     *            the value
+     * @return the index metadata builder
+     */
     public IndexMetadataBuilder addOption(String option, String value) {
         if (options == null) {
             options = new HashMap<Selector, Selector>();
@@ -94,6 +133,15 @@ public class IndexMetadataBuilder {
         return this;
     }
 
+    /**
+     * Adds the option.
+     *
+     * @param option
+     *            the option
+     * @param value
+     *            the value
+     * @return the index metadata builder
+     */
     public IndexMetadataBuilder addOption(String option, Integer value) {
         if (options == null) {
             options = new HashMap<Selector, Selector>();
@@ -102,6 +150,15 @@ public class IndexMetadataBuilder {
         return this;
     }
 
+    /**
+     * Adds the option.
+     *
+     * @param option
+     *            the option
+     * @param value
+     *            the value
+     * @return the index metadata builder
+     */
     public IndexMetadataBuilder addOption(String option, Boolean value) {
         if (options == null) {
             options = new HashMap<Selector, Selector>();
@@ -110,6 +167,11 @@ public class IndexMetadataBuilder {
         return this;
     }
 
+    /**
+     * Builds the.
+     *
+     * @return the index metadata
+     */
     public IndexMetadata build() {
         // TODO logger.debug()
         return new IndexMetadata(indexName, columns, indexType, options);
