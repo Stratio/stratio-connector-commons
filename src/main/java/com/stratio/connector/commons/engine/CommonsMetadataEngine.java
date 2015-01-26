@@ -21,9 +21,6 @@ package com.stratio.connector.commons.engine;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.stratio.connector.commons.connection.Connection;
 import com.stratio.connector.commons.connection.ConnectionHandler;
 import com.stratio.crossdata.common.connector.IMetadataEngine;
@@ -49,11 +46,6 @@ import com.stratio.crossdata.common.statements.structures.Selector;
  */
 public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
 
-    private static final String GENERIC_CONNECTOR_UNAVAILABLE = "Error retrieving the connection for %s in %s.%s";
-    /**
-     * The Log.
-     */
-    private final transient Logger logger = LoggerFactory.getLogger(this.getClass());
     /**
      * The connection handler.
      */

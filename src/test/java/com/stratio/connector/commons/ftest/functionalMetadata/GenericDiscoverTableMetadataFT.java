@@ -76,8 +76,10 @@ public abstract class GenericDiscoverTableMetadataFT extends GenericConnectorTes
     public void provideTableMetadataNameFT() throws UnsupportedException, ConnectorException {
 
         // Results verification
-        assertTrue(tableMetadataProvided.getName().getName().equals(tableMetadata.getName().getName()));
-        assertTrue(tableMetadataProvided.getClusterRef().getName().equals(getClusterName().getName()));
+        assertTrue("The table name is not the expected",
+                        tableMetadataProvided.getName().getName().equals(tableMetadata.getName().getName()));
+        assertTrue("The cluster name is not the expected",
+                        tableMetadataProvided.getClusterRef().getName().equals(getClusterName().getName()));
 
     }
 
@@ -100,8 +102,8 @@ public abstract class GenericDiscoverTableMetadataFT extends GenericConnectorTes
         assertEquals("The index should have 2 columns", 2, indexMetadata.getColumns().keySet().size());
         Iterator<ColumnName> iterator = indexMetadata.getColumns().keySet().iterator();
 
-        assertEquals(COLUMN_1, iterator.next().getName());
-        assertEquals(COLUMN_2, iterator.next().getName());
+        assertEquals("First column in composite index is not the expected", COLUMN_1, iterator.next().getName());
+        assertEquals("Second column in composite index is not the expected", COLUMN_2, iterator.next().getName());
     }
 
     @Test
@@ -117,10 +119,10 @@ public abstract class GenericDiscoverTableMetadataFT extends GenericConnectorTes
         assertEquals("The table must have 2 columns", 2, tableMetadataProvided.getColumns().size());
         String columnNameProvided_1 = tableMetadataProvided.getColumns()
                         .get(new ColumnName(tableMetadata.getName(), COLUMN_1)).getName().getName();
-        assertEquals(COLUMN_1, columnNameProvided_1);
+        assertEquals("The field " + COLUMN_1 + " has not been found", COLUMN_1, columnNameProvided_1);
         String columnNameProvided_2 = tableMetadataProvided.getColumns()
                         .get(new ColumnName(tableMetadata.getName(), COLUMN_2)).getName().getName();
-        assertEquals(COLUMN_2, columnNameProvided_2);
+        assertEquals("The field " + COLUMN_1 + " has not been found", COLUMN_2, columnNameProvided_2);
 
     }
 

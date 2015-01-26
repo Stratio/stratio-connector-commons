@@ -260,6 +260,6 @@ public class SelectorHelperTest {
         String value = (String) SelectorHelper.getRestrictedValue(new ColumnSelector(new ColumnName(new TableName(
                         "catalog", "table"), "column")), SelectorType.COLUMN);
 
-        assertEquals("column", value);
+        assertEquals("the value is not the expected", "column", value);
     }
 }

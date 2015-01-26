@@ -147,8 +147,8 @@ public abstract class GenericMetadataAlterTableFT extends GenericConnectorTest {
         assertEquals("Table [" + CATALOG + "." + TABLE + "] ", 1, queryResult.getResultSet().size());
 
         Row receivedRow = queryResult.getResultSet().getRows().get(0);
-        assertEquals("value1", receivedRow.getCell(COLUMN_1).getValue());
-        assertEquals(25, receivedRow.getCell(COLUMN_2).getValue());
+        assertEquals("Error recovering the inserted data", "value1", receivedRow.getCell(COLUMN_1).getValue());
+        assertEquals("Error recovering the inserted data", 25, receivedRow.getCell(COLUMN_2).getValue());
 
         // DROP the column: COLUMN_2 with alterTable
         ColumnMetadata columnMetadata = new ColumnMetadata(new ColumnName(CATALOG, TABLE, COLUMN_2), new Object[0],
@@ -168,8 +168,9 @@ public abstract class GenericMetadataAlterTableFT extends GenericConnectorTest {
         assertEquals("Table [" + CATALOG + "." + TABLE + "] ", 1, queryResult.getResultSet().size());
 
         receivedRow = queryResult.getResultSet().getRows().get(0);
-        assertEquals("value1", receivedRow.getCell(COLUMN_1).getValue());
-        assertEquals(null, receivedRow.getCell(COLUMN_2).getValue());
+        assertEquals("Error recovering the column which has not been modified", "value1", receivedRow.getCell(COLUMN_1)
+                        .getValue());
+        assertEquals("Founded not null value in the dropped column", null, receivedRow.getCell(COLUMN_2).getValue());
 
     }
 
