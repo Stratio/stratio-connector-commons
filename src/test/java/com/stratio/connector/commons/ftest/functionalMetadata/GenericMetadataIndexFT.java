@@ -49,7 +49,7 @@ public abstract class GenericMetadataIndexFT extends GenericConnectorTest {
 
     static final String INDEX_NAME = "index1";
     static final String INDEX_NAME_2 = "index2";
-    static final String COLUMN_INDEX_NAME = "columnName_2";
+    static final String COLUMN_INDEX_NAME = "columnname_2";
     /**
      * The Log.
      */
