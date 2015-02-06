@@ -1,5 +1,19 @@
 /*
- * 
+ * Licensed to STRATIO (C) under one or more contributor license agreements.
+ * See the NOTICE file distributed with this work for additional information
+ * regarding copyright ownership.  The STRATIO (C) licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
  */
 
 package com.stratio.connector.commons.ftest.functionalMetadata;
@@ -62,8 +76,10 @@ public abstract class GenericDiscoverTableMetadataFT extends GenericConnectorTes
     public void provideTableMetadataNameFT() throws UnsupportedException, ConnectorException {
 
         // Results verification
-        assertTrue(tableMetadataProvided.getName().getName().equals(tableMetadata.getName().getName()));
-        assertTrue(tableMetadataProvided.getClusterRef().getName().equals(getClusterName().getName()));
+        assertTrue("The table name is not the expected",
+                        tableMetadataProvided.getName().getName().equals(tableMetadata.getName().getName()));
+        assertTrue("The cluster name is not the expected",
+                        tableMetadataProvided.getClusterRef().getName().equals(getClusterName().getName()));
 
     }
 
@@ -86,8 +102,8 @@ public abstract class GenericDiscoverTableMetadataFT extends GenericConnectorTes
         assertEquals("The index should have 2 columns", 2, indexMetadata.getColumns().keySet().size());
         Iterator<ColumnName> iterator = indexMetadata.getColumns().keySet().iterator();
 
-        assertEquals(COLUMN_1, iterator.next().getName());
-        assertEquals(COLUMN_2, iterator.next().getName());
+        assertEquals("First column in composite index is not the expected", COLUMN_1, iterator.next().getName());
+        assertEquals("Second column in composite index is not the expected", COLUMN_2, iterator.next().getName());
     }
 
     @Test
@@ -103,10 +119,10 @@ public abstract class GenericDiscoverTableMetadataFT extends GenericConnectorTes
         assertEquals("The table must have 2 columns", 2, tableMetadataProvided.getColumns().size());
         String columnNameProvided_1 = tableMetadataProvided.getColumns()
                         .get(new ColumnName(tableMetadata.getName(), COLUMN_1)).getName().getName();
-        assertEquals(COLUMN_1, columnNameProvided_1);
+        assertEquals("The field " + COLUMN_1 + " has not been found", COLUMN_1, columnNameProvided_1);
         String columnNameProvided_2 = tableMetadataProvided.getColumns()
                         .get(new ColumnName(tableMetadata.getName(), COLUMN_2)).getName().getName();
-        assertEquals(COLUMN_2, columnNameProvided_2);
+        assertEquals("The field " + COLUMN_1 + " has not been found", COLUMN_2, columnNameProvided_2);
 
     }
 

@@ -17,9 +17,6 @@
  */
 package com.stratio.connector.commons.engine;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.stratio.connector.commons.connection.Connection;
 import com.stratio.connector.commons.connection.ConnectionHandler;
 import com.stratio.crossdata.common.data.ClusterName;
@@ -33,13 +30,10 @@ import com.stratio.crossdata.common.result.QueryResult;
 /**
  * This abstract class is a Template for CommonsQueryEngine. This template only supports a project in the workflow.
  *
+ * @param <T>
+ *            the native client
  */
 public abstract class SingleProjectQueryEngine<T> extends CommonsQueryEngine {
-
-    /**
-     * The Log.
-     */
-    private final transient Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * Constructor.

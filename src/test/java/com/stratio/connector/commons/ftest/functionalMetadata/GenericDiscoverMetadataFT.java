@@ -1,5 +1,19 @@
 /*
- * 
+ * Licensed to STRATIO (C) under one or more contributor license agreements.
+ * See the NOTICE file distributed with this work for additional information
+ * regarding copyright ownership.  The STRATIO (C) licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
  */
 
 package com.stratio.connector.commons.ftest.functionalMetadata;
@@ -88,11 +102,15 @@ public abstract class GenericDiscoverMetadataFT extends GenericConnectorTest {
         TableMetadata tableSimpleProvided = catalogMetadataProvided.getTables().get(tableMetadataSecondary.getName());
 
         // Results verification
-        assertTrue(tableWithIndexProvided.getName().getName().equals(tableMetadata.getName().getName()));
-        assertTrue(tableWithIndexProvided.getClusterRef().getName().equals(getClusterName().getName()));
+        assertTrue("The table name is not the expected",
+                        tableWithIndexProvided.getName().getName().equals(tableMetadata.getName().getName()));
+        assertTrue("The cluster name is not the expected",
+                        tableWithIndexProvided.getClusterRef().getName().equals(getClusterName().getName()));
 
-        assertTrue(tableSimpleProvided.getName().getName().equals(tableMetadataSecondary.getName().getName()));
-        assertTrue(tableSimpleProvided.getClusterRef().getName().equals(getClusterName().getName()));
+        assertTrue("The table name is not the expected",
+                        tableSimpleProvided.getName().getName().equals(tableMetadataSecondary.getName().getName()));
+        assertTrue("The cluster name is not the expected",
+                        tableSimpleProvided.getClusterRef().getName().equals(getClusterName().getName()));
 
     }
 
@@ -125,8 +143,8 @@ public abstract class GenericDiscoverMetadataFT extends GenericConnectorTest {
         assertEquals("The index should have 2 columns", 2, indexMetadata.getColumns().keySet().size());
         Iterator<ColumnName> iterator = indexMetadata.getColumns().keySet().iterator();
 
-        assertEquals(COLUMN_1, iterator.next().getName());
-        assertEquals(COLUMN_2, iterator.next().getName());
+        assertEquals("First column in composite index is not the expected", COLUMN_1, iterator.next().getName());
+        assertEquals("Second column in composite index is not the expected", COLUMN_2, iterator.next().getName());
     }
 
     @Test
@@ -152,17 +170,18 @@ public abstract class GenericDiscoverMetadataFT extends GenericConnectorTest {
         assertEquals("The table must have 2 columns", 2, tableWithIndexProvided.getColumns().size());
         String columnNameProvided_1 = tableWithIndexProvided.getColumns()
                         .get(new ColumnName(tableMetadata.getName(), COLUMN_1)).getName().getName();
-        assertEquals(COLUMN_1, columnNameProvided_1);
+        assertEquals("The field " + COLUMN_1 + " has not been found", COLUMN_1, columnNameProvided_1);
         String columnNameProvided_2 = tableWithIndexProvided.getColumns()
                         .get(new ColumnName(tableMetadata.getName(), COLUMN_2)).getName().getName();
-        assertEquals(COLUMN_2, columnNameProvided_2);
+        assertEquals("The field " + COLUMN_2 + " has not been found", COLUMN_2, columnNameProvided_2);
 
         // verifyAllRowWasInserted table2
 
         assertEquals("The table must have 1 column", 1, tableSimpleProvided.getColumns().size());
         columnNameProvided_1 = tableSimpleProvided.getColumns()
                         .get(new ColumnName(tableMetadataSecondary.getName(), SECOND_TABLE_COLUMN)).getName().getName();
-        assertEquals(SECOND_TABLE_COLUMN, columnNameProvided_1);
+        assertEquals("The field " + SECOND_TABLE_COLUMN + " has not been found", SECOND_TABLE_COLUMN,
+                        columnNameProvided_1);
 
     }
 

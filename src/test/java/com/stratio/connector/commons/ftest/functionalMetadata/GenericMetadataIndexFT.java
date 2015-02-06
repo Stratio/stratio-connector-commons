@@ -25,6 +25,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,7 +49,7 @@ public abstract class GenericMetadataIndexFT extends GenericConnectorTest {
 
     static final String INDEX_NAME = "index1";
     static final String INDEX_NAME_2 = "index2";
-    static final String COLUMN_INDEX_NAME = "columnName_2";
+    static final String COLUMN_INDEX_NAME = "columnname_2";
     /**
      * The Log.
      */
@@ -87,8 +88,10 @@ public abstract class GenericMetadataIndexFT extends GenericConnectorTest {
         connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata);
         connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata2);
 
-        assertTrue(iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
-        assertTrue(iConnectorHelper.containsIndex(CATALOG, TABLE, COLUMN_INDEX_NAME));
+        assertTrue("The index " + INDEX_NAME + " has not been found",
+                        iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
+        assertTrue("The index " + COLUMN_INDEX_NAME + " has not been found",
+                        iConnectorHelper.containsIndex(CATALOG, TABLE, COLUMN_INDEX_NAME));
 
     }
 
@@ -127,12 +130,13 @@ public abstract class GenericMetadataIndexFT extends GenericConnectorTest {
 
         // Creating index
         connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata);
-        assertTrue(iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
+        assertTrue("The index " + INDEX_NAME + " has not been found",
+                        iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
 
         // The text index must be applied only over a single column.
         try {
             connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata2);
-            // failDoubleTextIndex();
+            failDoubleTextIndex();
         } catch (Exception e) {
         }
 
@@ -142,7 +146,7 @@ public abstract class GenericMetadataIndexFT extends GenericConnectorTest {
     }
 
     private void failDoubleTextIndex() {
-        assertFalse("The index text must be applied only onver a single column", true);
+        Assert.fail("The index text must be applied only t a single column");
     }
 
     /**
@@ -170,7 +174,8 @@ public abstract class GenericMetadataIndexFT extends GenericConnectorTest {
 
         // Creating the index
         connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata);
-        assertTrue(iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
+        assertTrue("The index " + INDEX_NAME + " has not been found",
+                        iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
 
     }
 
@@ -217,7 +222,8 @@ public abstract class GenericMetadataIndexFT extends GenericConnectorTest {
 
         // Creating the index
         connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata);
-        assertTrue(iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
+        assertTrue("The index " + INDEX_NAME + " has not been found",
+                        iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
 
     }
 
@@ -239,7 +245,8 @@ public abstract class GenericMetadataIndexFT extends GenericConnectorTest {
 
         // Creating the index
         connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata);
-        assertTrue(iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
+        assertTrue("The index " + INDEX_NAME + " has not been found",
+                        iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
 
         int previousIndexCount = iConnectorHelper.countIndexes(CATALOG, TABLE);
 
@@ -249,10 +256,11 @@ public abstract class GenericMetadataIndexFT extends GenericConnectorTest {
         } catch (Exception e) {
         }
 
-        assertTrue(iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
+        assertTrue("The index " + INDEX_NAME + " has not been found",
+                        iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
 
         int indexCount = iConnectorHelper.countIndexes(CATALOG, TABLE);
-        assertEquals(previousIndexCount, indexCount);
+        assertEquals("Duplicate indexes should not be inserted", previousIndexCount, indexCount);
     }
 
     @Test
@@ -270,7 +278,8 @@ public abstract class GenericMetadataIndexFT extends GenericConnectorTest {
 
         // Creating the index
         connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata);
-        assertTrue(iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
+        assertTrue("The index " + INDEX_NAME + " has not been found",
+                        iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
 
         // Creating other indexMetadata
         Map<ColumnName, ColumnMetadata> columns2 = new HashMap<>();
@@ -282,13 +291,16 @@ public abstract class GenericMetadataIndexFT extends GenericConnectorTest {
 
         // Creating the index
         connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata2);
-        assertTrue(iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME_2));
+        assertTrue("The index " + INDEX_NAME_2 + " has not been found",
+                        iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME_2));
 
         connector.getMetadataEngine().dropIndex(getClusterName(), indexMetadata);
         connector.getMetadataEngine().dropIndex(getClusterName(), indexMetadata2);
 
-        assertFalse(iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
-        assertFalse(iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME_2));
+        assertFalse("The index " + INDEX_NAME + " has not been dropped",
+                        iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
+        assertFalse("The index " + INDEX_NAME_2 + " has not been dropped",
+                        iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME_2));
 
         // TODO An exception could to be thrown when dropping a index which does not exist
         try {

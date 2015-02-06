@@ -22,7 +22,7 @@
     <description>The crossdata connector commons</description>
 
   <properties>
-        <version.crossdata>0.2.0-RC1</version.crossdata>
+        <version.crossdata>0.2.0-001</version.crossdata>
     </properties>
     
     <dependencies>
@@ -182,7 +182,7 @@
         </plugins>
 
 
-    </build>
+</build>
  <reporting>
     <plugins>
       <plugin>
@@ -191,7 +191,5 @@
         <version>2.6</version>
       </plugin>
     </plugins>
-  </reporting>
-
-
+</reporting>
 </project>

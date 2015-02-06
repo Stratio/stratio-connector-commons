@@ -178,7 +178,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterFT extends GenericConne
     }
 
     @Test
-    public void selectNoNotIndexedFilterGreaterEqual() throws ConnectorException {
+    public void selectNotIndexedFilterGreaterEqual() throws ConnectorException {
         ClusterName clusterNodeName = getClusterName();
 
         insertRow(1, 10, 15, clusterNodeName, false);

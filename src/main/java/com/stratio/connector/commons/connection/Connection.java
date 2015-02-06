@@ -37,6 +37,20 @@ public abstract class Connection<T> {
     private Map<String, Object> session;
 
     /**
+     * The dateFormat.
+     */
+    private static final String FILENAME_DATE_PATTERN = "yyyy-MM-dd HH:mm";
+
+    /**
+     * The last use date.
+     */
+    private String lastDateInfo;
+    /**
+     * The job connection state.
+     */
+    private Boolean jobInProgress = false;
+
+    /**
      * Recovered a object from the session.
      * 
      * @param type
@@ -66,20 +80,6 @@ public abstract class Connection<T> {
 
         session.put(name, value);
     }
-
-    /**
-     * The dateFormat.
-     */
-    private static final String FILENAME_DATE_PATTERN = "yyyy-MM-dd HH:mm";
-
-    /**
-     * The last use date.
-     */
-    private String lastDateInfo;
-    /**
-     * The job connection state.
-     */
-    private Boolean jobInProgress;
 
     /**
      * Close the connection.

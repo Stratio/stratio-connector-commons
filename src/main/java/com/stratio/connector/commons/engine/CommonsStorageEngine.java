@@ -20,9 +20,6 @@ package com.stratio.connector.commons.engine;
 
 import java.util.Collection;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.stratio.connector.commons.connection.Connection;
 import com.stratio.connector.commons.connection.ConnectionHandler;
 import com.stratio.crossdata.common.connector.IStorageEngine;
@@ -44,13 +41,9 @@ import com.stratio.crossdata.common.statements.structures.Relation;
 public abstract class CommonsStorageEngine<T> implements IStorageEngine {
 
     /**
-     * The Log.
-     */
-    private final transient Logger logger = LoggerFactory.getLogger(this.getClass());
-    /**
      * The connection handler.
      */
-    transient ConnectionHandler connectionHandler;
+    protected transient ConnectionHandler connectionHandler;
 
     /**
      * Constructor.
@@ -79,7 +72,6 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
      *             if the execution fails.
      */
     @Override
-
     public final void insert(ClusterName targetCluster, TableMetadata targetTable, Row row, boolean isNotExists)
                     throws UnsupportedException, ExecutionException {
 
@@ -109,10 +101,8 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
      *             if the execution fails.
      */
     @Override
-
     public final void insert(ClusterName targetCluster, TableMetadata targetTable, Collection<Row> rows,
                     boolean isNotExists) throws UnsupportedException, ExecutionException {
-
 
         connectionHandler.startJob(targetCluster.getName());
 
@@ -142,7 +132,7 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
     @Override
     public void update(ClusterName targetCluster, TableName tableName, Collection<Relation> assignments,
 
-            Collection<Filter> whereClauses) throws UnsupportedException, ExecutionException {
+    Collection<Filter> whereClauses) throws UnsupportedException, ExecutionException {
         connectionHandler.startJob(targetCluster.getName());
 
         try {
@@ -167,7 +157,7 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
      */
     @Override
     public void delete(ClusterName targetCluster, TableName tableName, Collection<Filter> whereClauses)
-            throws ExecutionException, UnsupportedException {
+                    throws ExecutionException, UnsupportedException {
 
         connectionHandler.startJob(targetCluster.getName());
 
@@ -190,10 +180,9 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
      * @throws ExecutionException
      */
     @Override
-
-    public void truncate(ClusterName targetCluster, TableName tableName)
-            throws UnsupportedException, ExecutionException {
-            connectionHandler.startJob(targetCluster.getName());
+    public void truncate(ClusterName targetCluster, TableName tableName) throws UnsupportedException,
+                    ExecutionException {
+        connectionHandler.startJob(targetCluster.getName());
 
         try {
 

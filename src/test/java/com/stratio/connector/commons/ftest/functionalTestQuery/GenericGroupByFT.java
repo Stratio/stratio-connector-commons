@@ -65,7 +65,7 @@ public abstract class GenericGroupByFT extends GenericConnectorTest {
 
         QueryResult queryResult = connector.getQueryEngine().execute(logicalWorkflow);
 
-        assertEquals(4, queryResult.getResultSet().size());
+        assertEquals("There should be only 4 different ages", 4, queryResult.getResultSet().size());
 
     }
 
