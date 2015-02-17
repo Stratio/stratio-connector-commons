@@ -20,6 +20,9 @@ package com.stratio.connector.commons.engine;
 
 import java.util.Collection;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.stratio.connector.commons.connection.Connection;
 import com.stratio.connector.commons.connection.ConnectionHandler;
 import com.stratio.crossdata.common.connector.IStorageEngine;
@@ -40,6 +43,14 @@ import com.stratio.crossdata.common.statements.structures.Relation;
  */
 public abstract class CommonsStorageEngine<T> implements IStorageEngine {
 
+
+	 /**
+    * The Log.
+    */
+   private transient final Logger logger = LoggerFactory.getLogger(this.getClass());
+	
+   
+   
     /**
      * The connection handler.
      */
@@ -75,10 +86,18 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
     public final void insert(ClusterName targetCluster, TableMetadata targetTable, Row row, boolean isNotExists)
                     throws UnsupportedException, ExecutionException {
 
-        connectionHandler.startJob(targetCluster.getName());
+        
 
         try {
+        	connectionHandler.startJob(targetCluster.getName());
+        	if (logger.isDebugEnabled()){
+        		logger.debug("Inserting one row in table ["+targetTable.getName().getName()+"] in cluster ["+targetCluster.getName()+"]");
+        	}
             insert(targetTable, row, isNotExists, connectionHandler.getConnection(targetCluster.getName()));
+            
+            if (logger.isDebugEnabled()){
+            	logger.debug("One row has been inserted successfully in table ["+targetTable.getName().getName()+"]  in cluster ["+targetCluster.getName()+"]");
+            }
         } finally {
             connectionHandler.endJob(targetCluster.getName());
         }
@@ -107,8 +126,14 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
         connectionHandler.startJob(targetCluster.getName());
 
         try {
-
+        	if (logger.isDebugEnabled()){
+        		logger.debug("Inserting several rows in table ["+targetTable.getName().getName()+"] in cluster ["+targetCluster.getName()+"]");
+        	}
             insert(targetTable, rows, isNotExists, connectionHandler.getConnection(targetCluster.getName()));
+            
+            if (logger.isDebugEnabled()){
+            	logger.debug("The rows has been inserted successfully in table ["+targetTable.getName().getName()+"]  in cluster ["+targetCluster.getName()+"]");
+            }
         } finally {
             connectionHandler.endJob(targetCluster.getName());
         }
@@ -133,10 +158,16 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
     public void update(ClusterName targetCluster, TableName tableName, Collection<Relation> assignments,
 
     Collection<Filter> whereClauses) throws UnsupportedException, ExecutionException {
-        connectionHandler.startJob(targetCluster.getName());
 
         try {
+            connectionHandler.startJob(targetCluster.getName());
+            if (logger.isDebugEnabled()){
+        		logger.debug("Updating  table ["+tableName.getName()+"] in cluster ["+targetCluster.getName()+"]");
+        	}
             update(tableName, assignments, whereClauses, connectionHandler.getConnection(targetCluster.getName()));
+            if (logger.isDebugEnabled()){
+        		logger.debug("The  table ["+tableName.getName()+"] has been updated successfully in cluster ["+targetCluster.getName()+"]");
+        	}
         } finally {
             connectionHandler.endJob(targetCluster.getName());
         }
@@ -159,11 +190,17 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
     public void delete(ClusterName targetCluster, TableName tableName, Collection<Filter> whereClauses)
                     throws ExecutionException, UnsupportedException {
 
-        connectionHandler.startJob(targetCluster.getName());
 
         try {
 
+            connectionHandler.startJob(targetCluster.getName());
+            if (logger.isDebugEnabled()){
+        		logger.debug("Deleting from  table ["+tableName.getName()+"] in cluster ["+targetCluster.getName()+"]");
+        	}
             delete(tableName, whereClauses, connectionHandler.getConnection(targetCluster.getName()));
+            if (logger.isDebugEnabled()){
+        		logger.debug("The rows has been successfully deleted in table ["+tableName.getName()+"] in cluster ["+targetCluster.getName()+"]");
+        	}
         } finally {
             connectionHandler.endJob(targetCluster.getName());
         }
@@ -182,12 +219,17 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
     @Override
     public void truncate(ClusterName targetCluster, TableName tableName) throws UnsupportedException,
                     ExecutionException {
-        connectionHandler.startJob(targetCluster.getName());
 
         try {
 
+            connectionHandler.startJob(targetCluster.getName());
+            if (logger.isDebugEnabled()){
+        		logger.debug("Tuncating table ["+tableName.getName()+"] in cluster ["+targetCluster.getName()+"]");
+        	}
             truncate(tableName, connectionHandler.getConnection(targetCluster.getName()));
-
+            if (logger.isDebugEnabled()){
+        		logger.debug("The table ["+tableName.getName()+"] has been successfully truncated in cluster ["+targetCluster.getName()+"]");
+        	}
         } finally {
             connectionHandler.endJob(targetCluster.getName());
         }

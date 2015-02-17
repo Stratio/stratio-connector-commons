@@ -39,7 +39,7 @@ public abstract class ConnectionHandler {
     /**
      * The Log.
      */
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private transient final Logger logger = LoggerFactory.getLogger(this.getClass());
     /**
      * The general settings.
      */
@@ -72,6 +72,7 @@ public abstract class ConnectionHandler {
      *             if the connection already exists.
      */
     public void createConnection(ICredentials credentials, ConnectorClusterConfig config) throws ConnectionException {
+    	logger.info("Creating new connection...");
         Connection connection = createNativeConnection(credentials, config);
 
         String connectionName = config.getName().getName();
@@ -172,6 +173,7 @@ public abstract class ConnectionHandler {
      */
     public void startJob(String targetCluster) throws ExecutionException {
         getConnection(targetCluster).setJobInProgress(true);
+        logger.info("a new job has been started in cluster ["+targetCluster+"]");
     }
 
     /**
@@ -184,7 +186,7 @@ public abstract class ConnectionHandler {
      */
     public void endJob(String targetCluster) throws ExecutionException {
         getConnection(targetCluster).setJobInProgress(false);
-
+        logger.info("a new job has been finished in cluster ["+targetCluster+"]");
     }
 
     /**
@@ -192,6 +194,7 @@ public abstract class ConnectionHandler {
      * @throws ExecutionException
      */
     public void closeAllConnections() throws ExecutionException {
+    	logger.info("Closing all connections...")M
         synchronized (connections) {
             while (!connections.isEmpty()) {
                 for (Entry<String, Connection> mapConnections : connections.entrySet()) {
