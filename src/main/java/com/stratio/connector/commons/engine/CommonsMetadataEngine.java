@@ -21,6 +21,9 @@ package com.stratio.connector.commons.engine;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.stratio.connector.commons.connection.Connection;
 import com.stratio.connector.commons.connection.ConnectionHandler;
 import com.stratio.crossdata.common.connector.IMetadataEngine;
@@ -46,7 +49,12 @@ import com.stratio.crossdata.common.statements.structures.Selector;
  */
 public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
 
-    /**
+	 /**
+     * The Log.
+     */
+    private transient final Logger logger = LoggerFactory.getLogger(this.getClass());
+	
+	/**
      * The connection handler.
      */
     private transient ConnectionHandler connectionHandler;
@@ -78,10 +86,18 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
     public final void createCatalog(ClusterName targetCluster, CatalogMetadata catalogMetadata)
                     throws ExecutionException, UnsupportedException {
 
-        connectionHandler.startJob(targetCluster.getName());
 
         try {
+            connectionHandler.startJob(targetCluster.getName());
+
+            
+        	if (logger.isDebugEnabled()){
+        		logger.debug("Creating catalog ["+catalogMetadata.getName().getName()+"] in cluster ["+targetCluster.getName()+"]");
+        	}
             createCatalog(catalogMetadata, connectionHandler.getConnection(targetCluster.getName()));
+            if (logger.isDebugEnabled()){
+            	logger.debug("Catalog ["+catalogMetadata.getName().getName()+"] has been created successfully in cluster ["+targetCluster.getName()+"]");
+            }
         } finally {
             connectionHandler.endJob(targetCluster.getName());
         }
@@ -105,10 +121,19 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
 
     ExecutionException {
 
-        connectionHandler.startJob(targetCluster.getName());
 
         try {
+            connectionHandler.startJob(targetCluster.getName());
+   
+          	if (logger.isDebugEnabled()){
+        		logger.debug("Creating table ["+tableMetadata.getName().getName()+"] in cluster ["+targetCluster.getName()+"]");
+        	}
+          	
             createTable(tableMetadata, connectionHandler.getConnection(targetCluster.getName()));
+            
+            if (logger.isDebugEnabled()){
+            	logger.debug("Catalog ["+tableMetadata.getName().getName()+"] has been created successfully in cluster ["+targetCluster.getName()+"]");
+            }
         } finally {
             connectionHandler.endJob(targetCluster.getName());
         }
@@ -130,10 +155,19 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
     public final void dropCatalog(ClusterName targetCluster, CatalogName name) throws UnsupportedException,
 
     ExecutionException {
-        connectionHandler.startJob(targetCluster.getName());
 
         try {
+            connectionHandler.startJob(targetCluster.getName());
+
+            
+        	if (logger.isDebugEnabled()){
+        		logger.debug("Dropping catalog ["+name.getName()+"] in cluster ["+targetCluster.getName()+"]");
+        	}
+        	
             dropCatalog(name, connectionHandler.getConnection(targetCluster.getName()));
+            if (logger.isDebugEnabled()){
+            	logger.debug("Catalog ["+name.getName()+"] has been drepped successfully in cluster ["+targetCluster.getName()+"]");
+            }
         } finally {
             connectionHandler.endJob(targetCluster.getName());
         }
@@ -157,10 +191,20 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
 
     ExecutionException {
 
-        connectionHandler.startJob(targetCluster.getName());
 
         try {
+            connectionHandler.startJob(targetCluster.getName());
+
+        	if (logger.isDebugEnabled()){
+        		logger.debug("Dropping table ["+name.getName()+"] in cluster ["+targetCluster.getName()+"]");
+        	}
+        	
             dropTable(name, connectionHandler.getConnection(targetCluster.getName()));
+            
+            if (logger.isDebugEnabled()){
+            	logger.debug("Table ["+name.getName()+"] has been drepped successfully in cluster ["+targetCluster.getName()+"]");
+            }
+            
         } finally {
             connectionHandler.endJob(targetCluster.getName());
         }
@@ -183,12 +227,20 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
 
     ExecutionException {
 
-        connectionHandler.startJob(targetCluster.getName());
 
         try {
+            connectionHandler.startJob(targetCluster.getName());
 
+        	if (logger.isDebugEnabled()){
+        		logger.debug("Creating index ["+indexMetadata.getName().getName()+"] in cluster ["+targetCluster.getName()+"]");
+        	}
+        	
             createIndex(indexMetadata, connectionHandler.getConnection(targetCluster.getName()));
 
+            if (logger.isDebugEnabled()){
+            	logger.debug("Index ["+indexMetadata.getName().getName()+"] has been created successfully in cluster ["+targetCluster.getName()+"]");
+            }
+            
         } finally {
             connectionHandler.endJob(targetCluster.getName());
         }
@@ -211,7 +263,14 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
                     ExecutionException {
         try {
             connectionHandler.startJob(targetCluster.getName());
+        	if (logger.isDebugEnabled()){
+        		logger.debug("Dropping index ["+indexMetadata.getName().getName()+"] in cluster ["+targetCluster.getName()+"]");
+        	}
             dropIndex(indexMetadata, connectionHandler.getConnection(targetCluster.getName()));
+            
+            if (logger.isDebugEnabled()){
+            	logger.debug("Index ["+indexMetadata.getName().getName()+"] has been drepped successfully in cluster ["+targetCluster.getName()+"]");
+            }
         } finally {
             connectionHandler.endJob(targetCluster.getName());
         }
@@ -235,8 +294,18 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
     public void alterTable(ClusterName targetCluster, TableName name, AlterOptions alterOptions)
                     throws UnsupportedException, ExecutionException {
         try {
+        	
             connectionHandler.startJob(targetCluster.getName());
+            
+        	if (logger.isDebugEnabled()){
+        		logger.debug("Altering table["+name.getName()+"] in cluster ["+targetCluster.getName()+"]");
+        	}
+            
             alterTable(name, alterOptions, connectionHandler.getConnection(targetCluster.getName()));
+            
+            if (logger.isDebugEnabled()){
+            	logger.debug("Table ["+name.getName()+"] has been altered successfully in cluster ["+targetCluster.getName()+"]");
+            }
         } finally {
             connectionHandler.endJob(targetCluster.getName());
         }
@@ -261,7 +330,16 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
                     throws UnsupportedException, ExecutionException {
         try {
             connectionHandler.startJob(targetCluster.getName());
+            
+         	if (logger.isDebugEnabled()){
+        		logger.debug("Altering catalog["+catalogName.getName()+"] in cluster ["+targetCluster.getName()+"]");
+         	}
+            
             alterCatalog(catalogName, options, connectionHandler.getConnection(targetCluster.getName()));
+            
+            if (logger.isDebugEnabled()){
+            	logger.debug("Catalog ["+catalogName.getName()+"] has been altered successfully in cluster ["+targetCluster.getName()+"]");
+            }
         } finally {
             connectionHandler.endJob(targetCluster.getName());
         }
@@ -271,7 +349,14 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
     public List<CatalogMetadata> provideMetadata(ClusterName targetCluster) throws ConnectorException {
         try {
             connectionHandler.startJob(targetCluster.getName());
-            return provideMetadata(targetCluster, connectionHandler.getConnection(targetCluster.getName()));
+         	if (logger.isDebugEnabled()){
+        		logger.debug("Providing metadatada from cluster ["+targetCluster.getName()+"]");
+         	}
+         	List<CatalogMetadata> metadata = provideMetadata(targetCluster, connectionHandler.getConnection(targetCluster.getName()));
+         	if (logger.isDebugEnabled()){
+        		logger.debug("Metadatada has been provided from cluster ["+targetCluster.getName()+"]");
+         	}
+         	return metadata;
         } finally {
             connectionHandler.endJob(targetCluster.getName());
         }
@@ -282,8 +367,18 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
                     throws ConnectorException {
         try {
             connectionHandler.startJob(targetCluster.getName());
-            return provideCatalogMetadata(catalogName, targetCluster,
-                            connectionHandler.getConnection(targetCluster.getName()));
+
+        	if (logger.isDebugEnabled()){
+        		logger.debug("Providing catalog ["+catalogName.getName()+"] metadatada from cluster ["+targetCluster.getName()+"]");
+         	}
+        	
+        	
+            CatalogMetadata catalogMetadata = provideCatalogMetadata(catalogName, targetCluster,
+                    connectionHandler.getConnection(targetCluster.getName()));;
+            if (logger.isDebugEnabled()){
+        		logger.debug("Metadatada  from ["+catalogName.getName()+"] has been provided from cluster ["+targetCluster.getName()+"]");
+         	}
+            return catalogMetadata;
         } finally {
             connectionHandler.endJob(targetCluster.getName());
         }
@@ -293,8 +388,17 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
     public TableMetadata provideTableMetadata(ClusterName targetCluster, TableName tableName) throws ConnectorException {
         try {
             connectionHandler.startJob(targetCluster.getName());
-            return provideTableMetadata(tableName, targetCluster,
-                            connectionHandler.getConnection(targetCluster.getName()));
+            if (logger.isDebugEnabled()){
+        		logger.debug("Providing table ["+tableName.getName()+"] metadatada from cluster ["+targetCluster.getName()+"]");
+         	}
+            
+            TableMetadata tableMetadata = provideTableMetadata(tableName, targetCluster,
+                    connectionHandler.getConnection(targetCluster.getName()));
+            if (logger.isDebugEnabled()){
+        		logger.debug("Metadatada  from ["+tableName.getName()+"] has been provided from cluster ["+targetCluster.getName()+"]");
+         	}
+            
+            return tableMetadata;
         } finally {
             connectionHandler.endJob(targetCluster.getName());
         }
