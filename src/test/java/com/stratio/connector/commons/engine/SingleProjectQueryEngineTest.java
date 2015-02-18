@@ -127,8 +127,7 @@ public class SingleProjectQueryEngineTest {
         /**
          * Constructor.
          *
-         * @param connectionHandler
-         *            the connector handler.
+         * @param connectionHandler the connector handler.
          */
         public UniqueProjectQueryEngineStub(ConnectionHandler connectionHandler) {
             super(connectionHandler);
@@ -136,7 +135,7 @@ public class SingleProjectQueryEngineTest {
 
         @Override
         public void asyncExecute(String queryId, LogicalWorkflow workflow, IResultHandler resultHandler)
-                        throws ConnectorException {
+                throws ConnectorException {
             queryIdSend = queryId;
             workflowSend = workflow;
             resultHandlerSend = resultHandler;
@@ -152,7 +151,7 @@ public class SingleProjectQueryEngineTest {
 
         @Override
         protected QueryResult execute(Project workflow, Connection connection) throws UnsupportedException,
-                        ExecutionException {
+                ExecutionException {
 
             projectSend = workflow;
             connectionSend = connection;

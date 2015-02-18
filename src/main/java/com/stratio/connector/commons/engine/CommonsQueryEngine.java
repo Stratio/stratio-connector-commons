@@ -36,11 +36,11 @@ import com.stratio.crossdata.common.result.QueryResult;
  */
 public abstract class CommonsQueryEngine implements IQueryEngine {
 
-	 /**
-	    * The Log.
-	    */
-	   private transient final Logger logger = LoggerFactory.getLogger(this.getClass());
-	   
+    /**
+     * The Log.
+     */
+    private transient final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     /**
      * The connection handler.
      */
@@ -49,8 +49,7 @@ public abstract class CommonsQueryEngine implements IQueryEngine {
     /**
      * Constructor.
      *
-     * @param connectionHandler
-     *            the connector handler.
+     * @param connectionHandler the connector handler.
      */
 
     protected CommonsQueryEngine(ConnectionHandler connectionHandler) {
@@ -60,11 +59,9 @@ public abstract class CommonsQueryEngine implements IQueryEngine {
     /**
      * This method execute a query.
      *
-     * @param workflow
-     *            the workflow to be executed.
+     * @param workflow the workflow to be executed.
      * @return the query result.
-     * @throws ConnectorException
-     *             if a error happens.
+     * @throws ConnectorException if a error happens.
      */
     @Override
     public final QueryResult execute(LogicalWorkflow workflow) throws ConnectorException {
@@ -75,13 +72,15 @@ public abstract class CommonsQueryEngine implements IQueryEngine {
                 ClusterName clusterName = ((Project) project).getClusterName();
                 connectionHandler.startJob(clusterName.getName());
             }
-            if (logger.isDebugEnabled()){
-            	logger.debug("Executing ["+workflow.toString()+"]");
+            if (logger.isDebugEnabled()) {
+                logger.debug("Executing [" + workflow.toString() + "]");
             }
             result = executeWorkFlow(workflow);
-           
-            if (logger.isDebugEnabled()){
-            	logger.debug("The result form the query ["+workflow.toString()+"] has returned ["+result.getResultSet().size()+"] rows");
+
+            if (logger.isDebugEnabled()) {
+                logger.debug(
+                        "The result form the query [" + workflow.toString() + "] has returned [" + result.getResultSet()
+                                .size() + "] rows");
             }
         } finally {
             for (LogicalStep project : workflow.getInitialSteps()) {
@@ -92,17 +91,15 @@ public abstract class CommonsQueryEngine implements IQueryEngine {
     }
 
     public final void pagedExecute(String var1, LogicalWorkflow var2, IResultHandler var3, int var4)
-            throws ConnectorException{
+            throws ConnectorException {
 
     }
 
     /**
      * Abstract method which must be implemented by the concrete database metadataEngine to execute a workflow.
      *
-     * @param workflow
-     *            the workflow.
-     * @throws ConnectorException
-     *             if an error happens.
+     * @param workflow the workflow.
+     * @throws ConnectorException if an error happens.
      */
     protected abstract QueryResult executeWorkFlow(LogicalWorkflow workflow) throws ConnectorException;
 }

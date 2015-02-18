@@ -67,12 +67,12 @@ public abstract class GenericLimitFT extends GenericConnectorTest {
     private LogicalWorkflow createLogicalPlan(int limit) {
 
         return new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName())
-                        .addColumnName(COLUMN_TEXT, COLUMN_AGE, COLUMN_MONEY).addLimit(limit).build();
+                .addColumnName(COLUMN_TEXT, COLUMN_AGE, COLUMN_MONEY).addLimit(limit).build();
 
     }
 
     private void insertRow(int ikey, String texto, ClusterName cLusterName) throws UnsupportedOperationException,
-                    ConnectorException {
+            ConnectorException {
 
         Row row = new Row();
         Map<String, Cell> cells = new HashMap<>();
@@ -81,7 +81,8 @@ public abstract class GenericLimitFT extends GenericConnectorTest {
         cells.put(COLUMN_MONEY, new Cell(20));
         row.setCells(cells);
 
-        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,getClusterName().getName());
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,
+                getClusterName().getName());
         tableMetadataBuilder.addColumn(COLUMN_TEXT,
                 new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_AGE, new ColumnType(DataType.INT))
                 .addColumn(COLUMN_MONEY, new ColumnType(DataType.INT));

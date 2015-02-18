@@ -40,8 +40,7 @@ public class CatalogMetadataBuilder {
     /**
      * Instantiates a new catalog metadata builder.
      *
-     * @param catalogName
-     *            the catalog name
+     * @param catalogName the catalog name
      */
     public CatalogMetadataBuilder(String catalogName) {
         this.catalogName = new CatalogName(catalogName);
@@ -53,8 +52,7 @@ public class CatalogMetadataBuilder {
     /**
      * Adds tables to the catalog.
      *
-     * @param tableMetadataList
-     *            the table metadata list
+     * @param tableMetadataList the table metadata list
      * @return the catalog metadata builder
      */
     public CatalogMetadataBuilder withTables(TableMetadata... tableMetadataList) {
@@ -67,8 +65,7 @@ public class CatalogMetadataBuilder {
     /**
      * Set the options. Any options previously created are removed.
      *
-     * @param opts
-     *            the opts
+     * @param opts the opts
      * @return the catalog metadata builder
      */
     public CatalogMetadataBuilder withOptions(Map<Selector, Selector> opts) {

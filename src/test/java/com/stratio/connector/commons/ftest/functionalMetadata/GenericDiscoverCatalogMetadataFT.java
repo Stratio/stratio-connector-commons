@@ -54,15 +54,13 @@ public abstract class GenericDiscoverCatalogMetadataFT extends GenericConnectorT
 
     protected static final String SECOND_TABLE = "second_table";
     protected static final String SECOND_TABLE_COLUMN = "column";
-
-    protected TableMetadata tableMetadata = createTableMetadataWithIndex();
-    protected TableMetadata tableMetadataSecondary = createSimpleTableMetadata();
-    protected CatalogMetadata catalogMetadataProvided;
-
     /**
      * The Log.
      */
     final Logger logger = LoggerFactory.getLogger(this.getClass());
+    protected TableMetadata tableMetadata = createTableMetadataWithIndex();
+    protected TableMetadata tableMetadataSecondary = createSimpleTableMetadata();
+    protected CatalogMetadata catalogMetadataProvided;
 
     @Override
     protected ClusterName getClusterName() {
@@ -71,7 +69,7 @@ public abstract class GenericDiscoverCatalogMetadataFT extends GenericConnectorT
 
     /**
      * Tests: provideTableMetadata
-     * 
+     *
      * @throws UnsupportedException
      * @throws ConnectorException
      */
@@ -82,7 +80,7 @@ public abstract class GenericDiscoverCatalogMetadataFT extends GenericConnectorT
         prepareEnvironment(tableMetadata);
         prepareEnvironment(tableMetadataSecondary);
         catalogMetadataProvided = getConnector().getMetadataEngine().provideCatalogMetadata(getClusterName(),
-                        new CatalogName(CATALOG));
+                new CatalogName(CATALOG));
 
     }
 
@@ -97,14 +95,14 @@ public abstract class GenericDiscoverCatalogMetadataFT extends GenericConnectorT
 
         // Results verification
         assertTrue("The table name is not the expected",
-                        tableWithIndexProvided.getName().getName().equals(tableMetadata.getName().getName()));
+                tableWithIndexProvided.getName().getName().equals(tableMetadata.getName().getName()));
         assertTrue("The cluster name is not the expected",
-                        tableWithIndexProvided.getClusterRef().getName().equals(getClusterName().getName()));
+                tableWithIndexProvided.getClusterRef().getName().equals(getClusterName().getName()));
 
         assertTrue("The table name is not the expected",
-                        tableSimpleProvided.getName().getName().equals(tableMetadataSecondary.getName().getName()));
+                tableSimpleProvided.getName().getName().equals(tableMetadataSecondary.getName().getName()));
         assertTrue("The cluster name is not the expected",
-                        tableSimpleProvided.getClusterRef().getName().equals(getClusterName().getName()));
+                tableSimpleProvided.getClusterRef().getName().equals(getClusterName().getName()));
 
     }
 
@@ -148,10 +146,10 @@ public abstract class GenericDiscoverCatalogMetadataFT extends GenericConnectorT
         TableMetadata tableSimpleProvided = catalogMetadataProvided.getTables().get(tableMetadataSecondary.getName());
 
         assertEquals("The primary key should be " + COLUMN_1, COLUMN_1, tableWithIndexProvided.getPrimaryKey().get(0)
-                        .getName());
+                .getName());
 
         assertEquals("The primary key should be " + SECOND_TABLE_COLUMN, SECOND_TABLE_COLUMN, tableSimpleProvided
-                        .getPrimaryKey().get(0).getName());
+                .getPrimaryKey().get(0).getName());
     }
 
     @Test
@@ -163,19 +161,19 @@ public abstract class GenericDiscoverCatalogMetadataFT extends GenericConnectorT
         // verifyAllRowWasInserted table1
         assertEquals("The table must have 2 columns", 2, tableWithIndexProvided.getColumns().size());
         String columnNameProvided_1 = tableWithIndexProvided.getColumns()
-                        .get(new ColumnName(tableMetadata.getName(), COLUMN_1)).getName().getName();
+                .get(new ColumnName(tableMetadata.getName(), COLUMN_1)).getName().getName();
         assertEquals("The field " + COLUMN_1 + " has not been found", COLUMN_1, columnNameProvided_1);
         String columnNameProvided_2 = tableWithIndexProvided.getColumns()
-                        .get(new ColumnName(tableMetadata.getName(), COLUMN_2)).getName().getName();
+                .get(new ColumnName(tableMetadata.getName(), COLUMN_2)).getName().getName();
         assertEquals("The field " + COLUMN_2 + " has not been found", COLUMN_2, columnNameProvided_2);
 
         // verifyAllRowWasInserted table2
 
         assertEquals("The table must have 1 column", 1, tableSimpleProvided.getColumns().size());
         columnNameProvided_1 = tableSimpleProvided.getColumns()
-                        .get(new ColumnName(tableMetadataSecondary.getName(), SECOND_TABLE_COLUMN)).getName().getName();
+                .get(new ColumnName(tableMetadataSecondary.getName(), SECOND_TABLE_COLUMN)).getName().getName();
         assertEquals("The field " + SECOND_TABLE_COLUMN + " has not been found", SECOND_TABLE_COLUMN,
-                        columnNameProvided_1);
+                columnNameProvided_1);
 
     }
 
@@ -203,14 +201,15 @@ public abstract class GenericDiscoverCatalogMetadataFT extends GenericConnectorT
 
     private TableMetadata createTableMetadataWithIndex() {
 
-        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE, getClusterName().getName());
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,
+                getClusterName().getName());
 
         tableMetadataBuilder.addColumn(COLUMN_1, new ColumnType(DataType.INT)).addColumn(COLUMN_2,
                 new ColumnType(DataType.TEXT));
         tableMetadataBuilder.withPartitionKey(COLUMN_1);
 
         IndexMetadataBuilder indexMetadataBuilder = new IndexMetadataBuilder(CATALOG, TABLE, INDEX_NAME,
-                        IndexType.DEFAULT);
+                IndexType.DEFAULT);
         indexMetadataBuilder.addColumn(COLUMN_1, new ColumnType(DataType.VARCHAR));
         indexMetadataBuilder.addColumn(COLUMN_2, new ColumnType(DataType.TEXT));
 
@@ -225,7 +224,7 @@ public abstract class GenericDiscoverCatalogMetadataFT extends GenericConnectorT
     private TableMetadata createSimpleTableMetadata() {
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, SECOND_TABLE, getClusterName()
-                        .getName());
+                .getName());
 
         tableMetadataBuilder.addColumn(SECOND_TABLE_COLUMN, new ColumnType(DataType.INT));
         tableMetadataBuilder.withPartitionKey(SECOND_TABLE_COLUMN);

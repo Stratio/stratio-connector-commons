@@ -65,8 +65,7 @@ public abstract class GenericAggregationUpdateFT extends GenericConnectorTest<IC
     /**
      * Test a basic increase field as "FIELD = FIELD + 2"
      *
-     * @throws ConnectorException
-     *             the connector exception
+     * @throws ConnectorException the connector exception
      */
     @Test
     public void updateAddFunctionFT() throws ConnectorException {
@@ -83,8 +82,7 @@ public abstract class GenericAggregationUpdateFT extends GenericConnectorTest<IC
     /**
      * Test a basic decrement field as "FIELD = FIELD - 5"
      *
-     * @throws ConnectorException
-     *             the connector exception
+     * @throws ConnectorException the connector exception
      */
     @Test
     public void updateSubstractFunctionFT() throws ConnectorException {
@@ -101,8 +99,7 @@ public abstract class GenericAggregationUpdateFT extends GenericConnectorTest<IC
     /**
      * Test a basic decrement field as "FIELD = FIELD * 5"
      *
-     * @throws ConnectorException
-     *             the connector exception
+     * @throws ConnectorException the connector exception
      */
     @Test
     public void updateMultiplicationFunctionFT() throws ConnectorException {
@@ -117,7 +114,7 @@ public abstract class GenericAggregationUpdateFT extends GenericConnectorTest<IC
     }
 
     protected void verifyUpdate(ClusterName clusterName, int insertedRows, Long valueExpected)
-                    throws ConnectorException {
+            throws ConnectorException {
         ResultSet resultIterator = createResultSet(clusterName);
 
         for (Row recoveredRow : resultIterator) {
@@ -129,9 +126,10 @@ public abstract class GenericAggregationUpdateFT extends GenericConnectorTest<IC
     }
 
     private void updateRow(ClusterName clusterName, Operator operator, long value) throws UnsupportedException,
-                    ConnectorException {
+            ConnectorException {
 
-        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,getClusterName().getName());
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,
+                getClusterName().getName());
         tableMetadataBuilder.addColumn(COLUMN_1, new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_2,
                 new ColumnType(DataType
                         .BIGINT));
@@ -193,7 +191,8 @@ public abstract class GenericAggregationUpdateFT extends GenericConnectorTest<IC
 
         row.setCells(cells);
 
-        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,getClusterName().getName());
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,
+                getClusterName().getName());
         tableMetadataBuilder.addColumn(COLUMN_1, new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_2,
                 new ColumnType(DataType.BIGINT));
 
@@ -208,7 +207,7 @@ public abstract class GenericAggregationUpdateFT extends GenericConnectorTest<IC
 
     private LogicalWorkflow createLogicalWorkFlow() {
         return new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName()).addColumnName(COLUMN_1, COLUMN_2)
-                        .build();
+                .build();
 
     }
 

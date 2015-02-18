@@ -73,7 +73,7 @@ public abstract class GenericSimpleUpdateWithFiltersFT extends GenericConnectorT
 
         Collection<Filter> filterCollection = new ArrayList<Filter>();
         filterCollection.add(new Filter(Operations.UPDATE_NON_INDEXED_GET,
-                        getBasicRelation(COLUMN_2, Operator.GET, 20l)));
+                getBasicRelation(COLUMN_2, Operator.GET, 20l)));
 
         updateRow(clusterName, filterCollection);
         verifyUpdate(clusterName, 3);
@@ -113,9 +113,10 @@ public abstract class GenericSimpleUpdateWithFiltersFT extends GenericConnectorT
     }
 
     private void updateRow(ClusterName clusterName, Collection<Filter> filterCollection) throws UnsupportedException,
-                    ConnectorException {
+            ConnectorException {
 
-        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,getClusterName().getName());
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,
+                getClusterName().getName());
         tableMetadataBuilder.addColumn(COLUMN_1,
                 new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_2, new ColumnType(DataType
                 .BIGINT));
@@ -167,10 +168,11 @@ public abstract class GenericSimpleUpdateWithFiltersFT extends GenericConnectorT
 
         row.setCells(cells);
 
-        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,getClusterName().getName());
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,
+                getClusterName().getName());
         tableMetadataBuilder.addColumn(COLUMN_1,
                 new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_2, new ColumnType(DataType
-                        .BIGINT))
+                .BIGINT))
                 .withPartitionKey(COLUMN_1);
 
         TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper().isPKMandatory());
@@ -184,7 +186,7 @@ public abstract class GenericSimpleUpdateWithFiltersFT extends GenericConnectorT
 
     private LogicalWorkflow createLogicalWorkFlow() {
         return new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName()).addColumnName(COLUMN_1, COLUMN_2)
-                        .build();
+                .build();
 
     }
 }

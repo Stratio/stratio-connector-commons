@@ -72,23 +72,24 @@ public abstract class GenericMetadataDropFT extends GenericConnectorTest {
             createTable();
         }
 
-        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,getClusterName().getName());
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,
+                getClusterName().getName());
         tableMetadataBuilder.addColumn(COLUMN_1,
                 new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_2, new ColumnType(DataType.INT));
         connector.getStorageEngine().insert(clusterName,
-                        tableMetadataBuilder.build(getConnectorHelper().isPKMandatory()), row, false);
+                tableMetadataBuilder.build(getConnectorHelper().isPKMandatory()), row, false);
 
-        tableMetadataBuilder = new TableMetadataBuilder(OTHER_CATALOG, TABLE,getClusterName().getName());
+        tableMetadataBuilder = new TableMetadataBuilder(OTHER_CATALOG, TABLE, getClusterName().getName());
         tableMetadataBuilder.addColumn(COLUMN_1,
                 new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_2, new ColumnType(DataType.INT));
         connector.getStorageEngine().insert(clusterName,
-                        tableMetadataBuilder.build(getConnectorHelper().isPKMandatory()), row, false);
+                tableMetadataBuilder.build(getConnectorHelper().isPKMandatory()), row, false);
 
-        tableMetadataBuilder = new TableMetadataBuilder(CATALOG, OTHER_TABLE,getClusterName().getName());
+        tableMetadataBuilder = new TableMetadataBuilder(CATALOG, OTHER_TABLE, getClusterName().getName());
         tableMetadataBuilder.addColumn(COLUMN_1, new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_2, new
-                        ColumnType(DataType.INT));
+                ColumnType(DataType.INT));
         connector.getStorageEngine().insert(clusterName,
-                        tableMetadataBuilder.build(getConnectorHelper().isPKMandatory()), row, false);
+                tableMetadataBuilder.build(getConnectorHelper().isPKMandatory()), row, false);
 
         refresh(CATALOG);
         refresh(OTHER_CATALOG);
@@ -126,7 +127,7 @@ public abstract class GenericMetadataDropFT extends GenericConnectorTest {
                 .TEXT)));
 
         TableMetadata tableMetadata = new TableMetadata(tableName, options, columnsMap, Collections.EMPTY_MAP,
-                        getClusterName(), new LinkedList(), new LinkedList());
+                getClusterName(), new LinkedList(), new LinkedList());
         connector.getMetadataEngine().createTable(getClusterName(), tableMetadata);
     }
 
@@ -140,23 +141,24 @@ public abstract class GenericMetadataDropFT extends GenericConnectorTest {
         cells.put(COLUMN_2, new Cell(2));
         row.setCells(cells);
 
-        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,getClusterName().getName());
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,
+                getClusterName().getName());
         tableMetadataBuilder.addColumn(COLUMN_1,
                 new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_2, new ColumnType(DataType.INT));
         connector.getStorageEngine().insert(clusterName,
-                        tableMetadataBuilder.build(getConnectorHelper().isPKMandatory()), row, false);
+                tableMetadataBuilder.build(getConnectorHelper().isPKMandatory()), row, false);
 
-        tableMetadataBuilder = new TableMetadataBuilder(OTHER_CATALOG, TABLE,getClusterName().getName());
+        tableMetadataBuilder = new TableMetadataBuilder(OTHER_CATALOG, TABLE, getClusterName().getName());
         tableMetadataBuilder.addColumn(COLUMN_1,
                 new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_2, new ColumnType(DataType.INT));
         connector.getStorageEngine().insert(clusterName,
-                        tableMetadataBuilder.build(getConnectorHelper().isPKMandatory()), row, false);
+                tableMetadataBuilder.build(getConnectorHelper().isPKMandatory()), row, false);
 
-        tableMetadataBuilder = new TableMetadataBuilder(CATALOG, OTHER_TABLE,getClusterName().getName());
+        tableMetadataBuilder = new TableMetadataBuilder(CATALOG, OTHER_TABLE, getClusterName().getName());
         tableMetadataBuilder.addColumn(COLUMN_1,
                 new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_2, new ColumnType(DataType.INT));
         connector.getStorageEngine().insert(clusterName,
-                        tableMetadataBuilder.build(getConnectorHelper().isPKMandatory()), row, false);
+                tableMetadataBuilder.build(getConnectorHelper().isPKMandatory()), row, false);
 
         refresh(CATALOG);
         refresh(OTHER_CATALOG);
@@ -179,7 +181,7 @@ public abstract class GenericMetadataDropFT extends GenericConnectorTest {
     private LogicalWorkflow createLogicalWorkFlow(String catalog, String table) {
 
         return new LogicalWorkFlowCreator(catalog, table, getClusterName()).addColumnName(COLUMN_1, COLUMN_2)
-                        .build();
+                .build();
     }
 
     @After

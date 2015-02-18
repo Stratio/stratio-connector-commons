@@ -81,11 +81,12 @@ public final class ColumnTypeHelper {
 
     /**
      * This method validate the Input.
+     *
      * @param columnType the columnType.
      * @throws ExecutionException if a exception happens.
      */
     private static void validateInput(ColumnType columnType) throws ExecutionException {
-        if (columnType==null){
+        if (columnType == null) {
             String messagge = "The ColumnType can not be null.";
             LOGGER.error(messagge);
             throw new ExecutionException(messagge);

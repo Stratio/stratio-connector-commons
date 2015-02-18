@@ -77,7 +77,7 @@ public abstract class GenericNotIndexedQueryStringFilterFT extends GenericConnec
         refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addColumnName(COLUMN_TEXT)
-                        .addEqualFilter(COLUMN_TEXT, names[10], false, false).build();
+                .addEqualFilter(COLUMN_TEXT, names[10], false, false).build();
 
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
 
@@ -94,7 +94,7 @@ public abstract class GenericNotIndexedQueryStringFilterFT extends GenericConnec
         refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addColumnName(COLUMN_TEXT)
-                        .addDistinctFilter(COLUMN_TEXT, names[5], false, false).build();
+                .addDistinctFilter(COLUMN_TEXT, names[5], false, false).build();
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
 
         assertEquals("The record number is correct", names.length - 1, queryResult.getResultSet().size());
@@ -111,7 +111,7 @@ public abstract class GenericNotIndexedQueryStringFilterFT extends GenericConnec
         refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addColumnName(COLUMN_TEXT)
-                        .addEqualFilter(COLUMN_TEXT, names[10].toLowerCase(), false, false).build();
+                .addEqualFilter(COLUMN_TEXT, names[10].toLowerCase(), false, false).build();
 
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
 
@@ -128,7 +128,7 @@ public abstract class GenericNotIndexedQueryStringFilterFT extends GenericConnec
         refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addColumnName(COLUMN_TEXT)
-                        .addDistinctFilter(COLUMN_TEXT, names[5].toLowerCase(), false, false).build();
+                .addDistinctFilter(COLUMN_TEXT, names[5].toLowerCase(), false, false).build();
         QueryResult queryResult = connector.getQueryEngine().execute(logicalPlan);
 
         assertEquals("The record number is correct", names.length - 1, queryResult.getResultSet().size());
@@ -143,7 +143,7 @@ public abstract class GenericNotIndexedQueryStringFilterFT extends GenericConnec
         refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addColumnName(COLUMN_TEXT)
-                        .addMatchFilter(COLUMN_TEXT, "matter").build();
+                .addMatchFilter(COLUMN_TEXT, "matter").build();
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
 
         ResultSet resultSet = queryResult.getResultSet();
@@ -151,15 +151,16 @@ public abstract class GenericNotIndexedQueryStringFilterFT extends GenericConnec
 
         for (Row row : resultSet) {
             assertTrue("the return text contains matter",
-                            ((String) row.getCell(COLUMN_TEXT).getValue()).contains("matter"));
+                    ((String) row.getCell(COLUMN_TEXT).getValue()).contains("matter"));
         }
 
     }
 
     private void insertRow(String[] text, ClusterName clusterNodeName, boolean toLowerCase)
-                    throws UnsupportedOperationException, ConnectorException {
+            throws UnsupportedOperationException, ConnectorException {
 
-        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,getClusterName().getName());
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,
+                getClusterName().getName());
         tableMetadataBuilder.addColumn("id", new ColumnType(DataType.INT)).addColumn(COLUMN_TEXT, new ColumnType
                 (DataType.VARCHAR));
         tableMetadataBuilder.addIndex(IndexType.FULL_TEXT, "indexText", COLUMN_TEXT);
@@ -172,9 +173,9 @@ public abstract class GenericNotIndexedQueryStringFilterFT extends GenericConnec
             Map<ColumnName, ColumnMetadata> columns = new HashMap<>();
             Object[] parameters = null;
             columns.put(new ColumnName(tableName, COLUMN_TEXT), new ColumnMetadata(new ColumnName(tableName,
-                            COLUMN_TEXT), parameters, new ColumnType(DataType.TEXT)));
+                    COLUMN_TEXT), parameters, new ColumnType(DataType.TEXT)));
             IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, "indexText"), columns,
-                            IndexType.FULL_TEXT, Collections.EMPTY_MAP);
+                    IndexType.FULL_TEXT, Collections.EMPTY_MAP);
             connector.getMetadataEngine().createIndex(clusterNodeName, indexMetadata);
         }
         Collection<Row> rows = new ArrayList();

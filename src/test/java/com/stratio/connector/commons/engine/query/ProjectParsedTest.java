@@ -42,12 +42,12 @@ import com.stratio.crossdata.common.statements.structures.window.WindowType;
 
 /**
  * ProjectParsed Tester.
- * 
+ *
  * @author <Authors name>
+ * @version 1.0
  * @since <pre>
  * dic 16, 2014
  * </pre>
- * @version 1.0
  */
 public class ProjectParsedTest {
 
@@ -58,9 +58,7 @@ public class ProjectParsedTest {
     private static final ClusterName CLUSTER_NAME = new ClusterName(CLUSTER);
 
     /**
-     * 
      * Method: hasProjection()
-     * 
      */
     @Test
     public void testCreateProjecParsedProject() throws Exception {
@@ -208,7 +206,7 @@ public class ProjectParsedTest {
         assertNull("The window must be null", projectParsed.getWindow());
         assertNull("The groupBy must be null", projectParsed.getGroupBy());
         assertEquals("The orderBy must be the orderBy created before", Operations.SELECT_ORDER_BY, projectParsed
-                        .getOrderBy().getOperation());
+                .getOrderBy().getOperation());
         assertEquals("The project must be the project pass in constructor", project, projectParsed.getProject());
 
     }

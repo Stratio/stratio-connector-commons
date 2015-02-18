@@ -88,7 +88,7 @@ public abstract class GenericQueryFT extends GenericConnectorTest {
                 .VARCHAR)));
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addColumnName(COLUMN_1, COLUMN_2, COLUMN_3)
-                        .addSelect(fields).build();
+                .addSelect(fields).build();
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
         Set<Object> proveSet = new HashSet<>();
         ResultSet resultSet = queryResult.getResultSet();
@@ -114,7 +114,6 @@ public abstract class GenericQueryFT extends GenericConnectorTest {
     @Test
     public void validateMetadataTest() throws ConnectorException {
 
-
         insertTypedRow();
 
         refresh(CATALOG);
@@ -125,10 +124,10 @@ public abstract class GenericQueryFT extends GenericConnectorTest {
                 .TEXT)));
         fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_2, ALIAS_COLUMN_2, new ColumnType(DataType.INT)));
         fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_3, ALIAS_COLUMN_3, new ColumnType(DataType
-                .BOOLEAN))  );
+                .BOOLEAN)));
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addColumnName(COLUMN_1, COLUMN_2, COLUMN_3)
-                        .addSelect(fields).build();
+                .addSelect(fields).build();
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
 
         ResultSet resultSet = queryResult.getResultSet();
@@ -145,7 +144,8 @@ public abstract class GenericQueryFT extends GenericConnectorTest {
         cells.put(COLUMN_2, new Cell(new Integer(10)));
         cells.put(COLUMN_3, new Cell(true));
 
-        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,getClusterName().getName());
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,
+                getClusterName().getName());
         tableMetadataBuilder.addColumn(COLUMN_1, new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_2, new ColumnType
                 (DataType.INT)).addColumn(COLUMN_3, new ColumnType(DataType.BOOLEAN));
 
@@ -159,28 +159,27 @@ public abstract class GenericQueryFT extends GenericConnectorTest {
         assertNotNull("The metadata is not null", columnMetadata);
         ColumnMetadata[] metadata = columnMetadata.toArray(new ColumnMetadata[0]);
 
-
         assertEquals("the table name is correct", QualifiedNames.getTableQualifiedName(CATALOG, TABLE),
 
-        metadata[0].getName().getTableName().toString());
+                metadata[0].getName().getTableName().toString());
         assertEquals("the table name is correct", QualifiedNames.getTableQualifiedName(CATALOG, TABLE), metadata[1]
-                        .getName().getTableName().toString());
+                .getName().getTableName().toString());
         assertEquals("the table name is correct", QualifiedNames.getTableQualifiedName(CATALOG, TABLE), metadata[2]
-                        .getName().getTableName().toString());
+                .getName().getTableName().toString());
 
         assertEquals("The first column type is correct", new ColumnType(DataType.TEXT), metadata[0].getColumnType());
         assertEquals("The second column type is correct", new ColumnType(DataType.INT), metadata[1].getColumnType());
         assertEquals("The third column type is correct", new ColumnType(DataType.BOOLEAN), metadata[2].getColumnType());
 
         assertEquals("The first column name is correct",
-                        QualifiedNames.getColumnQualifiedName(CATALOG, TABLE, COLUMN_1), metadata[0].getName()
-                                        .getQualifiedName());
+                QualifiedNames.getColumnQualifiedName(CATALOG, TABLE, COLUMN_1), metadata[0].getName()
+                        .getQualifiedName());
         assertEquals("The first column name is correct",
-                        QualifiedNames.getColumnQualifiedName(CATALOG, TABLE, COLUMN_2), metadata[1].getName()
-                                        .getQualifiedName());
+                QualifiedNames.getColumnQualifiedName(CATALOG, TABLE, COLUMN_2), metadata[1].getName()
+                        .getQualifiedName());
         assertEquals("The first column name is correct",
-                        QualifiedNames.getColumnQualifiedName(CATALOG, TABLE, COLUMN_3), metadata[2].getName()
-                                        .getQualifiedName());
+                QualifiedNames.getColumnQualifiedName(CATALOG, TABLE, COLUMN_3), metadata[2].getName()
+                        .getQualifiedName());
 
         assertEquals("The first column alias is correct", ALIAS_COLUMN_1, metadata[0].getName().getAlias());
         assertEquals("The first column alias is correct", ALIAS_COLUMN_2, metadata[1].getName().getAlias());
@@ -211,12 +210,12 @@ public abstract class GenericQueryFT extends GenericConnectorTest {
     }
 
     private void insertRow(int ikey, ClusterName clusterNodeName) throws UnsupportedOperationException,
-                    ConnectorException {
+            ConnectorException {
         insertRow(ikey, TABLE, clusterNodeName);
     }
 
     private void insertRow(int ikey, String Table, ClusterName clusterNodeName) throws UnsupportedOperationException,
-                    ConnectorException {
+            ConnectorException {
 
         Row row = new Row();
         Map<String, Cell> cells = new HashMap<>();
@@ -225,7 +224,8 @@ public abstract class GenericQueryFT extends GenericConnectorTest {
         cells.put(COLUMN_3, new Cell("ValueBin3_r" + ikey));
         row.setCells(cells);
 
-        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, Table,getClusterName().getName());
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, Table,
+                getClusterName().getName());
         tableMetadataBuilder.addColumn(COLUMN_1,
                 new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_2, new ColumnType(DataType.VARCHAR))
                 .addColumn(COLUMN_3, new ColumnType(DataType.VARCHAR));

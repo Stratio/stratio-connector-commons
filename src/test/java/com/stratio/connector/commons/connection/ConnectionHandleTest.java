@@ -96,7 +96,7 @@ public class ConnectionHandleTest {
             fail("should not get here");
         } catch (ConnectionException e) {
             assertEquals("The message is correct", "The connection [" + CLUSTER_NAME + "] already exists",
-                            e.getMessage());
+                    e.getMessage());
         }
 
     }
@@ -108,7 +108,7 @@ public class ConnectionHandleTest {
 
         } catch (ExecutionException e) {
             assertEquals("The message is correct", e.getMessage(), "The connection [" + CLUSTER_NAME
-                            + "] does not exist");
+                    + "] does not exist");
 
         }
     }

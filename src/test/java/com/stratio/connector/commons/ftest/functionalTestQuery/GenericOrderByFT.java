@@ -129,7 +129,7 @@ public abstract class GenericOrderByFT extends GenericConnectorTest {
         LogicalWorkFlowCreator logWFCreator = new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName());
         logWFCreator.addColumnName(COLUMN_TEXT).addColumnName(COLUMN_AGE).addSelect(getSelectClause(logWFCreator));
         logWFCreator.addOrderByClause(COLUMN_MONEY, OrderDirection.ASC).addOrderByClause(COLUMN_AGE,
-                        OrderDirection.DESC);
+                OrderDirection.DESC);
 
         // return COLUMN_TEXT order by money asc, age asc
         QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logWFCreator.build());
@@ -157,7 +157,8 @@ public abstract class GenericOrderByFT extends GenericConnectorTest {
 
     protected void prepareDataForTest() throws ConnectorException {
 
-        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,getClusterName().getName());
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,
+                getClusterName().getName());
         tableMetadataBuilder.addColumn(COLUMN_TEXT,
                 new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_AGE, new ColumnType(DataType.INT))
                 .addColumn(COLUMN_MONEY, new ColumnType(DataType.INT)).withPartitionKey(COLUMN_TEXT);
@@ -168,7 +169,7 @@ public abstract class GenericOrderByFT extends GenericConnectorTest {
         }
         if (this.getConnectorHelper().isTableMandatory()) {
             getConnectorHelper().getConnector().getMetadataEngine()
-                            .createTable(getClusterName(), tableMetadataBuilder.build());
+                    .createTable(getClusterName(), tableMetadataBuilder.build());
         }
         if (this.getConnectorHelper().isIndexMandatory()) {
             // TODO createIndexes
@@ -185,7 +186,7 @@ public abstract class GenericOrderByFT extends GenericConnectorTest {
     }
 
     private void insertRow(int ikey, String texto, int money, int age, TableMetadata tableMetadata,
-                    ClusterName clusterName) throws ConnectorException {
+            ClusterName clusterName) throws ConnectorException {
 
         Row row = new Row();
         Map<String, Cell> cells = new HashMap<>();

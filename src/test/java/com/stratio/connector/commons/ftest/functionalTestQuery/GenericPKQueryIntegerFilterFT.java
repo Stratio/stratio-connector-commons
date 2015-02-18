@@ -78,13 +78,13 @@ public abstract class GenericPKQueryIntegerFilterFT extends GenericConnectorTest
         refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns().addColumnName(COLUMN_PK)
-                        .addEqualFilter(COLUMN_PK, new Integer(2), false, true).build();
+                .addEqualFilter(COLUMN_PK, new Integer(2), false, true).build();
 
         QueryResult queryResult = connector.getQueryEngine().execute(logicalPlan);
 
         assertEquals("The record number is correct", 1, queryResult.getResultSet().size());
         assertEquals("The value is correct", new Integer(2),
-                        queryResult.getResultSet().getRows().get(0).getCell(COLUMN_PK).getValue());
+                queryResult.getResultSet().getRows().get(0).getCell(COLUMN_PK).getValue());
 
     }
 
@@ -102,8 +102,8 @@ public abstract class GenericPKQueryIntegerFilterFT extends GenericConnectorTest
         refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns().addColumnName(COLUMN_PK)
-                        .addEqualFilter(COLUMN_PK, new Integer(2), false, true)
-                        .addEqualFilter(COLUMN_PK, new Integer(3), false, true).build();
+                .addEqualFilter(COLUMN_PK, new Integer(2), false, true)
+                .addEqualFilter(COLUMN_PK, new Integer(3), false, true).build();
 
         QueryResult queryResult = connector.getQueryEngine().execute(logicalPlan);
 
@@ -130,8 +130,8 @@ public abstract class GenericPKQueryIntegerFilterFT extends GenericConnectorTest
         connectorFields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_AGE, ALIAS_COLUMN_AGE, new ColumnType
                 (DataType.INT)));
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns().addColumnName(COLUMN_PK)
-                        .addSelect(connectorFields).addDistinctFilter(COLUMN_PK, new Integer(2), false, true)
-                        .addDistinctFilter(COLUMN_PK, new Integer(3), false, true).build();
+                .addSelect(connectorFields).addDistinctFilter(COLUMN_PK, new Integer(2), false, true)
+                .addDistinctFilter(COLUMN_PK, new Integer(3), false, true).build();
 
         QueryResult queryResult = connector.getQueryEngine().execute(logicalPlan);
 
@@ -153,7 +153,7 @@ public abstract class GenericPKQueryIntegerFilterFT extends GenericConnectorTest
         refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns().addColumnName(COLUMN_PK)
-                        .addGreaterEqualFilter(COLUMN_PK, new Integer(2), false, false).build();
+                .addGreaterEqualFilter(COLUMN_PK, new Integer(2), false, false).build();
 
         QueryResult queryResult = connector.getQueryEngine().execute(logicalPlan);
 
@@ -175,7 +175,7 @@ public abstract class GenericPKQueryIntegerFilterFT extends GenericConnectorTest
     }
 
     private void insertRow(int ikey, int age, int money, ClusterName clusterNodeName, boolean withPk)
-                    throws UnsupportedOperationException, ConnectorException {
+            throws UnsupportedOperationException, ConnectorException {
 
         Row row = new Row();
         Map<String, Cell> cells = new HashMap<>();
@@ -186,7 +186,8 @@ public abstract class GenericPKQueryIntegerFilterFT extends GenericConnectorTest
         cells.put(COLUMN_MONEY, new Cell(money));
         cells.put(COLUMN_PK, new Cell(ikey));
 
-        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,getClusterName().getName());
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,
+                getClusterName().getName());
         tableMetadataBuilder.addColumn(COLUMN_1,
                 new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_2, new ColumnType(DataType
                 .VARCHAR))

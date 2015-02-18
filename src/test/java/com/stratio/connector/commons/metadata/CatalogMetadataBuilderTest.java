@@ -58,7 +58,7 @@ public class CatalogMetadataBuilderTest {
 
         Assert.assertEquals("Catalog name is not the expected", CATALOG, catalogMetadata.getName().getName());
         Assert.assertEquals("The options are not the expected", selectorValue,
-                        catalogMetadata.getOptions().get(selector));
+                catalogMetadata.getOptions().get(selector));
     }
 
     @Test
@@ -73,7 +73,7 @@ public class CatalogMetadataBuilderTest {
         Assert.assertEquals("Catalog name is not the expected", CATALOG, catalogMetadata.getName().getName());
         Assert.assertEquals("There should be 1 table", 1, catalogMetadata.getTables().size());
         Assert.assertTrue("The table " + tableName.getQualifiedName() + " has not been found", catalogMetadata
-                        .getTables().containsKey(tableName));
+                .getTables().containsKey(tableName));
 
     }
 

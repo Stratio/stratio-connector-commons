@@ -70,7 +70,8 @@ public abstract class GenericBulkInsertFT extends GenericConnectorTest {
     }
 
     @Test
-    public void testBulkInsertWithoutPK() throws ConnectorException, ValidationException, UnsupportedOperationException {
+    public void testBulkInsertWithoutPK()
+            throws ConnectorException, ValidationException, UnsupportedOperationException {
 
         ClusterName clusterName = getClusterName();
         insertBulk(clusterName, false);
@@ -93,7 +94,8 @@ public abstract class GenericBulkInsertFT extends GenericConnectorTest {
             rows.add(row);
         }
 
-        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,getClusterName().getName());
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,
+                getClusterName().getName());
         tableMetadataBuilder.addColumn(COLUMN_KEY, new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_1,
                 new ColumnType(DataType.VARCHAR))
                 .addColumn(COLUMN_2,
@@ -112,7 +114,8 @@ public abstract class GenericBulkInsertFT extends GenericConnectorTest {
         QueryResult queryResult = connector.getQueryEngine().execute(createLogicalWorkFlow());
         ResultSet resultIterator = queryResult.getResultSet();
 
-        assertEquals("The records number is correct " + cluesterName.getName(), getRowToInsert(), resultIterator.size());
+        assertEquals("The records number is correct " + cluesterName.getName(), getRowToInsert(),
+                resultIterator.size());
 
         int rowRecovered = 0;
         for (Row recoveredRow : resultIterator) {
@@ -129,7 +132,7 @@ public abstract class GenericBulkInsertFT extends GenericConnectorTest {
     private LogicalWorkflow createLogicalWorkFlow() {
 
         return new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName()).addColumnName(COLUMN_KEY, COLUMN_1,
-                        COLUMN_2, COLUMN_3).build();
+                COLUMN_2, COLUMN_3).build();
 
     }
 

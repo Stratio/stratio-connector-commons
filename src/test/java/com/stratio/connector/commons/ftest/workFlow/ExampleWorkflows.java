@@ -119,7 +119,7 @@ public class ExampleWorkflows {
 
     public Project getProject(ColumnName... columnNames) {
         TableName table = new TableName(columnNames[0].getTableName().getCatalogName().getName(), columnNames[0]
-                        .getTableName().getName());
+                .getTableName().getName());
         return new Project(Operations.PROJECT, table, clusterName, Arrays.asList(columnNames));
     }
 
@@ -184,7 +184,7 @@ public class ExampleWorkflows {
         ColumnType[] types = { new ColumnType(DataType.VARCHAR), new ColumnType(DataType.INT) };
         LogicalStep project = getProject(id, name, age);
         LogicalStep filter = getFilter(Operations.FILTER_INDEXED_EQ, name, Operator.EQ,
-                        new StringSelector(names[0].toLowerCase()));
+                new StringSelector(names[0].toLowerCase()));
         project.setNextStep(filter);
         LogicalStep select = getSelect(outputNames, types, name, age);
         filter.setNextStep(select);
@@ -222,7 +222,7 @@ public class ExampleWorkflows {
                 (DataType.INT) };
         LogicalStep project = getProject(id, name, age);
         LogicalStep filterName = getFilter(Operations.FILTER_INDEXED_EQ, name, Operator.EQ,
-                        new StringSelector(names[1].toLowerCase()));
+                new StringSelector(names[1].toLowerCase()));
         project.setNextStep(filterName);
         LogicalStep filterAge = getFilter(Operations.FILTER_NON_INDEXED_EQ, age, Operator.EQ, new IntegerSelector(40));
         filterName.setNextStep(filterAge);

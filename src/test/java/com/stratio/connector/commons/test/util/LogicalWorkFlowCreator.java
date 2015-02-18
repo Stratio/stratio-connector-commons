@@ -118,7 +118,8 @@ public class LogicalWorkFlowCreator {
             Map<String, ColumnType> typeMap = new LinkedHashMap();
             Map<Selector, ColumnType> typeMapColumnName = new LinkedHashMap<>();
             for (ColumnName columnName : project.getColumnList()) {
-                ColumnSelector columnSelector = new ColumnSelector(new ColumnName(catalog, table, columnName.getName()));
+                ColumnSelector columnSelector = new ColumnSelector(
+                        new ColumnName(catalog, table, columnName.getName()));
                 selectColumn.put(columnSelector, columnName.getName());
                 typeMap.put(columnName.getAlias(), new ColumnType(DataType.VARCHAR));
                 typeMapColumnName.put(columnSelector, new ColumnType(DataType.VARCHAR));
@@ -207,7 +208,7 @@ public class LogicalWorkFlowCreator {
     public LogicalWorkFlowCreator addGreaterEqualFilter(String columnName, Object term, Boolean indexed, boolean pk) {
 
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)), Operator.GET,
-                        returnSelector(term));
+                returnSelector(term));
 
         if (pk) {
             filters.add(new Filter(Operations.FILTER_PK_GET, relation));
@@ -225,7 +226,7 @@ public class LogicalWorkFlowCreator {
     public LogicalWorkFlowCreator addGreaterFilter(String columnName, Object term, Boolean indexed) {
 
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)), Operator.GT,
-                        returnSelector(term));
+                returnSelector(term));
         if (indexed) {
             filters.add(new Filter(Operations.FILTER_INDEXED_GT, relation));
         } else {
@@ -239,7 +240,7 @@ public class LogicalWorkFlowCreator {
     public LogicalWorkFlowCreator addLowerEqualFilter(String columnName, Object term, Boolean indexed) {
 
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)), Operator.LET,
-                        returnSelector(term));
+                returnSelector(term));
         if (indexed) {
             filters.add(new Filter(Operations.FILTER_INDEXED_LET, relation));
         } else {
@@ -252,7 +253,7 @@ public class LogicalWorkFlowCreator {
 
     public LogicalWorkFlowCreator addNLowerFilter(String columnName, Object term, Boolean indexed) {
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)), Operator.LT,
-                        returnSelector(term));
+                returnSelector(term));
         if (indexed) {
             filters.add(new Filter(Operations.FILTER_INDEXED_LT, relation));
         } else {
@@ -264,7 +265,7 @@ public class LogicalWorkFlowCreator {
 
     public LogicalWorkFlowCreator addDistinctFilter(String columnName, Object term, Boolean indexed, Boolean PK) {
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)),
-                        Operator.DISTINCT, returnSelector(term));
+                Operator.DISTINCT, returnSelector(term));
         if (PK) {
             filters.add(new Filter(Operations.FILTER_PK_DISTINCT, relation));
         } else if (indexed) {
@@ -280,7 +281,7 @@ public class LogicalWorkFlowCreator {
 
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)),
 
-        Operator.MATCH, returnSelector(textToFind));
+                Operator.MATCH, returnSelector(textToFind));
 
         filters.add(new Filter(Operations.FILTER_INDEXED_MATCH, relation));
 
@@ -290,7 +291,7 @@ public class LogicalWorkFlowCreator {
     public LogicalWorkFlowCreator addLikeFilter(String columnName, String textToFind) {
 
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)), Operator.LIKE,
-                        returnSelector(textToFind));
+                returnSelector(textToFind));
 
         filters.add(new Filter(Operations.FILTER_INDEXED_MATCH, relation));
 

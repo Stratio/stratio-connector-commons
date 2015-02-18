@@ -54,7 +54,8 @@ public abstract class GenericMetadataAlterTableFT extends GenericConnectorTest {
         ClusterName clusterName = getClusterName();
 
         // Create the catalog and the table with COLUMN_1
-        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,getClusterName().getName());
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,
+                getClusterName().getName());
         tableMetadataBuilder.addColumn(COLUMN_1, new ColumnType(DataType.VARCHAR));
 
         CatalogMetadataBuilder catalogMetadataBuilder = new CatalogMetadataBuilder(CATALOG);
@@ -64,7 +65,7 @@ public abstract class GenericMetadataAlterTableFT extends GenericConnectorTest {
         }
         if (iConnectorHelper.isTableMandatory()) {
             connector.getMetadataEngine().createTable(clusterName,
-                            tableMetadataBuilder.build(getConnectorHelper().isPKMandatory()));
+                    tableMetadataBuilder.build(getConnectorHelper().isPKMandatory()));
         } else {
 
             Row row = new Row();
@@ -72,14 +73,14 @@ public abstract class GenericMetadataAlterTableFT extends GenericConnectorTest {
             cells.put(COLUMN_1, new Cell("value1"));
             row.setCells(cells);
             connector.getStorageEngine().insert(clusterName,
-                            tableMetadataBuilder.build(getConnectorHelper().isPKMandatory()), row, false);
+                    tableMetadataBuilder.build(getConnectorHelper().isPKMandatory()), row, false);
             insertElement++;
             refresh(CATALOG);
         }
 
         // ADD the column: COLUMN_2 with alterTable
         ColumnMetadata columnMetadata = new ColumnMetadata(new ColumnName(CATALOG, TABLE, COLUMN_2), new Object[0],
-                       new ColumnType(DataType.INT));
+                new ColumnType(DataType.INT));
         AlterOptions alterOptions = new AlterOptions(AlterOperation.ADD_COLUMN, null, columnMetadata);
 
         connector.getMetadataEngine().alterTable(clusterName, new TableName(CATALOG, TABLE), alterOptions);
@@ -95,19 +96,19 @@ public abstract class GenericMetadataAlterTableFT extends GenericConnectorTest {
 
         tableMetadataBuilder.addColumn(COLUMN_2, new ColumnType(DataType.INT));
         connector.getStorageEngine().insert(clusterName,
-                        tableMetadataBuilder.build(getConnectorHelper().isPKMandatory()), row, false);
+                tableMetadataBuilder.build(getConnectorHelper().isPKMandatory()), row, false);
         insertElement++;
 
         refresh(CATALOG);
 
         // Verify the proper column field is returned
         QueryResult queryResult = connector.getQueryEngine().execute(
-                        new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName()).addColumnName(COLUMN_1)
-                                        .addColumnName(COLUMN_2).build());
+                new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName()).addColumnName(COLUMN_1)
+                        .addColumnName(COLUMN_2).build());
         ResultSet resultSet = queryResult.getResultSet();
 
         assertEquals("The number of element recovered must be the same of the number of element inserted",
-                        insertElement, resultSet.size());
+                insertElement, resultSet.size());
         assertEquals("The number or column must be two", 2, resultSet.getColumnMetadata().size());
 
     }
@@ -118,7 +119,8 @@ public abstract class GenericMetadataAlterTableFT extends GenericConnectorTest {
         ClusterName clusterName = getClusterName();
 
         // Create the catalog and the table with COLUMN_1 and COLUMN_2
-        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,getClusterName().getName());
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,
+                getClusterName().getName());
         tableMetadataBuilder.addColumn(COLUMN_1, new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_2, new ColumnType
                 (DataType.INT));
 
@@ -129,7 +131,7 @@ public abstract class GenericMetadataAlterTableFT extends GenericConnectorTest {
         }
         if (iConnectorHelper.isTableMandatory()) {
             connector.getMetadataEngine().createTable(clusterName,
-                            tableMetadataBuilder.build(getConnectorHelper().isPKMandatory()));
+                    tableMetadataBuilder.build(getConnectorHelper().isPKMandatory()));
         }
 
         // Insert a row
@@ -140,12 +142,12 @@ public abstract class GenericMetadataAlterTableFT extends GenericConnectorTest {
         row.setCells(cells);
 
         connector.getStorageEngine().insert(clusterName,
-                        tableMetadataBuilder.build(getConnectorHelper().isPKMandatory()), row, false);
+                tableMetadataBuilder.build(getConnectorHelper().isPKMandatory()), row, false);
 
         // Verify both fields are returned
         QueryResult queryResult = connector.getQueryEngine().execute(
-                        new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName()).addColumnName(COLUMN_1)
-                                        .addColumnName(COLUMN_2).build());
+                new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName()).addColumnName(COLUMN_1)
+                        .addColumnName(COLUMN_2).build());
         assertEquals("Table [" + CATALOG + "." + TABLE + "] ", 1, queryResult.getResultSet().size());
 
         Row receivedRow = queryResult.getResultSet().getRows().get(0);
@@ -154,7 +156,7 @@ public abstract class GenericMetadataAlterTableFT extends GenericConnectorTest {
 
         // DROP the column: COLUMN_2 with alterTable
         ColumnMetadata columnMetadata = new ColumnMetadata(new ColumnName(CATALOG, TABLE, COLUMN_2), new Object[0],
-                       new ColumnType(DataType.INT));
+                new ColumnType(DataType.INT));
         AlterOptions alterOptions = new AlterOptions(AlterOperation.DROP_COLUMN, null, columnMetadata);
 
         refresh(CATALOG);
@@ -165,13 +167,13 @@ public abstract class GenericMetadataAlterTableFT extends GenericConnectorTest {
 
         // Verify if the column has been dropped
         queryResult = connector.getQueryEngine().execute(
-                        new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName()).addColumnName(COLUMN_1)
-                                        .addColumnName(COLUMN_2).build());
+                new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName()).addColumnName(COLUMN_1)
+                        .addColumnName(COLUMN_2).build());
         assertEquals("Table [" + CATALOG + "." + TABLE + "] ", 1, queryResult.getResultSet().size());
 
         receivedRow = queryResult.getResultSet().getRows().get(0);
         assertEquals("Error recovering the column which has not been modified", "value1", receivedRow.getCell(COLUMN_1)
-                        .getValue());
+                .getValue());
         assertEquals("Founded not null value in the dropped column", null, receivedRow.getCell(COLUMN_2).getValue());
 
     }

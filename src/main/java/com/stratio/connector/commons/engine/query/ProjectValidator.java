@@ -26,12 +26,9 @@ import com.stratio.crossdata.common.exceptions.ConnectorException;
 public interface ProjectValidator {
     /**
      * This method validate the projectParsed.
-     * 
-     * @param projectParsed
-     *            the projectParsed.
      *
-     * @throws ConnectorException
-     *             if the project is not validated.
+     * @param projectParsed the projectParsed.
+     * @throws ConnectorException if the project is not validated.
      */
     void validate(ProjectParsed projectParsed) throws ConnectorException;
 }

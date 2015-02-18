@@ -88,13 +88,10 @@ public class ProjectParsed {
 
     /**
      * Constructor.
-     * 
-     * @param project
-     *            the project.
-     * @param projectValidator
-     *            the validator for the projecto.
-     * @throws ConnectorException
-     *             if the logical step is not supported.
+     *
+     * @param project          the project.
+     * @param projectValidator the validator for the projecto.
+     * @throws ConnectorException if the logical step is not supported.
      */
     public ProjectParsed(Project project, ProjectValidator projectValidator) throws ConnectorException {
         this.project = project;
@@ -153,7 +150,7 @@ public class ProjectParsed {
 
     /**
      * Return the GroupBy.
-     * 
+     *
      * @return the groupBy.
      */
     public GroupBy getGroupBy() {
@@ -162,7 +159,7 @@ public class ProjectParsed {
 
     /**
      * Return the OrderBy.
-     * 
+     *
      * @return the orderBy.
      */
     public OrderBy getOrderBy() {
@@ -180,11 +177,9 @@ public class ProjectParsed {
 
     /**
      * This method add the correct logical step.
-     * 
-     * @param lStep
-     *            logical step.
-     * @throws ExecutionException
-     *             if the logical step is not supported.
+     *
+     * @param lStep logical step.
+     * @throws ExecutionException if the logical step is not supported.
      */
     private void addLogicalStep(LogicalStep lStep) throws ExecutionException {
         if (lStep instanceof Project) {
@@ -214,9 +209,8 @@ public class ProjectParsed {
 
     /**
      * Add filter in the correct list.
-     * 
-     * @param filter
-     *            the filter.
+     *
+     * @param filter the filter.
      */
     private void decideTypeFilterToAdd(Filter filter) {
         Filter step = filter;

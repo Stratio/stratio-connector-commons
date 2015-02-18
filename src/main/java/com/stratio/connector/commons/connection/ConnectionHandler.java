@@ -53,8 +53,7 @@ public abstract class ConnectionHandler {
     /**
      * Constructor.
      *
-     * @param configuration
-     *            the general settings.
+     * @param configuration the general settings.
      */
     public ConnectionHandler(IConfiguration configuration) {
         this.configuration = configuration;
@@ -64,15 +63,12 @@ public abstract class ConnectionHandler {
     /**
      * This method create a connection.
      *
-     * @param credentials
-     *            the cluster configuration.
-     * @param config
-     *            the connection options.
-     * @throws ConnectionException
-     *             if the connection already exists.
+     * @param credentials the cluster configuration.
+     * @param config      the connection options.
+     * @throws ConnectionException if the connection already exists.
      */
     public void createConnection(ICredentials credentials, ConnectorClusterConfig config) throws ConnectionException {
-    	logger.info("Creating new connection...");
+        logger.info("Creating new connection...");
         Connection connection = createNativeConnection(credentials, config);
 
         String connectionName = config.getName().getName();
@@ -94,8 +90,7 @@ public abstract class ConnectionHandler {
     /**
      * Close the connection.
      *
-     * @param clusterName
-     *            the connection name to be closed.
+     * @param clusterName the connection name to be closed.
      */
     public void closeConnection(String clusterName) {
         synchronized (connections) {
@@ -110,8 +105,7 @@ public abstract class ConnectionHandler {
     /**
      * Return if a connection is connected.
      *
-     * @param clusterName
-     *            the connection name.
+     * @param clusterName the connection name.
      * @return true if the connection is connected. False in other case.
      */
     public boolean isConnected(String clusterName) {
@@ -127,26 +121,20 @@ public abstract class ConnectionHandler {
     /**
      * Create a connection for the concrete database.
      *
-     * @param credentials
-     *            the credentials.
-     * @param config
-     *            the config.
+     * @param credentials the credentials.
+     * @param config      the config.
      * @return a connection.
-     *
-     * @throws ConnectionException
-     *             if a connection exception happens.
+     * @throws ConnectionException if a connection exception happens.
      */
     protected abstract Connection createNativeConnection(ICredentials credentials, ConnectorClusterConfig config)
-                    throws ConnectionException;
+            throws ConnectionException;
 
     /**
      * This method return a connection.
      *
-     * @param name
-     *            the connection name.
+     * @param name the connection name.
      * @return the connection.
-     * @throws ExecutionException
-     *             if the connection does not exist.
+     * @throws ExecutionException if the connection does not exist.
      */
     public Connection getConnection(String name) throws ExecutionException {
         Connection connection = null;
@@ -166,35 +154,30 @@ public abstract class ConnectionHandler {
     /**
      * This method start a work for a connections.
      *
-     * @param targetCluster
-     *            the connections cluster name.
-     * @throws ExecutionException
-     *             if the work can not start.
+     * @param targetCluster the connections cluster name.
+     * @throws ExecutionException if the work can not start.
      */
     public void startJob(String targetCluster) throws ExecutionException {
         getConnection(targetCluster).setJobInProgress(true);
-        logger.info("a new job has been started in cluster ["+targetCluster+"]");
+        logger.info("a new job has been started in cluster [" + targetCluster + "]");
     }
 
     /**
      * This method finalize a work for a connections.
      *
-     * @param targetCluster
-     *            the connections cluster name.
-     * @throws ExecutionException
-     *             if the work can not finish.
+     * @param targetCluster the connections cluster name.
+     * @throws ExecutionException if the work can not finish.
      */
     public void endJob(String targetCluster) throws ExecutionException {
         getConnection(targetCluster).setJobInProgress(false);
-        logger.info("a new job has been finished in cluster ["+targetCluster+"]");
+        logger.info("a new job has been finished in cluster [" + targetCluster + "]");
     }
 
     /**
-     *
      * @throws ExecutionException
      */
     public void closeAllConnections() throws ExecutionException {
-    	logger.info("Closing all connections...");
+        logger.info("Closing all connections...");
         synchronized (connections) {
             while (!connections.isEmpty()) {
                 for (Entry<String, Connection> mapConnections : connections.entrySet()) {

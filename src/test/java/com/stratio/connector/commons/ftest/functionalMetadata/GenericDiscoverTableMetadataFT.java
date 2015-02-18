@@ -48,18 +48,16 @@ public abstract class GenericDiscoverTableMetadataFT extends GenericConnectorTes
     protected static final String COLUMN_1 = "id";
     protected static final String COLUMN_2 = "name";
     protected static final String INDEX_NAME = "index1";
-
-    protected TableMetadata tableMetadata = createMetadata();
-    protected TableMetadata tableMetadataProvided;
-
     /**
      * The Log.
      */
     final Logger logger = LoggerFactory.getLogger(this.getClass());
+    protected TableMetadata tableMetadata = createMetadata();
+    protected TableMetadata tableMetadataProvided;
 
     /**
      * Tests: provideTableMetadata
-     * 
+     *
      * @throws UnsupportedException
      * @throws ConnectorException
      */
@@ -69,7 +67,7 @@ public abstract class GenericDiscoverTableMetadataFT extends GenericConnectorTes
 
         prepareEnvironment(tableMetadata);
         tableMetadataProvided = getConnector().getMetadataEngine().provideTableMetadata(getClusterName(),
-                        tableMetadata.getName());
+                tableMetadata.getName());
 
     }
 
@@ -78,9 +76,9 @@ public abstract class GenericDiscoverTableMetadataFT extends GenericConnectorTes
 
         // Results verification
         assertTrue("The table name is not the expected",
-                        tableMetadataProvided.getName().getName().equals(tableMetadata.getName().getName()));
+                tableMetadataProvided.getName().getName().equals(tableMetadata.getName().getName()));
         assertTrue("The cluster name is not the expected",
-                        tableMetadataProvided.getClusterRef().getName().equals(getClusterName().getName()));
+                tableMetadataProvided.getClusterRef().getName().equals(getClusterName().getName()));
 
     }
 
@@ -111,7 +109,7 @@ public abstract class GenericDiscoverTableMetadataFT extends GenericConnectorTes
     public void providePrimaryKeyFT() throws UnsupportedException, ConnectorException {
 
         assertEquals("The primary key should be " + COLUMN_1, COLUMN_1, tableMetadataProvided.getPrimaryKey().get(0)
-                        .getName());
+                .getName());
     }
 
     @Test
@@ -119,10 +117,10 @@ public abstract class GenericDiscoverTableMetadataFT extends GenericConnectorTes
 
         assertEquals("The table must have 2 columns", 2, tableMetadataProvided.getColumns().size());
         String columnNameProvided_1 = tableMetadataProvided.getColumns()
-                        .get(new ColumnName(tableMetadata.getName(), COLUMN_1)).getName().getName();
+                .get(new ColumnName(tableMetadata.getName(), COLUMN_1)).getName().getName();
         assertEquals("The field " + COLUMN_1 + " has not been found", COLUMN_1, columnNameProvided_1);
         String columnNameProvided_2 = tableMetadataProvided.getColumns()
-                        .get(new ColumnName(tableMetadata.getName(), COLUMN_2)).getName().getName();
+                .get(new ColumnName(tableMetadata.getName(), COLUMN_2)).getName().getName();
         assertEquals("The field " + COLUMN_1 + " has not been found", COLUMN_2, columnNameProvided_2);
 
     }
@@ -151,14 +149,15 @@ public abstract class GenericDiscoverTableMetadataFT extends GenericConnectorTes
 
     private TableMetadata createMetadata() {
 
-        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE, getClusterName().getName());
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,
+                getClusterName().getName());
 
         tableMetadataBuilder.addColumn(COLUMN_1, new ColumnType(DataType.INT)).addColumn(COLUMN_2, new ColumnType
                 (DataType.TEXT));
         tableMetadataBuilder.withPartitionKey(COLUMN_1);
 
         IndexMetadataBuilder indexMetadataBuilder = new IndexMetadataBuilder(CATALOG, TABLE, INDEX_NAME,
-                        IndexType.DEFAULT);
+                IndexType.DEFAULT);
         indexMetadataBuilder.addColumn(COLUMN_1, new ColumnType(DataType.VARCHAR));
         indexMetadataBuilder.addColumn(COLUMN_2, new ColumnType(DataType.TEXT));
 

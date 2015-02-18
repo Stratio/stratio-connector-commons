@@ -91,7 +91,8 @@ public abstract class GenericQueryProjectFT extends GenericConnectorTest {
             }
         }
 
-        assertEquals("The record number is not correct", getRowsToSearch(), (Integer) queryResult.getResultSet().size());
+        assertEquals("The record number is not correct", getRowsToSearch(),
+                (Integer) queryResult.getResultSet().size());
         for (int i = 0; i < getRowsToSearch(); i++) {
 
             assertTrue("Return correct record", probeSet.contains("bin1ValueBin1_r" + i));
@@ -104,11 +105,11 @@ public abstract class GenericQueryProjectFT extends GenericConnectorTest {
     private LogicalWorkflow createLogicalWorkFlow() {
 
         return new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName()).addColumnName(COLUMN_1, COLUMN_2)
-                        .build();
+                .build();
     }
 
     private void insertRow(int ikey, ClusterName clusterNodeName, TableMetadata targetTable)
-                    throws UnsupportedOperationException, ConnectorException {
+            throws UnsupportedOperationException, ConnectorException {
 
         Row row = new Row();
         Map<String, Cell> cells = new HashMap<>();

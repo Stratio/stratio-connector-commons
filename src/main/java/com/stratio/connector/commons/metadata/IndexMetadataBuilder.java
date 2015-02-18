@@ -50,14 +50,10 @@ public class IndexMetadataBuilder {
     /**
      * Instantiates a new index metadata builder.
      *
-     * @param catalogName
-     *            the catalog name
-     * @param tableName
-     *            the table name
-     * @param indexName
-     *            the index name
-     * @param type
-     *            the type
+     * @param catalogName the catalog name
+     * @param tableName   the table name
+     * @param indexName   the index name
+     * @param type        the type
      */
     public IndexMetadataBuilder(String catalogName, String tableName, String indexName, IndexType type) {
         this.tableName = new TableName(catalogName, tableName);
@@ -70,8 +66,7 @@ public class IndexMetadataBuilder {
     /**
      * Set the options. Any options previously created are removed.
      *
-     * @param opts
-     *            the opts
+     * @param opts the opts
      * @return the index metadata builder
      */
     public IndexMetadataBuilder withOptions(Map<Selector, Selector> opts) {
@@ -82,8 +77,7 @@ public class IndexMetadataBuilder {
     /**
      * Add new columns. The columns previously created are not removed.
      *
-     * @param columnsMetadata
-     *            the columns metadata
+     * @param columnsMetadata the columns metadata
      * @return the index metadata builder
      */
     public IndexMetadataBuilder withColumns(List<ColumnMetadata> columnsMetadata) {
@@ -96,10 +90,8 @@ public class IndexMetadataBuilder {
     /**
      * Add column. Parameters in columnMetadata will be null.
      *
-     * @param columnName
-     *            the column name
-     * @param colType
-     *            the col type
+     * @param columnName the column name
+     * @param colType    the col type
      * @return the index metadata builder
      */
     public IndexMetadataBuilder addColumn(String columnName, ColumnType colType) {
@@ -112,10 +104,8 @@ public class IndexMetadataBuilder {
     /**
      * Adds a new string option.
      *
-     * @param option
-     *            the option
-     * @param value
-     *            the value
+     * @param option the option
+     * @param value  the value
      * @return the index metadata builder
      */
     public IndexMetadataBuilder addOption(String option, String value) {
@@ -129,10 +119,8 @@ public class IndexMetadataBuilder {
     /**
      * Adds a new integer option.
      *
-     * @param option
-     *            the option
-     * @param value
-     *            the value
+     * @param option the option
+     * @param value  the value
      * @return the index metadata builder
      */
     public IndexMetadataBuilder addOption(String option, Integer value) {
@@ -146,10 +134,8 @@ public class IndexMetadataBuilder {
     /**
      * Adds a new boolean option.
      *
-     * @param option
-     *            the option
-     * @param value
-     *            the value
+     * @param option the option
+     * @param value  the value
      * @return the index metadata builder
      */
     public IndexMetadataBuilder addOption(String option, Boolean value) {

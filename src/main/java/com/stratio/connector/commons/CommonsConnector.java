@@ -34,15 +34,11 @@ import com.stratio.crossdata.common.security.ICredentials;
  */
 public abstract class CommonsConnector implements IConnector {
 
-	
+    /**
+     * The Log.
+     */
+    private transient final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	 /**
-    * The Log.
-    */
-   private transient final Logger logger = LoggerFactory.getLogger(this.getClass());
-	
-   
-   
     /**
      * The connectionHandler.
      */
@@ -51,16 +47,13 @@ public abstract class CommonsConnector implements IConnector {
     /**
      * Create a logical connection.
      *
-     * @param credentials
-     *            the credentials.
-     * @param config
-     *            the connection configuration.
-     * @throws ConnectionException
-     *             if the connection fail.
+     * @param credentials the credentials.
+     * @param config      the connection configuration.
+     * @throws ConnectionException if the connection fail.
      */
     @Override
     public final void connect(ICredentials credentials, ConnectorClusterConfig config) throws ConnectionException {
-    	logger.info("Conecting connector ["+getConnectorName()+"]");
+        logger.info("Conecting connector [" + getConnectorName() + "]");
         connectionHandler.createConnection(credentials, config);
 
     }
@@ -68,25 +61,23 @@ public abstract class CommonsConnector implements IConnector {
     /**
      * It close the logical connection.
      *
-     * @param clusterName
-     *            the connection identifier.
+     * @param clusterName the connection identifier.
      */
     @Override
     public final void close(ClusterName clusterName) {
-        logger.info("Close connection to cluster ["+clusterName+"] from connector ["+getConnectorName()+"]");
-    	connectionHandler.closeConnection(clusterName.getName());
+        logger.info("Close connection to cluster [" + clusterName + "] from connector [" + getConnectorName() + "]");
+        connectionHandler.closeConnection(clusterName.getName());
 
     }
 
     /**
      * This method closeAllConnections the connector.
      *
-     * @throws ExecutionException
-     *             if an error happens.
+     * @throws ExecutionException if an error happens.
      */
     @Override
     public final void shutdown() throws ExecutionException {
-    	logger.info("shutting down connector ["+getConnectorName()+"]");
+        logger.info("shutting down connector [" + getConnectorName() + "]");
         connectionHandler.closeAllConnections();
 
     }
@@ -94,8 +85,7 @@ public abstract class CommonsConnector implements IConnector {
     /**
      * The connection status.
      *
-     * @param name
-     *            the cluster Name.
+     * @param name the cluster Name.
      * @return true if connection is open. False in other case.
      */
     @Override

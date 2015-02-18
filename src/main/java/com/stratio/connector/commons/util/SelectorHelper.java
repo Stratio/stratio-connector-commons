@@ -176,7 +176,7 @@ public final class SelectorHelper {
         } else if (isString(field.getClass())) {
             returnValue = Boolean.valueOf((String) field);
         } else {
-            throw new ExecutionException("The field "+field+" cannot be parsed");
+            throw new ExecutionException("The field " + field + " cannot be parsed");
         }
         return returnValue;
     }

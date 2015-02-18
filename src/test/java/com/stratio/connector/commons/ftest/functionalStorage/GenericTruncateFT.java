@@ -40,7 +40,7 @@ import com.stratio.crossdata.common.result.QueryResult;
 /**
  * @author lfernandez
  */
-public abstract class   GenericTruncateFT extends GenericConnectorTest<IConnector> {
+public abstract class GenericTruncateFT extends GenericConnectorTest<IConnector> {
 
     private static String COLUMN_1 = "name1";
     private static String COLUMN_2 = "name2";
@@ -57,12 +57,13 @@ public abstract class   GenericTruncateFT extends GenericConnectorTest<IConnecto
         cells.put(COLUMN_2, new Cell(2));
         row.setCells(cells);
 
-        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,getClusterName().getName());
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,
+                getClusterName().getName());
 
         tableMetadataBuilder.addColumn(COLUMN_1, new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_2, new ColumnType
                 (DataType.INT));
         connector.getStorageEngine().insert(clusterName,
-                        tableMetadataBuilder.build(getConnectorHelper().isPKMandatory()), row, false);
+                tableMetadataBuilder.build(getConnectorHelper().isPKMandatory()), row, false);
 
         QueryResult queryResult = connector.getQueryEngine().execute(createLogicalWorkFlow(CATALOG, TABLE));
         Assert.assertEquals(1, queryResult.getResultSet().size());
@@ -79,6 +80,6 @@ public abstract class   GenericTruncateFT extends GenericConnectorTest<IConnecto
     private LogicalWorkflow createLogicalWorkFlow(String catalog, String table) {
 
         return new LogicalWorkFlowCreator(catalog, table, getClusterName()).addColumnName(COLUMN_1, COLUMN_2)
-                        .build();
+                .build();
     }
 }

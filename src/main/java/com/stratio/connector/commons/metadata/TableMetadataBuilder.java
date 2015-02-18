@@ -50,11 +50,8 @@ public class TableMetadataBuilder {
     private ClusterName clusterName;
 
     /**
-     *
-     * @param catalogName
-     *            the catalog name
-     * @param tableName
-     *            the table name
+     * @param catalogName the catalog name
+     * @param tableName   the table name
      * @deprecated use {@link #TableMetadataBuilder(String, String, String)} instead.
      */
     @Deprecated
@@ -70,12 +67,9 @@ public class TableMetadataBuilder {
     /**
      * Instantiates a new table metadata builder.
      *
-     * @param catalogName
-     *            the catalog name
-     * @param tableName
-     *            the table name
-     * @param clusName
-     *            the cluster name
+     * @param catalogName the catalog name
+     * @param tableName   the table name
+     * @param clusName    the cluster name
      */
     public TableMetadataBuilder(String catalogName, String tableName, String clusName) {
         this.clusterName = new ClusterName(clusName);
@@ -90,8 +84,7 @@ public class TableMetadataBuilder {
     /**
      * Set the options. Any options previously created are removed.
      *
-     * @param opts
-     *            the opts
+     * @param opts the opts
      * @return the table metadata builder
      */
     public TableMetadataBuilder withOptions(Map<Selector, Selector> opts) {
@@ -102,8 +95,7 @@ public class TableMetadataBuilder {
     /**
      * Add new columns. The columns previously created are not removed.
      *
-     * @param columnsMetadata
-     *            the columns metadata
+     * @param columnsMetadata the columns metadata
      * @return the table metadata builder
      */
     public TableMetadataBuilder withColumns(List<ColumnMetadata> columnsMetadata) {
@@ -116,10 +108,8 @@ public class TableMetadataBuilder {
     /**
      * Add column. Parameters in columnMetadata will be null.
      *
-     * @param columnName
-     *            the column name
-     * @param colType
-     *            the column type
+     * @param columnName the column name
+     * @param colType    the column type
      * @return the table metadata builder
      */
     public TableMetadataBuilder addColumn(String columnName, ColumnType colType) {
@@ -133,12 +123,9 @@ public class TableMetadataBuilder {
      * Add an index. Must be called after including columns because columnMetadata is recovered from the tableMetadata.
      * Options in indexMetadata will be null.
      *
-     * @param indType
-     *            the index type
-     * @param indexName
-     *            the index name
-     * @param fields
-     *            the columns which define the index
+     * @param indType   the index type
+     * @param indexName the index name
+     * @param fields    the columns which define the index
      * @return the table metadata builder
      */
     public TableMetadataBuilder addIndex(IndexType indType, String indexName, String... fields) {
@@ -162,8 +149,7 @@ public class TableMetadataBuilder {
     /**
      * Add an index.
      *
-     * @param indexMetadata
-     *            the index metadata
+     * @param indexMetadata the index metadata
      * @return the table metadata builder
      */
     public TableMetadataBuilder addIndex(IndexMetadata indexMetadata) {
@@ -174,8 +160,7 @@ public class TableMetadataBuilder {
     /**
      * Set the partition key.
      *
-     * @param fields
-     *            the fields
+     * @param fields the fields
      * @return the table metadata builder
      */
     public TableMetadataBuilder withPartitionKey(String... fields) {
@@ -190,8 +175,7 @@ public class TableMetadataBuilder {
     /**
      * Set the cluster key.
      *
-     * @param fields
-     *            the fields
+     * @param fields the fields
      * @return the table metadata builder
      */
     public TableMetadataBuilder withClusterKey(String... fields) {
@@ -204,8 +188,7 @@ public class TableMetadataBuilder {
     /**
      * Set the cluster name.
      *
-     * @param clusterName
-     *            the cluster name
+     * @param clusterName the cluster name
      * @return the table metadata builder
      * @deprecated use {@link #TableMetadataBuilder(String, String, String)} instead.
      */
@@ -227,8 +210,7 @@ public class TableMetadataBuilder {
     /**
      * Builds the table metadata.
      *
-     * @param isPKRequired
-     *            whether the pk is required or not
+     * @param isPKRequired whether the pk is required or not
      * @return the table metadata
      */
     public TableMetadata build(boolean isPKRequired) {

@@ -56,8 +56,8 @@ public abstract class GenericGroupByFT extends GenericConnectorTest {
         insertRow(6, "text", 20, 48);
 
         LogicalWorkFlowCreator logicalWorkflowCreator = new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName())
-                        .addColumnName(COLUMN_ID).addColumnName(COLUMN_TEXT).addColumnName(COLUMN_AGE)
-                        .addColumnName(COLUMN_MONEY).addGroupBy(COLUMN_AGE);
+                .addColumnName(COLUMN_ID).addColumnName(COLUMN_TEXT).addColumnName(COLUMN_AGE)
+                .addColumnName(COLUMN_MONEY).addGroupBy(COLUMN_AGE);
         ConnectorField cField = logicalWorkflowCreator.createConnectorField(COLUMN_TEXT, COLUMN_TEXT, new ColumnType
                 (DataType.TEXT));
         LinkedList<ConnectorField> selectFields = new LinkedList<>();
@@ -83,7 +83,8 @@ public abstract class GenericGroupByFT extends GenericConnectorTest {
 
         row.setCells(cells);
 
-        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,getClusterName().getName());
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,
+                getClusterName().getName());
         tableMetadataBuilder.addColumn(COLUMN_ID,
                 new ColumnType(DataType.INT)).addColumn(COLUMN_TEXT, new ColumnType(DataType.VARCHAR))
                 .addColumn(COLUMN_AGE, new ColumnType(DataType.INT)).addColumn(COLUMN_MONEY,

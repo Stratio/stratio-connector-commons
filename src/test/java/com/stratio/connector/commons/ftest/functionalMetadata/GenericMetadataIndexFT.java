@@ -75,7 +75,7 @@ public abstract class GenericMetadataIndexFT extends GenericConnectorTest {
         ColumnName colName = new ColumnName(tableName, "columnName_1");
         columns.put(colName, new ColumnMetadata(colName, parameters, new ColumnType(DataType.TEXT)));
         IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, INDEX_NAME), columns,
-                        IndexType.DEFAULT, Collections.EMPTY_MAP);
+                IndexType.DEFAULT, Collections.EMPTY_MAP);
 
         // Creating other indexMetadata with columnName insteadOf indexName
         Map<ColumnName, ColumnMetadata> columns2 = new HashMap<>();
@@ -83,16 +83,16 @@ public abstract class GenericMetadataIndexFT extends GenericConnectorTest {
         ColumnName colName2 = new ColumnName(tableName, COLUMN_INDEX_NAME);
         columns2.put(colName2, new ColumnMetadata(colName2, parameters2, new ColumnType(DataType.TEXT)));
         IndexMetadata indexMetadata2 = new IndexMetadata(new IndexName(tableName, COLUMN_INDEX_NAME), columns2,
-                        IndexType.DEFAULT, Collections.EMPTY_MAP);
+                IndexType.DEFAULT, Collections.EMPTY_MAP);
 
         // Creating index
         connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata);
         connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata2);
 
         assertTrue("The index " + INDEX_NAME + " has not been found",
-                        iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
+                iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
         assertTrue("The index " + COLUMN_INDEX_NAME + " has not been found",
-                        iConnectorHelper.containsIndex(CATALOG, TABLE, COLUMN_INDEX_NAME));
+                iConnectorHelper.containsIndex(CATALOG, TABLE, COLUMN_INDEX_NAME));
 
     }
 
@@ -116,23 +116,23 @@ public abstract class GenericMetadataIndexFT extends GenericConnectorTest {
         ColumnName colName = new ColumnName(tableName, "columnName_1");
         columns.put(colName, new ColumnMetadata(colName, parameters, new ColumnType(DataType.TEXT)));
         IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, INDEX_NAME), columns,
-                        IndexType.FULL_TEXT, Collections.EMPTY_MAP);
+                IndexType.FULL_TEXT, Collections.EMPTY_MAP);
 
         // Creating other indexMetadata with 2 columns
         Map<ColumnName, ColumnMetadata> columns2 = new HashMap<>();
         Object[] parameters2 = null;
 
         columns2.put(new ColumnName(tableName, "columnName_2"), new ColumnMetadata(new ColumnName(tableName,
-                        "columnName_2"), parameters2, new ColumnType(DataType.VARCHAR)));
+                "columnName_2"), parameters2, new ColumnType(DataType.VARCHAR)));
         columns2.put(new ColumnName(tableName, "columnName_3"), new ColumnMetadata(new ColumnName(tableName,
-                        "columnName_3"), parameters2, new ColumnType(DataType.TEXT)));
+                "columnName_3"), parameters2, new ColumnType(DataType.TEXT)));
         IndexMetadata indexMetadata2 = new IndexMetadata(new IndexName(tableName, INDEX_NAME_2), columns2,
-                        IndexType.FULL_TEXT, Collections.EMPTY_MAP);
+                IndexType.FULL_TEXT, Collections.EMPTY_MAP);
 
         // Creating index
         connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata);
         assertTrue("The index " + INDEX_NAME + " has not been found",
-                        iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
+                iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
 
         // The text index must be applied only over a single column.
         try {
@@ -142,7 +142,7 @@ public abstract class GenericMetadataIndexFT extends GenericConnectorTest {
         }
 
         assertFalse("The index text must be applied only onver a single column",
-                        iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME_2));
+                iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME_2));
 
     }
 
@@ -167,16 +167,16 @@ public abstract class GenericMetadataIndexFT extends GenericConnectorTest {
         Map<ColumnName, ColumnMetadata> columns = new HashMap<>();
         Object[] parameters2 = null;
         columns.put(new ColumnName(tableName, "columnName_2"), new ColumnMetadata(new ColumnName(tableName,
-                        "columnName_2"), parameters2, new ColumnType(DataType.VARCHAR)));
+                "columnName_2"), parameters2, new ColumnType(DataType.VARCHAR)));
         columns.put(new ColumnName(tableName, "columnName_2"), new ColumnMetadata(new ColumnName(tableName,
-                        "columnName_3"), parameters2, new ColumnType(DataType.TEXT)));
+                "columnName_3"), parameters2, new ColumnType(DataType.TEXT)));
         IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, INDEX_NAME), columns,
-                        IndexType.DEFAULT, Collections.EMPTY_MAP);
+                IndexType.DEFAULT, Collections.EMPTY_MAP);
 
         // Creating the index
         connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata);
         assertTrue("The index " + INDEX_NAME + " has not been found",
-                        iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
+                iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
 
     }
 
@@ -197,9 +197,9 @@ public abstract class GenericMetadataIndexFT extends GenericConnectorTest {
         Map<ColumnName, ColumnMetadata> columns = new HashMap<>();
         Object[] parameters2 = null;
         columns.put(new ColumnName(tableName, "columnName_2"), new ColumnMetadata(new ColumnName(tableName,
-                        "columnName_2"), parameters2, new ColumnType(DataType.VARCHAR)));
+                "columnName_2"), parameters2, new ColumnType(DataType.VARCHAR)));
         columns.put(new ColumnName(tableName, "columnName_3"), new ColumnMetadata(new ColumnName(tableName,
-                        "columnName_3"), parameters2, new ColumnType(DataType.TEXT)));
+                "columnName_3"), parameters2, new ColumnType(DataType.TEXT)));
 
         // Options
         Map<Selector, Selector> options = new HashMap<Selector, Selector>();
@@ -219,12 +219,12 @@ public abstract class GenericMetadataIndexFT extends GenericConnectorTest {
         options.put(optSelector3, optValue3);
 
         IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, INDEX_NAME), columns,
-                        IndexType.CUSTOM, options);
+                IndexType.CUSTOM, options);
 
         // Creating the index
         connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata);
         assertTrue("The index " + INDEX_NAME + " has not been found",
-                        iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
+                iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
 
     }
 
@@ -238,16 +238,16 @@ public abstract class GenericMetadataIndexFT extends GenericConnectorTest {
         Map<ColumnName, ColumnMetadata> columns = new HashMap<>();
         Object[] parameters2 = null;
         columns.put(new ColumnName(tableName, "columnName_2"), new ColumnMetadata(new ColumnName(tableName,
-                        "columnName_2"), parameters2, new ColumnType(DataType.VARCHAR)));
+                "columnName_2"), parameters2, new ColumnType(DataType.VARCHAR)));
         columns.put(new ColumnName(tableName, "columnName_3"), new ColumnMetadata(new ColumnName(tableName,
-                        "columnName_3"), parameters2, new ColumnType(DataType.TEXT)));
+                "columnName_3"), parameters2, new ColumnType(DataType.TEXT)));
         IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, INDEX_NAME), columns,
-                        IndexType.DEFAULT, Collections.EMPTY_MAP);
+                IndexType.DEFAULT, Collections.EMPTY_MAP);
 
         // Creating the index
         connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata);
         assertTrue("The index " + INDEX_NAME + " has not been found",
-                        iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
+                iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
 
         int previousIndexCount = iConnectorHelper.countIndexes(CATALOG, TABLE);
 
@@ -258,7 +258,7 @@ public abstract class GenericMetadataIndexFT extends GenericConnectorTest {
         }
 
         assertTrue("The index " + INDEX_NAME + " has not been found",
-                        iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
+                iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
 
         int indexCount = iConnectorHelper.countIndexes(CATALOG, TABLE);
         assertEquals("Duplicate indexes should not be inserted", previousIndexCount, indexCount);
@@ -273,35 +273,35 @@ public abstract class GenericMetadataIndexFT extends GenericConnectorTest {
         Map<ColumnName, ColumnMetadata> columns = new HashMap<>();
         Object[] parameters = null;
         columns.put(new ColumnName(tableName, "columnName_1"), new ColumnMetadata(new ColumnName(tableName,
-                        "columnName_1"), parameters, new ColumnType(DataType.TEXT)));
+                "columnName_1"), parameters, new ColumnType(DataType.TEXT)));
         IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, INDEX_NAME), columns,
-                        IndexType.DEFAULT, Collections.EMPTY_MAP);
+                IndexType.DEFAULT, Collections.EMPTY_MAP);
 
         // Creating the index
         connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata);
         assertTrue("The index " + INDEX_NAME + " has not been found",
-                        iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
+                iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
 
         // Creating other indexMetadata
         Map<ColumnName, ColumnMetadata> columns2 = new HashMap<>();
         Object[] parameters2 = null;
         columns2.put(new ColumnName(tableName, "columnName_2"), new ColumnMetadata(new ColumnName(tableName,
-                        "columnName_2"), parameters2, new ColumnType(DataType.VARCHAR)));
+                "columnName_2"), parameters2, new ColumnType(DataType.VARCHAR)));
         IndexMetadata indexMetadata2 = new IndexMetadata(new IndexName(tableName, INDEX_NAME_2), columns2,
-                        IndexType.FULL_TEXT, Collections.EMPTY_MAP);
+                IndexType.FULL_TEXT, Collections.EMPTY_MAP);
 
         // Creating the index
         connector.getMetadataEngine().createIndex(getClusterName(), indexMetadata2);
         assertTrue("The index " + INDEX_NAME_2 + " has not been found",
-                        iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME_2));
+                iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME_2));
 
         connector.getMetadataEngine().dropIndex(getClusterName(), indexMetadata);
         connector.getMetadataEngine().dropIndex(getClusterName(), indexMetadata2);
 
         assertFalse("The index " + INDEX_NAME + " has not been dropped",
-                        iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
+                iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME));
         assertFalse("The index " + INDEX_NAME_2 + " has not been dropped",
-                        iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME_2));
+                iConnectorHelper.containsIndex(CATALOG, TABLE, INDEX_NAME_2));
 
         // TODO An exception could to be thrown when dropping a index which does not exist
         try {
