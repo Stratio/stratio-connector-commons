@@ -18,6 +18,7 @@ import com.stratio.crossdata.common.data.ClusterName;
 import com.stratio.crossdata.common.data.Row;
 import com.stratio.crossdata.common.exceptions.ConnectorException;
 import com.stratio.crossdata.common.metadata.ColumnType;
+import com.stratio.crossdata.common.metadata.DataType;
 import com.stratio.crossdata.common.metadata.TableMetadata;
 
 public class InsertThread extends Thread{
@@ -103,7 +104,7 @@ public class InsertThread extends Thread{
 	private TableMetadata createTableMetadata() {
 		TableMetadataBuilder tableMetadataBuilder = EficiencyBean.getTableMetadata(catalog, targetCluster
 				.getName());
-		tableMetadataBuilder.addColumn(INSERTER_COLUMN_NAME, ColumnType.TEXT);
+		tableMetadataBuilder.addColumn(INSERTER_COLUMN_NAME, new ColumnType(DataType.TEXT));
 		return tableMetadataBuilder.build(false);
 	}
 

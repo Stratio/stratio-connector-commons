@@ -34,6 +34,7 @@ import com.stratio.crossdata.common.data.Row;
 import com.stratio.crossdata.common.exceptions.ConnectorException;
 import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
 import com.stratio.crossdata.common.metadata.ColumnType;
+import com.stratio.crossdata.common.metadata.DataType;
 import com.stratio.crossdata.common.metadata.TableMetadata;
 import com.stratio.crossdata.common.result.QueryResult;
 
@@ -57,7 +58,8 @@ public abstract class GenericGroupByFT extends GenericConnectorTest {
         LogicalWorkFlowCreator logicalWorkflowCreator = new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName())
                         .addColumnName(COLUMN_ID).addColumnName(COLUMN_TEXT).addColumnName(COLUMN_AGE)
                         .addColumnName(COLUMN_MONEY).addGroupBy(COLUMN_AGE);
-        ConnectorField cField = logicalWorkflowCreator.createConnectorField(COLUMN_TEXT, COLUMN_TEXT, ColumnType.TEXT);
+        ConnectorField cField = logicalWorkflowCreator.createConnectorField(COLUMN_TEXT, COLUMN_TEXT, new ColumnType
+                (DataType.TEXT));
         LinkedList<ConnectorField> selectFields = new LinkedList<>();
         selectFields.add(cField);
         logicalWorkflowCreator.addSelect(selectFields);
@@ -82,8 +84,10 @@ public abstract class GenericGroupByFT extends GenericConnectorTest {
         row.setCells(cells);
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
-        tableMetadataBuilder.addColumn(COLUMN_ID, ColumnType.INT).addColumn(COLUMN_TEXT, ColumnType.VARCHAR)
-                        .addColumn(COLUMN_AGE, ColumnType.INT).addColumn(COLUMN_MONEY, ColumnType.INT);
+        tableMetadataBuilder.addColumn(COLUMN_ID,
+                new ColumnType(DataType.INT)).addColumn(COLUMN_TEXT, new ColumnType(DataType.VARCHAR))
+                .addColumn(COLUMN_AGE, new ColumnType(DataType.INT)).addColumn(COLUMN_MONEY,
+                new ColumnType(DataType.INT));
 
         TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper().isPKMandatory());
 

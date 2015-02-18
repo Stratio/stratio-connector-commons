@@ -40,6 +40,7 @@ import com.stratio.crossdata.common.exceptions.ConnectorException;
 import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
 import com.stratio.crossdata.common.metadata.CatalogMetadata;
 import com.stratio.crossdata.common.metadata.ColumnType;
+import com.stratio.crossdata.common.metadata.DataType;
 import com.stratio.crossdata.common.metadata.TableMetadata;
 import com.stratio.crossdata.common.result.QueryResult;
 
@@ -62,7 +63,7 @@ public abstract class GenericSimpleInsertFT extends GenericConnectorTest {
     public void testSimpleInsertWithPK() throws ConnectorException {
         ClusterName clusterName = getClusterName();
 
-        insertRow(clusterName, VALUE_4, ColumnType.VARCHAR, VALUE_1, true);
+        insertRow(clusterName, VALUE_4, new ColumnType(DataType.VARCHAR), VALUE_1, true);
 
         verifyInsert(clusterName, VALUE_4);
     }
@@ -71,7 +72,7 @@ public abstract class GenericSimpleInsertFT extends GenericConnectorTest {
     public void testSimpleInsertWithoutPK() throws ConnectorException {
         ClusterName clusterName = getClusterName();
 
-        insertRow(clusterName, VALUE_4, ColumnType.VARCHAR, VALUE_1, false);
+        insertRow(clusterName, VALUE_4, new ColumnType(DataType.VARCHAR), VALUE_1, false);
 
         verifyInsert(clusterName, VALUE_4);
     }
@@ -80,8 +81,8 @@ public abstract class GenericSimpleInsertFT extends GenericConnectorTest {
     public void testInsertSamePK() throws ConnectorException {
         ClusterName clusterName = getClusterName();
 
-        insertRow(clusterName, OTHER_VALUE_4, ColumnType.VARCHAR, VALUE_1, true);
-        insertRow(clusterName, VALUE_4, ColumnType.VARCHAR, VALUE_1, true);
+        insertRow(clusterName, OTHER_VALUE_4, new ColumnType(DataType.VARCHAR), VALUE_1, true);
+        insertRow(clusterName, VALUE_4, new ColumnType(DataType.VARCHAR), VALUE_1, true);
 
         verifyInsert(clusterName, VALUE_4);
 
@@ -118,7 +119,7 @@ public abstract class GenericSimpleInsertFT extends GenericConnectorTest {
         ClusterName clusterName = getClusterName();
 
         Object value4 = "String";
-        insertRow(clusterName, value4, ColumnType.VARCHAR, VALUE_1, true);
+        insertRow(clusterName, value4, new ColumnType(DataType.VARCHAR), VALUE_1, true);
 
         ResultSet resultIterator = createResultSet(clusterName);
         assertEquals("It has only one result", 1, resultIterator.size());
@@ -135,7 +136,7 @@ public abstract class GenericSimpleInsertFT extends GenericConnectorTest {
         ClusterName clusterName = getClusterName();
 
         Object value4 = new Integer(1);
-        insertRow(clusterName, value4, ColumnType.INT, VALUE_1, true);
+        insertRow(clusterName, value4, new ColumnType(DataType.INT), VALUE_1, true);
 
         ResultSet resultIterator = createResultSet(clusterName);
         assertEquals("It has only one result", 1, resultIterator.size());
@@ -152,9 +153,9 @@ public abstract class GenericSimpleInsertFT extends GenericConnectorTest {
         ClusterName clusterName = getClusterName();
 
         Object value4 = 1L;
-        insertRow(clusterName, value4, ColumnType.BIGINT, VALUE_1, true);
+        insertRow(clusterName, value4, new ColumnType(DataType.BIGINT), VALUE_1, true);
 
-        ResultSet resultIterator = createResultSetTyped(clusterName, ColumnType.BIGINT);
+        ResultSet resultIterator = createResultSetTyped(clusterName, new ColumnType(DataType.BIGINT));
         assertEquals("It should have only one result", 1, resultIterator.size());
         for (Row recoveredRow : resultIterator) {
             assertEquals("The type is not correct ", Long.class.getCanonicalName(), recoveredRow.getCell(COLUMN_4)
@@ -169,7 +170,7 @@ public abstract class GenericSimpleInsertFT extends GenericConnectorTest {
         ClusterName clusterName = getClusterName();
 
         Object value4 = new Boolean(true);
-        insertRow(clusterName, value4, ColumnType.BOOLEAN, VALUE_1, true);
+        insertRow(clusterName, value4, new ColumnType(DataType.BOOLEAN), VALUE_1, true);
 
         ResultSet resultIterator = createResultSet(clusterName);
         assertEquals("It has only one result", 1, resultIterator.size());
@@ -186,7 +187,7 @@ public abstract class GenericSimpleInsertFT extends GenericConnectorTest {
         ClusterName clusterName = getClusterName();
 
         Object value4 = new Date();
-        insertRow(clusterName, value4, ColumnType.NATIVE, VALUE_1, true);
+        insertRow(clusterName, value4, new ColumnType(DataType.NATIVE), VALUE_1, true);
 
         ResultSet resultIterator = createResultSet(clusterName);
         assertEquals("It has only one result", 1, resultIterator.size());
@@ -203,7 +204,7 @@ public abstract class GenericSimpleInsertFT extends GenericConnectorTest {
         ClusterName clusterName = getClusterName();
 
         Object value4 = new Double(25.32);
-        insertRow(clusterName, value4, ColumnType.DOUBLE, VALUE_1, true);
+        insertRow(clusterName, value4, new ColumnType(DataType.DOUBLE), VALUE_1, true);
 
         ResultSet resultIterator = createResultSet(clusterName);
         assertEquals("It has only one result", 1, resultIterator.size());
@@ -251,8 +252,9 @@ public abstract class GenericSimpleInsertFT extends GenericConnectorTest {
         row.setCells(cells);
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
-        tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.INT)
-                        .addColumn(COLUMN_3, ColumnType.BOOLEAN).addColumn(COLUMN_4, colType_4);
+        tableMetadataBuilder.addColumn(COLUMN_1, new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_2,
+                new ColumnType(DataType.INT))
+                        .addColumn(COLUMN_3, new ColumnType(DataType.BOOLEAN)).addColumn(COLUMN_4, colType_4);
         if (withPK) {
             tableMetadataBuilder.withPartitionKey(COLUMN_1);
         }
@@ -279,8 +281,10 @@ public abstract class GenericSimpleInsertFT extends GenericConnectorTest {
         row.setCells(cells);
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
-        tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.VARCHAR)
-                        .addColumn(COLUMN_3, ColumnType.VARCHAR).addColumn(COLUMN_4, ColumnType.VARCHAR);
+        tableMetadataBuilder.addColumn(COLUMN_1,
+                new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_2, new ColumnType(DataType.VARCHAR))
+                .addColumn(COLUMN_3, new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_4,
+                new ColumnType(DataType.VARCHAR));
 
         tableMetadataBuilder.withPartitionKey(COLUMN_1);
         tableMetadataBuilder.withClusterKey(clusterKey);
@@ -306,9 +310,9 @@ public abstract class GenericSimpleInsertFT extends GenericConnectorTest {
     private LogicalWorkflow createLogicalWorkFlowValue4Type(ColumnType colType) {
         LinkedList<ConnectorField> linkList = new LinkedList<ConnectorField>();
         LogicalWorkFlowCreator lwfC = new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName());
-        linkList.add(lwfC.createConnectorField(COLUMN_1, COLUMN_1, ColumnType.VARCHAR));
-        linkList.add(lwfC.createConnectorField(COLUMN_2, COLUMN_2, ColumnType.VARCHAR));
-        linkList.add(lwfC.createConnectorField(COLUMN_3, COLUMN_3, ColumnType.VARCHAR));
+        linkList.add(lwfC.createConnectorField(COLUMN_1, COLUMN_1, new ColumnType(DataType.VARCHAR)));
+        linkList.add(lwfC.createConnectorField(COLUMN_2, COLUMN_2, new ColumnType(DataType.VARCHAR)));
+        linkList.add(lwfC.createConnectorField(COLUMN_3, COLUMN_3, new ColumnType(DataType.VARCHAR)));
         linkList.add(lwfC.createConnectorField(COLUMN_4, COLUMN_4, colType));
         return new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName())
                         .addColumnName(COLUMN_1, COLUMN_2, COLUMN_3, COLUMN_4).addSelect(linkList).build();

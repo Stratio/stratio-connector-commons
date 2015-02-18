@@ -42,6 +42,7 @@ import com.stratio.crossdata.common.exceptions.ConnectorException;
 import com.stratio.crossdata.common.logicalplan.Filter;
 import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
 import com.stratio.crossdata.common.metadata.ColumnType;
+import com.stratio.crossdata.common.metadata.DataType;
 import com.stratio.crossdata.common.metadata.Operations;
 import com.stratio.crossdata.common.result.QueryResult;
 import com.stratio.crossdata.common.statements.structures.ColumnSelector;
@@ -148,8 +149,9 @@ public abstract class GenericDeleteFT extends GenericConnectorTest {
     private void insertTestData(ClusterName clusterName) throws ConnectorException {
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
 
-        tableMetadataBuilder.addColumn(COLUMN_PK, ColumnType.VARCHAR).addColumn(COLUMN_1, ColumnType.VARCHAR)
-                        .withPartitionKey(COLUMN_PK);
+        tableMetadataBuilder.addColumn(COLUMN_PK,
+                new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_1, new ColumnType(DataType.VARCHAR))
+                .withPartitionKey(COLUMN_PK);
 
         connector.getStorageEngine().insert(clusterName,
                         tableMetadataBuilder.build(getConnectorHelper().isPKMandatory()), createRow("0", "value1"),

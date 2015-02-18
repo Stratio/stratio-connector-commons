@@ -40,6 +40,7 @@ import com.stratio.crossdata.common.exceptions.ConnectorException;
 import com.stratio.crossdata.common.exceptions.UnsupportedException;
 import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
 import com.stratio.crossdata.common.metadata.ColumnType;
+import com.stratio.crossdata.common.metadata.DataType;
 import com.stratio.crossdata.common.metadata.TableMetadata;
 import com.stratio.crossdata.common.result.QueryResult;
 import com.stratio.crossdata.common.statements.structures.BooleanSelector;
@@ -131,7 +132,9 @@ public abstract class GenericAggregationUpdateFT extends GenericConnectorTest<IC
                     ConnectorException {
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
-        tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.BIGINT);
+        tableMetadataBuilder.addColumn(COLUMN_1, new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_2,
+                new ColumnType(DataType
+                        .BIGINT));
 
         TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper().isPKMandatory());
 
@@ -191,7 +194,8 @@ public abstract class GenericAggregationUpdateFT extends GenericConnectorTest<IC
         row.setCells(cells);
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
-        tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.BIGINT);
+        tableMetadataBuilder.addColumn(COLUMN_1, new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_2,
+                new ColumnType(DataType.BIGINT));
 
         TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper().isPKMandatory());
 

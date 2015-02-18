@@ -44,6 +44,7 @@ import com.stratio.crossdata.common.data.Row;
 import com.stratio.crossdata.common.exceptions.ConnectorException;
 import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
 import com.stratio.crossdata.common.metadata.ColumnType;
+import com.stratio.crossdata.common.metadata.DataType;
 import com.stratio.crossdata.common.metadata.TableMetadata;
 import com.stratio.crossdata.common.result.QueryResult;
 
@@ -124,8 +125,10 @@ public abstract class GenericPKQueryIntegerFilterFT extends GenericConnectorTest
         refresh(CATALOG);
 
         LinkedList<LogicalWorkFlowCreator.ConnectorField> connectorFields = new LinkedList<>();
-        connectorFields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_1, ALIAS_COLUMN_1, ColumnType.VARCHAR));
-        connectorFields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_AGE, ALIAS_COLUMN_AGE, ColumnType.INT));
+        connectorFields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_1, ALIAS_COLUMN_1, new ColumnType(
+                DataType.VARCHAR)));
+        connectorFields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_AGE, ALIAS_COLUMN_AGE, new ColumnType
+                (DataType.INT)));
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns().addColumnName(COLUMN_PK)
                         .addSelect(connectorFields).addDistinctFilter(COLUMN_PK, new Integer(2), false, true)
                         .addDistinctFilter(COLUMN_PK, new Integer(3), false, true).build();
@@ -184,9 +187,14 @@ public abstract class GenericPKQueryIntegerFilterFT extends GenericConnectorTest
         cells.put(COLUMN_PK, new Cell(ikey));
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
-        tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.VARCHAR)
-                        .addColumn(COLUMN_3, ColumnType.VARCHAR).addColumn(COLUMN_AGE, ColumnType.INT)
-                        .addColumn(COLUMN_MONEY, ColumnType.INT).addColumn(COLUMN_PK, ColumnType.INT);
+        tableMetadataBuilder.addColumn(COLUMN_1,
+                new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_2, new ColumnType(DataType
+                .VARCHAR))
+                        .addColumn(COLUMN_3,
+                                new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_AGE, new ColumnType(DataType.INT))
+                                        .addColumn(COLUMN_MONEY,
+                                                new ColumnType(DataType.INT))
+                                        .addColumn(COLUMN_PK, new ColumnType(DataType.INT));
         tableMetadataBuilder.withPartitionKey(COLUMN_PK);
 
         TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper().isPKMandatory());

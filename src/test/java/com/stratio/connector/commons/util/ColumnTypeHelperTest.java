@@ -22,6 +22,7 @@ import static junit.framework.TestCase.assertEquals;
 import org.junit.Test;
 
 import com.stratio.crossdata.common.metadata.ColumnType;
+import com.stratio.crossdata.common.metadata.DataType;
 
 /**
  * ColumnTypeHelper Tester.
@@ -41,21 +42,23 @@ public class ColumnTypeHelperTest {
     public void testGetCastingValueLong() throws Exception {
 
         assertEquals("The type is correct", Long.class.getCanonicalName(),
-                ColumnTypeHelper.getCastingValue(ColumnType.BIGINT, new Integer(5)).getClass()
+                ColumnTypeHelper.getCastingValue(new ColumnType(DataType.BIGINT), new Integer(5)).getClass()
                         .getCanonicalName());
 
         assertEquals("The type is correct", Long.class.getCanonicalName(),
-                ColumnTypeHelper.getCastingValue(ColumnType.BIGINT, new Long(5)).getClass().getCanonicalName());
-
-        assertEquals("The type is correct", Long.class.getCanonicalName(),
-                ColumnTypeHelper.getCastingValue(ColumnType.BIGINT, new Double(5)).getClass()
+                ColumnTypeHelper.getCastingValue(new ColumnType(DataType.BIGINT), new Long(5)).getClass()
                         .getCanonicalName());
 
         assertEquals("The type is correct", Long.class.getCanonicalName(),
-                ColumnTypeHelper.getCastingValue(ColumnType.BIGINT, new Float(5)).getClass().getCanonicalName());
+                ColumnTypeHelper.getCastingValue(new ColumnType(DataType.BIGINT), new Double(5)).getClass()
+                        .getCanonicalName());
 
         assertEquals("The type is correct", Long.class.getCanonicalName(),
-                ColumnTypeHelper.getCastingValue(ColumnType.BIGINT, new Short("1")).getClass()
+                ColumnTypeHelper.getCastingValue(new ColumnType(DataType.BIGINT), new Float(5)).getClass()
+                        .getCanonicalName());
+
+        assertEquals("The type is correct", Long.class.getCanonicalName(),
+                ColumnTypeHelper.getCastingValue(new ColumnType(DataType.BIGINT), new Short("1")).getClass()
                         .getCanonicalName());
     }
 
@@ -63,21 +66,23 @@ public class ColumnTypeHelperTest {
     public void testGetCastingValueDouble() throws Exception {
 
         assertEquals("The type is correct", Double.class.getCanonicalName(),
-                ColumnTypeHelper.getCastingValue(ColumnType.DOUBLE, new Integer(5)).getClass()
+                ColumnTypeHelper.getCastingValue(new ColumnType(DataType.DOUBLE), new Integer(5)).getClass()
                         .getCanonicalName());
 
         assertEquals("The type is correct", Double.class.getCanonicalName(),
-                ColumnTypeHelper.getCastingValue(ColumnType.DOUBLE, new Long(5)).getClass().getCanonicalName());
-
-        assertEquals("The type is correct", Double.class.getCanonicalName(),
-                ColumnTypeHelper.getCastingValue(ColumnType.DOUBLE, new Double(5)).getClass()
+                ColumnTypeHelper.getCastingValue(new ColumnType(DataType.DOUBLE), new Long(5)).getClass()
                         .getCanonicalName());
 
         assertEquals("The type is correct", Double.class.getCanonicalName(),
-                ColumnTypeHelper.getCastingValue(ColumnType.DOUBLE, new Float(5)).getClass().getCanonicalName());
+                ColumnTypeHelper.getCastingValue(new ColumnType(DataType.DOUBLE), new Double(5)).getClass()
+                        .getCanonicalName());
 
         assertEquals("The type is correct", Double.class.getCanonicalName(),
-                ColumnTypeHelper.getCastingValue(ColumnType.DOUBLE, new Short("1")).getClass()
+                ColumnTypeHelper.getCastingValue(new ColumnType(DataType.DOUBLE), new Float(5)).getClass()
+                        .getCanonicalName());
+
+        assertEquals("The type is correct", Double.class.getCanonicalName(),
+                ColumnTypeHelper.getCastingValue(new ColumnType(DataType.DOUBLE), new Short("1")).getClass()
                         .getCanonicalName());
     }
 
@@ -85,20 +90,23 @@ public class ColumnTypeHelperTest {
     public void testGetCastingValueFloat() throws Exception {
 
         assertEquals("The type is correct", Float.class.getCanonicalName(),
-                ColumnTypeHelper.getCastingValue(ColumnType.FLOAT, new Integer(5)).getClass()
+                ColumnTypeHelper.getCastingValue(new ColumnType(DataType.FLOAT), new Integer(5)).getClass()
                         .getCanonicalName());
 
         assertEquals("The type is correct", Float.class.getCanonicalName(),
-                ColumnTypeHelper.getCastingValue(ColumnType.FLOAT, new Long(5)).getClass().getCanonicalName());
+                ColumnTypeHelper.getCastingValue(new ColumnType(DataType.FLOAT), new Long(5)).getClass()
+                        .getCanonicalName());
 
         assertEquals("The type is correct", Float.class.getCanonicalName(),
-                ColumnTypeHelper.getCastingValue(ColumnType.FLOAT, new Double(5)).getClass().getCanonicalName());
+                ColumnTypeHelper.getCastingValue(new ColumnType(DataType.FLOAT), new Double(5)).getClass()
+                        .getCanonicalName());
 
         assertEquals("The type is correct", Float.class.getCanonicalName(),
-                ColumnTypeHelper.getCastingValue(ColumnType.FLOAT, new Float(5)).getClass().getCanonicalName());
+                ColumnTypeHelper.getCastingValue(new ColumnType(DataType.FLOAT), new Float(5)).getClass()
+                        .getCanonicalName());
 
         assertEquals("The type is correct", Float.class.getCanonicalName(),
-                ColumnTypeHelper.getCastingValue(ColumnType.FLOAT, new Short("1")).getClass()
+                ColumnTypeHelper.getCastingValue(new ColumnType(DataType.FLOAT), new Short("1")).getClass()
                         .getCanonicalName());
     }
 
@@ -106,31 +114,36 @@ public class ColumnTypeHelperTest {
     public void testGetCastingValueINT() throws Exception {
 
         assertEquals("The type is correct", Integer.class.getCanonicalName(),
-                ColumnTypeHelper.getCastingValue(ColumnType.INT, new Integer(5)).getClass().getCanonicalName());
+                ColumnTypeHelper.getCastingValue(new ColumnType(DataType.INT), new Integer(5)).getClass()
+                        .getCanonicalName());
 
         assertEquals("The type is correct", Integer.class.getCanonicalName(),
-                ColumnTypeHelper.getCastingValue(ColumnType.INT, new Long(5)).getClass().getCanonicalName());
+                ColumnTypeHelper.getCastingValue(new ColumnType(DataType.INT), new Long(5)).getClass()
+                        .getCanonicalName());
 
         assertEquals("The type is correct", Integer.class.getCanonicalName(),
-                ColumnTypeHelper.getCastingValue(ColumnType.INT, new Double(5)).getClass().getCanonicalName());
+                ColumnTypeHelper.getCastingValue(new ColumnType(DataType.INT), new Double(5)).getClass()
+                        .getCanonicalName());
 
         assertEquals("The type is correct", Integer.class.getCanonicalName(),
-                ColumnTypeHelper.getCastingValue(ColumnType.INT, new Float(5)).getClass().getCanonicalName());
+                ColumnTypeHelper.getCastingValue(new ColumnType(DataType.INT), new Float(5)).getClass()
+                        .getCanonicalName());
 
         assertEquals("The type is correct", Integer.class.getCanonicalName(),
-                ColumnTypeHelper.getCastingValue(ColumnType.INT, new Short("1")).getClass().getCanonicalName());
+                ColumnTypeHelper.getCastingValue(new ColumnType(DataType.INT), new Short("1")).getClass()
+                        .getCanonicalName());
     }
 
     @Test
     public void testGetCastingReturnNull() throws Exception {
         assertEquals("The return is null", null,
-                ColumnTypeHelper.getCastingValue(ColumnType.INT, null));
+                ColumnTypeHelper.getCastingValue(new ColumnType(DataType.INT), null));
         assertEquals("The return is null", null,
-                ColumnTypeHelper.getCastingValue(ColumnType.FLOAT, null));
+                ColumnTypeHelper.getCastingValue(new ColumnType(DataType.FLOAT), null));
         assertEquals("The return is null", null,
-                ColumnTypeHelper.getCastingValue(ColumnType.DOUBLE, null));
+                ColumnTypeHelper.getCastingValue(new ColumnType(DataType.DOUBLE), null));
         assertEquals("The return is null", null,
-                ColumnTypeHelper.getCastingValue(ColumnType.BIGINT, null));
+                ColumnTypeHelper.getCastingValue(new ColumnType(DataType.BIGINT), null));
 
     }
 

@@ -43,6 +43,7 @@ import com.stratio.crossdata.common.exceptions.UnsupportedException;
 import com.stratio.crossdata.common.logicalplan.Filter;
 import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
 import com.stratio.crossdata.common.metadata.ColumnType;
+import com.stratio.crossdata.common.metadata.DataType;
 import com.stratio.crossdata.common.metadata.Operations;
 import com.stratio.crossdata.common.metadata.TableMetadata;
 import com.stratio.crossdata.common.result.QueryResult;
@@ -115,7 +116,9 @@ public abstract class GenericSimpleUpdateWithFiltersFT extends GenericConnectorT
                     ConnectorException {
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
-        tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.BIGINT);
+        tableMetadataBuilder.addColumn(COLUMN_1,
+                new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_2, new ColumnType(DataType
+                .BIGINT));
 
         TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper().isPKMandatory());
 
@@ -165,7 +168,9 @@ public abstract class GenericSimpleUpdateWithFiltersFT extends GenericConnectorT
         row.setCells(cells);
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
-        tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.BIGINT)
+        tableMetadataBuilder.addColumn(COLUMN_1,
+                new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_2, new ColumnType(DataType
+                        .BIGINT))
                         .withPartitionKey(COLUMN_1);
 
         TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper().isPKMandatory());

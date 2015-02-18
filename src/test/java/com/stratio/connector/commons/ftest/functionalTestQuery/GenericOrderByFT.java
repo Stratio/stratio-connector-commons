@@ -36,6 +36,7 @@ import com.stratio.crossdata.common.data.ClusterName;
 import com.stratio.crossdata.common.data.Row;
 import com.stratio.crossdata.common.exceptions.ConnectorException;
 import com.stratio.crossdata.common.metadata.ColumnType;
+import com.stratio.crossdata.common.metadata.DataType;
 import com.stratio.crossdata.common.metadata.TableMetadata;
 import com.stratio.crossdata.common.result.QueryResult;
 import com.stratio.crossdata.common.statements.structures.OrderDirection;
@@ -147,7 +148,8 @@ public abstract class GenericOrderByFT extends GenericConnectorTest {
     }
 
     private LinkedList<ConnectorField> getSelectClause(LogicalWorkFlowCreator logWFCreator) {
-        ConnectorField field = logWFCreator.createConnectorField(COLUMN_TEXT, COLUMN_TEXT, ColumnType.VARCHAR);
+        ConnectorField field = logWFCreator.createConnectorField(COLUMN_TEXT, COLUMN_TEXT, new ColumnType(DataType
+                .VARCHAR));
         LinkedList<ConnectorField> selectClause = new LinkedList<ConnectorField>();
         selectClause.add(field);
         return selectClause;
@@ -156,8 +158,9 @@ public abstract class GenericOrderByFT extends GenericConnectorTest {
     protected void prepareDataForTest() throws ConnectorException {
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
-        tableMetadataBuilder.addColumn(COLUMN_TEXT, ColumnType.VARCHAR).addColumn(COLUMN_AGE, ColumnType.INT)
-                        .addColumn(COLUMN_MONEY, ColumnType.INT).withPartitionKey(COLUMN_TEXT);
+        tableMetadataBuilder.addColumn(COLUMN_TEXT,
+                new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_AGE, new ColumnType(DataType.INT))
+                .addColumn(COLUMN_MONEY, new ColumnType(DataType.INT)).withPartitionKey(COLUMN_TEXT);
         TableMetadata tableMetadata = tableMetadataBuilder.build();
 
         if (this.getConnectorHelper().isCatalogMandatory()) {
