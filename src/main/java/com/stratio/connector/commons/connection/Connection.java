@@ -23,6 +23,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * This interface represents a generic logic connection. Created by jmgomez on 29/08/14.
  *
@@ -31,6 +34,11 @@ import java.util.Map;
  */
 public abstract class Connection<T> {
 
+	/**
+     * The Log.
+     */
+    private transient final Logger logger = LoggerFactory.getLogger(this.getClass());
+    
     /**
      * The session.
      */
@@ -62,7 +70,12 @@ public abstract class Connection<T> {
      * @return the object.
      */
     public <T> T getSessionObject(Class<T> type, String name) {
-        return (T) session.get(name);
+        
+    	T value = (T) session.get(name)
+    	if (logger.isDebugEnabled(){
+        	logger.debug("Recovering object ["+name+"] from  session with value ["+value+"]");
+        }
+        return value;
     }
 
     /**
@@ -77,7 +90,9 @@ public abstract class Connection<T> {
         if (session == null) {
             session = new HashMap<>();
         }
-
+        if (logger.isDebugEnabled(){
+        	logger.debug("Add object ["+name+"] to session with value ["+value+"]");
+        }
         session.put(name, value);
     }
 

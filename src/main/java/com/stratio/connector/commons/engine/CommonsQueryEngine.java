@@ -18,6 +18,9 @@
 
 package com.stratio.connector.commons.engine;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.stratio.connector.commons.connection.ConnectionHandler;
 import com.stratio.crossdata.common.connector.IQueryEngine;
 import com.stratio.crossdata.common.data.ClusterName;
@@ -32,6 +35,11 @@ import com.stratio.crossdata.common.result.QueryResult;
  */
 public abstract class CommonsQueryEngine implements IQueryEngine {
 
+	 /**
+	    * The Log.
+	    */
+	   private transient final Logger logger = LoggerFactory.getLogger(this.getClass());
+	   
     /**
      * The connection handler.
      */
@@ -66,8 +74,14 @@ public abstract class CommonsQueryEngine implements IQueryEngine {
                 ClusterName clusterName = ((Project) project).getClusterName();
                 connectionHandler.startJob(clusterName.getName());
             }
+            if (logger.isDebugEnabled()){
+            	logger.debug("Executing ["+workflow.toString()+"]");
+            }
             result = executeWorkFlow(workflow);
-
+           
+            if (logger.isDebugEnabled()){
+            	logger.debug("The result form the query ["+workflow.toString()+"] has returned ["+result.getResultSet().size()+"] rows");
+            }
         } finally {
             for (LogicalStep project : workflow.getInitialSteps()) {
                 connectionHandler.endJob(((Project) project).getClusterName().getName());

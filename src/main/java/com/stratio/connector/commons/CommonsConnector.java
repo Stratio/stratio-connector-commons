@@ -18,6 +18,9 @@
 
 package com.stratio.connector.commons;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.stratio.connector.commons.connection.ConnectionHandler;
 import com.stratio.crossdata.common.connector.ConnectorClusterConfig;
 import com.stratio.crossdata.common.connector.IConnector;
@@ -31,6 +34,15 @@ import com.stratio.crossdata.common.security.ICredentials;
  */
 public abstract class CommonsConnector implements IConnector {
 
+	
+
+	 /**
+    * The Log.
+    */
+   private transient final Logger logger = LoggerFactory.getLogger(this.getClass());
+	
+   
+   
     /**
      * The connectionHandler.
      */
@@ -48,7 +60,7 @@ public abstract class CommonsConnector implements IConnector {
      */
     @Override
     public final void connect(ICredentials credentials, ConnectorClusterConfig config) throws ConnectionException {
-
+    	logger.info("Conecting connector ["+getConnectorName()+"]");
         connectionHandler.createConnection(credentials, config);
 
     }
@@ -61,7 +73,8 @@ public abstract class CommonsConnector implements IConnector {
      */
     @Override
     public final void close(ClusterName clusterName) {
-        connectionHandler.closeConnection(clusterName.getName());
+        logger.info("Close connection to cluster ["+clusterName+"] from connector ["+getConnectorName()+"]");
+    	connectionHandler.closeConnection(clusterName.getName());
 
     }
 
@@ -73,6 +86,7 @@ public abstract class CommonsConnector implements IConnector {
      */
     @Override
     public final void shutdown() throws ExecutionException {
+    	logger.info("shutting down connector ["+getConnectorName()+"]");
         connectionHandler.closeAllConnections();
 
     }
