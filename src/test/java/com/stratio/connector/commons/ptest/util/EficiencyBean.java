@@ -25,6 +25,9 @@ public class EficiencyBean implements Serializable {
     public static final String COLUMN_RANDOM_KEY = "randomKey";
     public static final String TABLE_NAME = EficiencyBean.class.getName();
     private static final String COLUMN_PK = "primaryKey";
+    private static Map<String, ColumnType> columns = new LinkedHashMap<String, ColumnType>();
+
+    
     static {
         columns.put(COLUMN_PK, new ColumnType(DataType.BIGINT));
         columns.put(COLUMN_NAME, new ColumnType(DataType.TEXT));
@@ -35,7 +38,6 @@ public class EficiencyBean implements Serializable {
         columns.put(COLUMN_RANDOM_KEY, new ColumnType(DataType.VARCHAR));
 
     }
-    private static Map<String, ColumnType> columns = new LinkedHashMap<String, ColumnType>();
     private final String separator = "%";
     public Integer primaryKey;
     public String name;
