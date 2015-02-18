@@ -20,6 +20,7 @@ package com.stratio.connector.commons.engine;
 
 import com.stratio.connector.commons.connection.ConnectionHandler;
 import com.stratio.crossdata.common.connector.IQueryEngine;
+import com.stratio.crossdata.common.connector.IResultHandler;
 import com.stratio.crossdata.common.data.ClusterName;
 import com.stratio.crossdata.common.exceptions.ConnectorException;
 import com.stratio.crossdata.common.logicalplan.LogicalStep;
@@ -74,6 +75,11 @@ public abstract class CommonsQueryEngine implements IQueryEngine {
             }
         }
         return result;
+    }
+
+    public final void pagedExecute(String var1, LogicalWorkflow var2, IResultHandler var3, int var4)
+            throws ConnectorException{
+
     }
 
     /**

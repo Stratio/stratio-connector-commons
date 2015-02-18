@@ -39,6 +39,7 @@ import com.stratio.crossdata.common.data.TableName;
 import com.stratio.crossdata.common.exceptions.ConnectorException;
 import com.stratio.crossdata.common.metadata.ColumnMetadata;
 import com.stratio.crossdata.common.metadata.ColumnType;
+import com.stratio.crossdata.common.metadata.DataType;
 import com.stratio.crossdata.common.result.QueryResult;
 
 public abstract class GenericMetadataAlterTableFT extends GenericConnectorTest {
@@ -54,7 +55,7 @@ public abstract class GenericMetadataAlterTableFT extends GenericConnectorTest {
 
         // Create the catalog and the table with COLUMN_1
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
-        tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR);
+        tableMetadataBuilder.addColumn(COLUMN_1, new ColumnType(DataType.VARCHAR));
 
         CatalogMetadataBuilder catalogMetadataBuilder = new CatalogMetadataBuilder(CATALOG);
         catalogMetadataBuilder.withTables(tableMetadataBuilder.build(getConnectorHelper().isPKMandatory()));
@@ -78,7 +79,7 @@ public abstract class GenericMetadataAlterTableFT extends GenericConnectorTest {
 
         // ADD the column: COLUMN_2 with alterTable
         ColumnMetadata columnMetadata = new ColumnMetadata(new ColumnName(CATALOG, TABLE, COLUMN_2), new Object[0],
-                        ColumnType.INT);
+                       new ColumnType(DataType.INT));
         AlterOptions alterOptions = new AlterOptions(AlterOperation.ADD_COLUMN, null, columnMetadata);
 
         connector.getMetadataEngine().alterTable(clusterName, new TableName(CATALOG, TABLE), alterOptions);
@@ -92,7 +93,7 @@ public abstract class GenericMetadataAlterTableFT extends GenericConnectorTest {
         cells.put(COLUMN_2, new Cell(25));
         row.setCells(cells);
 
-        tableMetadataBuilder.addColumn(COLUMN_2, ColumnType.INT);
+        tableMetadataBuilder.addColumn(COLUMN_2, new ColumnType(DataType.INT));
         connector.getStorageEngine().insert(clusterName,
                         tableMetadataBuilder.build(getConnectorHelper().isPKMandatory()), row, false);
         insertElement++;
@@ -118,7 +119,8 @@ public abstract class GenericMetadataAlterTableFT extends GenericConnectorTest {
 
         // Create the catalog and the table with COLUMN_1 and COLUMN_2
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
-        tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.INT);
+        tableMetadataBuilder.addColumn(COLUMN_1, new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_2, new ColumnType
+                (DataType.INT));
 
         CatalogMetadataBuilder catalogMetadataBuilder = new CatalogMetadataBuilder(CATALOG);
         catalogMetadataBuilder.withTables(tableMetadataBuilder.build(getConnectorHelper().isPKMandatory()));
@@ -152,7 +154,7 @@ public abstract class GenericMetadataAlterTableFT extends GenericConnectorTest {
 
         // DROP the column: COLUMN_2 with alterTable
         ColumnMetadata columnMetadata = new ColumnMetadata(new ColumnName(CATALOG, TABLE, COLUMN_2), new Object[0],
-                        ColumnType.INT);
+                       new ColumnType(DataType.INT));
         AlterOptions alterOptions = new AlterOptions(AlterOperation.DROP_COLUMN, null, columnMetadata);
 
         refresh(CATALOG);

@@ -38,6 +38,7 @@ import com.stratio.crossdata.common.logicalplan.Project;
 import com.stratio.crossdata.common.logicalplan.Select;
 import com.stratio.crossdata.common.logicalplan.Window;
 import com.stratio.crossdata.common.metadata.ColumnType;
+import com.stratio.crossdata.common.metadata.DataType;
 import com.stratio.crossdata.common.metadata.Operations;
 import com.stratio.crossdata.common.statements.structures.BooleanSelector;
 import com.stratio.crossdata.common.statements.structures.ColumnSelector;
@@ -119,8 +120,8 @@ public class LogicalWorkFlowCreator {
             for (ColumnName columnName : project.getColumnList()) {
                 ColumnSelector columnSelector = new ColumnSelector(new ColumnName(catalog, table, columnName.getName()));
                 selectColumn.put(columnSelector, columnName.getName());
-                typeMap.put(columnName.getAlias(), ColumnType.VARCHAR);
-                typeMapColumnName.put(columnSelector, ColumnType.VARCHAR);
+                typeMap.put(columnName.getAlias(), new ColumnType(DataType.VARCHAR));
+                typeMapColumnName.put(columnSelector, new ColumnType(DataType.VARCHAR));
             }
 
             select = new Select(Operations.SELECT_OPERATOR, selectColumn, typeMap, typeMapColumnName); // The select is

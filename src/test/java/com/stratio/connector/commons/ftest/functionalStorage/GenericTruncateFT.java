@@ -34,12 +34,13 @@ import com.stratio.crossdata.common.data.TableName;
 import com.stratio.crossdata.common.exceptions.ConnectorException;
 import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
 import com.stratio.crossdata.common.metadata.ColumnType;
+import com.stratio.crossdata.common.metadata.DataType;
 import com.stratio.crossdata.common.result.QueryResult;
 
 /**
  * @author lfernandez
  */
-public abstract class GenericTruncateFT extends GenericConnectorTest<IConnector> {
+public abstract class   GenericTruncateFT extends GenericConnectorTest<IConnector> {
 
     private static String COLUMN_1 = "name1";
     private static String COLUMN_2 = "name2";
@@ -58,7 +59,8 @@ public abstract class GenericTruncateFT extends GenericConnectorTest<IConnector>
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
 
-        tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.INT);
+        tableMetadataBuilder.addColumn(COLUMN_1, new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_2, new ColumnType
+                (DataType.INT));
         connector.getStorageEngine().insert(clusterName,
                         tableMetadataBuilder.build(getConnectorHelper().isPKMandatory()), row, false);
 
