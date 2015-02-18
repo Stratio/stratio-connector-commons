@@ -186,15 +186,15 @@ public abstract class GenericPKQueryIntegerFilterFT extends GenericConnectorTest
         cells.put(COLUMN_MONEY, new Cell(money));
         cells.put(COLUMN_PK, new Cell(ikey));
 
-        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,getClusterName().getName());
         tableMetadataBuilder.addColumn(COLUMN_1,
                 new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_2, new ColumnType(DataType
                 .VARCHAR))
-                        .addColumn(COLUMN_3,
-                                new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_AGE, new ColumnType(DataType.INT))
-                                        .addColumn(COLUMN_MONEY,
-                                                new ColumnType(DataType.INT))
-                                        .addColumn(COLUMN_PK, new ColumnType(DataType.INT));
+                .addColumn(COLUMN_3,
+                        new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_AGE, new ColumnType(DataType.INT))
+                .addColumn(COLUMN_MONEY,
+                        new ColumnType(DataType.INT))
+                .addColumn(COLUMN_PK, new ColumnType(DataType.INT));
         tableMetadataBuilder.withPartitionKey(COLUMN_PK);
 
         TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper().isPKMandatory());

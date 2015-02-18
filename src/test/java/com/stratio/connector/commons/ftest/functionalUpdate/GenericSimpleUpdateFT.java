@@ -131,7 +131,7 @@ public abstract class GenericSimpleUpdateFT extends GenericConnectorTest<IConnec
 
     private void updateRow(ClusterName clusterName) throws UnsupportedException, ConnectorException {
 
-        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,getClusterName().getName());
         tableMetadataBuilder.addColumn(COLUMN_1, new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_2,
                 new ColumnType(DataType
                         .BIGINT))
@@ -210,7 +210,7 @@ public abstract class GenericSimpleUpdateFT extends GenericConnectorTest<IConnec
 
         row.setCells(cells);
 
-        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,getClusterName().getName());
         tableMetadataBuilder.addColumn(COLUMN_1, new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_2,
                 new ColumnType(DataType
                         .BIGINT))
@@ -238,7 +238,7 @@ public abstract class GenericSimpleUpdateFT extends GenericConnectorTest<IConnec
         otherCells.put(COLUMN_3, new Cell(VALUE_3));
         otherRow.setCells(otherCells);
 
-        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,getClusterName().getName());
         tableMetadataBuilder.addColumn(COLUMN_1, new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_2,
                 new ColumnType(DataType
                         .BIGINT))

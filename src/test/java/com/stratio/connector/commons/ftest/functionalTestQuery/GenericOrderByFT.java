@@ -157,7 +157,7 @@ public abstract class GenericOrderByFT extends GenericConnectorTest {
 
     protected void prepareDataForTest() throws ConnectorException {
 
-        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,getClusterName().getName());
         tableMetadataBuilder.addColumn(COLUMN_TEXT,
                 new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_AGE, new ColumnType(DataType.INT))
                 .addColumn(COLUMN_MONEY, new ColumnType(DataType.INT)).withPartitionKey(COLUMN_TEXT);

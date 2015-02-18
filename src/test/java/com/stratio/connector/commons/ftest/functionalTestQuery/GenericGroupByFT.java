@@ -83,7 +83,7 @@ public abstract class GenericGroupByFT extends GenericConnectorTest {
 
         row.setCells(cells);
 
-        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,getClusterName().getName());
         tableMetadataBuilder.addColumn(COLUMN_ID,
                 new ColumnType(DataType.INT)).addColumn(COLUMN_TEXT, new ColumnType(DataType.VARCHAR))
                 .addColumn(COLUMN_AGE, new ColumnType(DataType.INT)).addColumn(COLUMN_MONEY,

@@ -194,7 +194,7 @@ public abstract class ConnectionHandler {
      * @throws ExecutionException
      */
     public void closeAllConnections() throws ExecutionException {
-    	logger.info("Closing all connections...")M
+    	logger.info("Closing all connections...");
         synchronized (connections) {
             while (!connections.isEmpty()) {
                 for (Entry<String, Connection> mapConnections : connections.entrySet()) {

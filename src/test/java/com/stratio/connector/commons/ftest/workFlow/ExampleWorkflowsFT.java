@@ -61,7 +61,7 @@ public abstract class ExampleWorkflowsFT extends GenericConnectorTest {
             deleteCatalog(CATALOG);
             setDeleteBeteweenTest(false);
 
-            TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
+            TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,getClusterName().getName());
             tableMetadataBuilder.addColumn(ExampleWorkflows.COLUMN_ID, new ColumnType(DataType.INT))
                     .addColumn(ExampleWorkflows.COLUMN_NAME, new ColumnType(DataType.VARCHAR))
                             .addColumn(ExampleWorkflows.COLUMN_AGE, new ColumnType(DataType.INT))

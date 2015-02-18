@@ -145,7 +145,7 @@ public abstract class GenericQueryFT extends GenericConnectorTest {
         cells.put(COLUMN_2, new Cell(new Integer(10)));
         cells.put(COLUMN_3, new Cell(true));
 
-        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,getClusterName().getName());
         tableMetadataBuilder.addColumn(COLUMN_1, new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_2, new ColumnType
                 (DataType.INT)).addColumn(COLUMN_3, new ColumnType(DataType.BOOLEAN));
 
@@ -225,7 +225,7 @@ public abstract class GenericQueryFT extends GenericConnectorTest {
         cells.put(COLUMN_3, new Cell("ValueBin3_r" + ikey));
         row.setCells(cells);
 
-        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, Table);
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, Table,getClusterName().getName());
         tableMetadataBuilder.addColumn(COLUMN_1,
                 new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_2, new ColumnType(DataType.VARCHAR))
                 .addColumn(COLUMN_3, new ColumnType(DataType.VARCHAR));

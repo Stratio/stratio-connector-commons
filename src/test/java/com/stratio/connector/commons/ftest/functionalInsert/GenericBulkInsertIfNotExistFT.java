@@ -96,7 +96,7 @@ public abstract class GenericBulkInsertIfNotExistFT extends GenericConnectorTest
             rows.add(row);
         }
 
-        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,getClusterName().getName());
         tableMetadataBuilder.addColumn(COLUMN_KEY, new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_1, new ColumnType
                 (DataType.VARCHAR))
                         .addColumn(COLUMN_2, new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_3, new ColumnType
@@ -156,7 +156,7 @@ public abstract class GenericBulkInsertIfNotExistFT extends GenericConnectorTest
             rows.add(row);
         }
 
-        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,getClusterName().getName());
         tableMetadataBuilder.addColumn(COLUMN_KEY, new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_1, new ColumnType
                 (DataType.VARCHAR))
                 .addColumn(COLUMN_2, new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_3,

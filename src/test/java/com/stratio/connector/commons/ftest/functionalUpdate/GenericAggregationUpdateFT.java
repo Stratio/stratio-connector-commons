@@ -131,7 +131,7 @@ public abstract class GenericAggregationUpdateFT extends GenericConnectorTest<IC
     private void updateRow(ClusterName clusterName, Operator operator, long value) throws UnsupportedException,
                     ConnectorException {
 
-        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,getClusterName().getName());
         tableMetadataBuilder.addColumn(COLUMN_1, new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_2,
                 new ColumnType(DataType
                         .BIGINT));
@@ -193,7 +193,7 @@ public abstract class GenericAggregationUpdateFT extends GenericConnectorTest<IC
 
         row.setCells(cells);
 
-        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,getClusterName().getName());
         tableMetadataBuilder.addColumn(COLUMN_1, new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_2,
                 new ColumnType(DataType.BIGINT));
 

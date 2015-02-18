@@ -438,7 +438,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterFT extends GenericConne
         cells.put(COLUMN_AGE, new Cell(age));
         cells.put(COLUMN_MONEY, new Cell(money));
 
-        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,clusterNodeName.getName());
         tableMetadataBuilder.addColumn(COLUMN_1, new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_2, new ColumnType
                 (DataType.VARCHAR))
                 .addColumn(COLUMN_3, new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_AGE, new ColumnType(DataType

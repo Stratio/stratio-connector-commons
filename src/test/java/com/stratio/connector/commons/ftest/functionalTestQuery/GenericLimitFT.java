@@ -81,7 +81,7 @@ public abstract class GenericLimitFT extends GenericConnectorTest {
         cells.put(COLUMN_MONEY, new Cell(20));
         row.setCells(cells);
 
-        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,getClusterName().getName());
         tableMetadataBuilder.addColumn(COLUMN_TEXT,
                 new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_AGE, new ColumnType(DataType.INT))
                 .addColumn(COLUMN_MONEY, new ColumnType(DataType.INT));

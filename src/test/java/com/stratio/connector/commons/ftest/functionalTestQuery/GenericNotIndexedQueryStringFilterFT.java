@@ -159,7 +159,7 @@ public abstract class GenericNotIndexedQueryStringFilterFT extends GenericConnec
     private void insertRow(String[] text, ClusterName clusterNodeName, boolean toLowerCase)
                     throws UnsupportedOperationException, ConnectorException {
 
-        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,getClusterName().getName());
         tableMetadataBuilder.addColumn("id", new ColumnType(DataType.INT)).addColumn(COLUMN_TEXT, new ColumnType
                 (DataType.VARCHAR));
         tableMetadataBuilder.addIndex(IndexType.FULL_TEXT, "indexText", COLUMN_TEXT);

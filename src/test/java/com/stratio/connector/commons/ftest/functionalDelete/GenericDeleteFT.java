@@ -147,7 +147,7 @@ public abstract class GenericDeleteFT extends GenericConnectorTest {
     }
 
     private void insertTestData(ClusterName clusterName) throws ConnectorException {
-        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,getClusterName().getName());
 
         tableMetadataBuilder.addColumn(COLUMN_PK,
                 new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_1, new ColumnType(DataType.VARCHAR))

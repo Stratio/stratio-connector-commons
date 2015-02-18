@@ -71,8 +71,8 @@ public abstract class Connection<T> {
      */
     public <T> T getSessionObject(Class<T> type, String name) {
         
-    	T value = (T) session.get(name)
-    	if (logger.isDebugEnabled(){
+    	T value = (T) session.get(name);
+    	if (logger.isDebugEnabled()){
         	logger.debug("Recovering object ["+name+"] from  session with value ["+value+"]");
         }
         return value;
@@ -90,7 +90,7 @@ public abstract class Connection<T> {
         if (session == null) {
             session = new HashMap<>();
         }
-        if (logger.isDebugEnabled(){
+        if (logger.isDebugEnabled()){
         	logger.debug("Add object ["+name+"] to session with value ["+value+"]");
         }
         session.put(name, value);

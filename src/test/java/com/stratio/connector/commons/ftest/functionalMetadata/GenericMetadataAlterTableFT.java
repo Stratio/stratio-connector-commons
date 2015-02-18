@@ -54,7 +54,7 @@ public abstract class GenericMetadataAlterTableFT extends GenericConnectorTest {
         ClusterName clusterName = getClusterName();
 
         // Create the catalog and the table with COLUMN_1
-        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,getClusterName().getName());
         tableMetadataBuilder.addColumn(COLUMN_1, new ColumnType(DataType.VARCHAR));
 
         CatalogMetadataBuilder catalogMetadataBuilder = new CatalogMetadataBuilder(CATALOG);
@@ -118,7 +118,7 @@ public abstract class GenericMetadataAlterTableFT extends GenericConnectorTest {
         ClusterName clusterName = getClusterName();
 
         // Create the catalog and the table with COLUMN_1 and COLUMN_2
-        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE);
+        TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,getClusterName().getName());
         tableMetadataBuilder.addColumn(COLUMN_1, new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_2, new ColumnType
                 (DataType.INT));
 
