@@ -33,8 +33,17 @@ import com.stratio.crossdata.common.statements.structures.Selector;
  */
 public class CatalogMetadataBuilder {
 
+    /**
+     * The catalog name.
+     */
     private CatalogName catalogName;
+    /**
+     * The options.
+     */
     private Map<Selector, Selector> options;
+    /**
+     * The tables metadata.
+     */
     private Map<TableName, TableMetadata> tables;
 
     /**
@@ -79,7 +88,6 @@ public class CatalogMetadataBuilder {
      * @return the catalog metadata
      */
     public CatalogMetadata build() {
-        // TODO logger.debug()
         return new CatalogMetadata(catalogName, options, tables);
     }
 

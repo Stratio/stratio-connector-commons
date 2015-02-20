@@ -143,6 +143,16 @@ public class SingleProjectQueryEngineTest {
 
         }
 
+        @Override protected void asyncExecuteWorkFlow(String queryId, LogicalWorkflow workflow,
+                IResultHandler resultHandler) {
+
+        }
+
+        @Override protected void pagedExecuteWorkFlow(String queryId, LogicalWorkflow workflow,
+                IResultHandler resultHandler, int pageSize) {
+
+        }
+
         @Override
         public void stop(String queryId) throws ConnectorException {
             queryIdSend = queryId;

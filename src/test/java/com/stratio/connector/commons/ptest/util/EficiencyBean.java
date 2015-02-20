@@ -27,7 +27,7 @@ public class EficiencyBean implements Serializable {
     private static final String COLUMN_PK = "primaryKey";
     private static Map<String, ColumnType> columns = new LinkedHashMap<String, ColumnType>();
 
-    
+
     static {
         columns.put(COLUMN_PK, new ColumnType(DataType.BIGINT));
         columns.put(COLUMN_NAME, new ColumnType(DataType.TEXT));

@@ -41,12 +41,38 @@ import com.stratio.crossdata.common.statements.structures.Selector;
  */
 public class TableMetadataBuilder {
 
+    /**
+     * The table.
+     */
     private TableName tableName;
+    /**
+     * The options.
+     */
     private Map<Selector, Selector> options;
+
+    /**
+     * The columns.
+     */
     private LinkedHashMap<ColumnName, ColumnMetadata> columns;
+
+    /**
+     * The index metadata.
+     */
     private Map<IndexName, IndexMetadata> indexes;
+
+    /**
+     * The partition key.
+     */
     private LinkedList<ColumnName> partitionKey;
+
+    /**
+     * The cluster key.
+     */
     private LinkedList<ColumnName> clusterKey;
+
+    /**
+     * The cluster name.
+     */
     private ClusterName clusterName;
 
     /**

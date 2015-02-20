@@ -41,10 +41,29 @@ import com.stratio.crossdata.common.statements.structures.StringSelector;
  */
 public class IndexMetadataBuilder {
 
+    /**
+     * The index name.
+     */
     private IndexName indexName;
+
+    /**
+     * The table name.
+     */
     private TableName tableName;
+
+    /**
+     * The options.
+     */
     private Map<Selector, Selector> options = Collections.emptyMap();
+
+    /**
+     * The column metadata.
+     */
     private Map<ColumnName, ColumnMetadata> columns = Collections.emptyMap();
+
+    /**
+     * The index.
+     */
     private IndexType indexType;
 
     /**

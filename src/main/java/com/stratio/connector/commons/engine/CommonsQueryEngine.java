@@ -56,6 +56,76 @@ public abstract class CommonsQueryEngine implements IQueryEngine {
         this.connectionHandler = connectionHandler;
     }
 
+
+    /**
+     * This method execute a async query.
+     *
+     * @param queryId the queryId.
+     * @param workflow the workflow.
+     * @param resultHandler the result handler.
+     *
+     * @throws ConnectorException if a error happens.
+     */
+    @Override public void asyncExecute(String queryId, LogicalWorkflow workflow, IResultHandler resultHandler)
+            throws ConnectorException {
+
+        try {
+            for (LogicalStep project : workflow.getInitialSteps()) {
+                ClusterName clusterName = ((Project) project).getClusterName();
+                connectionHandler.startJob(clusterName.getName());
+            }
+            if (logger.isDebugEnabled()) {
+                logger.debug("Async Executing [" + workflow.toString() + "] : queryId ["+queryId+"]");
+            }
+            asyncExecuteWorkFlow(queryId,workflow, resultHandler);
+
+            if (logger.isDebugEnabled()) {
+                logger.debug(
+                        "The async query [" + queryId + "] has ended" );
+            }
+        } finally {
+            for (LogicalStep project : workflow.getInitialSteps()) {
+                connectionHandler.endJob(((Project) project).getClusterName().getName());
+            }
+        }
+
+
+    }
+    /**
+     * This method execute a async and paged query.
+     *
+     * @param queryId the queryId.
+     * @param workflow the workflow.
+     * @param resultHandler the result handler.
+     *
+     * @throws ConnectorException if a error happens.
+     */
+    @Override public void pagedExecute(String queryId, LogicalWorkflow workflow, IResultHandler resultHandler,
+            int pageSize) throws ConnectorException {
+
+        try {
+            for (LogicalStep project : workflow.getInitialSteps()) {
+                ClusterName clusterName = ((Project) project).getClusterName();
+                connectionHandler.startJob(clusterName.getName());
+            }
+            if (logger.isDebugEnabled()) {
+                logger.debug("Async paged Executing [" + workflow.toString() + "] : queryId ["+queryId+"]");
+            }
+            pagedExecuteWorkFlow(queryId, workflow, resultHandler,pageSize);
+
+            if (logger.isDebugEnabled()) {
+                logger.debug(
+                        "The async query [" + queryId + "] has ended" );
+            }
+        } finally {
+            for (LogicalStep project : workflow.getInitialSteps()) {
+                connectionHandler.endJob(((Project) project).getClusterName().getName());
+            }
+        }
+
+    }
+
+
     /**
      * This method execute a query.
      *
@@ -90,16 +160,40 @@ public abstract class CommonsQueryEngine implements IQueryEngine {
         return result;
     }
 
-    public final void pagedExecute(String var1, LogicalWorkflow var2, IResultHandler var3, int var4)
-            throws ConnectorException {
 
-    }
 
     /**
      * Abstract method which must be implemented by the concrete database metadataEngine to execute a workflow.
      *
      * @param workflow the workflow.
+     * @return  the query result.
      * @throws ConnectorException if an error happens.
      */
     protected abstract QueryResult executeWorkFlow(LogicalWorkflow workflow) throws ConnectorException;
+
+    /**
+     * Abstract method which must be implemented by the concrete database metadataEngine to execute a async workflow.
+     *
+     * @param queryId the queryId.
+     * @param workflow the workflow.
+     * @param resultHandler the result handler.
+     *
+     * @throws ConnectorException if an error happens.
+     */
+    protected abstract void asyncExecuteWorkFlow(String queryId, LogicalWorkflow workflow, IResultHandler resultHandler);
+
+
+    /**
+     * Abstract method which must be implemented by the concrete database metadataEngine to execute a async and paged
+     * workflow.
+     *
+     * @param queryId the queryId.
+     * @param workflow the workflow.
+     * @param resultHandler the result handler.
+     *
+     * @param pageSize
+     * @throws ConnectorException if an error happens.
+     */
+    protected abstract void pagedExecuteWorkFlow(String queryId, LogicalWorkflow workflow, IResultHandler resultHandler,
+            int pageSize);
 }
