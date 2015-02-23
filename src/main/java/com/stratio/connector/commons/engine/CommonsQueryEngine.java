@@ -136,7 +136,7 @@ public abstract class CommonsQueryEngine implements IQueryEngine {
     @Override
     public final QueryResult execute(LogicalWorkflow workflow) throws ConnectorException {
         QueryResult result = null;
-
+        Long time = null;
         try {
             for (LogicalStep project : workflow.getInitialSteps()) {
                 ClusterName clusterName = ((Project) project).getClusterName();
@@ -145,6 +145,7 @@ public abstract class CommonsQueryEngine implements IQueryEngine {
             if (logger.isDebugEnabled()) {
                 logger.debug("Executing [" + workflow.toString() + "]");
             }
+            time = System.currentTimeMillis();
             result = executeWorkFlow(workflow);
 
             if (logger.isDebugEnabled()) {
@@ -155,6 +156,9 @@ public abstract class CommonsQueryEngine implements IQueryEngine {
         } finally {
             for (LogicalStep project : workflow.getInitialSteps()) {
                 connectionHandler.endJob(((Project) project).getClusterName().getName());
+            }
+            if (time!=null){
+                logger.info("TIME - The execute time has been ["+(System.currentTimeMillis()-time)+"]");
             }
         }
         return result;
@@ -196,5 +200,6 @@ public abstract class CommonsQueryEngine implements IQueryEngine {
      * @throws ConnectorException if an error happens.
      */
     protected abstract void pagedExecuteWorkFlow(String queryId, LogicalWorkflow workflow, IResultHandler resultHandler,
-            int pageSize)  throws ConnectorException;
+            int pageSize)  throws ConnectorException
+    ;
 }
