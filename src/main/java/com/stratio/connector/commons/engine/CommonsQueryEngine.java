@@ -180,7 +180,8 @@ public abstract class CommonsQueryEngine implements IQueryEngine {
      *
      * @throws ConnectorException if an error happens.
      */
-    protected abstract void asyncExecuteWorkFlow(String queryId, LogicalWorkflow workflow, IResultHandler resultHandler);
+    protected abstract void asyncExecuteWorkFlow(String queryId, LogicalWorkflow workflow, IResultHandler
+            resultHandler)  throws ConnectorException;
 
 
     /**
@@ -195,5 +196,5 @@ public abstract class CommonsQueryEngine implements IQueryEngine {
      * @throws ConnectorException if an error happens.
      */
     protected abstract void pagedExecuteWorkFlow(String queryId, LogicalWorkflow workflow, IResultHandler resultHandler,
-            int pageSize);
+            int pageSize)  throws ConnectorException;
 }
