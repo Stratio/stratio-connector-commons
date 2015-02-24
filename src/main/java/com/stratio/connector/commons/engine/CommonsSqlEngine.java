@@ -77,13 +77,19 @@ public abstract class CommonsSqlEngine implements ISqlEngine {
             if (logger.isDebugEnabled()) {
                 logger.debug("Executing SQL [" + sqlQuery + "]");
             }
+            Long time = System.currentTimeMillis();
             result = executeSQL(sqlQuery);
 
             if (logger.isDebugEnabled()) {
                 logger.debug(
                         "The result form the query [" + sqlQuery + "] has returned [" + result.getResultSet()
                                 .size() + "] rows");
+
             }
+
+            logger.info("TIME - The execute time for the query ["+sqlQuery+"] has been ["+(System.currentTimeMillis()-time)
+                    +"]");
+
        /* } finally {
             for (LogicalStep project : workflow.getInitialSteps()) {
                 connectionHandler.endJob(((Project) project).getClusterName().getName());
@@ -111,6 +117,7 @@ public abstract class CommonsSqlEngine implements ISqlEngine {
         if (logger.isDebugEnabled()) {
             logger.debug("Executing SQL [" + sqlQuery + "] with id ["+queryId+"]");
         }
+        Long time = System.currentTimeMillis();
         asyncExecuteSQL(queryId,sqlQuery,resultHandler);
 
         if (logger.isDebugEnabled()) {
@@ -118,6 +125,9 @@ public abstract class CommonsSqlEngine implements ISqlEngine {
                     "The result form the query [" + sqlQuery + "with id ["+queryId+"] has returned [" + result.getResultSet()
                             .size() + "] rows");
         }
+
+
+         logger.info("TIME - The async execute time for the query with id["+queryId+"] has been ["+(System.currentTimeMillis() -time)+"]");
 
     }
 
@@ -137,6 +147,7 @@ public abstract class CommonsSqlEngine implements ISqlEngine {
         if (logger.isDebugEnabled()) {
             logger.debug("Executing paged SQL [" + sqlQuery + "] with id ["+queryId+"] and page size ["+pageSize+"]");
         }
+        Long time = System.currentTimeMillis();
         pagedExecuteSQL(queryId, sqlQuery, resultHandler, pageSize);
 
         if (logger.isDebugEnabled()) {
@@ -144,6 +155,8 @@ public abstract class CommonsSqlEngine implements ISqlEngine {
                     "The result form the query [" + sqlQuery + "with id ["+queryId+"] has returned [" + result.getResultSet()
                             .size() + "] rows");
         }
+        logger.info("TIME - The paged execute time for the query with id["+queryId+"] has been ["+(System
+                .currentTimeMillis() -time)+"]");
 
     }
 

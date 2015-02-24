@@ -155,7 +155,7 @@ public class CommonsQueryEngineTest {
 
 
         verify(logger).debug("Executing [" + logicalworkFlow.toString() + "]");
-        verify(logger).debug("The result form the query [" + logicalworkFlow.toString() + "] has returned ["+ result.getResultSet().size() + "] rows");
+        verify(logger).debug("The query has finished. The result form the query [" + logicalworkFlow.toString() + "] has returned ["+ result.getResultSet().size() + "] rows");
 
     }
 
@@ -197,7 +197,7 @@ public class CommonsQueryEngineTest {
         commonsQueryEngineStub.pagedExecute(queryID, logicalworkFlow, resultHandler,10);
 
         verify(logger).debug("Async paged Executing [" + logicalworkFlow.toString() + "] : queryId ["+queryID+"]");
-        verify(logger).debug(  "The async query [" + queryID + "] has ended" );
+        verify(logger).debug("The async query [" + queryID + "] has ended" );
 
     }
 

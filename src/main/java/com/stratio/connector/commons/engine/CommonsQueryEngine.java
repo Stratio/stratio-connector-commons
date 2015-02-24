@@ -68,7 +68,7 @@ public abstract class CommonsQueryEngine implements IQueryEngine {
      */
     @Override public void asyncExecute(String queryId, LogicalWorkflow workflow, IResultHandler resultHandler)
             throws ConnectorException {
-
+        Long time = null;
         try {
             for (LogicalStep project : workflow.getInitialSteps()) {
                 ClusterName clusterName = ((Project) project).getClusterName();
@@ -77,6 +77,7 @@ public abstract class CommonsQueryEngine implements IQueryEngine {
             if (logger.isDebugEnabled()) {
                 logger.debug("Async Executing [" + workflow.toString() + "] : queryId ["+queryId+"]");
             }
+            time = System.currentTimeMillis();
             asyncExecuteWorkFlow(queryId,workflow, resultHandler);
 
             if (logger.isDebugEnabled()) {
@@ -86,6 +87,11 @@ public abstract class CommonsQueryEngine implements IQueryEngine {
         } finally {
             for (LogicalStep project : workflow.getInitialSteps()) {
                 connectionHandler.endJob(((Project) project).getClusterName().getName());
+            }
+            if (time!=null){
+                logger.info("TIME - The execute time to async executed with queryId ["+queryId+"] has been ["+(System
+                        .currentTimeMillis()-time)
+                        +"]");
             }
         }
 
@@ -102,7 +108,7 @@ public abstract class CommonsQueryEngine implements IQueryEngine {
      */
     @Override public void pagedExecute(String queryId, LogicalWorkflow workflow, IResultHandler resultHandler,
             int pageSize) throws ConnectorException {
-
+        Long time = null;
         try {
             for (LogicalStep project : workflow.getInitialSteps()) {
                 ClusterName clusterName = ((Project) project).getClusterName();
@@ -111,6 +117,7 @@ public abstract class CommonsQueryEngine implements IQueryEngine {
             if (logger.isDebugEnabled()) {
                 logger.debug("Async paged Executing [" + workflow.toString() + "] : queryId ["+queryId+"]");
             }
+            time = System.currentTimeMillis();
             pagedExecuteWorkFlow(queryId, workflow, resultHandler,pageSize);
 
             if (logger.isDebugEnabled()) {
@@ -120,6 +127,11 @@ public abstract class CommonsQueryEngine implements IQueryEngine {
         } finally {
             for (LogicalStep project : workflow.getInitialSteps()) {
                 connectionHandler.endJob(((Project) project).getClusterName().getName());
+            }
+            if (time!=null){
+                logger.info("TIME - The execute time to paged executed with queryId ["+queryId+"] has been ["+(System
+                        .currentTimeMillis()-time)
+                        +"]");
             }
         }
 
@@ -150,8 +162,12 @@ public abstract class CommonsQueryEngine implements IQueryEngine {
 
             if (logger.isDebugEnabled()) {
                 logger.debug(
-                        "The result form the query [" + workflow.toString() + "] has returned [" + result.getResultSet()
+                        "The query has finished. The result form the query [" + workflow.toString() + "] has returned "
+                                + "[" +
+                                result
+                                .getResultSet()
                                 .size() + "] rows");
+
             }
         } finally {
             for (LogicalStep project : workflow.getInitialSteps()) {

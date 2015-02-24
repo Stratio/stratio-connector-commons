@@ -342,6 +342,7 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
     @Override
     public CatalogMetadata provideCatalogMetadata(ClusterName targetCluster, CatalogName catalogName)
             throws ConnectorException {
+        Long time = System.currentTimeMillis();
         try {
             connectionHandler.startJob(targetCluster.getName());
 
@@ -351,9 +352,10 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
                                 .getName() + "]");
             }
 
+
             CatalogMetadata catalogMetadata = provideCatalogMetadata(catalogName, targetCluster,
                     connectionHandler.getConnection(targetCluster.getName()));
-            ;
+
             if (logger.isDebugEnabled()) {
                 logger.debug("Metadatada  from [" + catalogName.getName() + "] has been provided from cluster ["
                         + targetCluster.getName() + "]");
@@ -361,12 +363,17 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
             return catalogMetadata;
         } finally {
             connectionHandler.endJob(targetCluster.getName());
+            logger.info("TIME - The execute time for the provide Catalog Metadata ["+targetCluster
+                    .getName()+":"+catalogName.getName()+"] has been ["+(System.currentTimeMillis()-time)
+                    +"]");
+
         }
     }
 
     @Override
     public TableMetadata provideTableMetadata(ClusterName targetCluster, TableName tableName)
             throws ConnectorException {
+        Long time = System.currentTimeMillis();
         try {
             connectionHandler.startJob(targetCluster.getName());
             if (logger.isDebugEnabled()) {
@@ -384,6 +391,9 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
             return tableMetadata;
         } finally {
             connectionHandler.endJob(targetCluster.getName());
+            logger.info("TIME - The execute time for the provide table Metadata ["+targetCluster
+                    .getName()+":"+tableName.getName()+"] has been ["+(System.currentTimeMillis()-time)
+                    +"]");
         }
     }
 
