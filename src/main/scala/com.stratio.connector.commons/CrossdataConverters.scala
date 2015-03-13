@@ -18,6 +18,9 @@
 
 package com.stratio.connector.commons
 
+import java.io.Serializable
+import java.util
+
 import scala.language.implicitConversions
 import scala.collection.mutable.ArrayBuffer
 import org.apache.spark.sql.catalyst.expressions.GenericRow
@@ -75,6 +78,21 @@ object CrossdataConverters {
         new Cell(toCellValue(row(idx), field.dataType)))
     }
     xdRow
+  }
+
+  def extractCellValue(value: AnyRef): SparkSQLRow = {
+    value match {
+      case cell : Cell => extractCellValue(cell.getValue)
+      case _ => SparkSQLRow(value)
+    }
+  }
+
+  def toSparkSQLRow (row: XDRow): SparkSQLRow = {
+    new GenericRow(row.getCellList.map { cell => cell.getValue match {
+      case value: Cell => extractCellValue(value)
+      case _ => cell.getValue
+    }
+    }.toArray[Any])
   }
 
   /**
