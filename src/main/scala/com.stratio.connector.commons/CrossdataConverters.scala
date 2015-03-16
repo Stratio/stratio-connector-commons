@@ -18,7 +18,6 @@
 
 package com.stratio.connector.commons
 
-import com.stratio.connector.hdfs.scala.connection.HDFSConnector
 import com.stratio.crossdata.common.exceptions.UnsupportedException
 
 import scala.language.implicitConversions
@@ -28,7 +27,6 @@ import org.apache.spark.sql.catalyst.types._
 import org.apache.spark.sql.{Row => SparkSQLRow, SchemaRDD}
 import com.stratio.crossdata.common.metadata.{TableMetadata, ColumnMetadata, ColumnType}
 import com.stratio.crossdata.common.data.{Row => XDRow, Cell, ResultSet}
-import com.stratio.crossdata.common.metadata.DataType
 
 object CrossdataConverters {
 
@@ -103,14 +101,14 @@ object CrossdataConverters {
         case(columnName, columnMetadata) =>
           new StructField(
             columnName.getName,
-            columnMetadata.getColumnType.getDataType match{
-              case DataType.BIGINT => LongType
-              case DataType.BOOLEAN => BooleanType
-              case DataType.DOUBLE => DoubleType
-              case DataType.FLOAT => FloatType
-              case DataType.INT => IntegerType
-              case DataType.TEXT => StringType
-              case DataType.VARCHAR => StringType
+            columnMetadata.getColumnType match{
+              case ColumnType.BIGINT => LongType
+              case ColumnType.BOOLEAN => BooleanType
+              case ColumnType.DOUBLE => DoubleType
+              case ColumnType.FLOAT => FloatType
+              case ColumnType.INT => IntegerType
+              case ColumnType.TEXT => StringType
+              case ColumnType.VARCHAR => StringType
               //TODO: throw UnsupportedException
               //case _ => UnsupportedException("Type not supported")
             }

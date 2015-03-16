@@ -97,45 +97,7 @@ public abstract class CommonsQueryEngine implements IQueryEngine {
 
 
     }
-    /**
-     * This method execute a async and paged query.
-     *
-     * @param queryId the queryId.
-     * @param workflow the workflow.
-     * @param resultHandler the result handler.
-     *
-     * @throws ConnectorException if a error happens.
-     */
-    @Override public void pagedExecute(String queryId, LogicalWorkflow workflow, IResultHandler resultHandler,
-            int pageSize) throws ConnectorException {
-        Long time = null;
-        try {
-            for (LogicalStep project : workflow.getInitialSteps()) {
-                ClusterName clusterName = ((Project) project).getClusterName();
-                connectionHandler.startJob(clusterName.getName());
-            }
-            if (logger.isDebugEnabled()) {
-                logger.debug("Async paged Executing [" + workflow.toString() + "] : queryId ["+queryId+"]");
-            }
-            time = System.currentTimeMillis();
-            pagedExecuteWorkFlow(queryId, workflow, resultHandler,pageSize);
 
-            if (logger.isDebugEnabled()) {
-                logger.debug(
-                        "The async query [" + queryId + "] has ended" );
-            }
-        } finally {
-            for (LogicalStep project : workflow.getInitialSteps()) {
-                connectionHandler.endJob(((Project) project).getClusterName().getName());
-            }
-            if (time!=null){
-                logger.info("TIME - The execute time to paged executed with queryId ["+queryId+"] has been ["+(System
-                        .currentTimeMillis()-time)
-                        +"]");
-            }
-        }
-
-    }
 
 
     /**

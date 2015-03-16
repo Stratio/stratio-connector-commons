@@ -52,7 +52,7 @@ public final class ColumnTypeHelper {
         validateInput(columnType);
         Object returnValue = null;
         if (value != null) {
-            switch (columnType.getDataType()) {
+            switch (columnType) {
 
             case BIGINT:
                 ensureNumber(value);

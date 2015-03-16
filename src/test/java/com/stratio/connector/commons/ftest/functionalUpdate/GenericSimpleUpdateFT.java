@@ -42,7 +42,6 @@ import com.stratio.crossdata.common.exceptions.UnsupportedException;
 import com.stratio.crossdata.common.logicalplan.Filter;
 import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
 import com.stratio.crossdata.common.metadata.ColumnType;
-import com.stratio.crossdata.common.metadata.DataType;
 import com.stratio.crossdata.common.metadata.TableMetadata;
 import com.stratio.crossdata.common.result.QueryResult;
 import com.stratio.crossdata.common.statements.structures.BooleanSelector;
@@ -133,10 +132,9 @@ public abstract class GenericSimpleUpdateFT extends GenericConnectorTest<IConnec
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,
                 getClusterName().getName());
-        tableMetadataBuilder.addColumn(COLUMN_1, new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_2,
-                new ColumnType(DataType
-                        .BIGINT))
-                .addColumn(COLUMN_3, new ColumnType(DataType.BOOLEAN));
+        tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2,
+                ColumnType.BIGINT)
+                .addColumn(COLUMN_3, ColumnType.BOOLEAN);
 
         TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper().isPKMandatory());
 
@@ -213,10 +211,9 @@ public abstract class GenericSimpleUpdateFT extends GenericConnectorTest<IConnec
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,
                 getClusterName().getName());
-        tableMetadataBuilder.addColumn(COLUMN_1, new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_2,
-                new ColumnType(DataType
-                        .BIGINT))
-                .addColumn(COLUMN_3, new ColumnType(DataType.BOOLEAN));
+        tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2,
+                ColumnType.BIGINT)
+                .addColumn(COLUMN_3, ColumnType.BOOLEAN);
 
         TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper().isPKMandatory());
 
@@ -243,10 +240,9 @@ public abstract class GenericSimpleUpdateFT extends GenericConnectorTest<IConnec
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,
                 getClusterName().getName());
-        tableMetadataBuilder.addColumn(COLUMN_1, new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_2,
-                new ColumnType(DataType
-                        .BIGINT))
-                .addColumn(COLUMN_3, new ColumnType(DataType.BOOLEAN));
+        tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2,
+                ColumnType.BIGINT)
+                .addColumn(COLUMN_3, ColumnType.BOOLEAN);
 
         TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper().isPKMandatory());
 

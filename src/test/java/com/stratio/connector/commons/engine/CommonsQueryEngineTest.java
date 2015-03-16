@@ -150,7 +150,7 @@ public class CommonsQueryEngineTest {
 
         when(logger.isDebugEnabled()).thenReturn(true);
 
-       QueryResult result =  commonsQueryEngineStub.execute(logicalworkFlow);
+        QueryResult result =  commonsQueryEngineStub.execute(logicalworkFlow);
 
 
 
@@ -158,52 +158,6 @@ public class CommonsQueryEngineTest {
         verify(logger).debug("The query has finished. The result form the query [" + logicalworkFlow.toString() + "] has returned ["+ result.getResultSet().size() + "] rows");
 
     }
-
-
-
-    /**
-     * Method: executeWorkFlow(LogicalWorkflow workflow)
-     */
-    @Test
-    public void testpagedExecuteWorkFlow() throws Exception {
-        String queryID = "queryID";
-        LogicalWorkflow logicalworkFlow = mock(LogicalWorkflow.class);
-        IResultHandler resultHandler = mock(IResultHandler.class);
-
-        commonsQueryEngineStub.pagedExecute(queryID, logicalworkFlow, resultHandler,10);
-
-        assertTrue("executeWorkFlow must be executed", pagedExecuteAsyncExecute);
-        assertEquals("The queryId must be correct", queryIdSend, queryID);
-        assertEquals("The workflow must be correct", workflowSend, logicalworkFlow);
-        assertEquals("The resultHandler must be correct", resultHandler, resultHandlerSend);
-        assertEquals("The paged must be correct", pageSizeExecute, 10);
-    }
-
-    @Test
-    public void testpagedExecuteWorkFlowLog() throws ConnectorException {
-
-
-
-        Logger logger = mock(Logger.class);
-        Whitebox.setInternalState(commonsQueryEngineStub,"logger",logger);
-
-
-        when(logger.isDebugEnabled()).thenReturn(true);
-
-        String queryID = "queryID";
-        LogicalWorkflow logicalworkFlow = mock(LogicalWorkflow.class);
-        IResultHandler resultHandler = mock(IResultHandler.class);
-
-        commonsQueryEngineStub.pagedExecute(queryID, logicalworkFlow, resultHandler,10);
-
-        verify(logger).debug("Async paged Executing [" + logicalworkFlow.toString() + "] : queryId ["+queryID+"]");
-        verify(logger).debug("The async query [" + queryID + "] has ended" );
-
-    }
-
-
-
-
 
     @Test
     public void testStop() throws ConnectorException {
@@ -241,7 +195,7 @@ public class CommonsQueryEngineTest {
         }
 
         @Override protected void asyncExecuteWorkFlow(String queryId, LogicalWorkflow workflow,
-                IResultHandler resultHandler) {
+                                                      IResultHandler resultHandler) {
             queryIdSend = queryId;
             workflowSend = workflow;
             resultHandlerSend = resultHandler;
@@ -249,7 +203,7 @@ public class CommonsQueryEngineTest {
         }
 
         @Override protected void pagedExecuteWorkFlow(String queryId, LogicalWorkflow workflow,
-                IResultHandler resultHandler, int pageSize) {
+                                                      IResultHandler resultHandler, int pageSize) {
             queryIdSend = queryId;
             workflowSend = workflow;
             resultHandlerSend = resultHandler;

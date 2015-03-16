@@ -43,7 +43,6 @@ import com.stratio.crossdata.common.exceptions.ConnectorException;
 import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
 import com.stratio.crossdata.common.metadata.ColumnMetadata;
 import com.stratio.crossdata.common.metadata.ColumnType;
-import com.stratio.crossdata.common.metadata.DataType;
 import com.stratio.crossdata.common.metadata.TableMetadata;
 import com.stratio.crossdata.common.result.QueryResult;
 
@@ -80,12 +79,9 @@ public abstract class GenericQueryFT extends GenericConnectorTest {
 
         LinkedList<LogicalWorkFlowCreator.ConnectorField> fields = new LinkedList<>();
         LogicalWorkFlowCreator logicalWorkFlowCreator = new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName());
-        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_1, ALIAS_COLUMN_1, new ColumnType(DataType
-                .VARCHAR)));
-        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_2, ALIAS_COLUMN_2, new ColumnType(DataType
-                .VARCHAR)));
-        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_3, ALIAS_COLUMN_3, new ColumnType(DataType
-                .VARCHAR)));
+        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_1, ALIAS_COLUMN_1, ColumnType.VARCHAR));
+        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_2, ALIAS_COLUMN_2, ColumnType.VARCHAR));
+        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_3, ALIAS_COLUMN_3, ColumnType.VARCHAR));
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addColumnName(COLUMN_1, COLUMN_2, COLUMN_3)
                 .addSelect(fields).build();
@@ -120,11 +116,9 @@ public abstract class GenericQueryFT extends GenericConnectorTest {
 
         LinkedList<LogicalWorkFlowCreator.ConnectorField> fields = new LinkedList<>();
         LogicalWorkFlowCreator logicalWorkFlowCreator = new LogicalWorkFlowCreator(CATALOG, TABLE, getClusterName());
-        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_1, ALIAS_COLUMN_1, new ColumnType(DataType
-                .TEXT)));
-        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_2, ALIAS_COLUMN_2, new ColumnType(DataType.INT)));
-        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_3, ALIAS_COLUMN_3, new ColumnType(DataType
-                .BOOLEAN)));
+        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_1, ALIAS_COLUMN_1, ColumnType.TEXT));
+        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_2, ALIAS_COLUMN_2, ColumnType.INT));
+        fields.add(logicalWorkFlowCreator.createConnectorField(COLUMN_3, ALIAS_COLUMN_3, ColumnType.BOOLEAN));
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addColumnName(COLUMN_1, COLUMN_2, COLUMN_3)
                 .addSelect(fields).build();
@@ -146,8 +140,7 @@ public abstract class GenericQueryFT extends GenericConnectorTest {
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,
                 getClusterName().getName());
-        tableMetadataBuilder.addColumn(COLUMN_1, new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_2, new ColumnType
-                (DataType.INT)).addColumn(COLUMN_3, new ColumnType(DataType.BOOLEAN));
+        tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.INT).addColumn(COLUMN_3, ColumnType.BOOLEAN);
 
         TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper().isPKMandatory());
 
@@ -167,9 +160,9 @@ public abstract class GenericQueryFT extends GenericConnectorTest {
         assertEquals("the table name is correct", QualifiedNames.getTableQualifiedName(CATALOG, TABLE), metadata[2]
                 .getName().getTableName().toString());
 
-        assertEquals("The first column type is correct", new ColumnType(DataType.TEXT), metadata[0].getColumnType());
-        assertEquals("The second column type is correct", new ColumnType(DataType.INT), metadata[1].getColumnType());
-        assertEquals("The third column type is correct", new ColumnType(DataType.BOOLEAN), metadata[2].getColumnType());
+        assertEquals("The first column type is correct", ColumnType.TEXT, metadata[0].getColumnType());
+        assertEquals("The second column type is correct", ColumnType.INT, metadata[1].getColumnType());
+        assertEquals("The third column type is correct", ColumnType.BOOLEAN, metadata[2].getColumnType());
 
         assertEquals("The first column name is correct",
                 QualifiedNames.getColumnQualifiedName(CATALOG, TABLE, COLUMN_1), metadata[0].getName()
@@ -227,8 +220,8 @@ public abstract class GenericQueryFT extends GenericConnectorTest {
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, Table,
                 getClusterName().getName());
         tableMetadataBuilder.addColumn(COLUMN_1,
-                new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_2, new ColumnType(DataType.VARCHAR))
-                .addColumn(COLUMN_3, new ColumnType(DataType.VARCHAR));
+                ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.VARCHAR)
+                .addColumn(COLUMN_3, ColumnType.VARCHAR);
 
         TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper().isPKMandatory());
 

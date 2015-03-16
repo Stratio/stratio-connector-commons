@@ -46,7 +46,6 @@ import com.stratio.crossdata.common.exceptions.ConnectorException;
 import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
 import com.stratio.crossdata.common.metadata.ColumnMetadata;
 import com.stratio.crossdata.common.metadata.ColumnType;
-import com.stratio.crossdata.common.metadata.DataType;
 import com.stratio.crossdata.common.metadata.IndexMetadata;
 import com.stratio.crossdata.common.metadata.IndexType;
 import com.stratio.crossdata.common.metadata.TableMetadata;
@@ -161,8 +160,7 @@ public abstract class GenericNotIndexedQueryStringFilterFT extends GenericConnec
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,
                 getClusterName().getName());
-        tableMetadataBuilder.addColumn("id", new ColumnType(DataType.INT)).addColumn(COLUMN_TEXT, new ColumnType
-                (DataType.VARCHAR));
+        tableMetadataBuilder.addColumn("id", ColumnType.INT).addColumn(COLUMN_TEXT, ColumnType.VARCHAR);
         tableMetadataBuilder.addIndex(IndexType.FULL_TEXT, "indexText", COLUMN_TEXT);
         TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper().isPKMandatory());
         TableName tableName = new TableName(CATALOG, TABLE);
@@ -173,7 +171,7 @@ public abstract class GenericNotIndexedQueryStringFilterFT extends GenericConnec
             Map<ColumnName, ColumnMetadata> columns = new HashMap<>();
             Object[] parameters = null;
             columns.put(new ColumnName(tableName, COLUMN_TEXT), new ColumnMetadata(new ColumnName(tableName,
-                    COLUMN_TEXT), parameters, new ColumnType(DataType.TEXT)));
+                    COLUMN_TEXT), parameters, ColumnType.TEXT));
             IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, "indexText"), columns,
                     IndexType.FULL_TEXT, Collections.EMPTY_MAP);
             connector.getMetadataEngine().createIndex(clusterNodeName, indexMetadata);

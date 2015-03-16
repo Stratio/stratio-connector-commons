@@ -39,7 +39,6 @@ import com.stratio.crossdata.common.exceptions.ExecutionException;
 import com.stratio.crossdata.common.exceptions.UnsupportedException;
 import com.stratio.crossdata.common.metadata.ColumnMetadata;
 import com.stratio.crossdata.common.metadata.ColumnType;
-import com.stratio.crossdata.common.metadata.DataType;
 import com.stratio.crossdata.common.metadata.IndexMetadata;
 import com.stratio.crossdata.common.metadata.IndexType;
 import com.stratio.crossdata.common.statements.structures.BooleanSelector;
@@ -73,7 +72,7 @@ public abstract class GenericMetadataIndexFT extends GenericConnectorTest {
         Map<ColumnName, ColumnMetadata> columns = new HashMap<>();
         Object[] parameters = null;
         ColumnName colName = new ColumnName(tableName, "columnName_1");
-        columns.put(colName, new ColumnMetadata(colName, parameters, new ColumnType(DataType.TEXT)));
+        columns.put(colName, new ColumnMetadata(colName, parameters, ColumnType.TEXT));
         IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, INDEX_NAME), columns,
                 IndexType.DEFAULT, Collections.EMPTY_MAP);
 
@@ -81,7 +80,7 @@ public abstract class GenericMetadataIndexFT extends GenericConnectorTest {
         Map<ColumnName, ColumnMetadata> columns2 = new HashMap<>();
         Object[] parameters2 = null;
         ColumnName colName2 = new ColumnName(tableName, COLUMN_INDEX_NAME);
-        columns2.put(colName2, new ColumnMetadata(colName2, parameters2, new ColumnType(DataType.TEXT)));
+        columns2.put(colName2, new ColumnMetadata(colName2, parameters2, ColumnType.TEXT));
         IndexMetadata indexMetadata2 = new IndexMetadata(new IndexName(tableName, COLUMN_INDEX_NAME), columns2,
                 IndexType.DEFAULT, Collections.EMPTY_MAP);
 
@@ -114,7 +113,7 @@ public abstract class GenericMetadataIndexFT extends GenericConnectorTest {
         Map<ColumnName, ColumnMetadata> columns = new HashMap<>();
         Object[] parameters = null;
         ColumnName colName = new ColumnName(tableName, "columnName_1");
-        columns.put(colName, new ColumnMetadata(colName, parameters, new ColumnType(DataType.TEXT)));
+        columns.put(colName, new ColumnMetadata(colName, parameters, ColumnType.TEXT));
         IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, INDEX_NAME), columns,
                 IndexType.FULL_TEXT, Collections.EMPTY_MAP);
 
@@ -123,9 +122,9 @@ public abstract class GenericMetadataIndexFT extends GenericConnectorTest {
         Object[] parameters2 = null;
 
         columns2.put(new ColumnName(tableName, "columnName_2"), new ColumnMetadata(new ColumnName(tableName,
-                "columnName_2"), parameters2, new ColumnType(DataType.VARCHAR)));
+                "columnName_2"), parameters2, ColumnType.VARCHAR));
         columns2.put(new ColumnName(tableName, "columnName_3"), new ColumnMetadata(new ColumnName(tableName,
-                "columnName_3"), parameters2, new ColumnType(DataType.TEXT)));
+                "columnName_3"), parameters2, ColumnType.TEXT));
         IndexMetadata indexMetadata2 = new IndexMetadata(new IndexName(tableName, INDEX_NAME_2), columns2,
                 IndexType.FULL_TEXT, Collections.EMPTY_MAP);
 
@@ -167,9 +166,9 @@ public abstract class GenericMetadataIndexFT extends GenericConnectorTest {
         Map<ColumnName, ColumnMetadata> columns = new HashMap<>();
         Object[] parameters2 = null;
         columns.put(new ColumnName(tableName, "columnName_2"), new ColumnMetadata(new ColumnName(tableName,
-                "columnName_2"), parameters2, new ColumnType(DataType.VARCHAR)));
+                "columnName_2"), parameters2, ColumnType.VARCHAR));
         columns.put(new ColumnName(tableName, "columnName_2"), new ColumnMetadata(new ColumnName(tableName,
-                "columnName_3"), parameters2, new ColumnType(DataType.TEXT)));
+                "columnName_3"), parameters2, ColumnType.TEXT));
         IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, INDEX_NAME), columns,
                 IndexType.DEFAULT, Collections.EMPTY_MAP);
 
@@ -197,9 +196,9 @@ public abstract class GenericMetadataIndexFT extends GenericConnectorTest {
         Map<ColumnName, ColumnMetadata> columns = new HashMap<>();
         Object[] parameters2 = null;
         columns.put(new ColumnName(tableName, "columnName_2"), new ColumnMetadata(new ColumnName(tableName,
-                "columnName_2"), parameters2, new ColumnType(DataType.VARCHAR)));
+                "columnName_2"), parameters2, ColumnType.VARCHAR));
         columns.put(new ColumnName(tableName, "columnName_3"), new ColumnMetadata(new ColumnName(tableName,
-                "columnName_3"), parameters2, new ColumnType(DataType.TEXT)));
+                "columnName_3"), parameters2, ColumnType.TEXT));
 
         // Options
         Map<Selector, Selector> options = new HashMap<Selector, Selector>();
@@ -238,9 +237,9 @@ public abstract class GenericMetadataIndexFT extends GenericConnectorTest {
         Map<ColumnName, ColumnMetadata> columns = new HashMap<>();
         Object[] parameters2 = null;
         columns.put(new ColumnName(tableName, "columnName_2"), new ColumnMetadata(new ColumnName(tableName,
-                "columnName_2"), parameters2, new ColumnType(DataType.VARCHAR)));
+                "columnName_2"), parameters2, ColumnType.VARCHAR));
         columns.put(new ColumnName(tableName, "columnName_3"), new ColumnMetadata(new ColumnName(tableName,
-                "columnName_3"), parameters2, new ColumnType(DataType.TEXT)));
+                "columnName_3"), parameters2, ColumnType.TEXT));
         IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, INDEX_NAME), columns,
                 IndexType.DEFAULT, Collections.EMPTY_MAP);
 
@@ -273,7 +272,7 @@ public abstract class GenericMetadataIndexFT extends GenericConnectorTest {
         Map<ColumnName, ColumnMetadata> columns = new HashMap<>();
         Object[] parameters = null;
         columns.put(new ColumnName(tableName, "columnName_1"), new ColumnMetadata(new ColumnName(tableName,
-                "columnName_1"), parameters, new ColumnType(DataType.TEXT)));
+                "columnName_1"), parameters, ColumnType.TEXT));
         IndexMetadata indexMetadata = new IndexMetadata(new IndexName(tableName, INDEX_NAME), columns,
                 IndexType.DEFAULT, Collections.EMPTY_MAP);
 
@@ -286,7 +285,7 @@ public abstract class GenericMetadataIndexFT extends GenericConnectorTest {
         Map<ColumnName, ColumnMetadata> columns2 = new HashMap<>();
         Object[] parameters2 = null;
         columns2.put(new ColumnName(tableName, "columnName_2"), new ColumnMetadata(new ColumnName(tableName,
-                "columnName_2"), parameters2, new ColumnType(DataType.VARCHAR)));
+                "columnName_2"), parameters2, ColumnType.VARCHAR));
         IndexMetadata indexMetadata2 = new IndexMetadata(new IndexName(tableName, INDEX_NAME_2), columns2,
                 IndexType.FULL_TEXT, Collections.EMPTY_MAP);
 

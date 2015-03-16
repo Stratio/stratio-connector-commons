@@ -22,13 +22,13 @@ import com.stratio.crossdata.common.data.ResultSet;
 import com.stratio.crossdata.common.exceptions.ConnectorException;
 import com.stratio.crossdata.common.result.QueryResult;
 
-/** 
-* CommonsSqlEngine Tester. 
-* 
-* @author <Authors name> 
-* @since <pre>feb 23, 2015</pre> 
-* @version 1.0 
-*/
+/**
+ * CommonsSqlEngine Tester.
+ *
+ * @author <Authors name>
+ * @since <pre>feb 23, 2015</pre>
+ * @version 1.0
+ */
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(QueryResult.class)
@@ -37,12 +37,12 @@ public class CommonsSqlEngineTest {
     private static final java.lang.Integer RESULT_SIZE = 10;
     private String queryIdSend;
     private String sqlQuerySend;
-    CommonsSqlEngineStub commonsSqlEngineStub;
     private IResultHandler resultHandlerSend;
     private boolean pagedExecuteAsyncExecute;
     private int pageSizeExecute;
 
-    @Mock ConnectionHandler connectionHandler;
+    @Mock
+    ConnectionHandler connectionHandler;
     private boolean executeWorkFlow;
     private boolean executeAsyncExecute;
 
@@ -58,143 +58,53 @@ public class CommonsSqlEngineTest {
         queryIdSend = "";
         executeAsyncExecute = false;
 
+    }
 
-        commonsSqlEngineStub = new CommonsSqlEngineStub(connectionHandler);
-} 
+    @After
+    public void after() throws Exception {
+    }
 
-@After
-public void after() throws Exception { 
-} 
 
-/** 
-* 
-* Method: execute(String sqlQuery) 
-* 
-*/ 
-@Test
-public void testExecute() throws Exception {
-    String sql = "SQL";
-    commonsSqlEngineStub.execute(sql);
-
-    assertTrue("executeWorkFlow is executed", executeWorkFlow);
-    assertEquals("The sql must be correct", sqlQuerySend, sql);
-}
-
+    /**
+     * Method: asyncExecute(String queryId, String sqlQuery, IResultHandler resultHandler)
+     */
     @Test
-    public void testExecuteLog() throws ConnectorException {
-        String sql = "SQL";
-
-
-        Logger logger = mock(Logger.class);
-        Whitebox.setInternalState(commonsSqlEngineStub, "logger", logger);
-
-
-        when(logger.isDebugEnabled()).thenReturn(true);
-
-        QueryResult result =  (QueryResult)commonsSqlEngineStub.execute(sql);
-
-
-
-        verify(logger).debug("Executing SQL [" + sql + "]");
-        verify(logger).debug( "The result form the query [" + sql + "] has returned [" + result.getResultSet().size() + "] "
-                + "rows");
-
+    public void testAsyncExecute() throws Exception {
+//TODO: Test goes here... 
     }
 
-/** 
-* 
-* Method: asyncExecute(String queryId, String sqlQuery, IResultHandler resultHandler) 
-* 
-*/ 
-@Test
-public void testAsyncExecute() throws Exception { 
+    /**
+     * Method: pagedExecute(String queryId, String sqlQuery, IResultHandler resultHandler, int pageSize)
+     */
+    @Test
+    public void testPagedExecute() throws Exception {
 //TODO: Test goes here... 
-} 
+    }
 
-/** 
-* 
-* Method: pagedExecute(String queryId, String sqlQuery, IResultHandler resultHandler, int pageSize) 
-* 
-*/ 
-@Test
-public void testPagedExecute() throws Exception { 
+    /**
+     * Method: pagedExecuteSQL(String queryId, String sqlQuery, IResultHandler resultHandler, int
+     * pageSize)
+     */
+    @Test
+    public void testPagedExecuteSQL() throws Exception {
 //TODO: Test goes here... 
-} 
+    }
 
-/** 
-* 
-* Method: pagedExecuteSQL(String queryId, String sqlQuery, IResultHandler resultHandler, int
-            pageSize) 
-* 
-*/ 
-@Test
-public void testPagedExecuteSQL() throws Exception { 
+    /**
+     * Method: asyncExecuteSQL(String queryId, String sqlQuery, IResultHandler resultHandler)
+     */
+    @Test
+    public void testAsyncExecuteSQL() throws Exception {
 //TODO: Test goes here... 
-} 
+    }
 
-/** 
-* 
-* Method: asyncExecuteSQL(String queryId, String sqlQuery, IResultHandler resultHandler) 
-* 
-*/ 
-@Test
-public void testAsyncExecuteSQL() throws Exception { 
+    /**
+     * Method: executeSQL(String sqlQuery)
+     */
+    @Test
+    public void testExecuteSQL() throws Exception {
 //TODO: Test goes here... 
-} 
+    }
 
-/** 
-* 
-* Method: executeSQL(String sqlQuery) 
-* 
-*/ 
-@Test
-public void testExecuteSQL() throws Exception { 
-//TODO: Test goes here... 
+
 }
-
-
-    class CommonsSqlEngineStub extends CommonsSqlEngine {
-
-
-        /**
-         * Constructor.
-         *
-         * @param connectionHandler the connector handler.
-         */
-        protected CommonsSqlEngineStub(ConnectionHandler connectionHandler) {
-            super(connectionHandler);
-        }
-
-
-        @Override protected void pagedExecuteSQL(String queryId, String sqlQuery, IResultHandler resultHandler,
-                int pageSize) throws ConnectorException {
-            queryIdSend = queryId;
-            sqlQuerySend = sqlQuery;
-            resultHandlerSend = resultHandler;
-            pagedExecuteAsyncExecute = true;
-            pageSizeExecute = pageSize;
-
-
-        }
-
-        @Override protected void asyncExecuteSQL(String queryId, String sqlQuery, IResultHandler resultHandler)
-                throws ConnectorException {
-            queryIdSend = queryId;
-            sqlQuerySend = sqlQuery;
-            resultHandlerSend = resultHandler;
-            executeAsyncExecute = true;
-        }
-
-        @Override protected QueryResult executeSQL(String sqlQuery) throws ConnectorException {
-            sqlQuerySend = sqlQuery;
-            executeWorkFlow = true;
-            ResultSet resultSet = mock(ResultSet.class);
-            when(resultSet.size()).thenReturn(RESULT_SIZE);
-            QueryResult queryResult = mock(QueryResult.class);
-
-            when(queryResult.getResultSet()).thenReturn(resultSet);
-            return queryResult;
-        }
-    }
-
-} 

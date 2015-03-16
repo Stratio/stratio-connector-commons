@@ -13,7 +13,6 @@ import com.stratio.crossdata.common.data.ClusterName;
 import com.stratio.crossdata.common.data.Row;
 import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
 import com.stratio.crossdata.common.metadata.ColumnType;
-import com.stratio.crossdata.common.metadata.DataType;
 
 public class EficiencyBean implements Serializable {
 
@@ -29,13 +28,13 @@ public class EficiencyBean implements Serializable {
 
 
     static {
-        columns.put(COLUMN_PK, new ColumnType(DataType.BIGINT));
-        columns.put(COLUMN_NAME, new ColumnType(DataType.TEXT));
-        columns.put(COLUMN_MARRIED_MARRIED, new ColumnType(DataType.BOOLEAN));
-        columns.put(COLUMN_COUNTRY, new ColumnType(DataType.TEXT));
-        columns.put(COLUMN_DANTE_LINE, new ColumnType(DataType.VARCHAR));
-        columns.put(COLUMN_AGE, new ColumnType(DataType.INT));
-        columns.put(COLUMN_RANDOM_KEY, new ColumnType(DataType.VARCHAR));
+        columns.put(COLUMN_PK, ColumnType.BIGINT);
+        columns.put(COLUMN_NAME, ColumnType.TEXT);
+        columns.put(COLUMN_MARRIED_MARRIED, ColumnType.BOOLEAN);
+        columns.put(COLUMN_COUNTRY, ColumnType.TEXT);
+        columns.put(COLUMN_DANTE_LINE, ColumnType.VARCHAR);
+        columns.put(COLUMN_AGE, ColumnType.INT);
+        columns.put(COLUMN_RANDOM_KEY, ColumnType.VARCHAR);
 
     }
     private final String separator = "%";

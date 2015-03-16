@@ -34,7 +34,6 @@ import com.stratio.crossdata.common.data.Row;
 import com.stratio.crossdata.common.exceptions.ConnectorException;
 import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
 import com.stratio.crossdata.common.metadata.ColumnType;
-import com.stratio.crossdata.common.metadata.DataType;
 import com.stratio.crossdata.common.metadata.TableMetadata;
 import com.stratio.crossdata.common.result.QueryResult;
 
@@ -84,8 +83,8 @@ public abstract class GenericLimitFT extends GenericConnectorTest {
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,
                 getClusterName().getName());
         tableMetadataBuilder.addColumn(COLUMN_TEXT,
-                new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_AGE, new ColumnType(DataType.INT))
-                .addColumn(COLUMN_MONEY, new ColumnType(DataType.INT));
+                ColumnType.VARCHAR).addColumn(COLUMN_AGE, ColumnType.INT)
+                .addColumn(COLUMN_MONEY, ColumnType.INT);
 
         TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper().isPKMandatory());
 

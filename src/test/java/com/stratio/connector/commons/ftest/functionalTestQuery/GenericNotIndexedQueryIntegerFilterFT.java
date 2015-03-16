@@ -48,7 +48,6 @@ import com.stratio.crossdata.common.data.Row;
 import com.stratio.crossdata.common.exceptions.ConnectorException;
 import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
 import com.stratio.crossdata.common.metadata.ColumnType;
-import com.stratio.crossdata.common.metadata.DataType;
 import com.stratio.crossdata.common.metadata.TableMetadata;
 import com.stratio.crossdata.common.result.QueryResult;
 
@@ -114,16 +113,11 @@ public abstract class GenericNotIndexedQueryIntegerFilterFT extends GenericConne
         refresh(CATALOG);
 
         LinkedList<LogicalWorkFlowCreator.ConnectorField> conectorList = new LinkedList();
-        conectorList.add(logicalWorkFlowCreator.createConnectorField(COLUMN_1, COLUMN_1, new ColumnType(DataType
-                .TEXT)));
-        conectorList.add(logicalWorkFlowCreator.createConnectorField(COLUMN_2, COLUMN_2, new ColumnType(DataType
-                .TEXT)));
-        conectorList.add(logicalWorkFlowCreator.createConnectorField(COLUMN_3, COLUMN_3, new ColumnType
-                (DataType.TEXT)));
-        conectorList.add(logicalWorkFlowCreator.createConnectorField(COLUMN_AGE, COLUMN_AGE, new ColumnType
-                (DataType.INT)));
-        conectorList.add(logicalWorkFlowCreator.createConnectorField(COLUMN_MONEY, COLUMN_MONEY, new ColumnType(
-                DataType.INT)));
+        conectorList.add(logicalWorkFlowCreator.createConnectorField(COLUMN_1, COLUMN_1, ColumnType.TEXT));
+        conectorList.add(logicalWorkFlowCreator.createConnectorField(COLUMN_2, COLUMN_2, ColumnType.TEXT));
+        conectorList.add(logicalWorkFlowCreator.createConnectorField(COLUMN_3, COLUMN_3, ColumnType.TEXT));
+        conectorList.add(logicalWorkFlowCreator.createConnectorField(COLUMN_AGE, COLUMN_AGE, ColumnType.INT));
+        conectorList.add(logicalWorkFlowCreator.createConnectorField(COLUMN_MONEY, COLUMN_MONEY, ColumnType.INT));
 
         logicalWorkFlowCreator.addSelect(conectorList);
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns()
@@ -439,13 +433,12 @@ public abstract class GenericNotIndexedQueryIntegerFilterFT extends GenericConne
         cells.put(COLUMN_MONEY, new Cell(money));
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE, clusterNodeName.getName());
-        tableMetadataBuilder.addColumn(COLUMN_1, new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_2, new ColumnType
-                (DataType.VARCHAR))
-                .addColumn(COLUMN_3, new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_AGE, new ColumnType(DataType
-                .INT))
-                .addColumn(COLUMN_MONEY, new ColumnType(DataType.INT));
+        tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR).addColumn(COLUMN_2, ColumnType.VARCHAR)
+                .addColumn(COLUMN_3, ColumnType.VARCHAR).addColumn(COLUMN_AGE, ColumnType
+                .INT)
+                .addColumn(COLUMN_MONEY, ColumnType.INT);
         if (withPk) {
-            tableMetadataBuilder.addColumn(COLUMN_KEY, new ColumnType(DataType.INT)).withPartitionKey(COLUMN_KEY);
+            tableMetadataBuilder.addColumn(COLUMN_KEY, ColumnType.INT).withPartitionKey(COLUMN_KEY);
         }
 
         TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper().isPKMandatory());

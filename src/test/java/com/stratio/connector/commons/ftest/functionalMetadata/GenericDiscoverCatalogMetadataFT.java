@@ -41,7 +41,6 @@ import com.stratio.crossdata.common.exceptions.ConnectorException;
 import com.stratio.crossdata.common.exceptions.UnsupportedException;
 import com.stratio.crossdata.common.metadata.CatalogMetadata;
 import com.stratio.crossdata.common.metadata.ColumnType;
-import com.stratio.crossdata.common.metadata.DataType;
 import com.stratio.crossdata.common.metadata.IndexMetadata;
 import com.stratio.crossdata.common.metadata.IndexType;
 import com.stratio.crossdata.common.metadata.TableMetadata;
@@ -204,14 +203,14 @@ public abstract class GenericDiscoverCatalogMetadataFT extends GenericConnectorT
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,
                 getClusterName().getName());
 
-        tableMetadataBuilder.addColumn(COLUMN_1, new ColumnType(DataType.INT)).addColumn(COLUMN_2,
-                new ColumnType(DataType.TEXT));
+        tableMetadataBuilder.addColumn(COLUMN_1, ColumnType.INT).addColumn(COLUMN_2,
+                ColumnType.TEXT);
         tableMetadataBuilder.withPartitionKey(COLUMN_1);
 
         IndexMetadataBuilder indexMetadataBuilder = new IndexMetadataBuilder(CATALOG, TABLE, INDEX_NAME,
                 IndexType.DEFAULT);
-        indexMetadataBuilder.addColumn(COLUMN_1, new ColumnType(DataType.VARCHAR));
-        indexMetadataBuilder.addColumn(COLUMN_2, new ColumnType(DataType.TEXT));
+        indexMetadataBuilder.addColumn(COLUMN_1, ColumnType.VARCHAR);
+        indexMetadataBuilder.addColumn(COLUMN_2, ColumnType.TEXT);
 
         IndexMetadata indexMetadata = indexMetadataBuilder.build();
 
@@ -226,7 +225,7 @@ public abstract class GenericDiscoverCatalogMetadataFT extends GenericConnectorT
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, SECOND_TABLE, getClusterName()
                 .getName());
 
-        tableMetadataBuilder.addColumn(SECOND_TABLE_COLUMN, new ColumnType(DataType.INT));
+        tableMetadataBuilder.addColumn(SECOND_TABLE_COLUMN, ColumnType.INT);
         tableMetadataBuilder.withPartitionKey(SECOND_TABLE_COLUMN);
 
         return tableMetadataBuilder.build();

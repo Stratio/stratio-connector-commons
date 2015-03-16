@@ -36,7 +36,6 @@ import com.stratio.crossdata.common.exceptions.ConnectorException;
 import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
 import com.stratio.crossdata.common.metadata.ColumnMetadata;
 import com.stratio.crossdata.common.metadata.ColumnType;
-import com.stratio.crossdata.common.metadata.DataType;
 import com.stratio.crossdata.common.metadata.IndexMetadata;
 import com.stratio.crossdata.common.metadata.IndexType;
 import com.stratio.crossdata.common.metadata.TableMetadata;
@@ -63,10 +62,10 @@ public abstract class ExampleWorkflowsFT extends GenericConnectorTest {
 
             TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,
                     getClusterName().getName());
-            tableMetadataBuilder.addColumn(ExampleWorkflows.COLUMN_ID, new ColumnType(DataType.INT))
-                    .addColumn(ExampleWorkflows.COLUMN_NAME, new ColumnType(DataType.VARCHAR))
-                    .addColumn(ExampleWorkflows.COLUMN_AGE, new ColumnType(DataType.INT))
-                    .addColumn(ExampleWorkflows.COLUMN_BOOL, new ColumnType(DataType.BOOLEAN))
+            tableMetadataBuilder.addColumn(ExampleWorkflows.COLUMN_ID, ColumnType.INT)
+                    .addColumn(ExampleWorkflows.COLUMN_NAME, ColumnType.VARCHAR)
+                    .addColumn(ExampleWorkflows.COLUMN_AGE, ColumnType.INT)
+                    .addColumn(ExampleWorkflows.COLUMN_BOOL, ColumnType.BOOLEAN)
                     .withPartitionKey(ExampleWorkflows.COLUMN_ID);
 
             TableMetadata targetTable = tableMetadataBuilder.build(getConnectorHelper().isPKMandatory());
@@ -80,7 +79,7 @@ public abstract class ExampleWorkflowsFT extends GenericConnectorTest {
             if (getConnectorHelper().isIndexMandatory()) {
                 Map<ColumnName, ColumnMetadata> columns = new LinkedHashMap<>();
                 ColumnName columnName = new ColumnName(CATALOG, TABLE, ExampleWorkflows.COLUMN_NAME);
-                columns.put(columnName, new ColumnMetadata(columnName, null, new ColumnType(DataType.VARCHAR)));
+                columns.put(columnName, new ColumnMetadata(columnName, null, ColumnType.VARCHAR));
                 IndexMetadata indexMetadata = new IndexMetadata(new IndexName(CATALOG, TABLE, "IndexTest"
                         + this.getClass().getName() + "SelectIndexedField"), columns, IndexType.DEFAULT, null);
 

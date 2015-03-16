@@ -38,7 +38,6 @@ import com.stratio.crossdata.common.exceptions.ConnectorException;
 import com.stratio.crossdata.common.exceptions.ValidationException;
 import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
 import com.stratio.crossdata.common.metadata.ColumnType;
-import com.stratio.crossdata.common.metadata.DataType;
 import com.stratio.crossdata.common.metadata.TableMetadata;
 import com.stratio.crossdata.common.result.QueryResult;
 
@@ -96,10 +95,10 @@ public abstract class GenericBulkInsertFT extends GenericConnectorTest {
 
         TableMetadataBuilder tableMetadataBuilder = new TableMetadataBuilder(CATALOG, TABLE,
                 getClusterName().getName());
-        tableMetadataBuilder.addColumn(COLUMN_KEY, new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_1,
-                new ColumnType(DataType.VARCHAR))
+        tableMetadataBuilder.addColumn(COLUMN_KEY, ColumnType.VARCHAR).addColumn(COLUMN_1,
+                ColumnType.VARCHAR)
                 .addColumn(COLUMN_2,
-                        new ColumnType(DataType.VARCHAR)).addColumn(COLUMN_3, new ColumnType(DataType.VARCHAR));
+                        ColumnType.VARCHAR).addColumn(COLUMN_3, ColumnType.VARCHAR);
         if (withPK) {
             tableMetadataBuilder.withPartitionKey(COLUMN_1);
         }
