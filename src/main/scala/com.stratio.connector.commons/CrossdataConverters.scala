@@ -18,16 +18,17 @@
 
 package com.stratio.connector.commons
 
-import java.io.Serializable
-import java.util
+import com.stratio.connector.hdfs.scala.connection.HDFSConnector
+import com.stratio.crossdata.common.exceptions.UnsupportedException
 
 import scala.language.implicitConversions
 import scala.collection.mutable.ArrayBuffer
 import org.apache.spark.sql.catalyst.expressions.GenericRow
-import org.apache.spark.sql.catalyst.types.{ArrayType, DataType, StructType}
+import org.apache.spark.sql.catalyst.types._
 import org.apache.spark.sql.{Row => SparkSQLRow, SchemaRDD}
-import com.stratio.crossdata.common.metadata.{ColumnMetadata, ColumnType}
+import com.stratio.crossdata.common.metadata.{TableMetadata, ColumnMetadata, ColumnType}
 import com.stratio.crossdata.common.data.{Row => XDRow, Cell, ResultSet}
+import com.stratio.crossdata.common.metadata.DataType
 
 object CrossdataConverters {
 
@@ -95,6 +96,29 @@ object CrossdataConverters {
     }.toArray[Any])
   }
 
+  def toStructType(tableMetadata:TableMetadata):StructType ={
+    val fields = tableMetadata.getColumns.toMap
+    val structType = new StructType(
+      fields.map{
+        case(columnName, columnMetadata) =>
+          new StructField(
+            columnName.getName,
+            columnMetadata.getColumnType.getDataType match{
+              case DataType.BIGINT => LongType
+              case DataType.BOOLEAN => BooleanType
+              case DataType.DOUBLE => DoubleType
+              case DataType.FLOAT => FloatType
+              case DataType.INT => IntegerType
+              case DataType.TEXT => StringType
+              case DataType.VARCHAR => StringType
+              //TODO: throw UnsupportedException
+              //case _ => UnsupportedException("Type not supported")
+            }
+          )
+      }.toSeq
+    )
+    structType
+  }
   /**
    * Convert some undefined value into Crossdata cell
    * @param value Given value to be converted to cell
