@@ -20,6 +20,7 @@
 package com.stratio.connector.commons
 
 import org.slf4j.Logger
+import com.codahale.metrics.{Timer, MetricRegistry}
 
 object timer {
 
@@ -40,17 +41,20 @@ object timer {
     t
   }
 
-  implicit class stringChronoHelper(desc: => String) {
-    def apply[T](f: => T)(implicit logger: Logger) =
-      time(desc)(f)(logger)
-  }
-
-  implicit class timeHelper[T](f: => T) {
-    def \\(desc: String)(implicit logger: Logger) =
-      time(desc)(f)(logger)
-  }
-
   def time[T](f: => T)(implicit logger: Logger): T =
     time(java.util.UUID.randomUUID().toString)(f)(logger)
+
+  def timeFor[T, U](timerName: String)(f: => T)(
+    implicit metricRegistry: MetricRegistry,logger: Logger) = {
+    import scala.collection.JavaConversions._
+    val timer = metricRegistry.getTimers.toMap.getOrElse(timerName, {
+      val newTimer = new Timer()
+      metricRegistry.register(timerName, newTimer)
+    })
+    val before = timer.time()
+    val t = f
+    val after = before.stop()
+    logger.debug( s"""[millis: $after] $timerName""")
+  }
 
 }
