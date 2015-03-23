@@ -132,7 +132,7 @@ public abstract class SingleProjectQueryEngine<T> extends CommonsQueryEngine {
      * @throws UnsupportedException if an operation is not supported.
      * @throws ExecutionException   if a error happens.
      */
-    protected abstract void asyncExecute(String queryId, Project project, Connection connection, IResultHandler resultHandler);
+    protected abstract void asyncExecute(String queryId, Project project, Connection connection, IResultHandler resultHandler) throws ConnectorException;
 
 
 
@@ -147,7 +147,7 @@ public abstract class SingleProjectQueryEngine<T> extends CommonsQueryEngine {
      * @throws UnsupportedException if an operation is not supported.
      * @throws ExecutionException   if a error happens.
      */
-    protected abstract void pagedExecute(String queryId, Project project, Connection connection, IResultHandler resultHandler);
+    protected abstract void pagedExecute(String queryId, Project project, Connection connection, IResultHandler resultHandler) throws ConnectorException;
 
 
     /**
