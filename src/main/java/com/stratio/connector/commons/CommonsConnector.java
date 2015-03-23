@@ -52,7 +52,7 @@ public abstract class CommonsConnector implements IConnector {
      * @throws ConnectionException if the connection fail.
      */
     @Override
-    public final void connect(ICredentials credentials, ConnectorClusterConfig config) throws ConnectionException {
+    public  void connect(ICredentials credentials, ConnectorClusterConfig config) throws ConnectionException {
         logger.info("Connecting connector [" + getConnectorName() + "]");
         connectionHandler.createConnection(credentials, config);
 
@@ -64,7 +64,7 @@ public abstract class CommonsConnector implements IConnector {
      * @param clusterName the connection identifier.
      */
     @Override
-    public final void close(ClusterName clusterName) {
+    public void close(ClusterName clusterName) {
         logger.info("Close connection to cluster [" + clusterName + "] from connector [" + getConnectorName() + "]");
         connectionHandler.closeConnection(clusterName.getName());
 
@@ -76,7 +76,7 @@ public abstract class CommonsConnector implements IConnector {
      * @throws ExecutionException if an error happens.
      */
     @Override
-    public final void shutdown() throws ExecutionException {
+    public void shutdown() throws ExecutionException {
         logger.info("shutting down connector [" + getConnectorName() + "]");
         connectionHandler.closeAllConnections();
 
