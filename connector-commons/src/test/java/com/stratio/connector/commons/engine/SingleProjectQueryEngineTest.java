@@ -51,7 +51,7 @@ public class SingleProjectQueryEngineTest {
 
     UniqueProjectQueryEngineStub uniqueProjectQueryEngineStub;
     private String queryIdSend;
-    private LogicalWorkflow workflowSend;
+    private Project workflowSend;
     private IResultHandler resultHandlerSend;
     private boolean executeAsyncExecute;
     private boolean executeStop;
@@ -134,20 +134,20 @@ public class SingleProjectQueryEngineTest {
         }
 
         @Override
-        public void asyncExecute(String queryId, LogicalWorkflow workflow, IResultHandler resultHandler)
+        public void asyncExecute(String queryId, Project project, Connection connection, IResultHandler resultHandler)
                 throws ConnectorException {
             queryIdSend = queryId;
-            workflowSend = workflow;
+            workflowSend = project;
             resultHandlerSend = resultHandler;
             executeAsyncExecute = true;
 
         }
 
-        @Override protected void asyncExecute(String queryId,Project project, Connection connection, IResultHandler resultHandler) {
 
-        }
+  
 
         @Override protected void pagedExecute(String queryId,Project project, Connection connection, IResultHandler resultHandler) {
+
 
         }
 
@@ -167,6 +167,7 @@ public class SingleProjectQueryEngineTest {
 
             return null;
         }
+
 
     }
 

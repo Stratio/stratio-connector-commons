@@ -109,11 +109,12 @@ html_theme = 'stratio'
 html_theme_options = {
 'versions' : ['0.5.0-SNAPSHOT'],
 'github' : 'https://github.com/Stratio/stratio-connector-commons.git',
+'jira' : 'https://github.com/Stratio/stratio-connector-commons/issues',
 'module_name' : 'connector-commons'
 }
 
 # Add any paths that contain custom themes here, relative to this directory.
-#html_theme_path = []
+html_theme_path = ['_themes']
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".

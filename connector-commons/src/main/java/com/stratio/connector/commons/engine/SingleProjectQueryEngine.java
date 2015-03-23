@@ -74,7 +74,6 @@ public abstract class SingleProjectQueryEngine<T> extends CommonsQueryEngine {
             resultHandler)  throws ConnectorException{
         checkIsSupported(workflow);
         ClusterName clusterName = ((Project) workflow.getInitialSteps().get(0)).getClusterName();
-
         asyncExecute(queryId,(Project) workflow.getInitialSteps().get(0),
                 connectionHandler.getConnection(clusterName.getName()), resultHandler);
     }
@@ -98,8 +97,7 @@ public abstract class SingleProjectQueryEngine<T> extends CommonsQueryEngine {
 
         checkIsSupported(workflow);
         ClusterName clusterName = ((Project) workflow.getInitialSteps().get(0)).getClusterName();
-
-        pagedExecute(queryId,(Project) workflow.getInitialSteps().get(0),
+         pagedExecute(queryId,(Project) workflow.getInitialSteps().get(0),
                 connectionHandler.getConnection(clusterName.getName()), resultHandler);
     }
 
@@ -132,6 +130,7 @@ public abstract class SingleProjectQueryEngine<T> extends CommonsQueryEngine {
      * @throws UnsupportedException if an operation is not supported.
      * @throws ExecutionException   if a error happens.
      */
+
     protected abstract void asyncExecute(String queryId, Project project, Connection connection, IResultHandler resultHandler) throws ConnectorException;
 
 
@@ -147,7 +146,9 @@ public abstract class SingleProjectQueryEngine<T> extends CommonsQueryEngine {
      * @throws UnsupportedException if an operation is not supported.
      * @throws ExecutionException   if a error happens.
      */
+
     protected abstract void pagedExecute(String queryId, Project project, Connection connection, IResultHandler resultHandler) throws ConnectorException;
+
 
 
     /**
