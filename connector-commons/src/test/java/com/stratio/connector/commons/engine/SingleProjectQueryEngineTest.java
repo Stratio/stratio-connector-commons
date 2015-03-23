@@ -143,11 +143,11 @@ public class SingleProjectQueryEngineTest {
 
         }
 
-        @Override protected void asyncExecute(Project project, Connection connection, IResultHandler resultHandler) {
+        @Override protected void asyncExecute(String queryId,Project project, Connection connection, IResultHandler resultHandler) {
 
         }
 
-        @Override protected void pagedExecute(Project project, Connection connection, IResultHandler resultHandler) {
+        @Override protected void pagedExecute(String queryId,Project project, Connection connection, IResultHandler resultHandler) {
 
         }
 
