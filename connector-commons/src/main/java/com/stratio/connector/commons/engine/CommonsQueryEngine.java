@@ -66,7 +66,7 @@ public abstract class CommonsQueryEngine implements IQueryEngine {
      *
      * @throws ConnectorException if a error happens.
      */
-    @Override public void asyncExecute(String queryId, LogicalWorkflow workflow, IResultHandler resultHandler)
+    @Override public final void asyncExecute(String queryId, LogicalWorkflow workflow, IResultHandler resultHandler)
             throws ConnectorException {
         Long time = null;
         try {
@@ -106,7 +106,7 @@ public abstract class CommonsQueryEngine implements IQueryEngine {
      *
      * @throws ConnectorException if a error happens.
      */
-    @Override public void pagedExecute(String queryId, LogicalWorkflow workflow, IResultHandler resultHandler,
+    @Override public final void pagedExecute(String queryId, LogicalWorkflow workflow, IResultHandler resultHandler,
             int pageSize) throws ConnectorException {
         Long time = null;
         try {

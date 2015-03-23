@@ -19,6 +19,7 @@ package com.stratio.connector.commons.engine;
 
 import com.stratio.connector.commons.connection.Connection;
 import com.stratio.connector.commons.connection.ConnectionHandler;
+import com.stratio.crossdata.common.connector.IResultHandler;
 import com.stratio.crossdata.common.data.ClusterName;
 import com.stratio.crossdata.common.exceptions.ConnectorException;
 import com.stratio.crossdata.common.exceptions.ExecutionException;
@@ -61,15 +62,93 @@ public abstract class SingleProjectQueryEngine<T> extends CommonsQueryEngine {
     }
 
     /**
-     * Abstract method which must be implemented by the concrete database metadataEngine to execute a workflow with only
+     * Abstract method which must be implemented by the concrete database metadataEngine to execute a async workflow.
+     *
+     * @param queryId the queryId.
+     * @param workflow the workflow.
+     * @param resultHandler the result handler.
+     *
+     * @throws ConnectorException if an error happens.
+     */
+    protected final void asyncExecuteWorkFlow(String queryId, LogicalWorkflow workflow, IResultHandler
+            resultHandler)  throws ConnectorException{
+        checkIsSupported(workflow);
+        ClusterName clusterName = ((Project) workflow.getInitialSteps().get(0)).getClusterName();
+
+        asyncExecute(queryId,(Project) workflow.getInitialSteps().get(0),
+                connectionHandler.getConnection(clusterName.getName()), resultHandler);
+    }
+
+
+
+
+    /**
+     * Abstract method which must be implemented by the concrete database metadataEngine to execute a async and paged
+     * workflow.
+     *
+     * @param queryId the queryId.
+     * @param workflow the workflow.
+     * @param resultHandler the result handler.
+     *
+     * @param pageSize
+     * @throws ConnectorException if an error happens.
+     */
+    protected final void pagedExecuteWorkFlow(String queryId, LogicalWorkflow workflow, IResultHandler resultHandler,
+                                                 int pageSize)  throws ConnectorException{
+
+        checkIsSupported(workflow);
+        ClusterName clusterName = ((Project) workflow.getInitialSteps().get(0)).getClusterName();
+
+        pagedExecute(queryId,(Project) workflow.getInitialSteps().get(0),
+                connectionHandler.getConnection(clusterName.getName()), resultHandler);
+    }
+
+
+
+
+
+
+
+    /**
+     * Abstract method which must be implemented by the concrete database metadataEngine to execute a project with only
      * a project.
      *
-     * @param workflow   the workflow.
+     * @param project   the project.
      * @param connection the connection to the database.
      * @throws UnsupportedException if an operation is not supported.
      * @throws ExecutionException   if a error happens.
      */
-    protected abstract QueryResult execute(Project workflow, Connection<T> connection) throws ConnectorException;
+    protected abstract QueryResult execute(Project project, Connection<T> connection) throws ConnectorException;
+
+
+    /**
+     * Abstract method which must be implemented by the concrete database metadataEngine to execute a  async workflow with only
+     * a project.
+     *
+     *
+     * @param queryId
+     * @param project   the project.
+     * @param connection the connection to the database.
+     * @throws UnsupportedException if an operation is not supported.
+     * @throws ExecutionException   if a error happens.
+     */
+    protected abstract void asyncExecute(String queryId, Project project, Connection connection, IResultHandler resultHandler) throws ConnectorException;;
+
+
+
+    /**
+     * Abstract method which must be implemented by the concrete database metadataEngine to execute a  paged workflow with only
+     * a project.
+     *
+     *
+     * @param queryId
+     * @param project   the project.
+     * @param connection the connection to the database.
+     * @throws UnsupportedException if an operation is not supported.
+     * @throws ExecutionException   if a error happens.
+     */
+    protected abstract void pagedExecute(String queryId, Project project, Connection connection, IResultHandler resultHandler) throws ConnectorException;
+
 
     /**
      * Check if the workflow is supported.
