@@ -144,7 +144,9 @@ public class SingleProjectQueryEngineTest {
         }
 
 
-        @Override protected void pagedExecute(String queryId,Project project, Connection connection, IResultHandler resultHandler)  {
+
+        @Override protected void pagedExecute(String queryId,Project project, Connection connection, IResultHandler resultHandler) {
+
 
         }
 
@@ -155,10 +157,10 @@ public class SingleProjectQueryEngineTest {
         }
 
         @Override
-        protected QueryResult execute(Project workflow, Connection connection) throws UnsupportedException,
+        protected QueryResult execute(Project project, Connection connection) throws UnsupportedException,
                 ExecutionException {
 
-            projectSend = workflow;
+            projectSend = project;
             connectionSend = connection;
             executeExecute = true;
 

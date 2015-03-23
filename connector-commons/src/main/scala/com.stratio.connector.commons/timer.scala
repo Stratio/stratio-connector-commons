@@ -45,7 +45,7 @@ object timer {
     time(java.util.UUID.randomUUID().toString)(f)(logger)
 
   def timeFor[T, U](timerName: String)(f: => T)(
-    implicit metricRegistry: MetricRegistry,logger: Logger) = {
+    implicit metricRegistry: MetricRegistry,logger: Logger): T = {
     import scala.collection.JavaConversions._
     val timer = metricRegistry.getTimers.toMap.getOrElse(timerName, {
       val newTimer = new Timer()
@@ -55,6 +55,7 @@ object timer {
     val t = f
     val after = before.stop()
     logger.debug( s"""[millis: $after] $timerName""")
+    t
   }
 
 }

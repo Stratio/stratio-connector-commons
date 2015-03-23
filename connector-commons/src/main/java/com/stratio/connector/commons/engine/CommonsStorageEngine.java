@@ -135,7 +135,7 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
      * @throws UnsupportedException
      */
     @Override
-    public void update(ClusterName targetCluster, TableName tableName, Collection<Relation> assignments,
+    public final void update(ClusterName targetCluster, TableName tableName, Collection<Relation> assignments,
 
             Collection<Filter> whereClauses) throws UnsupportedException, ExecutionException {
 
@@ -165,7 +165,7 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
      * @throws UnsupportedException
      */
     @Override
-    public void delete(ClusterName targetCluster, TableName tableName, Collection<Filter> whereClauses)
+    public final void delete(ClusterName targetCluster, TableName tableName, Collection<Filter> whereClauses)
             throws ExecutionException, UnsupportedException {
 
         try {
@@ -195,7 +195,7 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
      * @throws ExecutionException
      */
     @Override
-    public void truncate(ClusterName targetCluster, TableName tableName) throws UnsupportedException,
+    public final void truncate(ClusterName targetCluster, TableName tableName) throws UnsupportedException,
             ExecutionException {
 
         try {
