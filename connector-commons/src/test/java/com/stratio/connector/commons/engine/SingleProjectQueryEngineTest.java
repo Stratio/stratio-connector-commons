@@ -83,10 +83,10 @@ public class SingleProjectQueryEngineTest {
     public void testasyncExecute() throws Exception {
 
         String queryID = "queryID";
-        LogicalWorkflow workflow = mock(LogicalWorkflow.class);
+        Project workflow = mock(Project.class);
         IResultHandler resultHandler = mock(IResultHandler.class);
-
-        uniqueProjectQueryEngineStub.asyncExecute(queryID, workflow, resultHandler);
+        Connection connection = mock(Connection.class);
+        uniqueProjectQueryEngineStub.asyncExecute(queryID, workflow, connection,resultHandler);
 
         assertTrue("executeWorkFlow is executed", executeAsyncExecute);
         assertEquals("The queryId is correct", queryIdSend, queryID);
@@ -144,7 +144,7 @@ public class SingleProjectQueryEngineTest {
         }
 
 
-  
+
 
         @Override protected void pagedExecute(String queryId,Project project, Connection connection, IResultHandler resultHandler) {
 
