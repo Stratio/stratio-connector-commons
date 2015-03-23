@@ -269,7 +269,7 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
      * @throws ExecutionException   the execution exception
      */
     @Override
-    public void alterTable(ClusterName targetCluster, TableName name, AlterOptions alterOptions)
+    public final void alterTable(ClusterName targetCluster, TableName name, AlterOptions alterOptions)
             throws UnsupportedException, ExecutionException {
         try {
 
@@ -300,7 +300,7 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
      * @throws ExecutionException   if any error happen during the execution
      */
     @Override
-    public void alterCatalog(ClusterName targetCluster, CatalogName catalogName, Map<Selector, Selector> options)
+    public final void alterCatalog(ClusterName targetCluster, CatalogName catalogName, Map<Selector, Selector> options)
             throws UnsupportedException, ExecutionException {
         try {
             connectionHandler.startJob(targetCluster.getName());
@@ -322,7 +322,7 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
     }
 
     @Override
-    public List<CatalogMetadata> provideMetadata(ClusterName targetCluster) throws ConnectorException {
+    public final List<CatalogMetadata> provideMetadata(ClusterName targetCluster) throws ConnectorException {
         try {
             connectionHandler.startJob(targetCluster.getName());
             if (logger.isDebugEnabled()) {
@@ -340,7 +340,7 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
     }
 
     @Override
-    public CatalogMetadata provideCatalogMetadata(ClusterName targetCluster, CatalogName catalogName)
+    public final CatalogMetadata provideCatalogMetadata(ClusterName targetCluster, CatalogName catalogName)
             throws ConnectorException {
         Long time = System.currentTimeMillis();
         try {
@@ -371,7 +371,7 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
     }
 
     @Override
-    public TableMetadata provideTableMetadata(ClusterName targetCluster, TableName tableName)
+    public final TableMetadata provideTableMetadata(ClusterName targetCluster, TableName tableName)
             throws ConnectorException {
         Long time = System.currentTimeMillis();
         try {

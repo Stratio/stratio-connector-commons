@@ -143,13 +143,11 @@ public class SingleProjectQueryEngineTest {
 
         }
 
-        @Override protected void asyncExecuteWorkFlow(String queryId, LogicalWorkflow workflow,
-                IResultHandler resultHandler) {
+        @Override protected void asyncExecute(Project project, Connection connection, IResultHandler resultHandler) {
 
         }
 
-        @Override protected void pagedExecuteWorkFlow(String queryId, LogicalWorkflow workflow,
-                IResultHandler resultHandler, int pageSize) {
+        @Override protected void pagedExecute(Project project, Connection connection, IResultHandler resultHandler) {
 
         }
 
@@ -160,15 +158,16 @@ public class SingleProjectQueryEngineTest {
         }
 
         @Override
-        protected QueryResult execute(Project workflow, Connection connection) throws UnsupportedException,
+        protected QueryResult execute(Project project, Connection connection) throws UnsupportedException,
                 ExecutionException {
 
-            projectSend = workflow;
+            projectSend = project;
             connectionSend = connection;
             executeExecute = true;
 
             return null;
         }
+
     }
 
 }
