@@ -29,7 +29,7 @@ import com.stratio.crossdata.common.statements.structures.IntegerSelector;
 import com.stratio.crossdata.common.statements.structures.Selector;
 import com.stratio.crossdata.common.statements.structures.SelectorType;
 import com.stratio.crossdata.common.statements.structures.StringSelector;
-
+import static com.stratio.connector.commons.util.TypeDecisor.*;
 /**
  * This class is a helper for the selector crossdata. Created by jmgomez on 17/09/14.
  */
@@ -236,31 +236,6 @@ public final class SelectorHelper {
         return returnValue;
     }
 
-    private static boolean isString(Class field) {
-        return String.class.getCanonicalName().equals(field.getCanonicalName());
 
-    }
-
-    private static boolean isBoolean(Class field) {
-        return Boolean.class.getCanonicalName().equals(field.getCanonicalName());
-
-    }
-
-    private static boolean isDouble(Class field) {
-        return Double.class.isAssignableFrom(field);
-    }
-
-    private static <T> boolean isInteger(Class<T> field) {
-        return Integer.class.isAssignableFrom(field);
-    }
-
-    private static <T> boolean isLong(Class<T> field) {
-        return Long.class.isAssignableFrom(field);
-    }
-
-    private static boolean isNumber(Class field) {
-
-        return Number.class.isAssignableFrom(field);
-    }
 
 }
