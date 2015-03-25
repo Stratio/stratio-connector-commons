@@ -49,4 +49,15 @@ public final class ConnectorParser {
     public static String[] ports(String ips) {
         return ips.replaceAll("\\s+", "").replaceAll("\\[", "").replaceAll("]", "").split(",");
     }
+
+    /**
+     * This method parse the ips string.
+     *
+     * @param hostPorts the host:ips string.
+     * @return the host:ips in an Array.
+     */
+    public static String[] hostPorts(String hostPorts) {
+        return hostPorts.replaceAll("\\s+", "").replaceAll("\\[", "").replaceAll("]", "").split(",");
+    }
+
 }
