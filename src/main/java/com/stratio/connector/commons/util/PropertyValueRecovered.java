@@ -29,7 +29,7 @@ public class PropertyValueRecovered {
      */
 
     public static <T>  T[] recoveredValueASArray(Class<T> type, String properties) {
-        logger.info(String.format("Recovered propeties [$s] as [$s]",properties,type));
+        logger.info(String.format("Recovered propeties [%s] as [%s]",properties,type));
 
         String[] stringParseProperties = properties.replaceAll("\\s+", "").replaceAll("\\[", "").replaceAll("]", "").split(",");
         T[] returnValue = null;
@@ -48,7 +48,7 @@ public class PropertyValueRecovered {
         }
 
         if (logger.isDebugEnabled()){
-            logger.debug(String.format("The property as converted to $s", Arrays.deepToString(returnValue)));
+            logger.debug(String.format("The property as converted to %s", Arrays.deepToString(returnValue)));
         }
         return returnValue;
     }
