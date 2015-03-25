@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Array;
+import java.util.Arrays;
 
 import static com.stratio.connector.commons.util.TypeDecisor.*;
 /**
@@ -28,7 +29,7 @@ public class PropertyValueRecovered {
      */
 
     public static <T>  T[] recoveredValueASArray(Class<T> type, String properties) {
-
+        logger.info(String.format("Recovered propeties [$s] as [$s]",properties,type));
 
         String[] stringParseProperties = properties.replaceAll("\\s+", "").replaceAll("\\[", "").replaceAll("]", "").split(",");
         T[] returnValue = (T[]) Array.newInstance(type,0); //we ensure not return null values.
@@ -46,7 +47,9 @@ public class PropertyValueRecovered {
             throw new RuntimeException(String.format(message));
         }
 
-
+        if (logger.isDebugEnabled()){
+            logger.debug(String.format("The property as converted to $s", Arrays.deepToString(returnValue)));
+        }
         return returnValue;
     }
 
