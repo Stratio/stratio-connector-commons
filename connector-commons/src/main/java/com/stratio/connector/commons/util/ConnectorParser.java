@@ -30,32 +30,35 @@ public final class ConnectorParser {
     }
 
     /**
-     * This method parse the hosts string.
+     * This method parse the hosts string. Use propertyValueRecovered.
      *
      * @param hosts the hosts string.
      * @return the hosts in an Array.
      */
+    @Deprecated
     public static String[] hosts(String hosts) {
         return hosts.replaceAll("\\s+", "").replaceAll("\\[", "").replaceAll("]", "").split(",");
 
     }
 
     /**
-     * This method parse the ips string.
+     * This method parse the ips string. Use propertyValueRecovered.
      *
      * @param ips the ips string.
      * @return the ips in an Array.
      */
+    @Deprecated
     public static String[] ports(String ips) {
         return ips.replaceAll("\\s+", "").replaceAll("\\[", "").replaceAll("]", "").split(",");
     }
 
     /**
-     * This method parse the ips string.
+     * This method parse the ips string. Use propertyValueRecovered.
      *
      * @param hostPorts the host:ips string.
      * @return the host:ips in an Array.
      */
+    @Deprecated
     public static String[] hostPorts(String hostPorts) {
         return hostPorts.replaceAll("\\s+", "").replaceAll("\\[", "").replaceAll("]", "").split(",");
     }
