@@ -32,6 +32,6 @@ public class TypeDecisor {
 
     public static boolean isNumber(Class field) {
 
-        return  Number.class.getSimpleName().equalsIgnoreCase(field.getSimpleName()); //to compatibility to scala
+        return  Number.class.isAssignableFrom(field);
     }
 }
