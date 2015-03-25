@@ -32,7 +32,7 @@ public class PropertyValueRecovered {
         logger.info(String.format("Recovered propeties [$s] as [$s]",properties,type));
 
         String[] stringParseProperties = properties.replaceAll("\\s+", "").replaceAll("\\[", "").replaceAll("]", "").split(",");
-        T[] returnValue = (T[]) Array.newInstance(type,0); //we ensure not return null values.
+        T[] returnValue = null;
         if (isString(type)){
             returnValue = (T[])stringParseProperties;
         } else if (isBoolean(type)){
