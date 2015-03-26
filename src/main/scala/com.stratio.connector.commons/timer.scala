@@ -16,9 +16,12 @@
 * under the License.
 */
 package com.stratio.connector.commons
+
 import org.slf4j.Logger
 import com.codahale.metrics.{Timer, MetricRegistry}
+
 object timer {
+
   /**
    * Evals some {{{T}}} by-name expression and get times spent on it.
    *
@@ -28,22 +31,31 @@ object timer {
    * @tparam T Expression type
    * @return Expression value
    */
+
   def time[T](op: String)(f: => T)(implicit logger: Logger): T = {
+
     val before = System.currentTimeMillis()
     val t = f
     val after = System.currentTimeMillis()
+
     logger.debug( s"""[millis: ${after - before}] $op""")
+
     t
   }
+
   def time[T](f: => T)(implicit logger: Logger): T =
+
     time(java.util.UUID.randomUUID().toString)(f)(logger)
+
   def timeFor[T, U](timerName: String)(f: => T)(
     implicit metricRegistry: MetricRegistry,logger: Logger): T = {
+
     import scala.collection.JavaConversions._
     val timer = metricRegistry.getTimers.toMap.getOrElse(timerName, {
       val newTimer = new Timer()
       metricRegistry.register(timerName, newTimer)
     })
+    
     val before = timer.time()
     val t = f
     val after = before.stop()
