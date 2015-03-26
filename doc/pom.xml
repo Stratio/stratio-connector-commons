@@ -20,19 +20,24 @@
     <url>http://www.stratio.com</url>
     <name>Stratio Connector commons documentation</name>
     <description>The crossdata connector commons documentation</description>
-<packaging>pom</packaging>
+    <packaging>pom</packaging>
 
-<parent>
+    <parent>
         <groupId>com.stratio.connector</groupId>
         <artifactId>stratio-connector-commons-parent</artifactId>
-    <version>0.5.0-SNAPSHOT</version>
-
-</parent>
-
-
+        <version>0.5.0-SNAPSHOT</version>
+    </parent>
 
     <build>
-<plugins>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.8.2</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
@@ -71,8 +76,6 @@
                     </reportPlugins>
                 </configuration>
             </plugin>
-
-
         </plugins>
     </build>
 </project>
