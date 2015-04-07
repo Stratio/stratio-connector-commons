@@ -3,7 +3,7 @@
 
 cd ..
 
-git checkout master
+git checkout maintenance/0.4
 git pull
 
 RELEASE_VER=$(mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version 2>/dev/null | grep -v '\[' | sed s/\-SNAPSHOT//) || { echo "Cannot generate next version number"; exit 1; }

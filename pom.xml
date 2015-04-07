@@ -83,26 +83,6 @@
     </dependencies>
 
 
-    <profiles>
-        <profile>
-            <id>local</id>
-            <distributionManagement>
-                <repository>
-                    <id>stratioRelease</id>
-                    <name>stratioRelease</name>
-                    <url>http://sodio.stratio.com/nexus/content/repositories/releases/</url>
-                    <layout>default</layout>
-                </repository>
-                <snapshotRepository>
-                    <id>stratioSnapshot</id>
-                    <name>stratioSnapshot</name>
-                    <url>http://sodio.stratio.com/nexus/content/repositories/snapshots/</url>
-                    <layout>default</layout>
-                </snapshotRepository>
-            </distributionManagement>
-        </profile>
-
-    </profiles>
 
     <licenses>
         <license>
