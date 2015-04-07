@@ -19,12 +19,7 @@ package com.stratio.connector.commons.ftest.functionalUpdate;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.junit.Test;
 
@@ -72,7 +67,9 @@ public abstract class GenericSimpleUpdateWithFiltersFT extends GenericConnectorT
         verifyInsert(clusterName, 4);
 
         Collection<Filter> filterCollection = new ArrayList<Filter>();
-        filterCollection.add(new Filter(Operations.UPDATE_NON_INDEXED_GET,
+        Set<Operations> operation = new HashSet<>();
+        operation.add(Operations.UPDATE_NON_INDEXED_GET);
+        filterCollection.add(new Filter(operation,
                 getBasicRelation(COLUMN_2, Operator.GET, 20l)));
 
         updateRow(clusterName, filterCollection);
@@ -92,7 +89,9 @@ public abstract class GenericSimpleUpdateWithFiltersFT extends GenericConnectorT
         verifyInsert(clusterName, 4);
 
         Collection<Filter> filterCollection = new ArrayList<Filter>();
-        filterCollection.add(new Filter(Operations.UPDATE_PK_EQ, getBasicRelation(COLUMN_1, Operator.EQ, "row1")));
+        Set<Operations> operation = new HashSet<>();
+        operation.add(Operations.UPDATE_PK_EQ);
+        filterCollection.add(new Filter(operation, getBasicRelation(COLUMN_1, Operator.EQ, "row1")));
 
         updateRow(clusterName, filterCollection);
         verifyUpdate(clusterName, 1);
