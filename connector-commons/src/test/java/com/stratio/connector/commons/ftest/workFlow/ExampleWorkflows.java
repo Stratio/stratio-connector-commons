@@ -20,11 +20,7 @@ package com.stratio.connector.commons.ftest.workFlow;
 
 import static com.stratio.connector.commons.util.TextConstant.names;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.stratio.crossdata.common.data.Cell;
 import com.stratio.crossdata.common.data.ClusterName;
@@ -120,7 +116,9 @@ public class ExampleWorkflows {
     public Project getProject(ColumnName... columnNames) {
         TableName table = new TableName(columnNames[0].getTableName().getCatalogName().getName(), columnNames[0]
                 .getTableName().getName());
-        return new Project(Operations.PROJECT, table, clusterName, Arrays.asList(columnNames));
+        Set<Operations> operation = new HashSet<>();
+        operation.add(Operations.PROJECT);
+        return new Project(operation, table, clusterName, Arrays.asList(columnNames));
     }
 
     public Select getSelect(String[] alias, ColumnType[] types, ColumnName... columnNames) {
@@ -135,14 +133,18 @@ public class ExampleWorkflows {
             typeMapFromColumnName.put(columnSelector, types[aliasIndex]);
             aliasIndex++;
         }
-        return new Select(Operations.SELECT_OPERATOR, columnMap, columntype, typeMapFromColumnName);
+        Set<Operations> operation = new HashSet<>();
+        operation.add(Operations.SELECT_OPERATOR);
+        return new Select(operation, columnMap, columntype, typeMapFromColumnName);
 
     }
 
     public Filter getFilter(Operations filterOp, ColumnName column, Operator op, Selector right) {
         Selector left = new ColumnSelector(column);
         Relation r = new Relation(left, op, right);
-        return new Filter(filterOp, r);
+        Set<Operations> operation = new HashSet<>();
+        operation.add(filterOp);
+        return new Filter(operation, r);
     }
 
     public LogicalWorkflow getBasicSelect() {

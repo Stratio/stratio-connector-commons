@@ -19,7 +19,11 @@
 package com.stratio.connector.commons.util;
 
 import com.stratio.crossdata.common.logicalplan.Filter;
+import com.stratio.crossdata.common.metadata.Operations;
 
+import java.util.Set;
+
+import static com.stratio.crossdata.common.metadata.Operations.*;
 /**
  * Created by jmgomez on 18/11/14.
  */
@@ -39,21 +43,13 @@ public final class FilterHelper {
      */
     public static boolean isPK(Filter filter) {
         boolean isPk = false;
-        switch (filter.getOperation()) {
-        case FILTER_PK_DISTINCT:
-        case FILTER_PK_EQ:
-        case FILTER_PK_GET:
-        case FILTER_PK_GT:
-        case FILTER_PK_LET:
-        case FILTER_PK_LT:
+        Set<Operations> operations = filter.getOperations();
+        if (operations.contains(FILTER_PK_DISTINCT) || operations.contains(FILTER_PK_EQ) ||
+                operations.contains(FILTER_PK_GET) || operations.contains(FILTER_PK_GT) ||
+                operations.contains(FILTER_PK_LET) || operations.contains(FILTER_PK_LT)) {
             isPk = true;
-            break;
-        default:
-            isPk = false;
-            break;
         }
         return isPk;
-
     }
 
 }

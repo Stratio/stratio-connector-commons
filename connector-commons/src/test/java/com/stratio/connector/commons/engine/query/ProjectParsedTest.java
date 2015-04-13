@@ -23,6 +23,8 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.Test;
 
@@ -62,7 +64,9 @@ public class ProjectParsedTest {
      */
     @Test
     public void testCreateProjecParsedProject() throws Exception {
-        Project project = new Project(Operations.PROJECT, TABLE_NAME, CLUSTER_NAME);
+        Set<Operations> operation = new HashSet<>();
+        operation.add(Operations.PROJECT);
+        Project project = new Project(operation, TABLE_NAME, CLUSTER_NAME);
 
         ProjectParsed projectParsed = new ProjectParsed(project, mock(ProjectValidator.class));
         assertTrue("The filter list must be empty", projectParsed.getFilter().isEmpty());
@@ -77,8 +81,13 @@ public class ProjectParsedTest {
 
     @Test
     public void testCreateProjecParsedProjectSelect() throws Exception {
-        Project project = new Project(Operations.PROJECT, TABLE_NAME, CLUSTER_NAME);
-        Select select = new Select(Operations.SELECT_OPERATOR, null, null, null);
+
+        Set<Operations> operationProject = new HashSet<>();
+        operationProject.add(Operations.PROJECT);
+        Project project = new Project(operationProject, TABLE_NAME, CLUSTER_NAME);
+        Set<Operations> selectOperation = new HashSet<>();
+        selectOperation.add(Operations.SELECT_OPERATOR);
+        Select select = new Select(selectOperation, null, null, null);
         project.setNextStep(select);
 
         ProjectParsed projectParsed = new ProjectParsed(project, mock(ProjectValidator.class));
@@ -94,10 +103,15 @@ public class ProjectParsedTest {
 
     @Test
     public void testCreateProjecParsedProjecFilter() throws Exception {
-        Project project = new Project(Operations.PROJECT, TABLE_NAME, CLUSTER_NAME);
+        Set<Operations> projectOperation = new HashSet<>();
+        projectOperation.add(Operations.PROJECT);
+        Project project = new Project(projectOperation, TABLE_NAME, CLUSTER_NAME);
+
 
         Relation relation = new Relation(null, Operator.EQ, null);
-        Filter filter = new Filter(Operations.FILTER_INDEXED_EQ, relation);
+        Set<Operations> filterOperation = new HashSet<>();
+        filterOperation.add(Operations.FILTER_INDEXED_EQ);
+        Filter filter = new Filter(filterOperation, relation);
         project.setNextStep(filter);
 
         ProjectParsed projectParsed = new ProjectParsed(project, mock(ProjectValidator.class));
@@ -117,10 +131,14 @@ public class ProjectParsedTest {
 
     @Test
     public void testCreateProjecParsedProjecMatch() throws Exception {
-        Project project = new Project(Operations.PROJECT, TABLE_NAME, CLUSTER_NAME);
+        Set<Operations> projectOperation = new HashSet<>();
+        projectOperation.add(Operations.PROJECT);
+        Project project = new Project(projectOperation, TABLE_NAME, CLUSTER_NAME);
 
+        Set<Operations> filterOperation = new HashSet<>();
+        filterOperation.add(Operations.FILTER_INDEXED_MATCH);
         Relation relation = new Relation(null, Operator.MATCH, null);
-        Filter filter = new Filter(Operations.FILTER_INDEXED_MATCH, relation);
+        Filter filter = new Filter(filterOperation, relation);
         project.setNextStep(filter);
 
         ProjectValidator projectValidator = mock(ProjectValidator.class);
@@ -143,8 +161,12 @@ public class ProjectParsedTest {
 
     @Test
     public void testCreateProjecParsedProjectLimit() throws Exception {
-        Project project = new Project(Operations.PROJECT, TABLE_NAME, CLUSTER_NAME);
-        Limit limit = new Limit(Operations.SELECT_LIMIT, 10);
+        Set<Operations> projectOperation = new HashSet<>();
+        projectOperation.add(Operations.PROJECT);
+        Project project = new Project(projectOperation, TABLE_NAME, CLUSTER_NAME);
+        Set<Operations> selectOperation = new HashSet<>();
+        selectOperation.add(Operations.SELECT_LIMIT);
+        Limit limit = new Limit(selectOperation, 10);
         project.setNextStep(limit);
 
         ProjectParsed projectParsed = new ProjectParsed(project, mock(ProjectValidator.class));
@@ -160,8 +182,12 @@ public class ProjectParsedTest {
 
     @Test
     public void testCreateProjecParsedProjectWindow() throws Exception {
-        Project project = new Project(Operations.PROJECT, TABLE_NAME, CLUSTER_NAME);
-        Window window = new Window(Operations.SELECT_WINDOW, WindowType.NUM_ROWS);
+        Set<Operations> projectOperation = new HashSet<>();
+        projectOperation.add(Operations.PROJECT);
+        Project project = new Project(projectOperation, TABLE_NAME, CLUSTER_NAME);
+        Set<Operations> selectOperation = new HashSet<>();
+        selectOperation.add(Operations.SELECT_WINDOW);
+        Window window = new Window(selectOperation, WindowType.NUM_ROWS);
 
         project.setNextStep(window);
 
@@ -177,8 +203,12 @@ public class ProjectParsedTest {
 
     @Test
     public void testCreateProjecParsedProjectGroupBy() throws Exception {
-        Project project = new Project(Operations.PROJECT, TABLE_NAME, CLUSTER_NAME);
-        GroupBy groupBy = new GroupBy(Operations.SELECT_GROUP_BY, null);
+        Set<Operations> projectOperation = new HashSet<>();
+        projectOperation.add(Operations.PROJECT);
+        Project project = new Project(projectOperation, TABLE_NAME, CLUSTER_NAME);
+        Set<Operations> selectOperation = new HashSet<>();
+        selectOperation.add(Operations.SELECT_GROUP_BY);
+        GroupBy groupBy = new GroupBy(selectOperation, null);
 
         project.setNextStep(groupBy);
 
@@ -194,8 +224,12 @@ public class ProjectParsedTest {
 
     @Test
     public void testCreateProjecParsedProjectOrderBy() throws Exception {
-        Project project = new Project(Operations.PROJECT, TABLE_NAME, CLUSTER_NAME);
-        OrderBy orderBy = new OrderBy(Operations.SELECT_ORDER_BY, null);
+        Set<Operations> projectOperation = new HashSet<>();
+        projectOperation.add(Operations.PROJECT);
+        Project project = new Project(projectOperation, TABLE_NAME, CLUSTER_NAME);
+        Set<Operations> selectOperator = new HashSet<>();
+        selectOperator.add(Operations.SELECT_ORDER_BY);
+        OrderBy orderBy = new OrderBy(selectOperator, null);
 
         project.setNextStep(orderBy);
 
@@ -206,7 +240,7 @@ public class ProjectParsedTest {
         assertNull("The window must be null", projectParsed.getWindow());
         assertNull("The groupBy must be null", projectParsed.getGroupBy());
         assertEquals("The orderBy must be the orderBy created before", Operations.SELECT_ORDER_BY, projectParsed
-                .getOrderBy().getOperation());
+                .getOrderBy().getOperations().toArray()[0]);
         assertEquals("The project must be the project pass in constructor", project, projectParsed.getProject());
 
     }

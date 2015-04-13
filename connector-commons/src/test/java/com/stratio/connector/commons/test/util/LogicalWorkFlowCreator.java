@@ -18,11 +18,7 @@
 
 package com.stratio.connector.commons.test.util;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.stratio.crossdata.common.data.ClusterName;
 import com.stratio.crossdata.common.data.ColumnName;
@@ -84,7 +80,9 @@ public class LogicalWorkFlowCreator {
 
         List<LogicalStep> logiclaSteps = new ArrayList<>();
 
-        Project project = new Project(Operations.PROJECT, new TableName(catalog, table), clusterName, columns);
+        Set<Operations> projectOperation = new HashSet<>();
+        projectOperation.add(Operations.PROJECT);
+        Project project = new Project(projectOperation, new TableName(catalog, table), clusterName, columns);
         LogicalStep lastStep = project;
         for (Filter filter : filters) {
             lastStep.setNextStep(filter);
@@ -124,8 +122,10 @@ public class LogicalWorkFlowCreator {
                 typeMap.put(columnName.getAlias(), new ColumnType(DataType.VARCHAR));
                 typeMapColumnName.put(columnSelector, new ColumnType(DataType.VARCHAR));
             }
+            Set<Operations> selectOperator = new HashSet<>();
+            selectOperator.add(Operations.SELECT_OPERATOR);
 
-            select = new Select(Operations.SELECT_OPERATOR, selectColumn, typeMap, typeMapColumnName); // The select is
+            select = new Select(selectOperator, selectColumn, typeMap, typeMapColumnName); // The select is
 
             // mandatory
             // . If it
@@ -180,15 +180,18 @@ public class LogicalWorkFlowCreator {
         } else {
             operation = Operations.FILTER_NON_INDEXED_EQ;
         }
-        filters.add(new Filter(operation, new Relation(columnSelector, Operator.EQ, returnSelector(value))));
+        Set<Operations> filterperator = new HashSet<>();
+        filterperator.add(operation);
+        filters.add(new Filter(filterperator, new Relation(columnSelector, Operator.EQ, returnSelector(value))));
         return this;
 
     }
 
     private void createFilterEQ(String columnName, Object value, Operations operations) {
         Selector columnSelector = new ColumnSelector(new ColumnName(catalog, table, columnName));
-
-        filters.add(new Filter(operations, new Relation(columnSelector, Operator.ASSIGN, returnSelector(value))));
+        Set<Operations> op = new HashSet<>();
+        op.add(operations);
+        filters.add(new Filter(op, new Relation(columnSelector, Operator.ASSIGN, returnSelector(value))));
     }
 
     private Selector returnSelector(Object value) {
@@ -210,14 +213,16 @@ public class LogicalWorkFlowCreator {
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)), Operator.GET,
                 returnSelector(term));
 
-        if (pk) {
-            filters.add(new Filter(Operations.FILTER_PK_GET, relation));
-        } else if (indexed) {
-            filters.add(new Filter(Operations.FILTER_INDEXED_GET, relation));
-        } else {
-            filters.add(new Filter(Operations.FILTER_NON_INDEXED_GET, relation));
+        Set<Operations> operation = new HashSet<>();
 
+        if (pk) {
+            operation.add(Operations.FILTER_PK_GET);
+        } else if (indexed) {
+            operation.add(Operations.FILTER_INDEXED_GET);
+        } else {
+            operation.add(Operations.FILTER_NON_INDEXED_GET);
         }
+        filters.add(new Filter(operation, relation));
 
         return this;
 
@@ -227,12 +232,13 @@ public class LogicalWorkFlowCreator {
 
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)), Operator.GT,
                 returnSelector(term));
+        Set<Operations> operation = new HashSet<>();
         if (indexed) {
-            filters.add(new Filter(Operations.FILTER_INDEXED_GT, relation));
+            operation.add(Operations.FILTER_INDEXED_GT);
         } else {
-            filters.add(new Filter(Operations.FILTER_NON_INDEXED_GT, relation));
+            operation.add(Operations.FILTER_NON_INDEXED_GT);
         }
-
+        filters.add(new Filter(operation, relation));
         return this;
 
     }
@@ -241,12 +247,17 @@ public class LogicalWorkFlowCreator {
 
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)), Operator.LET,
                 returnSelector(term));
+        Set<Operations> operation = new HashSet<>();
+
         if (indexed) {
-            filters.add(new Filter(Operations.FILTER_INDEXED_LET, relation));
+            operation.add(Operations.FILTER_INDEXED_LET);
+
         } else {
-            filters.add(new Filter(Operations.FILTER_NON_INDEXED_LET, relation));
+            operation.add(Operations.FILTER_NON_INDEXED_LET);
+
         }
 
+        filters.add(new Filter(operation, relation));
         return this;
 
     }
@@ -254,26 +265,35 @@ public class LogicalWorkFlowCreator {
     public LogicalWorkFlowCreator addNLowerFilter(String columnName, Object term, Boolean indexed) {
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)), Operator.LT,
                 returnSelector(term));
-        if (indexed) {
-            filters.add(new Filter(Operations.FILTER_INDEXED_LT, relation));
-        } else {
-            filters.add(new Filter(Operations.FILTER_NON_INDEXED_LT, relation));
-        }
+        Set<Operations> operation = new HashSet<>();
 
+        if (indexed) {
+            operation.add(Operations.FILTER_INDEXED_LT);
+
+        } else {
+            operation.add(Operations.FILTER_NON_INDEXED_LT);
+
+        }
+        filters.add(new Filter(operation, relation));
         return this;
     }
 
     public LogicalWorkFlowCreator addDistinctFilter(String columnName, Object term, Boolean indexed, Boolean PK) {
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)),
                 Operator.DISTINCT, returnSelector(term));
-        if (PK) {
-            filters.add(new Filter(Operations.FILTER_PK_DISTINCT, relation));
-        } else if (indexed) {
-            filters.add(new Filter(Operations.FILTER_INDEXED_DISTINCT, relation));
-        } else {
-            filters.add(new Filter(Operations.FILTER_NON_INDEXED_DISTINCT, relation));
-        }
+        Set<Operations> operation = new HashSet<>();
 
+        if (PK) {
+            operation.add(Operations.FILTER_PK_DISTINCT);
+
+        } else if (indexed) {
+            operation.add(Operations.FILTER_INDEXED_DISTINCT);
+
+        } else {
+            operation.add(Operations.FILTER_NON_INDEXED_DISTINCT);
+
+        }
+        filters.add(new Filter(operation, relation));
         return this;
     }
 
@@ -282,8 +302,9 @@ public class LogicalWorkFlowCreator {
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)),
 
                 Operator.MATCH, returnSelector(textToFind));
-
-        filters.add(new Filter(Operations.FILTER_INDEXED_MATCH, relation));
+        Set<Operations> operation = new HashSet<>();
+        operation.add(Operations.FILTER_INDEXED_MATCH);
+        filters.add(new Filter(operation, relation));
 
         return this;
     }
@@ -292,8 +313,9 @@ public class LogicalWorkFlowCreator {
 
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)), Operator.LIKE,
                 returnSelector(textToFind));
-
-        filters.add(new Filter(Operations.FILTER_INDEXED_MATCH, relation));
+        Set<Operations> operation = new HashSet<>();
+        operation.add(Operations.FILTER_INDEXED_MATCH);
+        filters.add(new Filter(operation, relation));
 
         return this;
     }
@@ -308,25 +330,27 @@ public class LogicalWorkFlowCreator {
             types.put(connectorField.alias, connectorField.columnType);
             typeMapFormColumnName.put(columnSelector, connectorField.columnType);
         }
-
-        select = new Select(Operations.PROJECT, mapping, types, typeMapFormColumnName);
+        Set<Operations> operation = new HashSet<>();
+        operation.add(Operations.PROJECT);
+        select = new Select(operation, mapping, types, typeMapFormColumnName);
 
         return this;
 
     }
 
     public LogicalWorkFlowCreator addWindow(WindowType type, int limit) throws UnsupportedException {
-
-        window = new Window(Operations.FILTER_FUNCTION_EQ, type);
+        Set<Operations> operation = new HashSet<>();
+        operation.add(Operations.FILTER_FUNCTION_EQ);
+        window = new Window(operation, type);
         switch (type) {
-        case NUM_ROWS:
-            window.setNumRows(limit);
-            break;
-        case TEMPORAL:
-            window.setTimeWindow(limit, TimeUnit.SECONDS);
-            break;
-        default:
-            throw new UnsupportedException("Window " + type + " not supported");
+            case NUM_ROWS:
+                window.setNumRows(limit);
+                break;
+            case TEMPORAL:
+                window.setTimeWindow(limit, TimeUnit.SECONDS);
+                break;
+            default:
+                throw new UnsupportedException("Window " + type + " not supported");
 
         }
         return this;
@@ -338,7 +362,9 @@ public class LogicalWorkFlowCreator {
     }
 
     public LogicalWorkFlowCreator addLimit(int limit) {
-        this.limit = new Limit(Operations.SELECT_LIMIT, limit);
+        Set<Operations> operation = new HashSet<>();
+        operation.add(Operations.SELECT_LIMIT);
+        this.limit = new Limit(operation, limit);
         return this;
     }
 
@@ -347,13 +373,17 @@ public class LogicalWorkFlowCreator {
         for (String field : fields) {
             ids.add(new ColumnSelector(new ColumnName(catalog, table, field)));
         }
-        this.groupBy = new GroupBy(Operations.SELECT_GROUP_BY, ids);
+        Set<Operations> operation = new HashSet<>();
+        operation.add(Operations.SELECT_GROUP_BY);
+        this.groupBy = new GroupBy(operation, ids);
         return this;
     }
 
     public LogicalWorkFlowCreator addOrderByClause(String field, OrderDirection direction) {
         if (orderBy == null) {
-            orderBy = new OrderBy(Operations.SELECT_ORDER_BY, new LinkedList<OrderByClause>());
+            Set<Operations> operation = new HashSet<>();
+            operation.add(Operations.SELECT_ORDER_BY);
+            orderBy = new OrderBy(operation, new LinkedList<OrderByClause>());
         }
 
         List<OrderByClause> previousList = orderBy.getIds();

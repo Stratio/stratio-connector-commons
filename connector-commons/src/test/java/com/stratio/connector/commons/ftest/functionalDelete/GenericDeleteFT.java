@@ -194,7 +194,9 @@ public abstract class GenericDeleteFT extends GenericConnectorTest {
         Selector rightTerm = new StringSelector("1");
 
         Relation relation = new Relation(primaryKey, operator, rightTerm);
-        filters.add(new Filter(operations, relation));
+        Set<Operations> operation = new HashSet<>();
+        operation.add(operations);
+        filters.add(new Filter(operation, relation));
         return filters;
     }
 
