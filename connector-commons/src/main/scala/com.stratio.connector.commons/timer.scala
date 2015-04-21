@@ -58,11 +58,15 @@ object timer {
 
       })
     }
-
+    if (logger.isDebugEnabled()) {
+      logger.debug( s"The process [$timerName] is starting")
+    }
     val before = timer.time()
     val t = f
     val after = before.stop()
-    logger.debug( s"""[millis: $after] $timerName""")
+    if (logger.isDebugEnabled()) {
+      logger.debug( s"""[millis: $after] $timerName""")
+    }
     t
   }
 
