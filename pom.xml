@@ -16,14 +16,14 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.stratio.connector</groupId>
     <artifactId>stratio-connector-commons</artifactId>
-    <version>0.5.0-FP</version>
+    <version>0.5.1-FP</version>
     <url>http://www.stratio.com</url>
     <name>Connector commons parent</name>
    <packaging>pom</packaging>
     <description>The crossdata connector commons parent</description>
 
     <properties>
-        <version.crossdata>0.3.0-FP</version.crossdata>
+        <version.crossdata>0.3.2-FP</version.crossdata>
 
         <scala.version>2.10.4</scala.version>
         <scala.test.version>2.2.1</scala.test.version>
