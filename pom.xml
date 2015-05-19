@@ -22,14 +22,14 @@
 
     <groupId>com.stratio.connector</groupId>
     <artifactId>stratio-connector-commons-parent</artifactId>
-    <version>0.5.0-RC2-SNAPSHOT</version>
+    <version>0.5.0-RC2</version>
     <url>http://www.stratio.com</url>
     <name>Stratio Connector Commons Parent</name>
     <packaging>pom</packaging>
     <description>The crossdata connector commons parent</description>
 
     <properties>
-        <version.crossdata>0.3.0-RC1</version.crossdata>
+        <version.crossdata>0.3.0-RC2</version.crossdata>
         <scala.version>2.10.4</scala.version>
         <scala.test.version>2.2.1</scala.test.version>
         <scala.binary.version>2.10</scala.binary.version>
