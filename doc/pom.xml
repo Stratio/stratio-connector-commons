@@ -16,7 +16,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.stratio.connector</groupId>
     <artifactId>stratio-connector-commons-doc</artifactId>
-    <version>0.5.0-RC2-SNAPSHOT</version>
+    <version>0.5.0-RC2</version>
     <url>http://www.stratio.com</url>
     <name>Stratio Connector commons documentation</name>
     <description>The crossdata connector commons documentation</description>
@@ -25,7 +25,7 @@
     <parent>
         <groupId>com.stratio.connector</groupId>
         <artifactId>stratio-connector-commons-parent</artifactId>
-        <version>0.5.0-RC2-SNAPSHOT</version>
+        <version>0.5.0-RC2</version>
     </parent>
 
     <build>
