@@ -1,20 +1,19 @@
 package com.stratio.connector.commons.ptest.storage.insert;
 
-import static junit.framework.TestCase.assertEquals;
-
-import java.io.FileNotFoundException;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
 import com.stratio.connector.commons.ptest.thread.InsertThread;
 import com.stratio.connector.commons.ptest.util.EficiencyBean;
 import com.stratio.connector.commons.ptest.util.TextFileParser;
 import com.stratio.connector.commons.util.SelectorHelper;
 import com.stratio.crossdata.common.exceptions.ConnectorException;
+import org.junit.Before;
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.FileNotFoundException;
+
+import static junit.framework.TestCase.assertEquals;
 
 public abstract class InsertOneGenericPT extends GenericConnectorTest {
 

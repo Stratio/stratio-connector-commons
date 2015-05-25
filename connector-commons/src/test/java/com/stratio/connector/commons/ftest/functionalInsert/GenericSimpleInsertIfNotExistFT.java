@@ -17,25 +17,11 @@
  */
 package com.stratio.connector.commons.ftest.functionalInsert;
 
-import static org.junit.Assert.assertEquals;
-
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
-
-import org.junit.Test;
-
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
 import com.stratio.connector.commons.metadata.TableMetadataBuilder;
 import com.stratio.connector.commons.test.util.LogicalWorkFlowCreator;
 import com.stratio.connector.commons.test.util.LogicalWorkFlowCreator.ConnectorField;
-import com.stratio.crossdata.common.data.CatalogName;
-import com.stratio.crossdata.common.data.Cell;
-import com.stratio.crossdata.common.data.ClusterName;
-import com.stratio.crossdata.common.data.ResultSet;
-import com.stratio.crossdata.common.data.Row;
+import com.stratio.crossdata.common.data.*;
 import com.stratio.crossdata.common.exceptions.ConnectorException;
 import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
 import com.stratio.crossdata.common.metadata.CatalogMetadata;
@@ -43,6 +29,11 @@ import com.stratio.crossdata.common.metadata.ColumnType;
 import com.stratio.crossdata.common.metadata.DataType;
 import com.stratio.crossdata.common.metadata.TableMetadata;
 import com.stratio.crossdata.common.result.QueryResult;
+import org.junit.Test;
+
+import java.util.*;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  */

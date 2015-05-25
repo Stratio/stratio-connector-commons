@@ -17,12 +17,11 @@
  */
 package com.stratio.connector.commons.util;
 
-import static junit.framework.TestCase.assertEquals;
-
-import org.junit.Test;
-
 import com.stratio.crossdata.common.metadata.ColumnType;
 import com.stratio.crossdata.common.metadata.DataType;
+import org.junit.Test;
+
+import static junit.framework.TestCase.assertEquals;
 
 /**
  * ColumnTypeHelper Tester.

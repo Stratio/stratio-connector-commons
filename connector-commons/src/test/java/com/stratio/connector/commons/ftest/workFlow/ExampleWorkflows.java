@@ -18,29 +18,16 @@
 
 package com.stratio.connector.commons.ftest.workFlow;
 
-import static com.stratio.connector.commons.util.TextConstant.names;
-
-import java.util.*;
-
-import com.stratio.crossdata.common.data.Cell;
-import com.stratio.crossdata.common.data.ClusterName;
-import com.stratio.crossdata.common.data.ColumnName;
-import com.stratio.crossdata.common.data.Row;
-import com.stratio.crossdata.common.data.TableName;
-import com.stratio.crossdata.common.logicalplan.Filter;
-import com.stratio.crossdata.common.logicalplan.LogicalStep;
-import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
-import com.stratio.crossdata.common.logicalplan.Project;
-import com.stratio.crossdata.common.logicalplan.Select;
+import com.stratio.crossdata.common.data.*;
+import com.stratio.crossdata.common.logicalplan.*;
 import com.stratio.crossdata.common.metadata.ColumnType;
 import com.stratio.crossdata.common.metadata.DataType;
 import com.stratio.crossdata.common.metadata.Operations;
-import com.stratio.crossdata.common.statements.structures.ColumnSelector;
-import com.stratio.crossdata.common.statements.structures.IntegerSelector;
-import com.stratio.crossdata.common.statements.structures.Operator;
-import com.stratio.crossdata.common.statements.structures.Relation;
-import com.stratio.crossdata.common.statements.structures.Selector;
-import com.stratio.crossdata.common.statements.structures.StringSelector;
+import com.stratio.crossdata.common.statements.structures.*;
+
+import java.util.*;
+
+import static com.stratio.connector.commons.util.TextConstant.names;
 
 /**
  * Example workflows to test basic functionality of the different connectors. This class assumes the existence of a
@@ -87,7 +74,7 @@ public class ExampleWorkflows {
     public static final String ALIAS_ID = "users.id";
     public static final String ALIAS_NAME = "users.name";
     public static final String ALIAS_AGE = "users.age";
-    public static Boolean[] booleans = { true, false };
+    public static Boolean[] booleans = {true, false};
     private final ClusterName clusterName;
     public String table;
     public String catalog;
@@ -117,7 +104,7 @@ public class ExampleWorkflows {
         TableName table = new TableName(columnNames[0].getTableName().getCatalogName().getName(), columnNames[0]
                 .getTableName().getName());
         Set<Operations> operation = new HashSet<>();
-    operation.add(Operations.PROJECT);
+        operation.add(Operations.PROJECT);
         return new Project(operation, table, clusterName, Arrays.asList(columnNames));
     }
 
@@ -150,8 +137,8 @@ public class ExampleWorkflows {
     public LogicalWorkflow getBasicSelect() {
         ColumnName name = new ColumnName(catalog, table, COLUMN_NAME);
         ColumnName age = new ColumnName(catalog, table, COLUMN_AGE);
-        String[] outputNames = { ALIAS_NAME, ALIAS_AGE };
-        ColumnType[] types = { new ColumnType(DataType.VARCHAR), new ColumnType(DataType.INT) };
+        String[] outputNames = {ALIAS_NAME, ALIAS_AGE};
+        ColumnType[] types = {new ColumnType(DataType.VARCHAR), new ColumnType(DataType.INT)};
         LogicalStep project = getProject(name, age);
         LogicalStep select = getSelect(outputNames, types, name, age);
         project.setNextStep(select);
@@ -167,12 +154,12 @@ public class ExampleWorkflows {
         ColumnName name = new ColumnName(catalog, table, COLUMN_NAME);
         ColumnName age = new ColumnName(catalog, table, COLUMN_AGE);
         ColumnName bool = new ColumnName(catalog, table, COLUMN_BOOL);
-        String[] outputNames = { COLUMN_ID, COLUMN_NAME, COLUMN_AGE, COLUMN_BOOL };
+        String[] outputNames = {COLUMN_ID, COLUMN_NAME, COLUMN_AGE, COLUMN_BOOL};
         LogicalStep project = getProject(id, name, age, bool);
-        LogicalStep select = getSelect(outputNames, new ColumnType[] { new ColumnType(DataType.INT), new ColumnType
+        LogicalStep select = getSelect(outputNames, new ColumnType[]{new ColumnType(DataType.INT), new ColumnType
                 (DataType.TEXT),
                 new ColumnType(DataType.INT),
-                new ColumnType(DataType.BOOLEAN) }, id, name, age, bool);
+                new ColumnType(DataType.BOOLEAN)}, id, name, age, bool);
         project.setNextStep(select);
         LogicalWorkflow lw = new LogicalWorkflow(Arrays.asList(project));
         return lw;
@@ -182,8 +169,8 @@ public class ExampleWorkflows {
         ColumnName id = new ColumnName(catalog, table, COLUMN_ID);
         ColumnName name = new ColumnName(catalog, table, COLUMN_NAME);
         ColumnName age = new ColumnName(catalog, table, COLUMN_AGE);
-        String[] outputNames = { ALIAS_NAME, ALIAS_AGE };
-        ColumnType[] types = { new ColumnType(DataType.VARCHAR), new ColumnType(DataType.INT) };
+        String[] outputNames = {ALIAS_NAME, ALIAS_AGE};
+        ColumnType[] types = {new ColumnType(DataType.VARCHAR), new ColumnType(DataType.INT)};
         LogicalStep project = getProject(id, name, age);
         LogicalStep filter = getFilter(Operations.FILTER_INDEXED_EQ, name, Operator.EQ,
                 new StringSelector(names[0].toLowerCase()));
@@ -204,8 +191,8 @@ public class ExampleWorkflows {
         ColumnName id = new ColumnName(catalog, table, COLUMN_ID);
         ColumnName name = new ColumnName(catalog, table, COLUMN_NAME);
         ColumnName age = new ColumnName(catalog, table, COLUMN_AGE);
-        String[] outputNames = { ALIAS_NAME, ALIAS_AGE };
-        ColumnType[] types = { new ColumnType(DataType.VARCHAR), new ColumnType(DataType.INT) };
+        String[] outputNames = {ALIAS_NAME, ALIAS_AGE};
+        ColumnType[] types = {new ColumnType(DataType.VARCHAR), new ColumnType(DataType.INT)};
         LogicalStep project = getProject(id, name, age);
         LogicalStep filter = getFilter(Operations.FILTER_NON_INDEXED_EQ, age, Operator.EQ, new IntegerSelector(42));
         project.setNextStep(filter);
@@ -219,9 +206,9 @@ public class ExampleWorkflows {
         ColumnName id = new ColumnName(catalog, table, COLUMN_ID);
         ColumnName name = new ColumnName(catalog, table, COLUMN_NAME);
         ColumnName age = new ColumnName(catalog, table, COLUMN_AGE);
-        String[] outputNames = { ALIAS_ID, ALIAS_NAME, ALIAS_AGE };
-        ColumnType[] types = { new ColumnType(DataType.INT), new ColumnType(DataType.VARCHAR), new ColumnType
-                (DataType.INT) };
+        String[] outputNames = {ALIAS_ID, ALIAS_NAME, ALIAS_AGE};
+        ColumnType[] types = {new ColumnType(DataType.INT), new ColumnType(DataType.VARCHAR), new ColumnType
+                (DataType.INT)};
         LogicalStep project = getProject(id, name, age);
         LogicalStep filterName = getFilter(Operations.FILTER_INDEXED_EQ, name, Operator.EQ,
                 new StringSelector(names[1].toLowerCase()));

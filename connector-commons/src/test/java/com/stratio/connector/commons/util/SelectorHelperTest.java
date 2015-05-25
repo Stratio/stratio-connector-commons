@@ -18,28 +18,17 @@
 
 package com.stratio.connector.commons.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
-
-import java.util.LinkedList;
-
-import org.junit.Test;
-
 import com.stratio.crossdata.common.data.ColumnName;
 import com.stratio.crossdata.common.data.TableName;
 import com.stratio.crossdata.common.exceptions.ExecutionException;
-import com.stratio.crossdata.common.statements.structures.AsteriskSelector;
-import com.stratio.crossdata.common.statements.structures.BooleanSelector;
-import com.stratio.crossdata.common.statements.structures.ColumnSelector;
-import com.stratio.crossdata.common.statements.structures.FloatingPointSelector;
-import com.stratio.crossdata.common.statements.structures.FunctionSelector;
-import com.stratio.crossdata.common.statements.structures.IntegerSelector;
-import com.stratio.crossdata.common.statements.structures.Relation;
-import com.stratio.crossdata.common.statements.structures.RelationSelector;
-import com.stratio.crossdata.common.statements.structures.Selector;
-import com.stratio.crossdata.common.statements.structures.SelectorType;
-import com.stratio.crossdata.common.statements.structures.StringSelector;
+import com.stratio.crossdata.common.statements.structures.*;
+import org.junit.Test;
+
+import java.util.LinkedList;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
 
 /**
  * SelectorHelper Tester.
@@ -102,10 +91,10 @@ public class SelectorHelperTest {
     @Test
     public void testGetClass() throws ExecutionException {
 
-        Selector[] selector = { new StringSelector(""), new ColumnSelector(mock(ColumnName.class)),
-                new BooleanSelector(true), new FloatingPointSelector("1"), new IntegerSelector(1) };
+        Selector[] selector = {new StringSelector(""), new ColumnSelector(mock(ColumnName.class)),
+                new BooleanSelector(true), new FloatingPointSelector("1"), new IntegerSelector(1)};
 
-        Class[] returnClass = { String.class, String.class, Boolean.class, Double.class, Long.class };
+        Class[] returnClass = {String.class, String.class, Boolean.class, Double.class, Long.class};
         for (int i = 0; i < selector.length; i++) {
             assertEquals("The retur class is correct", returnClass[i], SelectorHelper.getClass(selector[i]));
         }
@@ -115,8 +104,8 @@ public class SelectorHelperTest {
     @Test
     public void testGetClassException() {
 
-        Selector[] exceptionSelector = { new AsteriskSelector(), new FunctionSelector("", new LinkedList<Selector>()),
-                new RelationSelector(mock(Relation.class)) };
+        Selector[] exceptionSelector = {new AsteriskSelector(), new FunctionSelector("", new LinkedList<Selector>()),
+                new RelationSelector(mock(Relation.class))};
 
         for (int i = 0; i < exceptionSelector.length; i++) {
 

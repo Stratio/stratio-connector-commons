@@ -18,9 +18,6 @@
 
 package com.stratio.connector.commons;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.stratio.connector.commons.connection.ConnectionHandler;
 import com.stratio.crossdata.common.connector.ConnectorClusterConfig;
 import com.stratio.crossdata.common.connector.IConnector;
@@ -28,6 +25,8 @@ import com.stratio.crossdata.common.data.ClusterName;
 import com.stratio.crossdata.common.exceptions.ConnectionException;
 import com.stratio.crossdata.common.exceptions.ExecutionException;
 import com.stratio.crossdata.common.security.ICredentials;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class represent a logical connection to a database.
@@ -37,7 +36,7 @@ public abstract class CommonsConnector implements IConnector {
     /**
      * The Log.
      */
-    private transient final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final transient Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * The connectionHandler.

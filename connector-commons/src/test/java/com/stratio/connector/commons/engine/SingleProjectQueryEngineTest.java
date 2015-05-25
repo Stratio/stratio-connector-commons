@@ -17,25 +17,23 @@
  */
 package com.stratio.connector.commons.engine;
 
-import static junit.framework.TestCase.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.powermock.modules.junit4.PowerMockRunner;
-
 import com.stratio.connector.commons.connection.Connection;
 import com.stratio.connector.commons.connection.ConnectionHandler;
 import com.stratio.crossdata.common.connector.IResultHandler;
 import com.stratio.crossdata.common.exceptions.ConnectorException;
 import com.stratio.crossdata.common.exceptions.ExecutionException;
 import com.stratio.crossdata.common.exceptions.UnsupportedException;
-import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
 import com.stratio.crossdata.common.logicalplan.Project;
 import com.stratio.crossdata.common.result.QueryResult;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.powermock.modules.junit4.PowerMockRunner;
+
+import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 
 /**
  * UniqueProjectQueryEngine Tester.
@@ -86,7 +84,7 @@ public class SingleProjectQueryEngineTest {
         Project workflow = mock(Project.class);
         IResultHandler resultHandler = mock(IResultHandler.class);
         Connection connection = mock(Connection.class);
-        uniqueProjectQueryEngineStub.asyncExecute(queryID, workflow, connection,resultHandler);
+        uniqueProjectQueryEngineStub.asyncExecute(queryID, workflow, connection, resultHandler);
 
         assertTrue("executeWorkFlow is executed", executeAsyncExecute);
         assertEquals("The queryId is correct", queryIdSend, queryID);
@@ -144,9 +142,8 @@ public class SingleProjectQueryEngineTest {
         }
 
 
-
-
-        @Override protected void pagedExecute(String queryId,Project project, Connection connection, IResultHandler resultHandler) {
+        @Override
+        protected void pagedExecute(String queryId, Project project, Connection connection, IResultHandler resultHandler) {
 
 
         }

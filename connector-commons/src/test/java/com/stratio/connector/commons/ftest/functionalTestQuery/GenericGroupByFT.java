@@ -17,14 +17,6 @@
  */
 package com.stratio.connector.commons.ftest.functionalTestQuery;
 
-import static org.junit.Assert.assertEquals;
-
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
-
-import org.junit.Test;
-
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
 import com.stratio.connector.commons.metadata.TableMetadataBuilder;
 import com.stratio.connector.commons.test.util.LogicalWorkFlowCreator;
@@ -37,6 +29,13 @@ import com.stratio.crossdata.common.metadata.ColumnType;
 import com.stratio.crossdata.common.metadata.DataType;
 import com.stratio.crossdata.common.metadata.TableMetadata;
 import com.stratio.crossdata.common.result.QueryResult;
+import org.junit.Test;
+
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
+
+import static org.junit.Assert.assertEquals;
 
 public abstract class GenericGroupByFT extends GenericConnectorTest {
 

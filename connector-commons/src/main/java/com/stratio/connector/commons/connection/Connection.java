@@ -18,13 +18,13 @@
 
 package com.stratio.connector.commons.connection;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This interface represents a generic logic connection. Created by jmgomez on 29/08/14.
@@ -40,7 +40,7 @@ public abstract class Connection<T> {
     /**
      * The Log.
      */
-    private transient final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final transient Logger logger = LoggerFactory.getLogger(this.getClass());
     /**
      * The session.
      */

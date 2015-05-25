@@ -18,14 +18,14 @@
 
 package com.stratio.connector.commons.ftest.helper;
 
-import java.util.Collection;
-import java.util.Map;
-
 import com.stratio.crossdata.common.connector.ConnectorClusterConfig;
 import com.stratio.crossdata.common.connector.IConfiguration;
 import com.stratio.crossdata.common.connector.IConnector;
 import com.stratio.crossdata.common.metadata.ColumnType;
 import com.stratio.crossdata.common.security.ICredentials;
+
+import java.util.Collection;
+import java.util.Map;
 
 /**
  * Created by jmgomez on 4/09/14.

@@ -26,7 +26,6 @@ import org.slf4j.Logger
 object timer {
 
 
-
   def time[T](f: => T)(implicit logger: Logger): T =
     time(java.util.UUID.randomUUID().toString)(f)(logger)
 
@@ -59,7 +58,7 @@ object timer {
       })
     }
     if (logger.isDebugEnabled()) {
-      logger.debug( s"The process [$timerName] is starting")
+      logger.debug(s"The process [$timerName] is starting")
     }
     val before = timer.time()
     val t = f

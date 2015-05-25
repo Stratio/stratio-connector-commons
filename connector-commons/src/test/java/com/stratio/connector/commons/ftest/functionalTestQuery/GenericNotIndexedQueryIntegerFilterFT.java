@@ -18,26 +18,6 @@
 
 package com.stratio.connector.commons.ftest.functionalTestQuery;
 
-import static com.stratio.connector.commons.test.util.LogicalWorkFlowCreator.COLUMN_1;
-import static com.stratio.connector.commons.test.util.LogicalWorkFlowCreator.COLUMN_2;
-import static com.stratio.connector.commons.test.util.LogicalWorkFlowCreator.COLUMN_3;
-import static com.stratio.connector.commons.test.util.LogicalWorkFlowCreator.COLUMN_AGE;
-import static com.stratio.connector.commons.test.util.LogicalWorkFlowCreator.COLUMN_KEY;
-import static com.stratio.connector.commons.test.util.LogicalWorkFlowCreator.COLUMN_MONEY;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Set;
-
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
 import com.stratio.connector.commons.metadata.TableMetadataBuilder;
 import com.stratio.connector.commons.test.util.LogicalWorkFlowCreator;
@@ -51,6 +31,15 @@ import com.stratio.crossdata.common.metadata.ColumnType;
 import com.stratio.crossdata.common.metadata.DataType;
 import com.stratio.crossdata.common.metadata.TableMetadata;
 import com.stratio.crossdata.common.result.QueryResult;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+
+import java.util.*;
+
+import static com.stratio.connector.commons.test.util.LogicalWorkFlowCreator.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by jmgomez on 17/07/14.

@@ -18,11 +18,10 @@
 
 package com.stratio.connector.commons.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.stratio.crossdata.common.exceptions.ExecutionException;
 import com.stratio.crossdata.common.metadata.ColumnType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class is a helper for CrossData ColumnType Created by jmgomez on 24/10/14.
@@ -54,24 +53,24 @@ public final class ColumnTypeHelper {
         if (value != null) {
             switch (columnType.getDataType()) {
 
-            case BIGINT:
-                ensureNumber(value);
-                returnValue = ((Number) value).longValue();
-                break;
-            case DOUBLE:
-                ensureNumber(value);
-                returnValue = ((Number) value).doubleValue();
-                break;
-            case FLOAT:
-                ensureNumber(value);
-                returnValue = ((Number) value).floatValue();
-                break;
-            case INT:
-                ensureNumber(value);
-                returnValue = ((Number) value).intValue();
-                break;
-            default:
-                returnValue = value;
+                case BIGINT:
+                    ensureNumber(value);
+                    returnValue = ((Number) value).longValue();
+                    break;
+                case DOUBLE:
+                    ensureNumber(value);
+                    returnValue = ((Number) value).doubleValue();
+                    break;
+                case FLOAT:
+                    ensureNumber(value);
+                    returnValue = ((Number) value).floatValue();
+                    break;
+                case INT:
+                    ensureNumber(value);
+                    returnValue = ((Number) value).intValue();
+                    break;
+                default:
+                    returnValue = value;
 
             }
         }

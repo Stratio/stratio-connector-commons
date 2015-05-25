@@ -18,24 +18,18 @@
 
 package com.stratio.connector.commons.util;
 
-import java.io.IOException;
-import java.io.InputStream;
-
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpression;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
-
+import com.stratio.crossdata.common.exceptions.InitializationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import com.stratio.crossdata.common.exceptions.InitializationException;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.*;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Utilities for manifest. Created by jmgomez on 27/10/14.
@@ -62,7 +56,7 @@ public final class ManifestUtil {
      */
     public static String[] getDatastoreName(String pathManifest) throws InitializationException {
 
-        String[] datastoreName = { "" };
+        String[] datastoreName = {""};
         try {
             Document document = getDocument(pathManifest);
             // Search for the limit properties and connectorName

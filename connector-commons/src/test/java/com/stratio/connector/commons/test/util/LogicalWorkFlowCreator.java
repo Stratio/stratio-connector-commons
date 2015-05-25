@@ -18,35 +18,19 @@
 
 package com.stratio.connector.commons.test.util;
 
-import java.util.*;
-
 import com.stratio.crossdata.common.data.ClusterName;
 import com.stratio.crossdata.common.data.ColumnName;
 import com.stratio.crossdata.common.data.TableName;
 import com.stratio.crossdata.common.exceptions.UnsupportedException;
-import com.stratio.crossdata.common.logicalplan.Filter;
-import com.stratio.crossdata.common.logicalplan.GroupBy;
-import com.stratio.crossdata.common.logicalplan.Limit;
-import com.stratio.crossdata.common.logicalplan.LogicalStep;
-import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
-import com.stratio.crossdata.common.logicalplan.OrderBy;
-import com.stratio.crossdata.common.logicalplan.Project;
-import com.stratio.crossdata.common.logicalplan.Select;
-import com.stratio.crossdata.common.logicalplan.Window;
+import com.stratio.crossdata.common.logicalplan.*;
 import com.stratio.crossdata.common.metadata.ColumnType;
 import com.stratio.crossdata.common.metadata.DataType;
 import com.stratio.crossdata.common.metadata.Operations;
-import com.stratio.crossdata.common.statements.structures.BooleanSelector;
-import com.stratio.crossdata.common.statements.structures.ColumnSelector;
-import com.stratio.crossdata.common.statements.structures.IntegerSelector;
-import com.stratio.crossdata.common.statements.structures.Operator;
-import com.stratio.crossdata.common.statements.structures.OrderByClause;
-import com.stratio.crossdata.common.statements.structures.OrderDirection;
-import com.stratio.crossdata.common.statements.structures.Relation;
-import com.stratio.crossdata.common.statements.structures.Selector;
-import com.stratio.crossdata.common.statements.structures.StringSelector;
+import com.stratio.crossdata.common.statements.structures.*;
 import com.stratio.crossdata.common.statements.structures.window.TimeUnit;
 import com.stratio.crossdata.common.statements.structures.window.WindowType;
+
+import java.util.*;
 
 /**
  * Created by jmgomez on 16/09/14.
@@ -343,14 +327,14 @@ public class LogicalWorkFlowCreator {
         operation.add(Operations.FILTER_FUNCTION_EQ);
         window = new Window(operation, type);
         switch (type) {
-        case NUM_ROWS:
-            window.setNumRows(limit);
-            break;
-        case TEMPORAL:
-            window.setTimeWindow(limit, TimeUnit.SECONDS);
-            break;
-        default:
-            throw new UnsupportedException("Window " + type + " not supported");
+            case NUM_ROWS:
+                window.setNumRows(limit);
+                break;
+            case TEMPORAL:
+                window.setTimeWindow(limit, TimeUnit.SECONDS);
+                break;
+            default:
+                throw new UnsupportedException("Window " + type + " not supported");
 
         }
         return this;

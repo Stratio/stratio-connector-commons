@@ -1,12 +1,5 @@
 package com.stratio.connector.commons.ptest.thread;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.stratio.connector.commons.metadata.TableMetadataBuilder;
 import com.stratio.connector.commons.ptest.util.EficiencyBean;
 import com.stratio.connector.commons.ptest.util.TextFileParser;
@@ -20,6 +13,12 @@ import com.stratio.crossdata.common.exceptions.ConnectorException;
 import com.stratio.crossdata.common.metadata.ColumnType;
 import com.stratio.crossdata.common.metadata.DataType;
 import com.stratio.crossdata.common.metadata.TableMetadata;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class InsertThread extends Thread {
 
@@ -37,7 +36,7 @@ public class InsertThread extends Thread {
     private Integer id;
 
     public InsertThread(Integer id, ClusterName targetCluster, IConnector connector, String catalog, String table,
-            boolean isNotExists) {
+                        boolean isNotExists) {
         super(InsertThread.class.getName() + "_" + id);
         this.id = id;
         this.targetCluster = targetCluster;
