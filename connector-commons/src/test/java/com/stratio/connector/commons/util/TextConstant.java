@@ -25,10 +25,10 @@ import java.util.Random;
  */
 public class TextConstant {
 
-    public static final String[] TEXT = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O",
+    public static final String[] TEXT = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O",
             "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f", "g", "h", "i",
             "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "!", "_", "1",
-            "2", "3", "4", "5", "6", "7", "8", "9", " " };
+            "2", "3", "4", "5", "6", "7", "8", "9", " "};
     public static String[] names = {
             "MARY", "PATRICIA", "LINDA", "BARBARA", "ELIZABETH", "JENNIFER", "MARIA", "SUSAN", "MARGARET",
             "DOROTHY",
@@ -188,7 +188,7 @@ public class TextConstant {
             "BERRY", "ALEC", "TANNER", "JARRED", "DONN", "TRINIDAD", "TAD", "SHIRLEY", "PRINCE", "PORFIRIO", "ODIS",
             "MARIA", "LENARD", "CHAUNCEY", "CHANG", "TOD", "MEL", "MARCELO", "KORY", "AUGUSTUS", "KEVEN", "HILARIO",
             "BUD", "SAL", "ROSARIO", "ORVAL", "MAURO", "DANNIE", "ZACHARIAH", "OLEN", "ANIBAL", "MILO", "JED",
-            "FRANCES", "THANH", "DILLON", "AMADO", "NEWTON", "CONNIE" };
+            "FRANCES", "THANH", "DILLON", "AMADO", "NEWTON", "CONNIE"};
 
     public static String[] danteParadise = {
             "His glory, by whose might all things are mov'd, Pierces the universe, and in one part Sheds more resplendence, elsewhere less. ",
@@ -235,9 +235,9 @@ public class TextConstant {
             "As from a cloud the fire is seen to fall, From its original impulse warp'd, to earth, By vicious fondness. ",
             "Thou no more admire Thy soaring, (if I rightly deem,) than lapse Of torrent downwards from a mountain's height.",
             "There would in thee for wonder be more cause, If, free of hind'rance, thou hadst fix'd thyself Below, like fire unmoving on the earth.\"",
-            "So said, she turn'd toward the heav'n her face. " };
+            "So said, she turn'd toward the heav'n her face. "};
 
-    public static String[] countries = { "Afghanistan",
+    public static String[] countries = {"Afghanistan",
             "Albania",
             "Algeria",
             "Andorra",
@@ -432,7 +432,7 @@ public class TextConstant {
             "Vietnam",
             "Yemen",
             "Zambia",
-            "Zimbabwe" };
+            "Zimbabwe"};
     private static Random random = new Random(System.currentTimeMillis());
 
     public static String getRandomName() {

@@ -18,11 +18,6 @@
 
 package com.stratio.connector.commons.engine;
 
-import java.util.Collection;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.stratio.connector.commons.connection.Connection;
 import com.stratio.connector.commons.connection.ConnectionHandler;
 import com.stratio.crossdata.common.connector.IStorageEngine;
@@ -34,6 +29,10 @@ import com.stratio.crossdata.common.exceptions.UnsupportedException;
 import com.stratio.crossdata.common.logicalplan.Filter;
 import com.stratio.crossdata.common.metadata.TableMetadata;
 import com.stratio.crossdata.common.statements.structures.Relation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Collection;
 
 /**
  * This abstract class is a Template for CommonsStorageEngine. Created by dgomez on 22/09/14.
@@ -45,7 +44,7 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
     /**
      * The Log.
      */
-    private transient final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final transient Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * The connection handler.
@@ -104,7 +103,7 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
      */
     @Override
     public final void insert(ClusterName targetCluster, TableMetadata targetTable, Collection<Row> rows,
-            boolean isNotExists) throws UnsupportedException, ExecutionException {
+                             boolean isNotExists) throws UnsupportedException, ExecutionException {
 
         connectionHandler.startJob(targetCluster.getName());
 
@@ -137,7 +136,7 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
     @Override
     public final void update(ClusterName targetCluster, TableName tableName, Collection<Relation> assignments,
 
-            Collection<Filter> whereClauses) throws UnsupportedException, ExecutionException {
+                             Collection<Filter> whereClauses) throws UnsupportedException, ExecutionException {
 
         try {
             connectionHandler.startJob(targetCluster.getName());
@@ -249,7 +248,7 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
      * @throws ExecutionException   if a error happens.
      */
     protected abstract void update(TableName tableName, Collection<Relation> assignments,
-            Collection<Filter> whereClauses, Connection<T> connection) throws UnsupportedException,
+                                   Collection<Filter> whereClauses, Connection<T> connection) throws UnsupportedException,
             ExecutionException;
 
     /**
@@ -276,5 +275,5 @@ public abstract class CommonsStorageEngine<T> implements IStorageEngine {
      * @throws ExecutionException   if the execution fails.
      */
     protected abstract void insert(TableMetadata targetTable, Collection<Row> rows, boolean isNotExists,
-            Connection<T> connection) throws UnsupportedException, ExecutionException;
+                                   Connection<T> connection) throws UnsupportedException, ExecutionException;
 }

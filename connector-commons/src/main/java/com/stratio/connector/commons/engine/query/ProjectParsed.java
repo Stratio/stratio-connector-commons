@@ -18,24 +18,16 @@
 
 package com.stratio.connector.commons.engine.query;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-
+import com.stratio.crossdata.common.exceptions.ConnectorException;
+import com.stratio.crossdata.common.exceptions.ExecutionException;
+import com.stratio.crossdata.common.logicalplan.*;
+import com.stratio.crossdata.common.statements.structures.Operator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.stratio.crossdata.common.exceptions.ConnectorException;
-import com.stratio.crossdata.common.exceptions.ExecutionException;
-import com.stratio.crossdata.common.logicalplan.Filter;
-import com.stratio.crossdata.common.logicalplan.GroupBy;
-import com.stratio.crossdata.common.logicalplan.Limit;
-import com.stratio.crossdata.common.logicalplan.LogicalStep;
-import com.stratio.crossdata.common.logicalplan.OrderBy;
-import com.stratio.crossdata.common.logicalplan.Project;
-import com.stratio.crossdata.common.logicalplan.Select;
-import com.stratio.crossdata.common.logicalplan.Window;
-import com.stratio.crossdata.common.statements.structures.Operator;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  * This class is a representation of a query.

@@ -18,9 +18,9 @@
 
 package com.stratio.connector.commons.util;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Parse Tester.
@@ -53,7 +53,7 @@ public class ConnectorParserTest {
 
 
     @Test
-    public void hostPorts(){
+    public void hostPorts() {
 
         String[] hostips = ConnectorParser.hostPorts("[10.70.90.12:2000, 10.70.90.13:3000]");
 

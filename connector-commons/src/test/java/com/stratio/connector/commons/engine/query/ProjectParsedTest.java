@@ -17,30 +17,21 @@
  */
 package com.stratio.connector.commons.engine.query;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
+import com.stratio.crossdata.common.data.ClusterName;
+import com.stratio.crossdata.common.data.TableName;
+import com.stratio.crossdata.common.logicalplan.*;
+import com.stratio.crossdata.common.metadata.Operations;
+import com.stratio.crossdata.common.statements.structures.Operator;
+import com.stratio.crossdata.common.statements.structures.Relation;
+import com.stratio.crossdata.common.statements.structures.window.WindowType;
+import org.junit.Test;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.junit.Test;
-
-import com.stratio.crossdata.common.data.ClusterName;
-import com.stratio.crossdata.common.data.TableName;
-import com.stratio.crossdata.common.logicalplan.Filter;
-import com.stratio.crossdata.common.logicalplan.GroupBy;
-import com.stratio.crossdata.common.logicalplan.Limit;
-import com.stratio.crossdata.common.logicalplan.OrderBy;
-import com.stratio.crossdata.common.logicalplan.Project;
-import com.stratio.crossdata.common.logicalplan.Select;
-import com.stratio.crossdata.common.logicalplan.Window;
-import com.stratio.crossdata.common.metadata.Operations;
-import com.stratio.crossdata.common.statements.structures.Operator;
-import com.stratio.crossdata.common.statements.structures.Relation;
-import com.stratio.crossdata.common.statements.structures.window.WindowType;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
 
 /**
  * ProjectParsed Tester.
@@ -111,7 +102,7 @@ public class ProjectParsedTest {
         Relation relation = new Relation(null, Operator.EQ, null);
         Set<Operations> filterOperation = new HashSet<>();
         filterOperation.add(Operations.FILTER_INDEXED_EQ);
-                Filter filter = new Filter(filterOperation, relation);
+        Filter filter = new Filter(filterOperation, relation);
         project.setNextStep(filter);
 
         ProjectParsed projectParsed = new ProjectParsed(project, mock(ProjectValidator.class));

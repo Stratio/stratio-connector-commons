@@ -18,9 +18,6 @@
 
 package com.stratio.connector.commons.engine;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.stratio.connector.commons.connection.ConnectionHandler;
 import com.stratio.crossdata.common.connector.IQueryEngine;
 import com.stratio.crossdata.common.connector.IResultHandler;
@@ -30,6 +27,8 @@ import com.stratio.crossdata.common.logicalplan.LogicalStep;
 import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
 import com.stratio.crossdata.common.logicalplan.Project;
 import com.stratio.crossdata.common.result.QueryResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This abstract class is a Template for CommonsQueryEngine. Created by dgomez on 22/09/14.
@@ -39,7 +38,7 @@ public abstract class CommonsQueryEngine implements IQueryEngine {
     /**
      * The Log.
      */
-    private transient final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final transient Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * The connection handler.
@@ -60,13 +59,13 @@ public abstract class CommonsQueryEngine implements IQueryEngine {
     /**
      * This method execute a async query.
      *
-     * @param queryId the queryId.
-     * @param workflow the workflow.
+     * @param queryId       the queryId.
+     * @param workflow      the workflow.
      * @param resultHandler the result handler.
-     *
      * @throws ConnectorException if a error happens.
      */
-    @Override public final void asyncExecute(String queryId, LogicalWorkflow workflow, IResultHandler resultHandler)
+    @Override
+    public final void asyncExecute(String queryId, LogicalWorkflow workflow, IResultHandler resultHandler)
             throws ConnectorException {
         Long time = null;
         try {
@@ -75,39 +74,40 @@ public abstract class CommonsQueryEngine implements IQueryEngine {
                 connectionHandler.startJob(clusterName.getName());
             }
             if (logger.isDebugEnabled()) {
-                logger.debug("Async Executing [" + workflow.toString() + "] : queryId ["+queryId+"]");
+                logger.debug("Async Executing [" + workflow.toString() + "] : queryId [" + queryId + "]");
             }
             time = System.currentTimeMillis();
-            asyncExecuteWorkFlow(queryId,workflow, resultHandler);
+            asyncExecuteWorkFlow(queryId, workflow, resultHandler);
 
             if (logger.isDebugEnabled()) {
                 logger.debug(
-                        "The async query [" + queryId + "] has ended" );
+                        "The async query [" + queryId + "] has ended");
             }
         } finally {
             for (LogicalStep project : workflow.getInitialSteps()) {
                 connectionHandler.endJob(((Project) project).getClusterName().getName());
             }
-            if (time!=null){
-                logger.info("TIME - The execute time to async executed with queryId ["+queryId+"] has been ["+(System
-                        .currentTimeMillis()-time)
-                        +"]");
+            if (time != null) {
+                logger.info("TIME - The execute time to async executed with queryId [" + queryId + "] has been [" + (System
+                        .currentTimeMillis() - time)
+                        + "]");
             }
         }
 
 
     }
+
     /**
      * This method execute a async and paged query.
      *
-     * @param queryId the queryId.
-     * @param workflow the workflow.
+     * @param queryId       the queryId.
+     * @param workflow      the workflow.
      * @param resultHandler the result handler.
-     *
      * @throws ConnectorException if a error happens.
      */
-    @Override public final void pagedExecute(String queryId, LogicalWorkflow workflow, IResultHandler resultHandler,
-            int pageSize) throws ConnectorException {
+    @Override
+    public final void pagedExecute(String queryId, LogicalWorkflow workflow, IResultHandler resultHandler,
+                                   int pageSize) throws ConnectorException {
         Long time = null;
         try {
             for (LogicalStep project : workflow.getInitialSteps()) {
@@ -115,23 +115,23 @@ public abstract class CommonsQueryEngine implements IQueryEngine {
                 connectionHandler.startJob(clusterName.getName());
             }
             if (logger.isDebugEnabled()) {
-                logger.debug("Async paged Executing [" + workflow.toString() + "] : queryId ["+queryId+"]");
+                logger.debug("Async paged Executing [" + workflow.toString() + "] : queryId [" + queryId + "]");
             }
             time = System.currentTimeMillis();
-            pagedExecuteWorkFlow(queryId, workflow, resultHandler,pageSize);
+            pagedExecuteWorkFlow(queryId, workflow, resultHandler, pageSize);
 
             if (logger.isDebugEnabled()) {
                 logger.debug(
-                        "The async query [" + queryId + "] has ended" );
+                        "The async query [" + queryId + "] has ended");
             }
         } finally {
             for (LogicalStep project : workflow.getInitialSteps()) {
                 connectionHandler.endJob(((Project) project).getClusterName().getName());
             }
-            if (time!=null){
-                logger.info("TIME - The execute time to paged executed with queryId ["+queryId+"] has been ["+(System
-                        .currentTimeMillis()-time)
-                        +"]");
+            if (time != null) {
+                logger.info("TIME - The execute time to paged executed with queryId [" + queryId + "] has been [" + (System
+                        .currentTimeMillis() - time)
+                        + "]");
             }
         }
 
@@ -165,28 +165,27 @@ public abstract class CommonsQueryEngine implements IQueryEngine {
                         "The query has finished. The result form the query [" + workflow.toString() + "] has returned "
                                 + "[" +
                                 result
-                                .getResultSet()
-                                .size() + "] rows");
+                                        .getResultSet()
+                                        .size() + "] rows");
 
             }
         } finally {
             for (LogicalStep project : workflow.getInitialSteps()) {
                 connectionHandler.endJob(((Project) project).getClusterName().getName());
             }
-            if (time!=null){
-                logger.info("TIME - The execute time has been ["+(System.currentTimeMillis()-time)+"]");
+            if (time != null) {
+                logger.info("TIME - The execute time has been [" + (System.currentTimeMillis() - time) + "]");
             }
         }
         return result;
     }
 
 
-
     /**
      * Abstract method which must be implemented by the concrete database metadataEngine to execute a workflow.
      *
      * @param workflow the workflow.
-     * @return  the query result.
+     * @return the query result.
      * @throws ConnectorException if an error happens.
      */
     protected abstract QueryResult executeWorkFlow(LogicalWorkflow workflow) throws ConnectorException;
@@ -194,28 +193,26 @@ public abstract class CommonsQueryEngine implements IQueryEngine {
     /**
      * Abstract method which must be implemented by the concrete database metadataEngine to execute a async workflow.
      *
-     * @param queryId the queryId.
-     * @param workflow the workflow.
+     * @param queryId       the queryId.
+     * @param workflow      the workflow.
      * @param resultHandler the result handler.
-     *
      * @throws ConnectorException if an error happens.
      */
     protected abstract void asyncExecuteWorkFlow(String queryId, LogicalWorkflow workflow, IResultHandler
-            resultHandler)  throws ConnectorException;
+            resultHandler) throws ConnectorException;
 
 
     /**
      * Abstract method which must be implemented by the concrete database metadataEngine to execute a async and paged
      * workflow.
      *
-     * @param queryId the queryId.
-     * @param workflow the workflow.
+     * @param queryId       the queryId.
+     * @param workflow      the workflow.
      * @param resultHandler the result handler.
-     *
      * @param pageSize
      * @throws ConnectorException if an error happens.
      */
     protected abstract void pagedExecuteWorkFlow(String queryId, LogicalWorkflow workflow, IResultHandler resultHandler,
-            int pageSize)  throws ConnectorException
+                                                 int pageSize) throws ConnectorException
     ;
 }

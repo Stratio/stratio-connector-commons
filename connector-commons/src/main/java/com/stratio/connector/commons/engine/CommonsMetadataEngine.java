@@ -18,12 +18,6 @@
 
 package com.stratio.connector.commons.engine;
 
-import java.util.List;
-import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.stratio.connector.commons.connection.Connection;
 import com.stratio.connector.commons.connection.ConnectionHandler;
 import com.stratio.crossdata.common.connector.IMetadataEngine;
@@ -38,6 +32,11 @@ import com.stratio.crossdata.common.metadata.CatalogMetadata;
 import com.stratio.crossdata.common.metadata.IndexMetadata;
 import com.stratio.crossdata.common.metadata.TableMetadata;
 import com.stratio.crossdata.common.statements.structures.Selector;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * This abstract class is a Template for MetadataEngines.
@@ -51,7 +50,7 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
     /**
      * The Log.
      */
-    private transient final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final transient Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * The connection handler.
@@ -363,9 +362,9 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
             return catalogMetadata;
         } finally {
             connectionHandler.endJob(targetCluster.getName());
-            logger.info("TIME - The execute time for the provide Catalog Metadata ["+targetCluster
-                    .getName()+":"+catalogName.getName()+"] has been ["+(System.currentTimeMillis()-time)
-                    +"]");
+            logger.info("TIME - The execute time for the provide Catalog Metadata [" + targetCluster
+                    .getName() + ":" + catalogName.getName() + "] has been [" + (System.currentTimeMillis() - time)
+                    + "]");
 
         }
     }
@@ -391,9 +390,9 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
             return tableMetadata;
         } finally {
             connectionHandler.endJob(targetCluster.getName());
-            logger.info("TIME - The execute time for the provide table Metadata ["+targetCluster
-                    .getName()+":"+tableName.getName()+"] has been ["+(System.currentTimeMillis()-time)
-                    +"]");
+            logger.info("TIME - The execute time for the provide table Metadata [" + targetCluster
+                    .getName() + ":" + tableName.getName() + "] has been [" + (System.currentTimeMillis() - time)
+                    + "]");
         }
     }
 
@@ -401,10 +400,10 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
             throws ConnectorException;
 
     protected abstract CatalogMetadata provideCatalogMetadata(CatalogName catalogName, ClusterName targetCluster,
-            Connection<T> connection) throws ConnectorException;
+                                                              Connection<T> connection) throws ConnectorException;
 
     protected abstract TableMetadata provideTableMetadata(TableName tableName, ClusterName targetCluster,
-            Connection<T> connection) throws ConnectorException;
+                                                          Connection<T> connection) throws ConnectorException;
 
     /**
      * Alter options in an existing table.
@@ -416,7 +415,7 @@ public abstract class CommonsMetadataEngine<T> implements IMetadataEngine {
      * @throws ExecutionException   if any error happen during the execution.
      */
     protected abstract void alterCatalog(CatalogName catalogName, Map<Selector, Selector> options,
-            Connection<T> connection) throws UnsupportedException, ExecutionException;
+                                         Connection<T> connection) throws UnsupportedException, ExecutionException;
 
     /**
      * Abstract method which must be implemented by the concrete database metadataEngine to add, delete, or modify

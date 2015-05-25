@@ -34,6 +34,7 @@ public final class ConnectorParser {
      *
      * @param hosts the hosts string.
      * @return the hosts in an Array.
+     * @deprecated use PropertyValueRecovered.
      */
     @Deprecated
     public static String[] hosts(String hosts) {
@@ -46,6 +47,7 @@ public final class ConnectorParser {
      *
      * @param ips the ips string.
      * @return the ips in an Array.
+     * @deprecated use PropertyValueRecovered.
      */
     @Deprecated
     public static String[] ports(String ips) {
@@ -57,6 +59,7 @@ public final class ConnectorParser {
      *
      * @param hostPorts the host:ips string.
      * @return the host:ips in an Array.
+     * @deprecated use PropertyValueRecovered.
      */
     @Deprecated
     public static String[] hostPorts(String hostPorts) {

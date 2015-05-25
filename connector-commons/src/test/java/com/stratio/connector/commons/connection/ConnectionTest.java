@@ -17,14 +17,13 @@
  */
 package com.stratio.connector.commons.connection;
 
-import static junit.framework.Assert.assertSame;
-import static junit.framework.TestCase.assertNotNull;
-
+import com.stratio.connector.commons.connection.dummy.DummyConnector;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.stratio.connector.commons.connection.dummy.DummyConnector;
+import static junit.framework.Assert.assertSame;
+import static junit.framework.TestCase.assertNotNull;
 
 /**
  * Connection Tester.

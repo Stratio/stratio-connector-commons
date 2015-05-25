@@ -1,11 +1,5 @@
 package com.stratio.connector.commons.ptest.util;
 
-import java.io.Serializable;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import com.stratio.connector.commons.metadata.TableMetadataBuilder;
 import com.stratio.connector.commons.test.util.LogicalWorkFlowCreator;
 import com.stratio.crossdata.common.data.Cell;
@@ -14,6 +8,12 @@ import com.stratio.crossdata.common.data.Row;
 import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
 import com.stratio.crossdata.common.metadata.ColumnType;
 import com.stratio.crossdata.common.metadata.DataType;
+
+import java.io.Serializable;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class EficiencyBean implements Serializable {
 
@@ -38,6 +38,7 @@ public class EficiencyBean implements Serializable {
         columns.put(COLUMN_RANDOM_KEY, new ColumnType(DataType.VARCHAR));
 
     }
+
     private final String separator = "%";
     public Integer primaryKey;
     public String name;
@@ -49,7 +50,7 @@ public class EficiencyBean implements Serializable {
 
     public EficiencyBean(Integer primaryKey, String name, Boolean married, String country, String danteLine, Integer
             age, String
-            randomKey) {
+                                 randomKey) {
         this.primaryKey = primaryKey;
         this.name = name;
         this.married = married;

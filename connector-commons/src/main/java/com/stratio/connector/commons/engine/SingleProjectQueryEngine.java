@@ -64,54 +64,45 @@ public abstract class SingleProjectQueryEngine<T> extends CommonsQueryEngine {
     /**
      * Abstract method which must be implemented by the concrete database metadataEngine to execute a async workflow.
      *
-     * @param queryId the queryId.
-     * @param workflow the workflow.
+     * @param queryId       the queryId.
+     * @param workflow      the workflow.
      * @param resultHandler the result handler.
-     *
      * @throws ConnectorException if an error happens.
      */
     protected final void asyncExecuteWorkFlow(String queryId, LogicalWorkflow workflow, IResultHandler
-            resultHandler)  throws ConnectorException{
+            resultHandler) throws ConnectorException {
         checkIsSupported(workflow);
         ClusterName clusterName = ((Project) workflow.getInitialSteps().get(0)).getClusterName();
-        asyncExecute(queryId,(Project) workflow.getInitialSteps().get(0),
+        asyncExecute(queryId, (Project) workflow.getInitialSteps().get(0),
                 connectionHandler.getConnection(clusterName.getName()), resultHandler);
     }
-
-
 
 
     /**
      * Abstract method which must be implemented by the concrete database metadataEngine to execute a async and paged
      * workflow.
      *
-     * @param queryId the queryId.
-     * @param workflow the workflow.
+     * @param queryId       the queryId.
+     * @param workflow      the workflow.
      * @param resultHandler the result handler.
-     *
      * @param pageSize
      * @throws ConnectorException if an error happens.
      */
     protected final void pagedExecuteWorkFlow(String queryId, LogicalWorkflow workflow, IResultHandler resultHandler,
-                                                 int pageSize)  throws ConnectorException{
+                                              int pageSize) throws ConnectorException {
 
         checkIsSupported(workflow);
         ClusterName clusterName = ((Project) workflow.getInitialSteps().get(0)).getClusterName();
-         pagedExecute(queryId,(Project) workflow.getInitialSteps().get(0),
+        pagedExecute(queryId, (Project) workflow.getInitialSteps().get(0),
                 connectionHandler.getConnection(clusterName.getName()), resultHandler);
     }
-
-
-
-
-
 
 
     /**
      * Abstract method which must be implemented by the concrete database metadataEngine to execute a project with only
      * a project.
      *
-     * @param project   the project.
+     * @param project    the project.
      * @param connection the connection to the database.
      * @throws UnsupportedException if an operation is not supported.
      * @throws ExecutionException   if a error happens.
@@ -123,9 +114,8 @@ public abstract class SingleProjectQueryEngine<T> extends CommonsQueryEngine {
      * Abstract method which must be implemented by the concrete database metadataEngine to execute a  async workflow with only
      * a project.
      *
-     *
      * @param queryId
-     * @param project   the project.
+     * @param project    the project.
      * @param connection the connection to the database.
      * @throws UnsupportedException if an operation is not supported.
      * @throws ExecutionException   if a error happens.
@@ -134,21 +124,18 @@ public abstract class SingleProjectQueryEngine<T> extends CommonsQueryEngine {
     protected abstract void asyncExecute(String queryId, Project project, Connection connection, IResultHandler resultHandler) throws ConnectorException;
 
 
-
     /**
      * Abstract method which must be implemented by the concrete database metadataEngine to execute a  paged workflow with only
      * a project.
      *
-     *
      * @param queryId
-     * @param project   the project.
+     * @param project    the project.
      * @param connection the connection to the database.
      * @throws UnsupportedException if an operation is not supported.
      * @throws ExecutionException   if a error happens.
      */
 
     protected abstract void pagedExecute(String queryId, Project project, Connection connection, IResultHandler resultHandler) throws ConnectorException;
-
 
 
     /**
@@ -159,7 +146,7 @@ public abstract class SingleProjectQueryEngine<T> extends CommonsQueryEngine {
      */
     private void checkIsSupported(LogicalWorkflow workflow) throws ExecutionException {
         if (workflow.getInitialSteps().size() != 1) {
-             throw new ExecutionException("The connector can only execute queries with one Project");
+            throw new ExecutionException("The connector can only execute queries with one Project");
         }
     }
 

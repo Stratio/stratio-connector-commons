@@ -1,14 +1,13 @@
 package com.stratio.connector.commons.ptest.util;
 
+import com.stratio.connector.commons.util.TextConstant;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.net.URL;
 import java.util.Random;
-
-import org.slf4j.LoggerFactory;
-
-import com.stratio.connector.commons.util.TextConstant;
 
 public class TextFileParser {
 

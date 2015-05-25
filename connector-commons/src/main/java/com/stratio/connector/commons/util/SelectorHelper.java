@@ -18,18 +18,13 @@
 
 package com.stratio.connector.commons.util;
 
+import com.stratio.crossdata.common.exceptions.ExecutionException;
+import com.stratio.crossdata.common.statements.structures.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.stratio.crossdata.common.exceptions.ExecutionException;
-import com.stratio.crossdata.common.statements.structures.BooleanSelector;
-import com.stratio.crossdata.common.statements.structures.ColumnSelector;
-import com.stratio.crossdata.common.statements.structures.FloatingPointSelector;
-import com.stratio.crossdata.common.statements.structures.IntegerSelector;
-import com.stratio.crossdata.common.statements.structures.Selector;
-import com.stratio.crossdata.common.statements.structures.SelectorType;
-import com.stratio.crossdata.common.statements.structures.StringSelector;
 import static com.stratio.connector.commons.util.TypeDecisor.*;
+
 /**
  * This class is a helper for the selector crossdata. Created by jmgomez on 17/09/14.
  */
@@ -90,24 +85,24 @@ public final class SelectorHelper {
 
         switch (selector.getType()) {
 
-        case COLUMN:
-            field = ((ColumnSelector) selector).getName().getName();
-            break;
-        case BOOLEAN:
-            field = ((BooleanSelector) selector).getValue();
-            break;
-        case STRING:
-            field = ((StringSelector) selector).getValue();
-            break;
-        case INTEGER:
-            field = ((IntegerSelector) selector).getValue();
-            break;
-        case FLOATING_POINT:
-            field = ((FloatingPointSelector) selector).getValue();
-            break;
+            case COLUMN:
+                field = ((ColumnSelector) selector).getName().getName();
+                break;
+            case BOOLEAN:
+                field = ((BooleanSelector) selector).getValue();
+                break;
+            case STRING:
+                field = ((StringSelector) selector).getValue();
+                break;
+            case INTEGER:
+                field = ((IntegerSelector) selector).getValue();
+                break;
+            case FLOATING_POINT:
+                field = ((FloatingPointSelector) selector).getValue();
+                break;
 
-        default:
-            throw new ExecutionException("Selector " + selector.getType() + " not supported get value operation.");
+            default:
+                throw new ExecutionException("Selector " + selector.getType() + " not supported get value operation.");
         }
 
         return field;
@@ -124,21 +119,21 @@ public final class SelectorHelper {
     public static Class getClass(Selector selector) throws ExecutionException {
         Class returnClass = null;
         switch (selector.getType()) {
-        case STRING:
-        case COLUMN:
-            returnClass = String.class;
-            break;
-        case BOOLEAN:
-            returnClass = Boolean.class;
-            break;
-        case INTEGER:
-            returnClass = Long.class;
-            break;
-        case FLOATING_POINT:
-            returnClass = Double.class;
-            break;
-        default:
-            throw new ExecutionException("Selector " + selector.getType() + " not supported get value operation.");
+            case STRING:
+            case COLUMN:
+                returnClass = String.class;
+                break;
+            case BOOLEAN:
+                returnClass = Boolean.class;
+                break;
+            case INTEGER:
+                returnClass = Long.class;
+                break;
+            case FLOATING_POINT:
+                returnClass = Double.class;
+                break;
+            default:
+                throw new ExecutionException("Selector " + selector.getType() + " not supported get value operation.");
         }
 
         return returnClass;
@@ -235,7 +230,6 @@ public final class SelectorHelper {
 
         return returnValue;
     }
-
 
 
 }

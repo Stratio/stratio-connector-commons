@@ -17,22 +17,15 @@
  */
 package com.stratio.connector.commons.metadata;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
 import com.stratio.crossdata.common.data.ClusterName;
 import com.stratio.crossdata.common.data.ColumnName;
 import com.stratio.crossdata.common.data.IndexName;
 import com.stratio.crossdata.common.data.TableName;
-import com.stratio.crossdata.common.metadata.ColumnMetadata;
-import com.stratio.crossdata.common.metadata.ColumnType;
-import com.stratio.crossdata.common.metadata.IndexMetadata;
-import com.stratio.crossdata.common.metadata.IndexType;
-import com.stratio.crossdata.common.metadata.TableMetadata;
+import com.stratio.crossdata.common.exceptions.ExecutionException;
+import com.stratio.crossdata.common.metadata.*;
 import com.stratio.crossdata.common.statements.structures.Selector;
+
+import java.util.*;
 
 /**
  * Builder for TableMetadata.
@@ -53,7 +46,7 @@ public class TableMetadataBuilder {
     /**
      * The columns.
      */
-    private LinkedHashMap<ColumnName, ColumnMetadata> columns;
+    private Map<ColumnName, ColumnMetadata> columns;
 
     /**
      * The index metadata.
@@ -63,12 +56,12 @@ public class TableMetadataBuilder {
     /**
      * The partition key.
      */
-    private LinkedList<ColumnName> partitionKey;
+    private List<ColumnName> partitionKey;
 
     /**
      * The cluster key.
      */
-    private LinkedList<ColumnName> clusterKey;
+    private List<ColumnName> clusterKey;
 
     /**
      * The cluster name.
@@ -149,12 +142,13 @@ public class TableMetadataBuilder {
      * Add an index. Must be called after including columns because columnMetadata is recovered from the tableMetadata.
      * Options in indexMetadata will be null.
      *
-     * @param indType   the index type
-     * @param indexName the index name
-     * @param fields    the columns which define the index
-     * @return the table metadata builder
+     * @param indType   the index type.
+     * @param indexName the index name.
+     * @param fields    the columns which define the index.
+     * @return the table metadata builder.
+     * @throws if an error happens.
      */
-    public TableMetadataBuilder addIndex(IndexType indType, String indexName, String... fields) {
+    public TableMetadataBuilder addIndex(IndexType indType, String indexName, String... fields) throws ExecutionException {
 
         IndexName indName = new IndexName(tableName.getName(), tableName.getName(), indexName);
 
@@ -163,7 +157,7 @@ public class TableMetadataBuilder {
         for (String field : fields) {
             ColumnMetadata cMetadata = columns.get(new ColumnName(tableName, field));
             if (cMetadata == null) {
-                throw new RuntimeException("Trying to index a not existing column: " + field);
+                throw new ExecutionException("Trying to index a not existing column: " + field);
             }
             columnsMetadata.put(new ColumnName(tableName, field), cMetadata);
         }
@@ -243,7 +237,7 @@ public class TableMetadataBuilder {
         if (isPKRequired && partitionKey.isEmpty()) {
             this.withPartitionKey(columns.keySet().iterator().next().getName());
         }
-        return new TableMetadata(tableName, options, columns, indexes, clusterName, partitionKey, clusterKey);
+        return new TableMetadata(tableName, options, new LinkedHashMap<>(columns), indexes, clusterName, partitionKey, clusterKey);
     }
 
 }

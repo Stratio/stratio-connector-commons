@@ -18,39 +18,23 @@
 
 package com.stratio.connector.commons.ftest.functionalTestQuery;
 
+import com.stratio.connector.commons.ftest.GenericConnectorTest;
+import com.stratio.connector.commons.metadata.TableMetadataBuilder;
+import com.stratio.connector.commons.test.util.LogicalWorkFlowCreator;
+import com.stratio.crossdata.common.data.*;
+import com.stratio.crossdata.common.exceptions.ConnectorException;
+import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
+import com.stratio.crossdata.common.metadata.*;
+import com.stratio.crossdata.common.result.QueryResult;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.*;
+
 import static com.stratio.connector.commons.util.TextConstant.danteParadise;
 import static com.stratio.connector.commons.util.TextConstant.names;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import com.stratio.connector.commons.ftest.GenericConnectorTest;
-import com.stratio.connector.commons.metadata.TableMetadataBuilder;
-import com.stratio.connector.commons.test.util.LogicalWorkFlowCreator;
-import com.stratio.crossdata.common.data.Cell;
-import com.stratio.crossdata.common.data.ClusterName;
-import com.stratio.crossdata.common.data.ColumnName;
-import com.stratio.crossdata.common.data.IndexName;
-import com.stratio.crossdata.common.data.ResultSet;
-import com.stratio.crossdata.common.data.Row;
-import com.stratio.crossdata.common.data.TableName;
-import com.stratio.crossdata.common.exceptions.ConnectorException;
-import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
-import com.stratio.crossdata.common.metadata.ColumnMetadata;
-import com.stratio.crossdata.common.metadata.ColumnType;
-import com.stratio.crossdata.common.metadata.DataType;
-import com.stratio.crossdata.common.metadata.IndexMetadata;
-import com.stratio.crossdata.common.metadata.IndexType;
-import com.stratio.crossdata.common.metadata.TableMetadata;
-import com.stratio.crossdata.common.result.QueryResult;
 
 /**
  * Created by jmgomez on 17/07/14.

@@ -19,15 +19,28 @@
 package com.stratio.connector.commons.util;
 
 import com.stratio.crossdata.common.logicalplan.Filter;
-import com.stratio.crossdata.common.metadata.Operations;
 
+import java.util.HashSet;
 import java.util.Set;
+
 import static com.stratio.crossdata.common.metadata.Operations.*;
 
 /**
  * Created by jmgomez on 18/11/14.
  */
 public final class FilterHelper {
+
+    private static Set pkFilters;
+
+    static {
+        pkFilters = new HashSet();
+        pkFilters.add(FILTER_PK_DISTINCT);
+        pkFilters.add(FILTER_PK_EQ);
+        pkFilters.add(FILTER_PK_GET);
+        pkFilters.add(FILTER_PK_GT);
+        pkFilters.add(FILTER_PK_LET);
+        pkFilters.add(FILTER_PK_LT);
+    }
 
     /**
      * Constructor.
@@ -42,16 +55,8 @@ public final class FilterHelper {
      * @return true if the filter is PK type. False in other case.
      */
     public static boolean isPK(Filter filter) {
-        boolean isPk = false;
-        Set<Operations> operations = filter.getOperations();
-        if (operations.contains(FILTER_PK_DISTINCT) || operations.contains(FILTER_PK_EQ) ||
-                operations.contains(FILTER_PK_GET) || operations.contains(FILTER_PK_GT) ||
-                operations.contains(FILTER_PK_LET) || operations.contains(FILTER_PK_LT)) {
-            isPk = true;
-        }
+        return pkFilters.containsAll(filter.getOperations());
 
-
-        return isPk;
 
     }
 

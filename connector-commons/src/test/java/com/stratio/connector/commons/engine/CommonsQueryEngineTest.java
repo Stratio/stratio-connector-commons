@@ -17,12 +17,14 @@
  */
 package com.stratio.connector.commons.engine;
 
-import static junit.framework.TestCase.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.powermock.api.mockito.PowerMockito.mock;
-
+import com.stratio.connector.commons.connection.ConnectionHandler;
+import com.stratio.crossdata.common.connector.IResultHandler;
+import com.stratio.crossdata.common.data.ResultSet;
+import com.stratio.crossdata.common.exceptions.ConnectorException;
+import com.stratio.crossdata.common.exceptions.ExecutionException;
+import com.stratio.crossdata.common.exceptions.UnsupportedException;
+import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
+import com.stratio.crossdata.common.result.QueryResult;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,14 +34,11 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import org.powermock.reflect.Whitebox;
 import org.slf4j.Logger;
 
-import com.stratio.connector.commons.connection.ConnectionHandler;
-import com.stratio.crossdata.common.connector.IResultHandler;
-import com.stratio.crossdata.common.data.ResultSet;
-import com.stratio.crossdata.common.exceptions.ConnectorException;
-import com.stratio.crossdata.common.exceptions.ExecutionException;
-import com.stratio.crossdata.common.exceptions.UnsupportedException;
-import com.stratio.crossdata.common.logicalplan.LogicalWorkflow;
-import com.stratio.crossdata.common.result.QueryResult;
+import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.powermock.api.mockito.PowerMockito.mock;
 
 /**
  * CommonsQueryEngine Tester.
@@ -57,7 +56,8 @@ public class CommonsQueryEngineTest {
     Boolean executeWorkFlow = false;
     String queryIdSend;
     CommonsQueryEngineStub commonsQueryEngineStub;
-    @Mock ConnectionHandler connectionHandler;
+    @Mock
+    ConnectionHandler connectionHandler;
     private IResultHandler resultHandlerSend;
     private boolean executeAsyncExecute = false;
     private boolean executeStop = false;
@@ -103,9 +103,8 @@ public class CommonsQueryEngineTest {
     public void testasyncExecuteLog() throws Exception {
 
 
-
         Logger logger = mock(Logger.class);
-        Whitebox.setInternalState(commonsQueryEngineStub,"logger",logger);
+        Whitebox.setInternalState(commonsQueryEngineStub, "logger", logger);
 
 
         when(logger.isDebugEnabled()).thenReturn(true);
@@ -116,9 +115,8 @@ public class CommonsQueryEngineTest {
         commonsQueryEngineStub.asyncExecute(queryID, logicalworkFlow, resultHandler);
 
 
-        verify(logger).debug("Async Executing [" + logicalworkFlow.toString() + "] : queryId ["+queryID+"]");
+        verify(logger).debug("Async Executing [" + logicalworkFlow.toString() + "] : queryId [" + queryID + "]");
         verify(logger).debug("The async query [" + queryID + "] has ended");
-
 
 
     }
@@ -136,29 +134,24 @@ public class CommonsQueryEngineTest {
     }
 
 
-
-
-
     @Test
     public void testExecuteWorkflowLog() throws ConnectorException {
         LogicalWorkflow logicalworkFlow = mock(LogicalWorkflow.class);
 
 
         Logger logger = mock(Logger.class);
-        Whitebox.setInternalState(commonsQueryEngineStub,"logger",logger);
+        Whitebox.setInternalState(commonsQueryEngineStub, "logger", logger);
 
 
         when(logger.isDebugEnabled()).thenReturn(true);
 
-       QueryResult result =  commonsQueryEngineStub.execute(logicalworkFlow);
-
+        QueryResult result = commonsQueryEngineStub.execute(logicalworkFlow);
 
 
         verify(logger).debug("Executing [" + logicalworkFlow.toString() + "]");
-        verify(logger).debug("The query has finished. The result form the query [" + logicalworkFlow.toString() + "] has returned ["+ result.getResultSet().size() + "] rows");
+        verify(logger).debug("The query has finished. The result form the query [" + logicalworkFlow.toString() + "] has returned [" + result.getResultSet().size() + "] rows");
 
     }
-
 
 
     /**
@@ -170,7 +163,7 @@ public class CommonsQueryEngineTest {
         LogicalWorkflow logicalworkFlow = mock(LogicalWorkflow.class);
         IResultHandler resultHandler = mock(IResultHandler.class);
 
-        commonsQueryEngineStub.pagedExecute(queryID, logicalworkFlow, resultHandler,10);
+        commonsQueryEngineStub.pagedExecute(queryID, logicalworkFlow, resultHandler, 10);
 
         assertTrue("executeWorkFlow must be executed", pagedExecuteAsyncExecute);
         assertEquals("The queryId must be correct", queryIdSend, queryID);
@@ -183,9 +176,8 @@ public class CommonsQueryEngineTest {
     public void testpagedExecuteWorkFlowLog() throws ConnectorException {
 
 
-
         Logger logger = mock(Logger.class);
-        Whitebox.setInternalState(commonsQueryEngineStub,"logger",logger);
+        Whitebox.setInternalState(commonsQueryEngineStub, "logger", logger);
 
 
         when(logger.isDebugEnabled()).thenReturn(true);
@@ -194,15 +186,12 @@ public class CommonsQueryEngineTest {
         LogicalWorkflow logicalworkFlow = mock(LogicalWorkflow.class);
         IResultHandler resultHandler = mock(IResultHandler.class);
 
-        commonsQueryEngineStub.pagedExecute(queryID, logicalworkFlow, resultHandler,10);
+        commonsQueryEngineStub.pagedExecute(queryID, logicalworkFlow, resultHandler, 10);
 
-        verify(logger).debug("Async paged Executing [" + logicalworkFlow.toString() + "] : queryId ["+queryID+"]");
-        verify(logger).debug("The async query [" + queryID + "] has ended" );
+        verify(logger).debug("Async paged Executing [" + logicalworkFlow.toString() + "] : queryId [" + queryID + "]");
+        verify(logger).debug("The async query [" + queryID + "] has ended");
 
     }
-
-
-
 
 
     @Test
@@ -216,7 +205,6 @@ public class CommonsQueryEngineTest {
     }
 
 
-
     class CommonsQueryEngineStub extends CommonsQueryEngine {
 
         /**
@@ -228,7 +216,8 @@ public class CommonsQueryEngineTest {
             super(connectionHandler);
         }
 
-        @Override protected QueryResult executeWorkFlow(LogicalWorkflow workflow)
+        @Override
+        protected QueryResult executeWorkFlow(LogicalWorkflow workflow)
                 throws UnsupportedException, ExecutionException {
             workflowSend = workflow;
             executeWorkFlow = true;
@@ -240,16 +229,18 @@ public class CommonsQueryEngineTest {
             return queryResult;
         }
 
-        @Override protected void asyncExecuteWorkFlow(String queryId, LogicalWorkflow workflow,
-                IResultHandler resultHandler) {
+        @Override
+        protected void asyncExecuteWorkFlow(String queryId, LogicalWorkflow workflow,
+                                            IResultHandler resultHandler) {
             queryIdSend = queryId;
             workflowSend = workflow;
             resultHandlerSend = resultHandler;
             executeAsyncExecute = true;
         }
 
-        @Override protected void pagedExecuteWorkFlow(String queryId, LogicalWorkflow workflow,
-                IResultHandler resultHandler, int pageSize) {
+        @Override
+        protected void pagedExecuteWorkFlow(String queryId, LogicalWorkflow workflow,
+                                            IResultHandler resultHandler, int pageSize) {
             queryIdSend = queryId;
             workflowSend = workflow;
             resultHandlerSend = resultHandler;
@@ -257,7 +248,8 @@ public class CommonsQueryEngineTest {
             pageSizeExecute = pageSize;
         }
 
-        @Override public void stop(String queryId) throws ConnectorException {
+        @Override
+        public void stop(String queryId) throws ConnectorException {
             queryIdSend = queryId;
             executeStop = true;
         }

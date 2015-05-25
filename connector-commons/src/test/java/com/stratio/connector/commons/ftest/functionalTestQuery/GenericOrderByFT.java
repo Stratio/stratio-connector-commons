@@ -18,15 +18,6 @@
 
 package com.stratio.connector.commons.ftest.functionalTestQuery;
 
-import static org.junit.Assert.assertEquals;
-
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Map;
-
-import org.junit.Test;
-
 import com.stratio.connector.commons.ftest.GenericConnectorTest;
 import com.stratio.connector.commons.metadata.TableMetadataBuilder;
 import com.stratio.connector.commons.test.util.LogicalWorkFlowCreator;
@@ -40,6 +31,14 @@ import com.stratio.crossdata.common.metadata.DataType;
 import com.stratio.crossdata.common.metadata.TableMetadata;
 import com.stratio.crossdata.common.result.QueryResult;
 import com.stratio.crossdata.common.statements.structures.OrderDirection;
+import org.junit.Test;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Map;
+
+import static org.junit.Assert.assertEquals;
 
 public abstract class GenericOrderByFT extends GenericConnectorTest {
 
@@ -186,7 +185,7 @@ public abstract class GenericOrderByFT extends GenericConnectorTest {
     }
 
     private void insertRow(int ikey, String texto, int money, int age, TableMetadata tableMetadata,
-            ClusterName clusterName) throws ConnectorException {
+                           ClusterName clusterName) throws ConnectorException {
 
         Row row = new Row();
         Map<String, Cell> cells = new HashMap<>();
