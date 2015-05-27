@@ -22,12 +22,14 @@ package com.stratio.connector.commons
 import com.codahale.metrics.{MetricRegistry, Timer}
 import org.slf4j.Logger
 
-
-object timer {
-
+trait ABSTimer {
 
   def time[T](f: => T)(implicit logger: Logger): T =
-    time(java.util.UUID.randomUUID().toString)(f)(logger)
+    time(getUID)(f)(logger)
+
+  def getUID[T]: String = {
+    java.util.UUID.randomUUID().toString
+  }
 
   /**
    * Evals some {{{T}}} by-name expression and get times spent on it.
@@ -70,3 +72,5 @@ object timer {
   }
 
 }
+
+object timer extends ABSTimer
