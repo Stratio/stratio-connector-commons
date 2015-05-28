@@ -83,10 +83,8 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
     <build>
         <plugins>
-
             <plugin>
                 <groupId>org.scala-tools</groupId>
                 <artifactId>maven-scala-plugin</artifactId>
@@ -115,9 +113,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-
         </plugins>
-
     </build>
 </project>

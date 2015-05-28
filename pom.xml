@@ -13,13 +13,11 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>com.stratio</groupId>
         <artifactId>parent</artifactId>
         <version>0.1.0</version>
     </parent>
-
     <groupId>com.stratio.connector</groupId>
     <artifactId>stratio-connector-commons-parent</artifactId>
     <version>0.6.0-SNAPSHOT</version>
@@ -41,14 +39,11 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
-
     <scm>
         <connection>scm:git:git@github.com:Stratio/stratio-connector-commons.git</connection>
         <developerConnection>scm:git:git@github.com:Stratio/stratio-connector-commons.git</developerConnection>
         <url>https://github.com/Stratio/stratio-connector-commons</url>
-      <tag>HEAD</tag>
-  </scm>
-
+    </scm>
     <developers>
         <developer>
             <id>jmgomez</id>
@@ -70,13 +65,10 @@
             </roles>
         </developer>
     </developers>
-
-<modules>
-	<module>doc</module>
-	<module>connector-commons</module>
-</modules>
-
-
+    <modules>
+        <module>doc</module>
+        <module>connector-commons</module>
+    </modules>
     <build>
         <plugins>
             <plugin>
@@ -114,7 +106,6 @@
                     </execution>
                 </executions>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -127,7 +118,7 @@
                     </execution>
                 </executions>
             </plugin>
-        <plugin>
+            <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.7.1.201405082137</version>
@@ -139,9 +130,9 @@
                             <goal>prepare-agent</goal>
                         </goals>
                         <configuration>
-			    <destFile>${project.build.directory}/jacocoUT.exec</destFile>
-		  	    <propertyName>jacoco-UT-argline</propertyName>
-			</configuration>
+                            <destFile>${project.build.directory}/jacocoUT.exec</destFile>
+                            <propertyName>jacoco-UT-argline</propertyName>
+                        </configuration>
                     </execution>
                     <execution>
                         <id>IT</id>
@@ -150,9 +141,9 @@
                             <goal>prepare-agent</goal>
                         </goals>
                         <configuration>
-			    <destFile>${project.build.directory}/jacocoIT.exec</destFile>
-		  	    <propertyName>jacoco-IT-argline</propertyName>
-			</configuration>
+                            <destFile>${project.build.directory}/jacocoIT.exec</destFile>
+                            <propertyName>jacoco-IT-argline</propertyName>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -161,10 +152,10 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.7</version>
                 <configuration>
-                        <skipTests>${skipUTs}</skipTests>
-                        <argLine>${jacoco-UT-argline}</argLine>
+                    <skipTests>${skipUTs}</skipTests>
+                    <argLine>${jacoco-UT-argline}</argLine>
                 </configuration>
-                </plugin>
+            </plugin>
         </plugins>
     </build>
 </project>
