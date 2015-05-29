@@ -197,7 +197,7 @@ public abstract class GenericSimpleUpdateFT extends GenericConnectorTest<IConnec
     }
 
     protected ResultSet createResultSet(ClusterName clusterName) throws ConnectorException {
-        QueryResult queryResult = connector.getQueryEngine().execute(createLogicalWorkFlow());
+        QueryResult queryResult = connector.getQueryEngine().execute("", createLogicalWorkFlow());
         return queryResult.getResultSet();
     }
 

@@ -59,7 +59,7 @@ public abstract class InsertOneGenericPT extends GenericConnectorTest {
     }
 
     protected void verifyAllRowWasInserted() throws ConnectorException {
-        int rowsReturned = getConnector().getQueryEngine().execute(EficiencyBean.getLogicalWorkFlowCreatorSelectAll
+        int rowsReturned = getConnector().getQueryEngine().execute("", EficiencyBean.getLogicalWorkFlowCreatorSelectAll
                 (CATALOG, getClusterName())).getResultSet().size();
         assertEquals("There must be recovered " + EXPECTED_ROWS + " rows", EXPECTED_ROWS, rowsReturned);
     }

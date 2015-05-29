@@ -80,7 +80,7 @@ public abstract class GenericQueryProjectFT extends GenericConnectorTest {
         refresh(CATALOG);
 
         LogicalWorkflow logicalPlan = createLogicalWorkFlow();
-        QueryResult queryResult = connector.getQueryEngine().execute(logicalPlan);
+        QueryResult queryResult = connector.getQueryEngine().execute("", logicalPlan);
 
         Set<Object> probeSet = new HashSet<>();
         Iterator<Row> rowIterator = queryResult.getResultSet().iterator();

@@ -178,7 +178,7 @@ public abstract class GenericAggregationUpdateFT extends GenericConnectorTest<IC
     }
 
     protected ResultSet createResultSet(ClusterName clusterName) throws ConnectorException {
-        QueryResult queryResult = connector.getQueryEngine().execute(createLogicalWorkFlow());
+        QueryResult queryResult = connector.getQueryEngine().execute("", createLogicalWorkFlow());
         return queryResult.getResultSet();
     }
 

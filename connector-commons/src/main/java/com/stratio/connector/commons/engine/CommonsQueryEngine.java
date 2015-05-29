@@ -146,7 +146,7 @@ public abstract class CommonsQueryEngine implements IQueryEngine {
      * @throws ConnectorException if a error happens.
      */
     @Override
-    public final QueryResult execute(LogicalWorkflow workflow) throws ConnectorException {
+    public final QueryResult execute(String queryId, LogicalWorkflow workflow) throws ConnectorException {
         QueryResult result = null;
         Long time = null;
         try {

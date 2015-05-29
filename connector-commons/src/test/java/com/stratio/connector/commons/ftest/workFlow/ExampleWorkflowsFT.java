@@ -94,7 +94,7 @@ public abstract class ExampleWorkflowsFT extends GenericConnectorTest {
     public void basicSelect() throws ConnectorException {
 
         LogicalWorkflow logicalWorkflow = exampleWorkflows.getBasicSelect();
-        QueryResult qr = connector.getQueryEngine().execute(logicalWorkflow);
+        QueryResult qr = connector.getQueryEngine().execute("", logicalWorkflow);
         assertEquals("The result number is correct", 1000000, qr.getResultSet().size());
 
         Row oneRow = qr.getResultSet().iterator().next();
@@ -106,7 +106,7 @@ public abstract class ExampleWorkflowsFT extends GenericConnectorTest {
     public void basicSelectAsterisk() throws ConnectorException {
 
         LogicalWorkflow logicalWorkflow = exampleWorkflows.getBasicSelectAsterisk();
-        QueryResult qr = connector.getQueryEngine().execute(logicalWorkflow);
+        QueryResult qr = connector.getQueryEngine().execute("", logicalWorkflow);
         assertEquals("All record are recovered", 1000000, qr.getResultSet().size());
     }
 
@@ -115,7 +115,7 @@ public abstract class ExampleWorkflowsFT extends GenericConnectorTest {
 
         LogicalWorkflow logicalWorkflow = exampleWorkflows.getSelectIndexedField();
 
-        QueryResult qr = connector.getQueryEngine().execute(logicalWorkflow);
+        QueryResult qr = connector.getQueryEngine().execute("", logicalWorkflow);
         assertEquals("The items number in the resultset is correct", 1623, qr.getResultSet().size());
 
         Row oneRow = qr.getResultSet().iterator().next();
@@ -129,7 +129,7 @@ public abstract class ExampleWorkflowsFT extends GenericConnectorTest {
 
         LogicalWorkflow logicalWorkflow = exampleWorkflows.getSelectNonIndexedField();
 
-        QueryResult qr = connector.getQueryEngine().execute(logicalWorkflow);
+        QueryResult qr = connector.getQueryEngine().execute("", logicalWorkflow);
 
         assertEquals("The items number in the resultset is correct", 9009, qr.getResultSet().size());
 
@@ -146,7 +146,7 @@ public abstract class ExampleWorkflowsFT extends GenericConnectorTest {
 
         LogicalWorkflow logicalWorkflow = exampleWorkflows.getSelectMixedWhere();
 
-        QueryResult qr = connector.getQueryEngine().execute(logicalWorkflow);
+        QueryResult qr = connector.getQueryEngine().execute("", logicalWorkflow);
         assertEquals("The result is correct", 7, qr.getResultSet().size());
 
     }

@@ -174,7 +174,7 @@ public abstract class GenericBulkInsertIfNotExistFT extends GenericConnectorTest
     }
 
     private void verifyInsert(ClusterName cluesterName) throws ConnectorException {
-        QueryResult queryResult = connector.getQueryEngine().execute(createLogicalWorkFlow());
+        QueryResult queryResult = connector.getQueryEngine().execute("", createLogicalWorkFlow());
         ResultSet resultIterator = queryResult.getResultSet();
 
         assertEquals("The records number is correct " + cluesterName.getName(), getRowToInsert(),

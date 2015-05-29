@@ -81,7 +81,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterFT extends GenericConne
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns()
                 .addEqualFilter(COLUMN_AGE, new Integer(10), false, false).build();
 
-        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
+        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute("", logicalPlan);
 
         Set<Object> proveSet = createCellsResult(queryResult);
 
@@ -128,7 +128,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterFT extends GenericConne
         logicalWorkFlowCreator.addSelect(conectorList);
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns()
                 .addEqualFilter(COLUMN_KEY, 1, false, true).build();
-        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
+        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute("", logicalPlan);
 
         Set<Object> proveSet = createCellsResult(queryResult);
 
@@ -161,7 +161,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterFT extends GenericConne
         // LogicalWorkflow logicalPlan = createLogicalWorkFlow(BETWEEN_FILTER);
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns()
                 .addBetweenFilter(COLUMN_AGE, null, null).build();
-        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
+        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute("", logicalPlan);
 
         Set<Object> proveSet = createCellsResult(queryResult);
 
@@ -201,7 +201,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterFT extends GenericConne
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns()
                 .addGreaterEqualFilter(COLUMN_AGE, new Integer("10"), false, false).build();
 
-        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
+        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute("", logicalPlan);
         ResultSet aux = queryResult.getResultSet();
 
         Set<Object> proveSet = createCellsResult(queryResult);
@@ -256,7 +256,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterFT extends GenericConne
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns()
                 .addGreaterFilter(COLUMN_AGE, new Integer("10"), false).build();
-        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
+        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute("", logicalPlan);
 
         Set<Object> proveSet = createCellsResult(queryResult);
 
@@ -298,7 +298,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterFT extends GenericConne
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns()
                 .addNLowerFilter(COLUMN_AGE, new Integer("10"), false).build();
-        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
+        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute("", logicalPlan);
 
         Set<Object> proveSet = createCellsResult(queryResult);
 
@@ -341,7 +341,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterFT extends GenericConne
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns()
                 .addLowerEqualFilter(COLUMN_AGE, new Integer("10"), false).build();
-        QueryResult queryResult = connector.getQueryEngine().execute(logicalPlan);
+        QueryResult queryResult = connector.getQueryEngine().execute("", logicalPlan);
 
         Set<Object> proveSet = createCellsResult(queryResult);
 
@@ -391,7 +391,7 @@ public abstract class GenericNotIndexedQueryIntegerFilterFT extends GenericConne
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns()
                 .addDistinctFilter(COLUMN_AGE, new Integer("10"), false, false).build();
-        QueryResult queryResult = connector.getQueryEngine().execute(logicalPlan);
+        QueryResult queryResult = connector.getQueryEngine().execute("", logicalPlan);
 
         Set<Object> proveSet = createCellsResult(queryResult);
 

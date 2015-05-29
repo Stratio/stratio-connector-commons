@@ -58,7 +58,7 @@ public abstract class GenericLimitFT extends GenericConnectorTest {
 
         LogicalWorkflow logicalPlan = createLogicalPlan(RESULT_NUMBER);
 
-        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
+        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute("", logicalPlan);
 
         assertEquals("The limited result is correct", RESULT_NUMBER, queryResult.getResultSet().size());
 
