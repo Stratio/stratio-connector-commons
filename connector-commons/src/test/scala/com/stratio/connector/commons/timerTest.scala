@@ -33,7 +33,7 @@ class timerTest extends FlatSpec with Matchers {
         "op"
       }
     }.time(operationTime)
-    verify(log).debug("[millis: 1000] op")
+    verify(log).debug("[millis: 1000] op ")
 
   }
 
