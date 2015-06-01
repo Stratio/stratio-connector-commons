@@ -127,7 +127,7 @@ public class CommonsQueryEngineTest {
     @Test
     public void testExecuteWorkFlow() throws Exception {
         LogicalWorkflow logicalworkFlow = mock(LogicalWorkflow.class);
-        commonsQueryEngineStub.execute(logicalworkFlow);
+        commonsQueryEngineStub.execute("", logicalworkFlow);
 
         assertTrue("executeWorkFlow is executed", executeWorkFlow);
         assertEquals("The workflow is correct", workflowSend, logicalworkFlow);
@@ -145,9 +145,8 @@ public class CommonsQueryEngineTest {
 
         when(logger.isDebugEnabled()).thenReturn(true);
 
-        QueryResult result = commonsQueryEngineStub.execute(logicalworkFlow);
-
-
+       QueryResult result =  commonsQueryEngineStub.execute("", logicalworkFlow);
+       
         verify(logger).debug("Executing [" + logicalworkFlow.toString() + "]");
         verify(logger).debug("The query has finished. The result form the query [" + logicalworkFlow.toString() + "] has returned [" + result.getResultSet().size() + "] rows");
 

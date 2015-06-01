@@ -52,7 +52,7 @@ public abstract class GenericDeleteFT extends GenericConnectorTest {
         connector.getStorageEngine().delete(clusterName, new TableName(CATALOG, TABLE),
                 createDeleteFilter(Operations.DELETE_PK_EQ, Operator.EQ));
 
-        QueryResult queryResult = connector.getQueryEngine().execute(createLogicalWorkFlow(CATALOG, TABLE));
+        QueryResult queryResult = connector.getQueryEngine().execute("", createLogicalWorkFlow(CATALOG, TABLE));
         assertEquals("One record has been deleted", 3, queryResult.getResultSet().size());
         Set<String> sRows = recoveredIds(queryResult);
         assertTrue("The row is correct", sRows.contains("0"));
@@ -70,7 +70,7 @@ public abstract class GenericDeleteFT extends GenericConnectorTest {
         connector.getStorageEngine().delete(clusterName, new TableName(CATALOG, TABLE),
                 createDeleteFilter(Operations.DELETE_PK_LT, Operator.LT));
 
-        QueryResult queryResult = connector.getQueryEngine().execute(createLogicalWorkFlow(CATALOG, TABLE));
+        QueryResult queryResult = connector.getQueryEngine().execute("", createLogicalWorkFlow(CATALOG, TABLE));
         assertEquals("One record has been deleted", 3, queryResult.getResultSet().size());
         Set<String> sRows = recoveredIds(queryResult);
         assertTrue("The row is correct", sRows.contains("1"));
@@ -88,7 +88,7 @@ public abstract class GenericDeleteFT extends GenericConnectorTest {
         connector.getStorageEngine().delete(clusterName, new TableName(CATALOG, TABLE),
                 createDeleteFilter(Operations.DELETE_PK_LET, Operator.LET));
 
-        QueryResult queryResult = connector.getQueryEngine().execute(createLogicalWorkFlow(CATALOG, TABLE));
+        QueryResult queryResult = connector.getQueryEngine().execute("", createLogicalWorkFlow(CATALOG, TABLE));
         assertEquals("One record has been deleted", 2, queryResult.getResultSet().size());
         Set<String> sRows = recoveredIds(queryResult);
 
@@ -106,7 +106,7 @@ public abstract class GenericDeleteFT extends GenericConnectorTest {
         connector.getStorageEngine().delete(clusterName, new TableName(CATALOG, TABLE),
                 createDeleteFilter(Operations.DELETE_PK_GT, Operator.GT));
 
-        QueryResult queryResult = connector.getQueryEngine().execute(createLogicalWorkFlow(CATALOG, TABLE));
+        QueryResult queryResult = connector.getQueryEngine().execute("", createLogicalWorkFlow(CATALOG, TABLE));
         assertEquals("One record has been deleted", 2, queryResult.getResultSet().size());
         Set<String> sRows = recoveredIds(queryResult);
 
@@ -124,7 +124,7 @@ public abstract class GenericDeleteFT extends GenericConnectorTest {
         connector.getStorageEngine().delete(clusterName, new TableName(CATALOG, TABLE),
                 createDeleteFilter(Operations.DELETE_PK_GET, Operator.GET));
 
-        QueryResult queryResult = connector.getQueryEngine().execute(createLogicalWorkFlow(CATALOG, TABLE));
+        QueryResult queryResult = connector.getQueryEngine().execute("", createLogicalWorkFlow(CATALOG, TABLE));
         assertEquals("One record has been deleted", 1, queryResult.getResultSet().size());
         Set<String> sRows = recoveredIds(queryResult);
 
@@ -155,7 +155,7 @@ public abstract class GenericDeleteFT extends GenericConnectorTest {
                 false);
 
         getConnectorHelper().refresh(CATALOG);
-        QueryResult queryResult = connector.getQueryEngine().execute(createLogicalWorkFlow(CATALOG, TABLE));
+        QueryResult queryResult = connector.getQueryEngine().execute("", createLogicalWorkFlow(CATALOG, TABLE));
 
         assertEquals("There are three records in table", 4, queryResult.getResultSet().size());
 

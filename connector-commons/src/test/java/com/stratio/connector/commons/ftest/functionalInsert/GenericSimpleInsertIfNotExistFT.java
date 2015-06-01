@@ -212,12 +212,12 @@ public abstract class GenericSimpleInsertIfNotExistFT extends GenericConnectorTe
     }
 
     protected ResultSet createResultSet(ClusterName clusterName) throws ConnectorException {
-        QueryResult queryResult = connector.getQueryEngine().execute(createLogicalWorkFlow());
+        QueryResult queryResult = connector.getQueryEngine().execute("", createLogicalWorkFlow());
         return queryResult.getResultSet();
     }
 
     protected ResultSet createResultSetTyped(ClusterName clusterName, ColumnType colType) throws ConnectorException {
-        QueryResult queryResult = connector.getQueryEngine().execute(createLogicalWorkFlowValue4Type(colType));
+        QueryResult queryResult = connector.getQueryEngine().execute("", createLogicalWorkFlowValue4Type(colType));
         return queryResult.getResultSet();
     }
 

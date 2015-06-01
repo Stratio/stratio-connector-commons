@@ -44,6 +44,21 @@ public abstract class CommonsConnector implements IConnector {
     protected ConnectionHandler connectionHandler = null;
 
     /**
+     * String  that contains the path to connector manifest.
+     */
+    private String connectorManifestPath;
+
+    /**
+     * String that contains the path to datastore manifest.
+     */
+    private String[] datastoreManifestPath=new String[1];
+
+
+    public CommonsConnector(String connectorManifestFileName, String datastoreManifestFileName){
+        connectorManifestPath=getClass().getResource(connectorManifestFileName).getPath();
+        datastoreManifestPath[0]=getClass().getResource(datastoreManifestFileName).getPath();
+    }
+    /**
      * Create a logical connection.
      *
      * @param credentials the credentials.
@@ -52,7 +67,7 @@ public abstract class CommonsConnector implements IConnector {
      */
     @Override
     public void connect(ICredentials credentials, ConnectorClusterConfig config) throws ConnectionException {
-        logger.info("Conecting connector [" + getConnectorName() + "]");
+        logger.info("Conecting connector [" + this.getClass().getSimpleName() + "]");
         connectionHandler.createConnection(credentials, config);
 
     }
@@ -64,7 +79,7 @@ public abstract class CommonsConnector implements IConnector {
      */
     @Override
     public void close(ClusterName clusterName) {
-        logger.info("Close connection to cluster [" + clusterName + "] from connector [" + getConnectorName() + "]");
+        logger.info("Close connection to cluster [" + clusterName + "] from connector [" + this.getClass().getSimpleName()  + "]");
         connectionHandler.closeConnection(clusterName.getName());
 
     }
@@ -76,7 +91,7 @@ public abstract class CommonsConnector implements IConnector {
      */
     @Override
     public void shutdown() throws ExecutionException {
-        logger.info("shutting down connector [" + getConnectorName() + "]");
+        logger.info("shutting down connector [" + this.getClass().getSimpleName()  + "]");
         connectionHandler.closeAllConnections();
 
     }
@@ -94,4 +109,14 @@ public abstract class CommonsConnector implements IConnector {
 
     }
 
+    @Override
+    public String getConnectorManifestPath() {
+        return connectorManifestPath;
+
+    }
+
+    @Override
+    public String[] getDatastoreManifestPath() {
+        return datastoreManifestPath;
+    }
 }

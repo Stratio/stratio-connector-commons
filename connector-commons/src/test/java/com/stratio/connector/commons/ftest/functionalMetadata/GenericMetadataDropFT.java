@@ -83,13 +83,13 @@ public abstract class GenericMetadataDropFT extends GenericConnectorTest {
 
         connector.getMetadataEngine().dropTable(clusterName, (new TableName(CATALOG, TABLE)));
 
-        QueryResult queryResult = connector.getQueryEngine().execute(createLogicalWorkFlow(CATALOG, TABLE));
+        QueryResult queryResult = connector.getQueryEngine().execute("", createLogicalWorkFlow(CATALOG, TABLE));
         assertEquals("Table [" + CATALOG + "." + TABLE + "] must be delete", 0, queryResult.getResultSet().size());
 
-        queryResult = connector.getQueryEngine().execute(createLogicalWorkFlow(OTHER_CATALOG, TABLE));
+        queryResult = connector.getQueryEngine().execute("", createLogicalWorkFlow(OTHER_CATALOG, TABLE));
         assertNotEquals("Table [" + OTHER_CATALOG + "." + TABLE + "] must exist", 0, queryResult.getResultSet().size());
 
-        queryResult = connector.getQueryEngine().execute(createLogicalWorkFlow(CATALOG, OTHER_TABLE));
+        queryResult = connector.getQueryEngine().execute("", createLogicalWorkFlow(CATALOG, OTHER_TABLE));
         assertNotEquals("Table [" + CATALOG + "." + OTHER_TABLE + " must  exist", 0, queryResult.getResultSet().size());
         if (iConnectorHelper.isTableMandatory()) {
             connector.getMetadataEngine().dropTable(getClusterName(), new TableName(CATALOG, TABLE));
@@ -152,13 +152,13 @@ public abstract class GenericMetadataDropFT extends GenericConnectorTest {
 
         connector.getMetadataEngine().dropCatalog(clusterName, new CatalogName(CATALOG));
 
-        QueryResult queryResult = connector.getQueryEngine().execute(createLogicalWorkFlow(CATALOG, TABLE));
+        QueryResult queryResult = connector.getQueryEngine().execute("", createLogicalWorkFlow(CATALOG, TABLE));
         assertEquals("Table [" + CATALOG + "." + TABLE + "] deleted", 0, queryResult.getResultSet().size());
 
-        queryResult = connector.getQueryEngine().execute(createLogicalWorkFlow(OTHER_CATALOG, TABLE));
+        queryResult = connector.getQueryEngine().execute("", createLogicalWorkFlow(OTHER_CATALOG, TABLE));
         assertNotEquals("Table [" + OTHER_CATALOG + "." + TABLE + "] exist", 0, queryResult.getResultSet().size());
 
-        queryResult = connector.getQueryEngine().execute(createLogicalWorkFlow(CATALOG, OTHER_TABLE));
+        queryResult = connector.getQueryEngine().execute("", createLogicalWorkFlow(CATALOG, OTHER_TABLE));
         assertEquals("Table [" + CATALOG + "." + OTHER_TABLE + " deleted", 0, queryResult.getResultSet().size());
 
         deleteCatalog(OTHER_CATALOG);
