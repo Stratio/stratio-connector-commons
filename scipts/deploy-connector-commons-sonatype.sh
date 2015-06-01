@@ -24,10 +24,9 @@ if [ -z "$passphrase" ]; then
     exit 1;
 fi
 
-mvn gpg:sign-and-deploy-file -Durl=https://oss.sonatype.org/service/local/staging/deploy/maven2/ -DrepositoryId=sonatype-nexus-staging -DpomFile=pom.xml -Dfile=pom.xml -Dpackaging=pom -Dgpg.passphrase=$passphrase
-
-mvn gpg:sign-and-deploy-file -Durl=https://oss.sonatype.org/service/local/staging/deploy/maven2/ -DrepositoryId=sonatype-nexus-staging -DpomFile=pom.xml -Dfile=target/stratio-connector-commons-${RELEASE_VER}.jar -Dgpg.passphrase=$passphrase
-mvn gpg:sign-and-deploy-file -Durl=https://oss.sonatype.org/service/local/staging/deploy/maven2/ -DrepositoryId=sonatype-nexus-staging -DpomFile=pom.xml -Dfile=target/stratio-connector-commons-${RELEASE_VER}-tests.jar -Dclassifier=tests -Dgpg.passphrase=$passphrase
-mvn gpg:sign-and-deploy-file -Durl=https://oss.sonatype.org/service/local/staging/deploy/maven2/ -DrepositoryId=sonatype-nexus-staging -DpomFile=pom.xml -Dfile=target/stratio-connector-commons-${RELEASE_VER}-sources.jar -Dclassifier=sources -Dgpg.passphrase=$passphrase
-mvn gpg:sign-and-deploy-file -Durl=https://oss.sonatype.org/service/local/staging/deploy/maven2/ -DrepositoryId=sonatype-nexus-staging -DpomFile=pom.xml -Dfile=target/stratio-connector-commons-${RELEASE_VER}-javadoc.jar -Dclassifier=javadoc -Dgpg.passphrase=$passphrase
+mvn gpg:sign-and-deploy-file -Durl=https://oss.sonatype.org/service/local/staging/deploy/maven2/ -DrepositoryId=sonatype-nexus-staging -DpomFile=pom.xml -Dfile=connector-commons/pom.xml -Dpackaging=pom -Dgpg.passphrase=$passphrase
+mvn gpg:sign-and-deploy-file -Durl=https://oss.sonatype.org/service/local/staging/deploy/maven2/ -DrepositoryId=sonatype-nexus-staging -DpomFile=pom.xml -Dfile=connector-commons/target/stratio-connector-commons-${RELEASE_VER}.jar -Dgpg.passphrase=$passphrase
+mvn gpg:sign-and-deploy-file -Durl=https://oss.sonatype.org/service/local/staging/deploy/maven2/ -DrepositoryId=sonatype-nexus-staging -DpomFile=pom.xml -Dfile=connector-commons/target/stratio-connector-commons-${RELEASE_VER}-tests.jar -Dclassifier=tests -Dgpg.passphrase=$passphrase
+mvn gpg:sign-and-deploy-file -Durl=https://oss.sonatype.org/service/local/staging/deploy/maven2/ -DrepositoryId=sonatype-nexus-staging -DpomFile=pom.xml -Dfile=connector-commons/target/stratio-connector-commons-${RELEASE_VER}-sources.jar -Dclassifier=sources -Dgpg.passphrase=$passphrase
+mvn gpg:sign-and-deploy-file -Durl=https://oss.sonatype.org/service/local/staging/deploy/maven2/ -DrepositoryId=sonatype-nexus-staging -DpomFile=pom.xml -Dfile=connector-commons/target/stratio-connector-commons-${RELEASE_VER}-javadoc.jar -Dclassifier=javadoc -Dgpg.passphrase=$passphrase
 
