@@ -21,7 +21,7 @@
     </parent>
 
     <groupId>com.stratio.connector</groupId>
-    <artifactId>stratio-connector-commons-parent</artifactId>
+    <artifactId>stratio-connector-commons</artifactId>
     <version>0.5.0</version>
     <url>http://www.stratio.com</url>
     <name>Stratio Connector Commons Parent</name>
