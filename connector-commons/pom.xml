@@ -16,27 +16,15 @@
     
     <groupId>com.stratio.connector</groupId>
     <artifactId>stratio-connector-commons-core</artifactId>
-    <version>0.5.0</version>
+    <version>0.5.1</version>
     <url>http://www.stratio.com</url>
-    <name>Stratio Connector Commons</name>
-    <description>The crossdata connector commons</description>
-
+    <name>Stratio Connector Commons core</name>
+    <description>The crossdata connector commons core</description>
 <parent>
     <groupId>com.stratio.connector</groupId>
     <artifactId>stratio-connector-commons</artifactId>
-    <version>0.5.0</version>
+    <version>0.5.1</version>
 </parent>
-
-
-
-    <properties>
-        <scala.version>2.10.4</scala.version>
-        <spark.version>1.2.1</spark.version>
-        <scala.test.version>2.2.1</scala.test.version>
-        <scala.binary.version>2.10</scala.binary.version>
-    </properties>
-
-
     <dependencies>
 
         <dependency>

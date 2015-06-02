@@ -21,15 +21,11 @@
     <name>Stratio Connector commons documentation</name>
     <description>The crossdata connector commons documentation</description>
     <packaging>pom</packaging>
-
     <parent>
         <groupId>com.stratio.connector</groupId>
         <artifactId>stratio-connector-commons</artifactId>
-        <version>0.5.0</version>
-
+        <version>0.5.1</version>
     </parent>
-
-
     <build>
         <plugins>
             <plugin>
