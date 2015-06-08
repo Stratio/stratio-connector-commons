@@ -14,12 +14,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>    
     <groupId>com.stratio.connector</groupId>
-    <artifactId>stratio-connector-commons</artifactId>
+    <artifactId>stratio-connector-commons-core</artifactId>
     <version>0.6.0-SNAPSHOT</version>
     <url>http://www.stratio.com</url>
     <name>Stratio Connector Commons core</name>
     <description>The crossdata connector commons core</description>
-
 <parent>
     <groupId>com.stratio.connector</groupId>
     <artifactId>stratio-connector-commons-parent</artifactId>
@@ -31,10 +30,7 @@
         <scala.test.version>2.2.1</scala.test.version>
         <scala.binary.version>2.10</scala.binary.version>
     </properties>
-
-
     <dependencies>
-
         <dependency>
             <artifactId>crossdata-common</artifactId>
             <groupId>com.stratio.crossdata</groupId>
