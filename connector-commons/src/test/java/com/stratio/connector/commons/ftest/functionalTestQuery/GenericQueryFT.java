@@ -76,7 +76,7 @@ public abstract class GenericQueryFT extends GenericConnectorTest {
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addColumnName(COLUMN_1, COLUMN_2, COLUMN_3)
                 .addSelect(fields).build();
-        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
+        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute("", logicalPlan);
         Set<Object> proveSet = new HashSet<>();
         ResultSet resultSet = queryResult.getResultSet();
 
@@ -115,7 +115,7 @@ public abstract class GenericQueryFT extends GenericConnectorTest {
 
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addColumnName(COLUMN_1, COLUMN_2, COLUMN_3)
                 .addSelect(fields).build();
-        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute(logicalPlan);
+        QueryResult queryResult = (QueryResult) connector.getQueryEngine().execute("", logicalPlan);
 
         ResultSet resultSet = queryResult.getResultSet();
         List<ColumnMetadata> columnMetadata = resultSet.getColumnMetadata();

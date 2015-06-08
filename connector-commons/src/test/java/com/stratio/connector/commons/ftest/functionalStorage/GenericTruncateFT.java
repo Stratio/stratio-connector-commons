@@ -64,13 +64,13 @@ public abstract class GenericTruncateFT extends GenericConnectorTest<IConnector>
         connector.getStorageEngine().insert(clusterName,
                 tableMetadataBuilder.build(getConnectorHelper().isPKMandatory()), row, false);
 
-        QueryResult queryResult = connector.getQueryEngine().execute(createLogicalWorkFlow(CATALOG, TABLE));
+        QueryResult queryResult = connector.getQueryEngine().execute("", createLogicalWorkFlow(CATALOG, TABLE));
         Assert.assertEquals(1, queryResult.getResultSet().size());
         Assert.assertEquals(2, queryResult.getResultSet().getRows().get(0).size());
 
         connector.getStorageEngine().truncate(clusterName, (new TableName(CATALOG, TABLE)));
 
-        queryResult = connector.getQueryEngine().execute(createLogicalWorkFlow(CATALOG, TABLE));
+        queryResult = connector.getQueryEngine().execute("", createLogicalWorkFlow(CATALOG, TABLE));
 
         Assert.assertEquals("Table [" + CATALOG + "." + TABLE + "] deleted", 0, queryResult.getResultSet().size());
 

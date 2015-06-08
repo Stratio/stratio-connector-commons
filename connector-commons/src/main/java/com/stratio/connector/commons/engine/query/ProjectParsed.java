@@ -21,6 +21,7 @@ package com.stratio.connector.commons.engine.query;
 import com.stratio.crossdata.common.exceptions.ConnectorException;
 import com.stratio.crossdata.common.exceptions.ExecutionException;
 import com.stratio.crossdata.common.logicalplan.*;
+import com.stratio.crossdata.common.statements.structures.FunctionSelector;
 import com.stratio.crossdata.common.statements.structures.Operator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -207,7 +208,8 @@ public class ProjectParsed {
     private void decideTypeFilterToAdd(Filter filter) {
         Filter step = filter;
 
-        if (Operator.MATCH == step.getRelation().getOperator()) {
+        if (Operator.MATCH == step.getRelation().getOperator() ||
+                step.getRelation().getRightTerm() instanceof FunctionSelector) {
             if (matchList.isEmpty()) {
                 matchList = new ArrayList<>();
             }

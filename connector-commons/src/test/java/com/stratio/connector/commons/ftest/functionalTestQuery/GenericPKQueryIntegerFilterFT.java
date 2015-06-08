@@ -70,7 +70,7 @@ public abstract class GenericPKQueryIntegerFilterFT extends GenericConnectorTest
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns().addColumnName(COLUMN_PK)
                 .addEqualFilter(COLUMN_PK, new Integer(2), false, true).build();
 
-        QueryResult queryResult = connector.getQueryEngine().execute(logicalPlan);
+        QueryResult queryResult = connector.getQueryEngine().execute("", logicalPlan);
 
         assertEquals("The record number is correct", 1, queryResult.getResultSet().size());
         assertEquals("The value is correct", new Integer(2),
@@ -95,7 +95,7 @@ public abstract class GenericPKQueryIntegerFilterFT extends GenericConnectorTest
                 .addEqualFilter(COLUMN_PK, new Integer(2), false, true)
                 .addEqualFilter(COLUMN_PK, new Integer(3), false, true).build();
 
-        QueryResult queryResult = connector.getQueryEngine().execute(logicalPlan);
+        QueryResult queryResult = connector.getQueryEngine().execute("", logicalPlan);
 
         assertEquals("The record number is correct", 0, queryResult.getResultSet().size());
 
@@ -123,7 +123,7 @@ public abstract class GenericPKQueryIntegerFilterFT extends GenericConnectorTest
                 .addSelect(connectorFields).addDistinctFilter(COLUMN_PK, new Integer(2), false, true)
                 .addDistinctFilter(COLUMN_PK, new Integer(3), false, true).build();
 
-        QueryResult queryResult = connector.getQueryEngine().execute(logicalPlan);
+        QueryResult queryResult = connector.getQueryEngine().execute("", logicalPlan);
 
         assertEquals("The record number is correct", 3, queryResult.getResultSet().size());
 
@@ -145,7 +145,7 @@ public abstract class GenericPKQueryIntegerFilterFT extends GenericConnectorTest
         LogicalWorkflow logicalPlan = logicalWorkFlowCreator.addDefaultColumns().addColumnName(COLUMN_PK)
                 .addGreaterEqualFilter(COLUMN_PK, new Integer(2), false, false).build();
 
-        QueryResult queryResult = connector.getQueryEngine().execute(logicalPlan);
+        QueryResult queryResult = connector.getQueryEngine().execute("", logicalPlan);
 
         assertEquals("The record number is correct", 4, queryResult.getResultSet().size());
 
