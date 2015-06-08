@@ -44,7 +44,7 @@ trait ABSTimer {
     val before = System.currentTimeMillis()
     val t = f
     val after = System.currentTimeMillis()
-    logger.debug( s"""[millis: [${after - before}] $op""")
+    logger.debug( s"""millis: [${after - before}] $op""")
     t
   }
 

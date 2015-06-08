@@ -25,7 +25,6 @@
     <name>Stratio Connector Commons </name>
     <packaging>pom</packaging>
     <description>The crossdata connector commons parent</description>
-
     <properties>
         <version.crossdata>0.3.0-RC2</version.crossdata>
         <scala.version>2.10.4</scala.version>
@@ -70,7 +69,6 @@
         <module>connector-commons</module>
     </modules>
     <build>
-        <testSourceDirectory>src/test/scala</testSourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -149,9 +147,8 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.scala-tools</groupId>
-                <artifactId>maven-scala-plugin</artifactId>
-                <version>2.15.2</version>
+                <groupId>net.alchim31.maven</groupId>
+                <artifactId>scala-maven-plugin</artifactId>
                 <executions>
                     <execution>
                         <id>scala-compile-first</id>
@@ -160,9 +157,6 @@
                             <goal>add-source</goal>
                             <goal>compile</goal>
                         </goals>
-                        <configuration>
-                            <scalaVersion>${scala.version}</scalaVersion>
-                        </configuration>
                     </execution>
                     <execution>
                         <id>scala-test-compile</id>
@@ -170,13 +164,9 @@
                         <goals>
                             <goal>testCompile</goal>
                         </goals>
-                        <configuration>
-                            <scalaVersion>${scala.version}</scalaVersion>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
-
         </plugins>
     </build>
 </project>
