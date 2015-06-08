@@ -21,7 +21,7 @@ class timerTest extends FlatSpec with Matchers {
    implicit val log = mock(classOf[Logger])
 
     timer.time("op")(operationTime)
-    verify(log).debug("[millis: 1000] op")
+    verify(log).debug("[millis: [500] op")
     
   }
 
@@ -33,11 +33,11 @@ class timerTest extends FlatSpec with Matchers {
         "op"
       }
     }.time(operationTime)
-    verify(log).debug("[millis: 1000] op ")
+    verify(log).debug("[millis: [500] op")
 
   }
 
   def operationTime: Unit ={
-    Thread.sleep(1000)
+    Thread.sleep(500)
   }
 }

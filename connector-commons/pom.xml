@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- ~ Licensed to STRATIO (C) under one or more contributor license agreements. 
-    ~ See the NOTICE file distributed with this work for additional information 
-    ~ regarding copyright ownership. The STRATIO (C) licenses this file ~ to 
+<!--  Licensed to STRATIO (C) under one or more contributor license agreements.
+    See the NOTICE file distributed with this work for additional information
+    regarding copyright ownership. The STRATIO (C) licenses this file ~ to
     you under the Apache License, Version 2.0 (the ~ "License"); you may not 
     use this file except in compliance ~ with the License. You may obtain a copy 
     of the License at ~ ~ http://www.apache.org/licenses/LICENSE-2.0 ~ ~ Unless 
@@ -19,7 +19,6 @@
     <url>http://www.stratio.com</url>
     <name>Stratio Connector Commons core</name>
     <description>The crossdata connector commons core</description>
-
 <parent>
     <groupId>com.stratio.connector</groupId>
     <artifactId>stratio-connector-commons-parent</artifactId>
@@ -31,10 +30,7 @@
         <scala.test.version>2.2.1</scala.test.version>
         <scala.binary.version>2.10</scala.binary.version>
     </properties>
-
-
     <dependencies>
-
         <dependency>
             <artifactId>crossdata-common</artifactId>
             <groupId>com.stratio.crossdata</groupId>
@@ -75,20 +71,78 @@
             <version>${scala.test.version}</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.scalamock</groupId>
             <artifactId>scalamock-scalatest-support_2.10</artifactId>
             <version>3.2.2</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.scalatest</groupId>
+            <artifactId> scalatest-maven-plugin</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+
+            <dependency>
+                <groupId>org.scala-lang</groupId>
+                <artifactId>scala-library</artifactId>
+                <version>2.7.2</version>
+            </dependency>
+        
+
+
     </dependencies>
     <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>net.alchim31.maven</groupId>
+                    <artifactId>scala-maven-plugin</artifactId>
+                    <version>3.2.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>2.0.2</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+
         <plugins>
+<!--            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.7</version>
+                <configuration>
+                    <skipTests>${skipUTs}</skipTests>
+                    <argLine>${jacoco-UT-argline}</argLine>
+                </configuration>
+            </plugin>
+
             <plugin>
-                <groupId>org.scala-tools</groupId>
-                <artifactId>maven-scala-plugin</artifactId>
-                <version>2.15.2</version>
+                <groupId>org.scalatest</groupId>
+                <artifactId>scalatest-maven-plugin</artifactId>
+                <version>1.0</version>
+                <configuration>
+                    <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+                    <junitxml>.</junitxml>
+                    <filereports>WDF TestSuite.txt</filereports>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>test</id>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin> -->
+
+            <plugin>
+                <groupId>net.alchim31.maven</groupId>
+                <artifactId>scala-maven-plugin</artifactId>
                 <executions>
                     <execution>
                         <id>scala-compile-first</id>
@@ -97,9 +151,6 @@
                             <goal>add-source</goal>
                             <goal>compile</goal>
                         </goals>
-                        <configuration>
-                            <scalaVersion>${scala.version}</scalaVersion>
-                        </configuration>
                     </execution>
                     <execution>
                         <id>scala-test-compile</id>
@@ -107,12 +158,23 @@
                         <goals>
                             <goal>testCompile</goal>
                         </goals>
-                        <configuration>
-                            <scalaVersion>${scala.version}</scalaVersion>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+
         </plugins>
     </build>
 </project>

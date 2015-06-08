@@ -99,6 +99,8 @@ public class SelectorHelperTest {
             assertEquals("The retur class is correct", returnClass[i], SelectorHelper.getClass(selector[i]));
         }
 
+        fail("NOK");
+
     }
 
     @Test
