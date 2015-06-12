@@ -109,12 +109,20 @@ public abstract class CommonsConnector implements IConnector {
 
     }
 
+    /**
+     * Return the connector manifestPath.
+     * @return the connector manifestPath.
+     */
     @Override
     public String getConnectorManifestPath() {
         return connectorManifestPath;
 
     }
 
+    /**
+     * Return the Datastore manifestPath.
+     * @return the Datastore manifestPath.
+     */
     @Override
     public String[] getDatastoreManifestPath() {
         return datastoreManifestPath;
