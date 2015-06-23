@@ -100,7 +100,9 @@ public final class SelectorHelper {
             case FLOATING_POINT:
                 field = ((FloatingPointSelector) selector).getValue();
                 break;
-
+            case GROUP:
+                field = getRestrictedValue(((GroupSelector)selector).getFirstValue(), null);
+                break;
             default:
                 throw new ExecutionException("Selector " + selector.getType() + " not supported get value operation.");
         }
@@ -131,6 +133,9 @@ public final class SelectorHelper {
                 break;
             case FLOATING_POINT:
                 returnClass = Double.class;
+                break;
+            case GROUP:
+                returnClass = getClass(((GroupSelector) selector).getFirstValue());
                 break;
             default:
                 throw new ExecutionException("Selector " + selector.getType() + " not supported get value operation.");
