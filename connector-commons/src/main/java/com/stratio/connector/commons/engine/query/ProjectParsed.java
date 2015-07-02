@@ -58,6 +58,11 @@ public class ProjectParsed {
     private Collection<Filter> matchList = Collections.emptyList();
 
     /**
+     * The functionFilters.
+     */
+    private Collection<FunctionFilter> functionFilters = new ArrayList<>();
+
+    /**
      * The select.
      */
     private Select select;
@@ -78,6 +83,8 @@ public class ProjectParsed {
      * The orderBy.
      */
     private OrderBy orderBy;
+
+
 
     /**
      * Constructor.
@@ -121,6 +128,15 @@ public class ProjectParsed {
      */
     public Collection<Filter> getMatchList() {
         return new ArrayList(matchList);
+    }
+
+    /**
+     * Return The functionFilters.
+     *
+     * @return the functionFilters
+     */
+    public Collection<FunctionFilter> getFunctionFilters() {
+        return new ArrayList(functionFilters);
     }
 
     /**
@@ -168,6 +184,8 @@ public class ProjectParsed {
         return limit;
     }
 
+
+
     /**
      * This method add the correct logical step.
      *
@@ -177,9 +195,14 @@ public class ProjectParsed {
     private void addLogicalStep(LogicalStep lStep) throws ExecutionException {
         if (lStep instanceof Project) {
             project = (Project) lStep;
+
         } else if (lStep instanceof Filter) {
             decideTypeFilterToAdd((Filter) lStep);
-        } else if (lStep instanceof Select) {
+
+        } else if (lStep instanceof FunctionFilter){
+            functionFilters.add((FunctionFilter) lStep);
+
+        }else if (lStep instanceof Select) {
             select = (Select) lStep;
 
         } else if (lStep instanceof Limit) {
@@ -190,6 +213,7 @@ public class ProjectParsed {
 
         } else if (lStep instanceof Window) {
             window = (Window) lStep;
+
         } else if (lStep instanceof OrderBy) {
             orderBy = (OrderBy) lStep;
         } else {

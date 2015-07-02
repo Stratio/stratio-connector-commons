@@ -53,7 +53,13 @@ public abstract class CommonsConnector implements IConnector {
      */
     private String[] datastoreManifestPath=new String[1];
 
-
+    /**
+     * Buils a instance setting the  connector Manifest and the datastore Manifest.
+     *
+     *
+     * @param connectorManifestFileName the filename of the connector manifest, Must be inside the the classpath.
+     * @param datastoreManifestFileName the filename of the datastore manifest, Must be inside the the classpath.
+     */
     public CommonsConnector(String connectorManifestFileName, String datastoreManifestFileName){
         connectorManifestPath=getClass().getResource(connectorManifestFileName).getPath();
         datastoreManifestPath[0]=getClass().getResource(datastoreManifestFileName).getPath();
@@ -125,6 +131,6 @@ public abstract class CommonsConnector implements IConnector {
      */
     @Override
     public String[] getDatastoreManifestPath() {
-        return datastoreManifestPath;
+        return datastoreManifestPath.clone();
     }
 }
