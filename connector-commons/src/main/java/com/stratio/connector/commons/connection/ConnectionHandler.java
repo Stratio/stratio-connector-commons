@@ -17,6 +17,8 @@
  */
 package com.stratio.connector.commons.connection;
 
+import com.jcabi.aspects.Loggable;
+import com.jcabi.aspects.aj.MethodLogger;
 import com.stratio.crossdata.common.connector.ConnectorClusterConfig;
 import com.stratio.crossdata.common.connector.IConfiguration;
 import com.stratio.crossdata.common.exceptions.ConnectionException;
@@ -35,7 +37,7 @@ import java.util.Map.Entry;
  */
 public abstract class ConnectionHandler {
 
-    /**
+     /**
      * The Log.
      */
     private final transient Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -66,6 +68,7 @@ public abstract class ConnectionHandler {
      * @param config      the connection options.
      * @throws ConnectionException if the connection already exists.
      */
+
     public void createConnection(ICredentials credentials, ConnectorClusterConfig config) throws ConnectionException {
         logger.info("Creating new connection...");
         Connection connection = createNativeConnection(credentials, config);

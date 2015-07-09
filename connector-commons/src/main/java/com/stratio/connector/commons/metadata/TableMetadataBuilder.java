@@ -17,6 +17,7 @@
  */
 package com.stratio.connector.commons.metadata;
 
+import com.stratio.connector.commons.TimerJ;
 import com.stratio.crossdata.common.data.ClusterName;
 import com.stratio.crossdata.common.data.ColumnName;
 import com.stratio.crossdata.common.data.IndexName;
@@ -106,6 +107,7 @@ public class TableMetadataBuilder {
      * @param opts the opts
      * @return the table metadata builder
      */
+    @TimerJ
     public TableMetadataBuilder withOptions(Map<Selector, Selector> opts) {
         options = new HashMap<Selector, Selector>(opts);
         return this;
@@ -117,6 +119,7 @@ public class TableMetadataBuilder {
      * @param columnsMetadata the columns metadata
      * @return the table metadata builder
      */
+    @TimerJ
     public TableMetadataBuilder withColumns(List<ColumnMetadata> columnsMetadata) {
         for (ColumnMetadata colMetadata : columnsMetadata) {
             columns.put(colMetadata.getName(), colMetadata);
@@ -131,6 +134,7 @@ public class TableMetadataBuilder {
      * @param colType    the column type
      * @return the table metadata builder
      */
+    @TimerJ
     public TableMetadataBuilder addColumn(String columnName, ColumnType colType) {
         ColumnName colName = new ColumnName(tableName, columnName);
         ColumnMetadata colMetadata = new ColumnMetadata(colName, null, colType);
@@ -148,6 +152,7 @@ public class TableMetadataBuilder {
      * @return the table metadata builder.
      * @throws if an error happens.
      */
+    @TimerJ
     public TableMetadataBuilder addIndex(IndexType indType, String indexName, String... fields) throws ExecutionException {
 
         IndexName indName = new IndexName(tableName.getName(), tableName.getName(), indexName);
@@ -172,6 +177,7 @@ public class TableMetadataBuilder {
      * @param indexMetadata the index metadata
      * @return the table metadata builder
      */
+    @TimerJ
     public TableMetadataBuilder addIndex(IndexMetadata indexMetadata) {
         indexes.put(indexMetadata.getName(), indexMetadata);
         return this;
@@ -183,6 +189,7 @@ public class TableMetadataBuilder {
      * @param fields the fields
      * @return the table metadata builder
      */
+    @TimerJ
     public TableMetadataBuilder withPartitionKey(String... fields) {
         for (String field : fields) {
             partitionKey.add(new ColumnName(tableName, field));
@@ -198,6 +205,7 @@ public class TableMetadataBuilder {
      * @param fields the fields
      * @return the table metadata builder
      */
+    @TimerJ
     public TableMetadataBuilder withClusterKey(String... fields) {
         for (String field : fields) {
             clusterKey.add(new ColumnName(tableName, field));
@@ -213,6 +221,7 @@ public class TableMetadataBuilder {
      * @deprecated use {@link #TableMetadataBuilder(String, String, String)} instead.
      */
     @Deprecated
+    @TimerJ
     public TableMetadataBuilder withClusterNameRef(ClusterName clusterName) {
         this.clusterName = clusterName;
         return this;
@@ -223,6 +232,7 @@ public class TableMetadataBuilder {
      *
      * @return the table metadata
      */
+    @TimerJ
     public TableMetadata build() {
         return build(false);
     }
@@ -233,6 +243,7 @@ public class TableMetadataBuilder {
      * @param isPKRequired whether the pk is required or not
      * @return the table metadata
      */
+    @TimerJ
     public TableMetadata build(boolean isPKRequired) {
         if (isPKRequired && partitionKey.isEmpty()) {
             this.withPartitionKey(columns.keySet().iterator().next().getName());

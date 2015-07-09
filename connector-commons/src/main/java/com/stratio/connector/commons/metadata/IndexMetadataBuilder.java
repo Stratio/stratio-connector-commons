@@ -17,6 +17,7 @@
  */
 package com.stratio.connector.commons.metadata;
 
+import com.stratio.connector.commons.TimerJ;
 import com.stratio.crossdata.common.data.ColumnName;
 import com.stratio.crossdata.common.data.IndexName;
 import com.stratio.crossdata.common.data.TableName;
@@ -88,6 +89,7 @@ public class IndexMetadataBuilder {
      * @param opts the opts
      * @return the index metadata builder
      */
+    @TimerJ
     public IndexMetadataBuilder withOptions(Map<Selector, Selector> opts) {
         options = new HashMap<Selector, Selector>(opts);
         return this;
@@ -99,6 +101,7 @@ public class IndexMetadataBuilder {
      * @param columnsMetadata the columns metadata
      * @return the index metadata builder
      */
+    @TimerJ
     public IndexMetadataBuilder withColumns(List<ColumnMetadata> columnsMetadata) {
         for (ColumnMetadata colMetadata : columnsMetadata) {
             columns.put(colMetadata.getName(), colMetadata);
@@ -113,6 +116,7 @@ public class IndexMetadataBuilder {
      * @param colType    the col type
      * @return the index metadata builder
      */
+    @TimerJ
     public IndexMetadataBuilder addColumn(String columnName, ColumnType colType) {
         ColumnName colName = new ColumnName(tableName, columnName);
         ColumnMetadata colMetadata = new ColumnMetadata(colName, null, colType);
@@ -127,6 +131,7 @@ public class IndexMetadataBuilder {
      * @param value  the value
      * @return the index metadata builder
      */
+    @TimerJ
     public IndexMetadataBuilder addOption(String option, String value) {
         if (options == null) {
             options = new HashMap<Selector, Selector>();
@@ -142,6 +147,7 @@ public class IndexMetadataBuilder {
      * @param value  the value
      * @return the index metadata builder
      */
+    @TimerJ
     public IndexMetadataBuilder addOption(String option, Integer value) {
         if (options == null) {
             options = new HashMap<Selector, Selector>();
@@ -157,6 +163,7 @@ public class IndexMetadataBuilder {
      * @param value  the value
      * @return the index metadata builder
      */
+    @TimerJ
     public IndexMetadataBuilder addOption(String option, Boolean value) {
         if (options == null) {
             options = new HashMap<Selector, Selector>();
@@ -170,6 +177,7 @@ public class IndexMetadataBuilder {
      *
      * @return the index metadata
      */
+    @TimerJ
     public IndexMetadata build() {
         // TODO logger.debug()
         return new IndexMetadata(indexName, columns, indexType, options);

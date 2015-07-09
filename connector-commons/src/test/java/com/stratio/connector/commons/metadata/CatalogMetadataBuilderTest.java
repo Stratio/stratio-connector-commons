@@ -17,6 +17,7 @@
  */
 package com.stratio.connector.commons.metadata;
 
+import com.jcabi.aspects.Loggable;
 import com.stratio.crossdata.common.data.TableName;
 import com.stratio.crossdata.common.metadata.CatalogMetadata;
 import com.stratio.crossdata.common.metadata.TableMetadata;
