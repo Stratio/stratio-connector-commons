@@ -17,6 +17,7 @@
  */
 package com.stratio.connector.commons.metadata;
 
+import com.stratio.connector.commons.TimerJ;
 import com.stratio.crossdata.common.data.CatalogName;
 import com.stratio.crossdata.common.data.TableName;
 import com.stratio.crossdata.common.metadata.CatalogMetadata;
@@ -64,6 +65,7 @@ public class CatalogMetadataBuilder {
      * @param tableMetadataList the table metadata list
      * @return the catalog metadata builder
      */
+    @TimerJ
     public CatalogMetadataBuilder withTables(TableMetadata... tableMetadataList) {
         for (TableMetadata tableMetadata : tableMetadataList) {
             tables.put(tableMetadata.getName(), tableMetadata);
@@ -77,6 +79,7 @@ public class CatalogMetadataBuilder {
      * @param opts the opts
      * @return the catalog metadata builder
      */
+    @TimerJ
     public CatalogMetadataBuilder withOptions(Map<Selector, Selector> opts) {
         options = new HashMap<Selector, Selector>(opts);
         return this;
@@ -87,6 +90,7 @@ public class CatalogMetadataBuilder {
      *
      * @return the catalog metadata
      */
+    @TimerJ
     public CatalogMetadata build() {
         return new CatalogMetadata(catalogName, options, tables);
     }
