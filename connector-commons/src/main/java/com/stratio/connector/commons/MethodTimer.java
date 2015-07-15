@@ -23,19 +23,23 @@ public class MethodTimer {
         String methodArgs = point.getArgs().toString();
         MetricRegistry metricRegistry = Metrics.getRegistry();
         Timer timer;
+
+        String metricName = "Starting method "+methodName + "at "+System.nanoTime();
         synchronized (this) {
             if(metricRegistry.getTimers().containsKey(methodName)){
-                timer = metricRegistry.getTimers().get(methodName);
+                timer = metricRegistry.getTimers().get(metricName);
             }
             else{
-                timer = metricRegistry.register(methodName, new Timer());
+                timer = metricRegistry.register(metricName, new Timer());
             }
         }
         Timer.Context before = timer.time();
         Object result = point.proceed();
         long timeAfter = before.stop();
 
-        logger.debug("Method "+methodName+" with args "+ methodArgs +" executed in "+timeAfter+ " ns");
+        logger.debug("Method " + methodName + " with args " + methodArgs + " executed in " + timeAfter + " ns");
+        System.out.println("Method "+methodName+" with args "+ methodArgs +" executed in "+timeAfter+ " ns");
+
         return result;
     }
 }
