@@ -38,7 +38,6 @@ public class MethodTimer {
         long timeAfter = before.stop();
 
         logger.debug("Method " + methodName + " with args " + methodArgs + " executed in " + timeAfter + " ns");
-        System.out.println("Method "+methodName+" with args "+ methodArgs +" executed in "+timeAfter+ " ns");
 
         return result;
     }
