@@ -63,10 +63,11 @@ trait ABSTimer {
       logger.debug(s"The process [$timerName] is starting")
     }
     val before = timer.time()
+    val timeBefore = before.stop
     val t = f
     val after = before.stop()
     if (logger.isDebugEnabled()) {
-      logger.debug( s"""[millis: $after] $timerName""")
+      logger.debug( s"""[millis: ${after - timeBefore}] $timerName""")
     }
     t
   }
