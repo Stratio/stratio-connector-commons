@@ -11,12 +11,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Class to create the annotation TimerJ using aspectj.
  * Created by ccaballero on 7/9/15.
  */
 @Aspect
 public class MethodTimer {
+
+    /**
+     * The logger
+     */
     private final transient Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    /**
+     * Function that register metrics.
+     * @param point
+     * @return
+     * @throws Throwable
+     */
     @Around("execution(* *(..)) && @annotation(TimerJ)")
     public Object around(ProceedingJoinPoint point) throws Throwable {
         String methodName = MethodSignature.class.cast(point.getSignature()).getMethod().getName();
