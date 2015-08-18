@@ -21,16 +21,11 @@
     <parent>
         <groupId>com.stratio.connector</groupId>
         <artifactId>stratio-connector-commons</artifactId>
-        <version>0.6.0-RC2-SNAPSHOT</version>
+        <version>0.6.0-RC2</version>
     </parent>
     <dependencies>
         <dependency>
             <artifactId>crossdata-common</artifactId>
-            <groupId>com.stratio.crossdata</groupId>
-            <version>${version.crossdata}</version>
-        </dependency>
-        <dependency>
-            <artifactId>crossdata-connector</artifactId>
             <groupId>com.stratio.crossdata</groupId>
             <version>${version.crossdata}</version>
         </dependency>
