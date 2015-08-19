@@ -37,7 +37,7 @@ source_suffix = '.rst'
 # source_encoding = 'utf-8-sig'
 
 # The master toctree document.
-master_doc = 'about'
+master_doc = 'index'
 
 # General information about the project.
 project = u'Commons Connector'
@@ -107,7 +107,7 @@ html_theme = 'stratio'
 # documentation.
 
 html_theme_options = {
-'versions' : ['0.5.0-SNAPSHOT'],
+'versions' : ['0.5.0'],
 'github' : 'https://github.com/Stratio/stratio-connector-commons.git',
 'jira' : 'https://github.com/Stratio/stratio-connector-commons/issues',
 'module_name' : 'connector-commons'
@@ -198,7 +198,7 @@ html_static_path = ['_static']
 #html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'index'
+htmlhelp_basename = 'connector-commons-doc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
