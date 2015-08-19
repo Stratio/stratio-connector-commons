@@ -30,6 +30,11 @@
             <version>${version.crossdata}</version>
         </dependency>
         <dependency>
+            <artifactId>crossdata-connector</artifactId>
+            <groupId>com.stratio.crossdata</groupId>
+            <version>${version.crossdata}</version>
+        </dependency>
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.7.7</version>
