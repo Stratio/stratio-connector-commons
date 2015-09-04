@@ -21,7 +21,7 @@
     <packaging>pom</packaging>
     <parent>
         <groupId>com.stratio.connector</groupId>
-        <version>0.6.1-RC1-SNAPSHOT</version>
+        <version>0.6.1</version>
         <artifactId>stratio-connector-commons</artifactId>
     </parent>
     <build>
