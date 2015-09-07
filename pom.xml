@@ -16,7 +16,7 @@
     <parent>
         <groupId>com.stratio</groupId>
         <artifactId>parent</artifactId>
-        <version>0.3.1</version>
+        <version>0.4.0</version>
     </parent>
     <groupId>com.stratio.connector</groupId>
     <artifactId>stratio-connector-commons</artifactId>
@@ -26,7 +26,7 @@
     <packaging>pom</packaging>
    <description>The crossdata connector commons parent</description>
     <properties>
-      <version.crossdata>0.4.0-RC1</version.crossdata>
+      <version.crossdata>0.4.1</version.crossdata>
         <scala.version>2.10.4</scala.version>
         <spark.version>1.2.1</spark.version>
         <scala.test.version>2.2.1</scala.test.version>
@@ -140,8 +140,5 @@
                 </executions>
             </plugin>
         </plugins>
-
-
-
     </build>
 </project>
