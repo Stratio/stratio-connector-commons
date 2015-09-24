@@ -25,16 +25,13 @@ import java.util.Set;
 
 import static com.stratio.crossdata.common.metadata.Operations.*;
 
-/**
- * Created by jmgomez on 18/11/14.
- */
 public final class FilterHelper {
 
     private static Set pkFilters;
 
     static {
         pkFilters = new HashSet();
-        pkFilters.add(FILTER_PK_DISTINCT);
+        pkFilters.add(FILTER_PK_NOT_EQ);
         pkFilters.add(FILTER_PK_EQ);
         pkFilters.add(FILTER_PK_GET);
         pkFilters.add(FILTER_PK_GT);

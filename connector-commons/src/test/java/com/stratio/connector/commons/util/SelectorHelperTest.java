@@ -104,14 +104,16 @@ public class SelectorHelperTest {
     @Test
     public void testGetClassException() {
 
-        Selector[] exceptionSelector = {new AsteriskSelector(), new FunctionSelector("", new LinkedList<Selector>()),
+        Selector[] exceptionSelector = {
+                new AsteriskSelector(),
+                new FunctionSelector("", SelectExpression.create(new LinkedList<ColumnName>())),
                 new RelationSelector(mock(Relation.class))};
 
         for (int i = 0; i < exceptionSelector.length; i++) {
 
             try {
                 SelectorHelper.getClass(exceptionSelector[i]);
-                fail("Not must are here");
+                fail("Test should have failed");
             } catch (ExecutionException e) {
                 e.printStackTrace();
             }

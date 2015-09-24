@@ -32,9 +32,6 @@ import com.stratio.crossdata.common.statements.structures.window.WindowType;
 
 import java.util.*;
 
-/**
- * Created by jmgomez on 16/09/14.
- */
 public class LogicalWorkFlowCreator {
 
     public static final String COLUMN_KEY = "id";
@@ -264,18 +261,15 @@ public class LogicalWorkFlowCreator {
 
     public LogicalWorkFlowCreator addDistinctFilter(String columnName, Object term, Boolean indexed, Boolean PK) {
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)),
-                Operator.DISTINCT, returnSelector(term));
+                Operator.NOT_EQUAL, returnSelector(term));
         Set<Operations> operation = new HashSet<>();
 
         if (PK) {
-            operation.add(Operations.FILTER_PK_DISTINCT);
-
+            operation.add(Operations.FILTER_PK_NOT_EQ);
         } else if (indexed) {
-            operation.add(Operations.FILTER_INDEXED_DISTINCT);
-
+            operation.add(Operations.FILTER_INDEXED_NOT_EQ);
         } else {
-            operation.add(Operations.FILTER_NON_INDEXED_DISTINCT);
-
+            operation.add(Operations.FILTER_NON_INDEXED_NOT_EQ);
         }
         filters.add(new Filter(operation, relation));
         return this;
@@ -285,7 +279,7 @@ public class LogicalWorkFlowCreator {
 
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)),
 
-                Operator.MATCH, returnSelector(textToFind));
+        Operator.MATCH, returnSelector(textToFind));
         Set<Operations> operation = new HashSet<>();
         operation.add(Operations.FILTER_INDEXED_MATCH);
         filters.add(new Filter(operation, relation));

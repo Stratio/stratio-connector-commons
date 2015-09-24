@@ -40,7 +40,7 @@ public class FilterHelperTest {
     @Test
     public void testPkDistinct() throws Exception {
         Set pk = new HashSet<>();
-        pk.add(FILTER_PK_DISTINCT);
+        pk.add(FILTER_PK_NOT_EQ);
         FilterHelper.isPK(new Filter(pk, null));
     }
 
