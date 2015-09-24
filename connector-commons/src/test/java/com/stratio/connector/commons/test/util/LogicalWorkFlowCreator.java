@@ -261,7 +261,7 @@ public class LogicalWorkFlowCreator {
 
     public LogicalWorkFlowCreator addDistinctFilter(String columnName, Object term, Boolean indexed, Boolean PK) {
         Relation relation = new Relation(new ColumnSelector(new ColumnName(catalog, table, columnName)),
-                Operator.NOT_EQUAL, returnSelector(term));
+                Operator.NOT_EQ, returnSelector(term));
         Set<Operations> operation = new HashSet<>();
 
         if (PK) {
