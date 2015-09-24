@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6.3 (September 2015)
+
+* Adapted to Stratio Crossdata 0.5.0
+
 ## 0.6.2 (September 2015)
 
 * Adapted to Stratio Crossdata 0.4.3
