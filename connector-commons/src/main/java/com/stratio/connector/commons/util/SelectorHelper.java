@@ -101,7 +101,13 @@ public final class SelectorHelper {
                 field = ((FloatingPointSelector) selector).getValue();
                 break;
             case GROUP:
-                field = getRestrictedValue(((GroupSelector)selector).getFirstValue(), null);
+                field = getRestrictedValue(((GroupSelector) selector).getFirstValue(), null);
+                break;
+            case LIST:
+                if (((ListSelector) selector).getSelectorsList().isEmpty()){
+                    throw new ExecutionException("Selector " + selector.getType() + " not supported get value operation.");
+                }
+                field = getRestrictedValue(((ListSelector)selector).getSelectorsList().get(0), null);
                 break;
             default:
                 throw new ExecutionException("Selector " + selector.getType() + " not supported get value operation.");
@@ -136,6 +142,12 @@ public final class SelectorHelper {
                 break;
             case GROUP:
                 returnClass = getClass(((GroupSelector) selector).getFirstValue());
+                break;
+            case LIST:
+                if (((ListSelector) selector).getSelectorsList().isEmpty()){
+                    throw new ExecutionException("Selector " + selector.getType() + " not supported get value operation.");
+                }
+                returnClass = getClass(((ListSelector) selector).getSelectorsList().get(0));
                 break;
             default:
                 throw new ExecutionException("Selector " + selector.getType() + " not supported get value operation.");
