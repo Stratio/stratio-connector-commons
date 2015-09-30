@@ -52,6 +52,12 @@ public class ProjectParsed {
      * The filters.
      */
     private Collection<Filter> filterList = Collections.emptyList();
+
+    /**
+     * The disjunctions (OR trees).
+     */
+    private Collection<Disjunction> disjunctionList = Collections.emptyList();
+
     /**
      * The matchList.
      */
@@ -85,7 +91,6 @@ public class ProjectParsed {
     private OrderBy orderBy;
 
 
-
     /**
      * Constructor.
      *
@@ -108,7 +113,6 @@ public class ProjectParsed {
      * @return the project,
      */
     public Project getProject() {
-
         return project;
     }
 
@@ -216,6 +220,11 @@ public class ProjectParsed {
 
         } else if (lStep instanceof OrderBy) {
             orderBy = (OrderBy) lStep;
+        }else if (lStep instanceof Disjunction){
+            if (disjunctionList.isEmpty()) {
+                disjunctionList = new ArrayList<>();
+            }
+            disjunctionList.add((Disjunction) lStep);
         } else {
 
             String message = "LogicalStep [" + lStep.getClass().getCanonicalName() + " not supported";
@@ -244,5 +253,9 @@ public class ProjectParsed {
             }
             filterList.add(filter);
         }
+    }
+
+    public Collection<Disjunction> getDisjunctionList() {
+        return disjunctionList;
     }
 }
