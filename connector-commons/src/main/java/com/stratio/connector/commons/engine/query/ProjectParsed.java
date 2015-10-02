@@ -29,6 +29,7 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * This class is a representation of a query.
@@ -67,6 +68,11 @@ public class ProjectParsed {
      * The functionFilters.
      */
     private Collection<FunctionFilter> functionFilters = new ArrayList<>();
+
+    /**
+     * The disjunctions of functionFilters (OR trees).
+     */
+    private Collection<Disjunction> disjunctionOfFunctionsList = Collections.emptyList();
 
     /**
      * The select.
@@ -221,16 +227,65 @@ public class ProjectParsed {
         } else if (lStep instanceof OrderBy) {
             orderBy = (OrderBy) lStep;
         }else if (lStep instanceof Disjunction){
-            if (disjunctionList.isEmpty()) {
-                disjunctionList = new ArrayList<>();
-            }
-            disjunctionList.add((Disjunction) lStep);
+            switchDisjunctionList((Disjunction) lStep);
         } else {
 
             String message = "LogicalStep [" + lStep.getClass().getCanonicalName() + " not supported";
             logger.error(message);
             throw new ExecutionException(message);
         }
+    }
+
+    public void switchDisjunctionList(Disjunction disjunction) throws ExecutionException {
+
+        if (isPureFunctionsDisjunction(disjunction)){
+            if (disjunctionOfFunctionsList.isEmpty()) {
+                disjunctionOfFunctionsList = new ArrayList<>();
+            }
+            disjunctionOfFunctionsList.add(disjunction);
+
+        }else if (isPureFilterDisjunction(disjunction)) {
+
+            if (disjunctionList.isEmpty()) {
+                disjunctionList = new ArrayList<>();
+            }
+            disjunctionList.add(disjunction);
+        }else{
+            String message = "Mixing FunctionFilter with Filter using OR disjunction is not supported Yet...";
+            logger.error(message);
+            throw new ExecutionException(message);
+        }
+    }
+
+    public boolean isPureFunctionsDisjunction(Disjunction disjunction){
+
+        for (List<ITerm> termsList :disjunction.getTerms()){
+            for (ITerm term : termsList){
+                if (term instanceof  Disjunction
+                        && !isPureFunctionsDisjunction((Disjunction) term)){
+                    return false;
+                }
+                if (term instanceof Filter){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public boolean isPureFilterDisjunction(Disjunction disjunction){
+        for (List<ITerm> termsList :disjunction.getTerms()){
+            for (ITerm term : termsList){
+                if (term instanceof  Disjunction
+                        && !isPureFilterDisjunction((Disjunction) term)){
+                    return false;
+                }
+                if (term instanceof FunctionFilter){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     /**
@@ -257,5 +312,9 @@ public class ProjectParsed {
 
     public Collection<Disjunction> getDisjunctionList() {
         return disjunctionList;
+    }
+
+    public Collection<Disjunction> getDisjunctionOfFunctionsList() {
+        return disjunctionOfFunctionsList;
     }
 }
