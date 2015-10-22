@@ -27,12 +27,12 @@
         <dependency>
             <artifactId>crossdata-common</artifactId>
             <groupId>com.stratio.crossdata</groupId>
-            <version>${version.crossdata}</version>
+            <version>${crossdata.version}</version>
         </dependency>
         <dependency>
             <artifactId>crossdata-connector</artifactId>
             <groupId>com.stratio.crossdata</groupId>
-            <version>${version.crossdata}</version>
+            <version>${crossdata.version}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
