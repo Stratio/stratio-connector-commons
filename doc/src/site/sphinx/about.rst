@@ -39,9 +39,7 @@ Usage examples can be found in connectors using this features:
 -  `Streaming <https://github.com/Stratio/stratio-connector-streaming>`__
 -  `HDFS <https://github.com/Stratio/stratio-connector-hdfs>`__
 -  `Elasticsearch <https://github.com/Stratio/stratio-connector-elasticsearch>`__
--  `Deep-Spark <https://github.com/Stratio/stratio-connector-deep>`__
--  `Aerospike <https://github.com/Stratio/stratio-connector-aerospike>`__
-
+-  `SparkSQL <https://github.com/Stratio/stratio-connector-sparkSQL>`__
 Functional tests
 ----------------
 
@@ -55,9 +53,6 @@ body of Crossdata features. To run these generic tests is needed to:
    database specific properties are defined. Therefore, you could use
    different implementations to probe the tests with the desired
    configuration.
-
-The list of functional tests implemented is detailed
-`here <_doc/FunctionalTests.md>`__.
 
 Utilities
 ---------
