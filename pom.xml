@@ -20,15 +20,14 @@
     </parent>
     <groupId>com.stratio.connector</groupId>
     <artifactId>stratio-connector-commons</artifactId>
-    <version>0.6.3</version>
+    <version>0.6.4-RC1-SNAPSHOT</version>
     <url>http://www.stratio.com</url>
     <name>Stratio Connector Commons </name>
     <packaging>pom</packaging>
    <description>The crossdata connector commons parent</description>
     <properties>
-        <crossdata.version>0.5.0</crossdata.version>
+        <crossdata.version>0.5.1</crossdata.version>
         <scala.version>2.10.4</scala.version>
-        <spark.version>1.2.1</spark.version>
         <scala.test.version>2.2.1</scala.test.version>
         <scala.binary.version>2.10</scala.binary.version>
     </properties>
@@ -63,6 +62,15 @@
                 <role>developer</role>
                 <role>maintainer</role>
             </roles>
+        </developer>
+        <developer>
+        <id>ccaballe</id>
+        <name>Cristian Caballero</name>
+        <email>ccaballero@stratio.com</email>
+        <roles>
+            <role>developer</role>
+            <role>maintainer</role>
+        </roles>
         </developer>
     </developers>
     <modules>
